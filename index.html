@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DE CERO A CIEN - Tu Conexión al Ecosistema Emprendedor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A192F; /* Azul Noche */
+            color: #E6F1FF; /* Un blanco suave para el texto */
+        }
+        .text-gold {
+            color: #FFD700; /* Dorado */
+        }
+        .bg-card {
+            background-color: #172A45; /* Un azul un poco más claro para las tarjetas */
+        }
+        .btn-primary {
+            @apply bg-yellow-400 text-gray-900 font-semibold py-2 px-6 rounded-lg hover:bg-yellow-300 transition-all duration-300;
+        }
+        .btn-secondary {
+            @apply bg-transparent border border-yellow-400 text-yellow-400 font-semibold py-2 px-6 rounded-lg hover:bg-yellow-400 hover:text-gray-900 transition-all duration-300;
+        }
+        
+        /* Animación para el slider */
+        .slider {
+            white-space: nowrap;
+            overflow: hidden;
+            position: relative;
+        }
+        .slider-track {
+            display: inline-block;
+            animation: slide 30s linear infinite;
+        }
+        @keyframes slide {
+            from {
+                transform: translateX(0%);
+            }
+            to {
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="text-2xl font-bold text-gold">
+            <!-- Esto es lo que vamos a cambiar: -->
+            <!-- DE CERO A CIEN -->
+            <!-- Por esto: -->
+            <img src="assets/logo.svg" alt="Logo De Cero a Cien" class="h-10"> <!-- Asumimos una altura de 40px, se puede ajustar -->
+        </div>
+        <nav class="space-x-4">
+            <a href="#" class="btn-secondary">Ingresar</a>
+            <a href="#" class="btn-primary">Registrarse</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="container mx-auto px-6 py-24 text-center">
+            <h1 class="text-5xl md:text-7xl font-extrabold leading-tight">
+                Te damos la bienvenida a <span class="text-gold">DE CERO A CIEN</span>
+            </h1>
+            <p class="mt-4 text-xl md:text-2xl text-gray-300">
+                Tu Conexión al Ecosistema Emprendedor
+            </p>
+        </section>
+
+        <!-- Animated Slider -->
+        <div class="slider w-full py-4 bg-card border-t border-b border-gray-700">
+            <div class="slider-track">
+                <span class="text-xl font-semibold text-gold mx-12">Para Emprendimientos Dinámicos y Startup</span>
+                <span class="text-xl font-semibold text-gray-300 mx-12">Para Emprendimientos Dinámicos y Startup</span>
+                <span class="text-xl font-semibold text-gold mx-12">Para Emprendimientos Dinámicos y Startup</span>
+                <span class="text-xl font-semibold text-gray-300 mx-12">Para Emprendimientos Dinámicos y Startup</span>
+                <span class="text-xl font-semibold text-gold mx-12">Para Emprendimientos Dinámicos y Startup</span>
+                <span class="text-xl font-semibold text-gray-300 mx-12">Para Emprendimientos Dinámicos y Startup</span>
+            </div>
+        </div>
+
+        <!-- Cards Section -->
+        <section class="container mx-auto px-6 py-20">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Card 1: El Camino Dorado -->
+                <div class="bg-card rounded-xl p-8 border border-gray-700 shadow-lg flex flex-col">
+                    <h2 class="text-3xl font-bold text-gold mb-4">EL CAMINO DORADO</h2>
+                    <p class="text-gray-300 mb-6 flex-grow"><span class="font-semibold">¿Qué es?</span> Son 31 micro herramientas de gestión para que el emprendedor o emprendedora, desarrollen su idea de negocio en 5 fases.</p>
+                    <ul class="space-y-2 text-gray-400 mb-8 flex-grow">
+                        <li><span class="text-gold font-semibold">Fase 1:</span> Ideación y Validación</li>
+                        <li><span class="text-gold font-semibold">Fase 2:</span> Construcción del PMV</li>
+                        <li><span class="text-gold font-semibold">Fase 3:</span> Tracción y Product-Market Fit</li>
+                        <li><span class="text-gold font-semibold">Fase 4:</span> Crecimiento y Escalabilidad</li>
+                        <li><span class="text-gold font-semibold">Fase 5:</span> Consolidación y Madurez</li>
+                    </ul>
+                    <a href="#" class="btn-primary mt-auto text-center">Conocer más</a>
+                </div>
+
+                <!-- Card 2: Servicios Empresariales Premium -->
+                <div class="bg-card rounded-xl p-8 border border-gray-700 shadow-lg flex flex-col">
+                    <h2 class="text-3xl font-bold text-gold mb-4">SERVICIOS EMPRESARIALES PREMIUM</h2>
+                    <p class="text-gray-300 mb-6 flex-grow"><span class="font-semibold">¿Qué es?</span> Es una bateria con más de 20 de servicios especializados para empresas, distribuidas en 6 áreas.</p>
+                    <ul class="space-y-2 text-gray-400 mb-8 flex-grow">
+                        <li><span class="text-gold font-semibold">1.</span> Marketing Digital y Desarrollo Web</li>
+                        <li><span class="text-gold font-semibold">2.</span> Desarrollo de software profesional avanzado</li>
+                        <li><span class="text-gold font-semibold">3.</span> Consultoria operacional a empresas</li>
+                        <li><span class="text-gold font-semibold">4.</span> Mentorias 1 a 1</li>
+                        <li><span class="text-gold font-semibold">5.</span> Conferencias</li>
+                    </ul>
+                    <a href="#" class="btn-primary mt-auto text-center">Explorar Servicios</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pre-Footer Section -->
+        <section class="container mx-auto px-6 py-16 text-center max-w-4xl">
+            <h3 class="text-2xl font-bold text-gold mb-4">DE CERO A CIEN</h3>
+            <p class="text-lg text-gray-300 leading-relaxed">
+                Tu emprendimiento será desarrollado mediante una metodología profesional y rigurosa, cumpliendo con todas las etapas que validan un producto o servicio rubusto y preparado, listo para salir al mercado.
+            </p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-card border-t border-gray-700 py-16">
+        <div class="container mx-auto px-6">
+            <!-- Título centrado del Footer -->
+            <div class="text-center mb-12">
+                <h4 class="text-2xl font-bold text-gold mb-2">DE CERO A CIEN</h4>
+                <p class="text-gray-400 max-w-lg mx-auto">Liderazgo Estratégico y Soluciones Digitales que Multiplican tu Eficiencia.</p>
+            </div>
+
+            <!-- Columnas del Footer -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <!-- Columna 1 -->
+                <div>
+                    <h5 class="font-semibold text-gray-200 mb-3">Enlaces Rápidos</h5>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-gold">Inicio</a></li>
+                        <li><a href="#" class="hover:text-gold">Nosotros</a></li>
+                        <li><a href="#" class="hover:text-gold">Servicios</a></li>
+                        <li><a href="#" class="hover:text-gold">Metodología</a></li>
+                        <li><a href="#" class="hover:text-gold">Contacto</a></li>
+                    </ul>
+                </div>
+                <!-- Columna 2 -->
+                <div>
+                    <h5 class="font-semibold text-gray-200 mb-3">Recursos y Herramientas</h5>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-gold">El Camino Dorado</a></li>
+                        <li><a href="#" class="hover:text-gold">Servicios empresariales premium</a></li>
+                        <li><a href="#" class="hover:text-gold">Academy (Pronto)</a></li>
+                        <li><a href="#" class="hover:text-gold">Conecta (Pronto)</a></li>
+                    </ul>
+                </div>
+                <!-- Columna 3 -->
+                <div>
+                    <h5 class="font-semibold text-gray-200 mb-3">Recursos y Herramientas</h5>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-gold">Integraciones con IA</a></li>
+                        <li><a href="#" class="hover:text-gold">Diagnósticos rápidos con IA</a></li>
+                        <li><a href="#" class="hover:text-gold">Bootcamp (Pronto)</a></li>
+                        <li><a href="#" class="hover:text-gold">Descargables</a></li>
+                        <li><a href="#" class="hover:text-gold">Videos</a></li>
+                        <li><a href="#" class="hover:text-gold">Audio</a></li>
+                    </ul>
+                </div>
+                <!-- Columna 4 -->
+                <div>
+                    <h5 class="font-semibold text-gray-200 mb-3">Contacto</h5>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="tel:+56985678296" class="hover:text-gold">+56985678296</a></li>
+                        <li><a href="mailto:hola@deceroacien.app" class="hover:text-gold">hola@deceroacien.app</a></li>
+                        <li><a href="http://www.deceroacien.app" target="_blank" class="hover:text-gold">www.deceroacien.app</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
+
