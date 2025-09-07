@@ -32,24 +32,22 @@
         .highlight-text {
             color: #FBBF24;
         }
-        .conference-card {
+        .card {
             background-color: #112240;
             border-radius: 12px;
             padding: 2rem;
             border: 1px solid #1e2d4d;
+            transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
-            height: 100%;
         }
-        .testimonial-card {
-             background-color: #112240;
-            border-radius: 12px;
-            padding: 2rem;
-            border: 1px solid #1e2d4d;
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(251, 191, 36, 0.4);
         }
-        .cta-button-outline {
+        .cta-button {
             display: inline-block;
-            border: 1px solid #FBBF24;
+            border: 2px solid #FBBF24;
             color: #FBBF24;
             font-weight: 600;
             padding: 10px 20px;
@@ -58,7 +56,7 @@
             transition: all 0.3s ease;
             text-align: center;
         }
-        .cta-button-outline:hover {
+        .cta-button:hover {
             background-color: #FBBF24;
             color: #0a1f2f;
         }
@@ -86,29 +84,6 @@
         .footer-link {
             color: #94a3b8;
         }
-        .form-input {
-            background-color: #1e2d4d;
-            border: 1px solid #303C55;
-            color: #e6f1ff;
-            border-radius: 6px;
-        }
-        .form-input:focus {
-            outline: none;
-            border-color: #FBBF24;
-            box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.3);
-        }
-        .submit-button {
-             background-color: #FBBF24;
-            color: #0a1f2f;
-            font-weight: 700;
-            padding: 12px 24px;
-            border-radius: 6px;
-            width: 100%;
-            transition: background-color 0.3s ease;
-        }
-        .submit-button:hover {
-            background-color: #FCD34D;
-        }
     </style>
 </head>
 <body class="antialiased">
@@ -133,110 +108,49 @@
 
     <main>
         <!-- Hero Section -->
-        <section class="pt-20 pb-16 sm:pt-28 sm:pb-24">
-            <div class="container mx-auto max-w-5xl px-6 text-center">
+        <section class="py-20 sm:py-28">
+            <div class="container mx-auto max-w-4xl px-6 text-center">
                 <h1 class="text-4xl sm:text-5xl font-bold section-title">Lleva la Estrategia <span class="highlight-text">DE CERO A CIEN</span> a Tu Evento</h1>
-                <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Conferencias de alto impacto sobre estrategia, innovación y el ecosistema emprendedor, diseñadas para inspirar, educar y transformar a tu audiencia.</p>
+                <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Conferencias de alto impacto sobre estrategia, emprendimiento y la sinergia Humano-IA, diseñadas para inspirar, educar y transformar a tu audiencia.</p>
             </div>
         </section>
         
         <!-- Conferences Catalog -->
-        <section class="pb-16 sm:pb-24">
+        <section class="pb-20 sm:pb-28">
             <div class="container mx-auto max-w-7xl px-6">
-                 <h2 class="text-3xl font-bold text-center section-title mb-12">Catálogo de Conferencias Estratégicas</h2>
+                <h2 class="text-3xl font-bold text-center section-title mb-12">Catálogo de Conferencias Estratégicas</h2>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     
-                    <!-- Conference 1 -->
-                    <div class="conference-card">
-                        <div class="flex-grow">
-                            <h3 class="text-xl font-bold text-white">El Fin de la Soledad del Estratega</h3>
-                            <p class="mt-4 text-gray-400 text-sm">Un análisis profundo sobre el principal dolor del fundador y cómo la creación de un ecosistema de apoyo se convierte en la principal ventaja competitiva.</p>
-                        </div>
+                    <!-- Conferencia 1 -->
+                    <div class="card">
+                        <h3 class="text-xl font-bold text-white">El Fin de la Soledad del Estratega</h3>
+                        <p class="mt-2 text-gray-400 text-sm flex-grow">De la Idea a un Modelo de Negocio a Prueba de Balas.</p>
                         <div class="mt-6">
-                            <a href="contacto.html" class="cta-button-outline w-full">Más Información</a>
+                            <a href="conferencia_soledad_estratega.html" class="cta-button w-full">Más Información</a>
                         </div>
                     </div>
 
-                    <!-- Conference 2 -->
-                    <div class="conference-card">
-                        <div class="flex-grow">
-                            <h3 class="text-xl font-bold text-white">La Máquina de Crecimiento</h3>
-                            <p class="mt-4 text-gray-400 text-sm">Cómo diseñar un modelo de negocio rentable y escalable, aplicando los principios de la sinergia Humano-IA para acelerar resultados.</p>
-                        </div>
-                         <div class="mt-6">
-                            <a href="contacto.html" class="cta-button-outline w-full">Más Información</a>
+                    <!-- Conferencia 2 -->
+                    <div class="card">
+                        <h3 class="text-xl font-bold text-white">La Máquina de Crecimiento</h3>
+                        <p class="mt-2 text-gray-400 text-sm flex-grow">Cómo Diseñar un Funnel de Ventas con un LTV/CAC de 20 a 1.</p>
+                        <div class="mt-6">
+                            <a href="conferencia_maquina_crecimiento.html" class="cta-button w-full">Más Información</a>
                         </div>
                     </div>
 
-                    <!-- Conference 3 -->
-                    <div class="conference-card">
-                         <div class="flex-grow">
-                            <h3 class="text-xl font-bold text-white">El Co-Piloto Estratégico</h3>
-                            <p class="mt-4 text-gray-400 text-sm">Metodología DE CERO A CIEN: un recorrido por las 5 fases del "Camino Dorado" para llevar una idea desde la validación hasta la consolidación.</p>
-                        </div>
-                         <div class="mt-6">
-                            <a href="contacto.html" class="cta-button-outline w-full">Más Información</a>
+                    <!-- Conferencia 3 -->
+                    <div class="card">
+                        <h3 class="text-xl font-bold text-white">El Co-Piloto Estratégico</h3>
+                        <p class="mt-2 text-gray-400 text-sm flex-grow">Sinergia Humano-IA para Multiplicar tu Productividad x10.</p>
+                        <div class="mt-6">
+                            <a href="#" class="cta-button w-full">Más Información</a>
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
-
-        <!-- Testimonials Section -->
-        <section class="pb-16 sm:pb-24">
-             <div class="container mx-auto max-w-7xl px-6">
-                 <h2 class="text-3xl font-bold text-center section-title mb-12">Empresas que ya han dado el Salto</h2>
-                 <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                     
-                     <!-- Testimonial 1 -->
-                     <div class="testimonial-card">
-                         <p class="text-gray-300">"La conferencia sobre 'La Máquina de Crecimiento' nos entregó un marco de trabajo claro y accionable. La visión de Cristian sobre la sinergia Humano-IA es reveladora y nos ha permitido optimizar procesos clave."</p>
-                         <p class="mt-6 font-bold text-white">Javier López</p>
-                         <p class="text-sm highlight-text">CEO, InnovaTech Solutions</p>
-                     </div>
-
-                     <!-- Testimonial 2 -->
-                     <div class="testimonial-card">
-                         <p class="text-gray-300">"Asistimos a la charla 'El Fin de la Soledad del Estratega' y resonó profundamente con nuestro equipo directivo. Nos ayudó a fortalecer nuestra cultura de colaboración y a entender la importancia de construir un ecosistema."</p>
-                         <p class="mt-6 font-bold text-white">María González</p>
-                         <p class="text-sm highlight-text">Directora de RRHH, Futuro Digital</p>
-                     </div>
-                 </div>
-             </div>
-        </section>
-
-        <!-- Contact Form Section -->
-        <section class="pb-20 sm:pb-28">
-            <div class="container mx-auto max-w-2xl px-6 text-center">
-                 <h2 class="text-3xl font-bold section-title mb-4">Inicia la Conversación</h2>
-                 <p class="text-gray-400 mb-10">Cuéntanos sobre tu evento y creemos una experiencia transformadora.</p>
-                
-                <form action="#" method="POST">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div>
-                            <label for="name" class="sr-only">Nombre</label>
-                            <input type="text" name="name" id="name" placeholder="Nombre" class="w-full form-input p-3">
-                        </div>
-                        <div>
-                            <label for="company" class="sr-only">Empresa</label>
-                            <input type="text" name="company" id="company" placeholder="Empresa" class="w-full form-input p-3">
-                        </div>
-                        <div class="sm:col-span-2">
-                            <label for="email" class="sr-only">Email</label>
-                            <input type="email" name="email" id="email" placeholder="Email" class="w-full form-input p-3">
-                        </div>
-                        <div class="sm:col-span-2">
-                             <label for="message" class="sr-only">Mensaje</label>
-                            <textarea name="message" id="message" rows="4" placeholder="Cuéntanos sobre tu evento, audiencia y objetivos..." class="w-full form-input p-3"></textarea>
-                        </div>
-                        <div class="sm:col-span-2">
-                            <button type="submit" class="submit-button">Enviar Solicitud</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </section>
-
     </main>
 
     <!-- Footer -->
@@ -297,3 +211,4 @@
 
 </body>
 </html>
+
