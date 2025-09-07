@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masterclass: El Taller del CEO Estratega (6 Semanas) - DE CERO A CIEN ACADEMY</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a1f2f;
+            color: #e6f1ff;
+        }
+        .header-link {
+            color: #cbd5e1;
+            transition: color 0.3s ease;
+        }
+        .header-link:hover, .footer-link:hover {
+            color: #FBBF24;
+        }
+        .active-link {
+            color: #FBBF24;
+            font-weight: 600;
+        }
+        .section-title {
+            color: #ccd6f6;
+            font-weight: 700;
+        }
+        .highlight-text {
+            color: #FBBF24;
+        }
+        .login-button {
+            color: #cbd5e1;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            padding: 8px 12px;
+        }
+        .login-button:hover {
+            color: #FBBF24;
+        }
+        .register-button {
+            background-color: #FBBF24;
+            color: #0a1f2f;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .register-button:hover {
+            background-color: #FCD34D;
+        }
+        .footer-link {
+            color: #94a3b8;
+        }
+        .cta-button-large {
+            display: inline-block;
+            background-color: #FBBF24;
+            color: #0a1f2f;
+            font-weight: 700;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.125rem;
+        }
+        .cta-button-large:hover {
+            background-color: #FCD34D;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(251, 191, 36, 0.3);
+        }
+        .week-accordion details > summary {
+            list-style: none;
+        }
+        .week-accordion details > summary::-webkit-details-marker {
+            display: none;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-[#0a1f2f]/80 backdrop-blur-lg">
+        <nav class="container mx-auto max-w-7xl px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold highlight-text">DE CERO A CIEN</a>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="index.html" class="header-link text-sm">Inicio</a>
+                <a href="nosotros.html" class="header-link text-sm">Nosotros</a>
+                <a href="servicios.html" class="header-link text-sm">Servicios</a>
+                <a href="metodologia.html" class="header-link text-sm">Metodología</a>
+                <a href="contacto.html" class="header-link text-sm">Contacto</a>
+                 <div class="pl-2 flex items-center space-x-2">
+                    <a href="#" class="login-button text-sm">Ingresa</a>
+                    <a href="#" class="register-button text-sm">Regístrate</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="py-20 sm:py-24 bg-[#0a1f2f]">
+            <div class="container mx-auto max-w-5xl px-6 text-center">
+                <p class="font-semibold highlight-text">Masterclass Fase 5</p>
+                <h1 class="text-4xl sm:text-6xl font-bold section-title mt-4">El Taller del CEO Estratega</h1>
+                <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Tu negocio ya es una empresa consolidada. Este no es un bootcamp, es un taller estratégico de alto nivel para CEOs que buscan definir el legado de su compañía. Trabajarás con un grupo reducido de pares para diseñar el futuro a largo plazo de tu empresa.</p>
+                <div class="mt-10">
+                    <a href="#" class="cta-button-large">Inscríbete por $499 USD</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Info Bar -->
+        <div class="border-y border-gray-800">
+            <div class="container mx-auto max-w-6xl px-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center py-6">
+                    <div>
+                        <p class="text-gray-400 text-sm">Duración</p>
+                        <p class="font-bold text-white text-lg">6 Semanas</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm">Formato</p>
+                        <p class="font-bold text-white text-lg">100% Online (Mastermind)</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm">Próxima Cohorte</p>
+                        <p class="font-bold text-white text-lg">03 de Noviembre</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm">Ideal Para</p>
+                        <p class="font-bold text-white text-lg">CEOs y Fundadores</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- What's Included Section -->
+        <section class="py-20 sm:py-28">
+            <div class="container mx-auto max-w-6xl px-6">
+                <div class="text-center">
+                    <h2 class="text-3xl sm:text-4xl font-bold section-title">¿Qué Incluye la Masterclass?</h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">Una experiencia de alto nivel para llevar tu liderazgo y tu empresa al siguiente nivel.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 mt-16">
+                    <div class="bg-[#112240] p-8 rounded-lg border border-gray-800">
+                        <h3 class="text-xl font-bold text-white">El Taller Estratégico</h3>
+                        <p class="mt-3 text-gray-400">Acceso a las herramientas de Fase 5 en la plataforma, diseñadas para el análisis y la planificación estratégica de alto nivel.</p>
+                    </div>
+                    <div class="bg-[#112240] p-8 rounded-lg border border-gray-800">
+                        <h3 class="text-xl font-bold text-white">Consejo de CEOs (Mastermind)</h3>
+                        <p class="mt-3 text-gray-400">Una sesión semanal en formato "Hot Seat" donde presentarás tus desafíos y recibirás feedback de un grupo selecto de pares y del mentor.</p>
+                    </div>
+                    <div class="bg-[#112240] p-8 rounded-lg border border-gray-800">
+                        <h3 class="text-xl font-bold text-white">Material de Apoyo Avanzado</h3>
+                        <p class="mt-3 text-gray-400">Acceso a la "Biblioteca Maestra" con guías, estudios de caso y plantillas de nivel ejecutivo para cada módulo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Curriculum Section -->
+        <section class="py-20 sm:py-28 bg-[#112240]">
+             <div class="container mx-auto max-w-4xl px-6">
+                <div class="text-center">
+                    <h2 class="text-3xl sm:text-4xl font-bold section-title">El Viaje del Estadista: Semana a Semana</h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">Un programa de 6 semanas para diseñar el futuro y el legado de tu compañía.</p>
+                </div>
+                <div class="mt-16 space-y-4 week-accordion">
+                    <!-- Week 1 -->
+                    <details class="bg-[#0a1f2f] rounded-lg border border-gray-800 overflow-hidden">
+                        <summary class="p-6 cursor-pointer flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-white">Semana 1: Horizontes de Crecimiento</h3>
+                            <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div class="p-6 pt-0 text-gray-400">
+                            <p><strong class="text-gray-300">Foco Estratégico:</strong> Analizar y decidir las futuras vías de expansión del negocio con el Simulador de Estrategias de Crecimiento.</p>
+                        </div>
+                    </details>
+                    <!-- Week 2 -->
+                    <details class="bg-[#0a1f2f] rounded-lg border border-gray-800 overflow-hidden">
+                        <summary class="p-6 cursor-pointer flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-white">Semana 2: Diagnóstico Financiero Profundo</h3>
+                            <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div class="p-6 pt-0 text-gray-400">
+                            <p><strong class="text-gray-300">Foco Estratégico:</strong> Monitorear la rentabilidad, eficiencia y solidez de la empresa con el Dashboard de Salud Financiera.</p>
+                        </div>
+                    </details>
+                    <!-- Week 3 -->
+                    <details class="bg-[#0a1f2f] rounded-lg border border-gray-800 overflow-hidden">
+                        <summary class="p-6 cursor-pointer flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-white">Semana 3: La Máquina de Eficiencia</h3>
+                            <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div class="p-6 pt-0 text-gray-400">
+                            <p><strong class="text-gray-300">Foco Estratégico:</strong> Encontrar y eliminar ineficiencias operativas con el Optimizador de Procesos Clave.</p>
+                        </div>
+                    </details>
+                    <!-- Week 4 -->
+                    <details class="bg-[#0a1f2f] rounded-lg border border-gray-800 overflow-hidden">
+                        <summary class="p-6 cursor-pointer flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-white">Semana 4: El ADN de la Empresa</h3>
+                            <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div class="p-6 pt-0 text-gray-400">
+                            <p><strong class="text-gray-300">Foco Estratégico:</strong> Codificar el alma de la compañía con el Constructor de Manual de Cultura.</p>
+                        </div>
+                    </details>
+                     <!-- Week 5 -->
+                    <details class="bg-[#0a1f2f] rounded-lg border border-gray-800 overflow-hidden">
+                        <summary class="p-6 cursor-pointer flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-white">Semana 5: Gobernanza y Liderazgo</h3>
+                            <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div class="p-6 pt-0 text-gray-400">
+                            <p><strong class="text-gray-300">Foco Estratégico:</strong> Diseñar una estructura de supervisión y consejo con el Simulador de Gobierno Corporativo.</p>
+                        </div>
+                    </details>
+                    <!-- Week 6 -->
+                    <details class="bg-[#0a1f2f] rounded-lg border border-gray-800 overflow-hidden">
+                        <summary class="p-6 cursor-pointer flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-white">Semana 6: El Legado</h3>
+                            <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div class="p-6 pt-0 text-gray-400">
+                            <p><strong class="text-gray-300">Foco Estratégico:</strong> Contemplar el futuro a largo plazo de la compañía con el Analizador de Escenarios de Salida.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+         <!-- Final CTA -->
+        <section class="py-20 sm:py-28">
+            <div class="container mx-auto max-w-4xl px-6 text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold section-title">Define el Futuro de tu Compañía</h2>
+                <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Únete a un grupo exclusivo de líderes y diseña el plan estratégico que asegurará el legado y la trascendencia de tu empresa.</p>
+                <div class="mt-10">
+                    <a href="#" class="cta-button-large">Inscríbete Ahora por $499 USD</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800">
+        <div class="container mx-auto max-w-7xl px-6 py-12">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 text-sm">
+                 <div>
+                    <h3 class="font-semibold text-white">Enlaces Rápidos</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="index.html" class="footer-link">Inicio</a></li>
+                        <li><a href="nosotros.html" class="footer-link">Nosotros</a></li>
+                        <li><a href="servicios.html" class="footer-link">Servicios</a></li>
+                        <li><a href="metodologia.html" class="footer-link">Metodología</a></li>
+                        <li><a href="contacto.html" class="footer-link">Contacto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white">Recursos y Herramientas</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="#" class="footer-link">El Camino Dorado</a></li>
+                        <li><a href="servicios.html" class="footer-link">Servicios empresariales premium</a></li>
+                        <li><a href="academy.html" class="footer-link">Academy</a></li>
+                        <li><a href="#" class="footer-link">Conecta (Pronto)</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white">Recursos y Herramientas</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="#" class="footer-link">Integraciones con IA</a></li>
+                        <li><a href="diagnostico.html" class="footer-link">Diagnósticos rápidos con IA</a></li>
+                        <li><a href="academy.html" class="footer-link">Bootcamp (Pronto)</a></li>
+                        <li><a href="#" class="footer-link">Descargables</a></li>
+                        <li><a href="#" class="footer-link">Videos</a></li>
+                        <li><a href="#" class="footer-link">Audio</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white">Legal</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="terminos.html" class="footer-link">Términos y Condiciones</a></li>
+                        <li><a href="politica_privacidad.html" class="footer-link">Política de Privacidad</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white">Contacto</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="tel:+56985678296" class="footer-link">+56 9 8567 8296</a></li>
+                        <li><a href="mailto:hola@deceroacien.app" class="footer-link">hola@deceroacien.app</a></li>
+                        <li><a href="https://www.deceroacien.app" target="_blank" class="footer-link">www.deceroacien.app</a></li>
+                    </ul>
+                </div>
+            </div>
+             <div class="mt-12 border-t border-gray-800 pt-8 text-center">
+                 <p class="text-gray-500 text-xs">© 2025 DE CERO A CIEN. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.querySelectorAll('.week-accordion details').forEach((detail) => {
+            detail.addEventListener('toggle', (event) => {
+                if (detail.open) {
+                    document.querySelectorAll('.week-accordion details').forEach((otherDetail) => {
+                        if (otherDetail !== detail) {
+                            otherDetail.removeAttribute('open');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
