@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosotros - De Cero a Cien</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a192f; /* Azul Oscuro de la Homepage */
+            color: #e6f1ff; /* Blanco Hueso para texto */
+        }
+        .header-link {
+            color: #cbd5e1;
+            transition: color 0.3s ease;
+        }
+        .header-link:hover {
+            color: #FBBF24; /* Dorado */
+        }
+        .active-link {
+            color: #FBBF24; /* Dorado */
+            font-weight: 600;
+        }
+        .section-title {
+            color: #ccd6f6;
+            font-weight: 700;
+        }
+        .highlight-text {
+            color: #FBBF24; /* Dorado */
+        }
+        .footer-link {
+             color: #8892b0;
+             transition: color 0.3s ease;
+        }
+        .footer-link:hover {
+            color: #FBBF24; /* Dorado */
+        }
+        .founder-card {
+            background-color: #112240;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-[#0a192f]/80 backdrop-blur-lg">
+        <nav class="container mx-auto max-w-7xl px-6 py-5 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold highlight-text">DE CERO A CIEN</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="header-link">Inicio</a>
+                <a href="nosotros.html" class="active-link">Nosotros</a>
+                <a href="servicios.html" class="header-link">Servicios</a>
+                <a href="metodologia.html" class="header-link">Metodología</a>
+                <a href="contacto.html" class="header-link">Contacto</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="py-20 sm:py-28">
+            <div class="container mx-auto max-w-4xl px-6">
+                <h1 class="text-4xl sm:text-5xl font-bold section-title leading-tight">Ya no estás solo en la cima de la montaña.</h1>
+                <div class="mt-8 text-lg text-gray-400 space-y-6">
+                    <p>
+                        Hay un momento en la vida de todo emprendedor de una claridad brutal y una soledad abrumadora. Es cuando te das cuenta de que la cima, el lugar desde donde se toman las decisiones estratégicas, es un lugar increíblemente solitario. Tu equipo confía en tu visión, y tu familia en tu fortaleza. Pero, ¿en quién confías tú cuando la niebla no te deja ver el siguiente paso?
+                    </p>
+                    <p>
+                        Hemos visto a fundadores brillantes, con ideas que podían cambiar el mundo, fracasar. No por falta de pasión, sino por falta de un mapa y de un co-piloto. Fracasaron ahogados en un mar de información, pero sedientos de sabiduría. Fracasaron porque <strong class="text-gray-300">la soledad del estratega es el enemigo silencioso del crecimiento.</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Founders Section -->
+        <section class="py-20 sm:py-28 bg-[#112240]">
+             <div class="container mx-auto max-w-5xl px-6">
+                <h2 class="text-3xl sm:text-4xl font-bold section-title text-center">Nuestra Historia: La Tríada Fundacional</h2>
+                <p class="mt-4 text-lg text-gray-400 text-center max-w-3xl mx-auto">
+                    Somos una familia que ha vivido la montaña rusa de construir un negocio desde cero. Unimos nuestras experiencias para crear el co-piloto que a nosotros nos hubiese gustado tener.
+                </p>
+                <div class="mt-16 grid md:grid-cols-3 gap-8">
+                    <!-- Cristian Jofré -->
+                    <div class="founder-card">
+                        <h3 class="text-2xl font-bold text-white">Cristian Jofré</h3>
+                        <p class="mt-2 highlight-text font-semibold">CEO - El Estratega</p>
+                        <p class="mt-4 text-gray-400 text-sm">
+                            Con más de 5 años de experiencia validando modelos de negocio, Cristian es el encargado de trazar el mapa, asegurando que cada paso esté fundamentado en una estrategia sólida y orientada a resultados.
+                        </p>
+                    </div>
+                    <!-- Claudia Guerra -->
+                    <div class="founder-card">
+                        <h3 class="text-2xl font-bold text-white">Claudia Guerra</h3>
+                        <p class="mt-2 highlight-text font-semibold">CRO - La Humanista</p>
+                        <p class="mt-4 text-gray-400 text-sm">
+                            Claudia es la experta en construir puentes y comunidades. Su rol es asegurar que la experiencia del emprendedor sea el centro de nuestro ecosistema, transformando la soledad en colaboración.
+                        </p>
+                    </div>
+                    <!-- Ignacio Jofré -->
+                    <div class="founder-card">
+                        <h3 class="text-2xl font-bold text-white">Ignacio Jofré</h3>
+                        <p class="mt-2 highlight-text font-semibold">CTO - El Arquitecto Tecnológico</p>
+                        <p class="mt-4 text-gray-400 text-sm">
+                            Ignacio es quien traduce la estrategia en herramientas. Como arquitecto de IA, se asegura de que la tecnología sea un multiplicador de potencia que simplifica lo complejo y acelera el crecimiento.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Philosophy Section -->
+        <section class="py-20 sm:py-28">
+            <div class="container mx-auto max-w-4xl px-6">
+                <h2 class="text-3xl sm:text-4xl font-bold section-title">Nuestra Convicción Inquebrantable</h2>
+                 <div class="mt-8 text-lg text-gray-400 space-y-6">
+                    <p>
+                        Creemos en una verdad fundamental: <strong class="text-gray-300">ningún emprendedor debería tener que construir el futuro a ciegas y en soledad.</strong> Creemos que la estrategia no es un lujo, sino el oxígeno que mantiene viva a una startup.
+                    </p>
+                     <p>
+                        No ofrecemos respuestas mágicas. Ofrecemos <span class="highlight-text">Claridad Radical</span>. Fusionamos el rigor analítico con un enfoque obsesivo en los resultados prácticos. Forjamos alianzas, no transacciones, porque tu éxito es nuestro éxito.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 mt-16">
+        <div class="container mx-auto max-w-7xl px-6 py-12">
+            <div class="grid md:grid-cols-3 gap-8 text-center md:text-left">
+                <div>
+                    <h3 class="text-lg font-semibold section-title">DE CERO A CIEN</h3>
+                    <p class="mt-2 text-gray-400 text-sm">Tu Conexión al Ecosistema Emprendedor.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold section-title">Enlaces Rápidos</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="index.html" class="footer-link">Inicio</a></li>
+                        <li><a href="nosotros.html" class="footer-link">Nosotros</a></li>
+                        <li><a href="servicios.html" class="footer-link">Servicios</a></li>
+                        <li><a href="metodologia.html" class="footer-link">Metodología</a></li>
+                        <li><a href="contacto.html" class="footer-link">Contacto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold section-title">Contacto</h3>
+                     <p class="mt-4 text-gray-400 text-sm">
+                        Email: contacto@deceroacien.com <br>
+                        Teléfono: +569 85678296
+                    </p>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-gray-800 pt-8 text-center">
+                 <p class="text-gray-500 text-sm">© 2025 DE CERO A CIEN. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
+
