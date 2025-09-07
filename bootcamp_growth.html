@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootcamp: Construye tu Máquina de Crecimiento en 8 Semanas - DE CERO A CIEN ACADEMY</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a1f2f;
+            color: #e6f1ff;
+        }
+        .header-link {
+            color: #cbd5e1;
+            transition: color 0.3s ease;
+        }
+        .header-link:hover, .footer-link:hover {
+            color: #FBBF24;
+        }
+        .active-link {
+            color: #FBBF24;
+            font-weight: 600;
+        }
+        .section-title {
+            color: #ccd6f6;
+            font-weight: 700;
+        }
+        .highlight-text {
+            color: #FBBF24;
+        }
+        .login-button {
+            color: #cbd5e1;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            padding: 8px 12px;
+        }
+        .login-button:hover {
+            color: #FBBF24;
+        }
+        .register-button {
+            background-color: #FBBF24;
+            color: #0a1f2f;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .register-button:hover {
+            background-color: #FCD34D;
+        }
+        .footer-link {
+            color: #94a3b8;
+        }
+        .cta-button-large {
+            display: inline-block;
+            background-color: #FBBF24;
+            color: #0a1f2f;
+            font-weight: 700;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.125rem;
+        }
+        .cta-button-large:hover {
+            background-color: #FCD34D;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(251, 191, 36, 0.3);
+        }
+        .week-accordion details > summary {
+            list-style: none;
+        }
+        .week-accordion details > summary::-webkit-details-marker {
+            display: none;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-[#0a1f2f]/80 backdrop-blur-lg">
+        <nav class="container mx-auto max-w-7xl px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold highlight-text">DE CERO A CIEN</a>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="index.html" class="header-link text-sm">Inicio</a>
+                <a href="nosotros.html" class="header-link text-sm">Nosotros</a>
+                <a href="servicios.html" class="header-link text-sm">Servicios</a>
+                <a href="metodologia.html" class="header-link text-sm">Metodología</a>
+                <a href="contacto.html" class="header-link text-sm">Contacto</a>
+                 <div class="pl-2 flex items-center space-x-2">
+                    <a href="#" class="login-button text-sm">Ingresa</a>
+                    <a href="#" class="register-button text-sm">Regístrate</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="py-20 sm:py-24 bg-[#0a1f2f]">
+            <div class="container mx-auto max-w-5xl px-6 text-center">
+                <p class="font-semibold highlight-text">Bootcamp Fase 4</p>
+                <h1 class="text-4xl sm:text-6xl font-bold section-title mt-4">Construye tu Máquina de Crecimiento en 8 Semanas</h1>
+                <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Has encontrado el Product-Market Fit. Ahora es el momento de pisar el acelerador. En este bootcamp, pasarás de ser un fundador que 'hace de todo' a un CEO que construye sistemas para escalar las ventas, el marketing y el equipo de forma predecible.</p>
+                <div class="mt-10">
+                    <a href="#" class="cta-button-large">Inscríbete por $499 USD</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Info Bar -->
+        <div class="border-y border-gray-800">
+            <div class="container mx-auto max-w-6xl px-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center py-6">
+                    <div>
+                        <p class="text-gray-400 text-sm">Duración</p>
+                        <p class="font-bold text-white text-lg">8 Semanas</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm">Formato</p>
+                        <p class="font-bold text-white text-lg">100% Online</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm">Próxima Cohorte</p>
+                        <p class="font-bold text-white text-lg">03 de Noviembre</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm">Ideal Para</p>
+                        <p class="font-bold text-white text-lg">Fundadores con Product-Market Fit</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- What's Included Section -->
+        <section class="py-20 sm:py-28">
+            <div class="container mx-auto max-w-6xl px-6">
+                <div class="text-center">
+                    <h2 class="text-3xl sm:text-4xl font-bold section-title">¿Qué Incluye el Bootcamp?</h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">Te entregamos un ecosistema de aprendizaje integral para asegurar tu éxito.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 mt-16">
+                    <div class="bg-[#112240] p-8 rounded-lg border border-gray-800">
+                        <h3 class="text-xl font-bold text-white">El Taller: Plataforma SaaS</h3>
+                        <p class="mt-3 text-gray-400">Acceso total a las micro-herramientas de "El Camino Dorado" para aplicar cada concepto de forma práctica y guiada.</p>
+                    </div>
+                    <div class="bg-[#112240] p-8 rounded-lg border border-gray-800">
+                        <h3 class="text-xl font-bold text-white">Mentorías Grupales Semanales</h3>
+                        <p class="mt-3 text-gray-400">Una sesión en vivo por semana vía Meet para resolver dudas, recibir feedback directo del mentor y aprender de la comunidad.</p>
+                    </div>
+                    <div class="bg-[#112240] p-8 rounded-lg border border-gray-800">
+                        <h3 class="text-xl font-bold text-white">Material de Apoyo Exclusivo</h3>
+                        <p class="mt-3 text-gray-400">Acceso a la "Biblioteca Maestra" con guías, Kits de Estudio, mapas mentales y material descargable para cada módulo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Curriculum Section -->
+        <section class="py-20 sm:py-28 bg-[#112240]">
+             <div class="container mx-auto max-w-4xl px-6">
+                <div class="text-center">
+                    <h2 class="text-3xl sm:text-4xl font-bold section-title">El Viaje: Semana a Semana</h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">Un programa intensivo de 8 semanas para convertirte en un ingeniero de crecimiento.</p>
+                </div>
+                <div class="mt-16 space-y-4 week-accordion">
+                    <!-- Weeks 1-2 -->
+                    <details class="bg-[#0a1f2f] rounded-lg border border-gray-800 overflow-hidden">
+                        <summary class="p-6 cursor-pointer flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-white">Semanas 1-2: Optimizando el Motor</h3>
+                            <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div class="p-6 pt-0 text-gray-400">
+                            <p><strong class="text-gray-300">Foco Estratégico:</strong> Diagnosticar y reparar tu proceso de ventas con el Optimizador de Embudos de Conversión.</p>
+                        </div>
+                    </details>
+                    <!-- Weeks 3-4 -->
+                    <details class="bg-[#0a1f2f] rounded-lg border border-gray-800 overflow-hidden">
+                        <summary class="p-6 cursor-pointer flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-white">Semanas 3-4: La Máquina de Contenidos</h3>
+                            <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div class="p-6 pt-0 text-gray-400">
+                            <p><strong class="text-gray-300">Foco Estratégico:</strong> Construir una estrategia de contenidos consistente con el Generador de Calendario Editorial con IA.</p>
+                        </div>
+                    </details>
+                    <!-- Weeks 5-6 -->
+                    <details class="bg-[#0a1f2f] rounded-lg border border-gray-800 overflow-hidden">
+                        <summary class="p-6 cursor-pointer flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-white">Semanas 5-6: El Combustible y la Historia</h3>
+                            <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div class="p-6 pt-0 text-gray-400">
+                            <p><strong class="text-gray-300">Foco Estratégico:</strong> Modelar tu futuro financiero y preparar la narrativa para inversores con el Generador de Proyecciones Financieras y el Constructor de Pitch Deck.</p>
+                        </div>
+                    </details>
+                    <!-- Weeks 7-8 -->
+                    <details class="bg-[#0a1f2f] rounded-lg border border-gray-800 overflow-hidden">
+                        <summary class="p-6 cursor-pointer flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-white">Semanas 7-8: El Sistema Operativo</h3>
+                            <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div class="p-6 pt-0 text-gray-400">
+                            <p><strong class="text-gray-300">Foco Estratégico:</strong> Escalar tu equipo y procesos con el Planificador de Contratación y el Manual de Operaciones.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+         <!-- Final CTA -->
+        <section class="py-20 sm:py-28">
+            <div class="container mx-auto max-w-4xl px-6 text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold section-title">¿Listo para Pisar el Acelerador?</h2>
+                <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Deja de operar en el caos. Únete a la próxima cohorte y aprende a construir los sistemas que te permitirán escalar tu negocio de forma predecible y sostenible.</p>
+                <div class="mt-10">
+                    <a href="#" class="cta-button-large">Inscríbete Ahora por $499 USD</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800">
+        <div class="container mx-auto max-w-7xl px-6 py-12">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 text-sm">
+                 <div>
+                    <h3 class="font-semibold text-white">Enlaces Rápidos</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="index.html" class="footer-link">Inicio</a></li>
+                        <li><a href="nosotros.html" class="footer-link">Nosotros</a></li>
+                        <li><a href="servicios.html" class="footer-link">Servicios</a></li>
+                        <li><a href="metodologia.html" class="footer-link">Metodología</a></li>
+                        <li><a href="contacto.html" class="footer-link">Contacto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white">Recursos y Herramientas</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="#" class="footer-link">El Camino Dorado</a></li>
+                        <li><a href="servicios.html" class="footer-link">Servicios empresariales premium</a></li>
+                        <li><a href="academy.html" class="footer-link">Academy</a></li>
+                        <li><a href="#" class="footer-link">Conecta (Pronto)</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white">Recursos y Herramientas</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="#" class="footer-link">Integraciones con IA</a></li>
+                        <li><a href="diagnostico.html" class="footer-link">Diagnósticos rápidos con IA</a></li>
+                        <li><a href="academy.html" class="footer-link">Bootcamp (Pronto)</a></li>
+                        <li><a href="#" class="footer-link">Descargables</a></li>
+                        <li><a href="#" class="footer-link">Videos</a></li>
+                        <li><a href="#" class="footer-link">Audio</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white">Legal</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="terminos.html" class="footer-link">Términos y Condiciones</a></li>
+                        <li><a href="politica_privacidad.html" class="footer-link">Política de Privacidad</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white">Contacto</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="tel:+56985678296" class="footer-link">+56 9 8567 8296</a></li>
+                        <li><a href="mailto:hola@deceroacien.app" class="footer-link">hola@deceroacien.app</a></li>
+                        <li><a href="https://www.deceroacien.app" target="_blank" class="footer-link">www.deceroacien.app</a></li>
+                    </ul>
+                </div>
+            </div>
+             <div class="mt-12 border-t border-gray-800 pt-8 text-center">
+                 <p class="text-gray-500 text-xs">© 2025 DE CERO A CIEN. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.querySelectorAll('.week-accordion details').forEach((detail) => {
+            detail.addEventListener('toggle', (event) => {
+                if (detail.open) {
+                    document.querySelectorAll('.week-accordion details').forEach((otherDetail) => {
+                        if (otherDetail !== detail) {
+                            otherDetail.removeAttribute('open');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
