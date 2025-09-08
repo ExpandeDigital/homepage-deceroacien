@@ -180,6 +180,7 @@ class HeaderComponent extends BaseComponent {
         super.init(); // Llamar al método padre
         this.generateHeaderHTML();
         this.createMobileMenu();
+    this.applyMobileAuthVisibility();
         console.log('Header inicializado correctamente con HTML dinámico');
     }
 
@@ -190,7 +191,9 @@ class HeaderComponent extends BaseComponent {
         const headerHTML = `
             <nav class="header-nav">
                 <!-- Logo principal -->
-                <a href="index.html" class="header-logo">DE CERO A CIEN</a>
+                <a href="index.html" class="header-logo" aria-label="Inicio DE CERO A CIEN">
+                    <img src="assets/logo_de_cero_a_cien_.png" alt="DE CERO A CIEN" class="header-logo-img" loading="lazy" />
+                </a>
                 
                 <!-- Navegación principal (desktop) -->
                 <div class="header-nav-links">
@@ -217,15 +220,14 @@ class HeaderComponent extends BaseComponent {
      * Crea el menú móvil si no existe
      */
     createMobileMenu() {
-        // Si ya existe un menú móvil, no lo creamos de nuevo
-        if (this.element.querySelector('.mobile-menu')) {
-            return;
-        }
+        // Solo crear si estamos en viewport móvil
+        if (window.innerWidth >= this.breakpoint) return;
+        // Si ya existen referencias válidas no recreamos
+        if (this.mobileMenuButton && this.mobileMenu) return;
 
         const nav = this.element.querySelector('.header-nav');
         if (!nav) return;
 
-        // Crear botón de menú móvil
         const mobileButton = document.createElement('button');
         mobileButton.className = 'mobile-menu-button mobile-only';
         mobileButton.innerHTML = `
@@ -235,7 +237,6 @@ class HeaderComponent extends BaseComponent {
         `;
         mobileButton.setAttribute('aria-label', 'Abrir menú de navegación');
 
-        // Crear menú móvil
         const mobileMenu = document.createElement('div');
         mobileMenu.className = 'mobile-menu';
         mobileMenu.innerHTML = this.getMobileMenuHTML();
@@ -245,6 +246,9 @@ class HeaderComponent extends BaseComponent {
 
         this.mobileMenuButton = mobileButton;
         this.mobileMenu = mobileMenu;
+
+        // Vincular evento de toggle inmediatamente (si bindEvents ya corrió)
+        this.mobileMenuButton.addEventListener('click', () => this.toggleMobileMenu());
     }
 
     /**
@@ -271,27 +275,74 @@ class HeaderComponent extends BaseComponent {
      * Vincula eventos del header
      */
     bindEvents() {
-        if (this.mobileMenuButton) {
-            this.mobileMenuButton.addEventListener('click', () => this.toggleMobileMenu());
-        }
+        // Resize handler para crear / eliminar menú móvil dinámicamente
+        window.addEventListener('resize', () => this.handleResize());
 
-        // Cerrar menú al hacer clic en un enlace
+        // Delegación segura (puede no existir aún al inicio)
+        document.addEventListener('click', (e) => {
+            if (this.isMenuOpen && this.mobileMenu && this.mobileMenuButton) {
+                if (!this.mobileMenu.contains(e.target) && !this.mobileMenuButton.contains(e.target)) {
+                    this.closeMobileMenu();
+                }
+            }
+        });
+
+        this.attachMobileInternalEvents();
+    }
+
+    /**
+     * Enlaza eventos internos del menú móvil si existe
+     */
+    attachMobileInternalEvents() {
         if (this.mobileMenu) {
             this.mobileMenu.addEventListener('click', (e) => {
-                if (e.target.classList.contains('mobile-menu-link')) {
+                if (e.target.classList && e.target.classList.contains('mobile-menu-link')) {
                     this.closeMobileMenu();
                 }
             });
         }
+    }
 
-        // Cerrar menú al hacer clic fuera
-        document.addEventListener('click', (e) => {
-            if (this.isMenuOpen && 
-                !this.mobileMenu.contains(e.target) && 
-                !this.mobileMenuButton.contains(e.target)) {
-                this.closeMobileMenu();
+    /**
+     * Maneja cambios de tamaño: crea menú en móvil y lo elimina en desktop
+     */
+    handleResize() {
+        if (window.innerWidth < this.breakpoint) {
+            // Crear si no existe
+            if (!this.mobileMenuButton || !this.mobileMenu) {
+                this.createMobileMenu();
+                this.attachMobileInternalEvents();
             }
-        });
+            this.applyMobileAuthVisibility();
+        } else {
+            // Eliminar si estamos en desktop
+            if (this.mobileMenuButton) {
+                this.mobileMenuButton.remove();
+                this.mobileMenuButton = null;
+            }
+            if (this.mobileMenu) {
+                this.mobileMenu.remove();
+                this.mobileMenu = null;
+            }
+            this.isMenuOpen = false;
+            document.body.style.overflow = '';
+            this.applyMobileAuthVisibility();
+        }
+    }
+
+    /**
+     * Fuerza visibilidad correcta de la sección de autenticación:
+     * - Oculta en móvil (< breakpoint)
+     * - Muestra en desktop
+     */
+    applyMobileAuthVisibility() {
+        const authSection = this.element.querySelector('.header-auth-section');
+        if (!authSection) return;
+        if (window.innerWidth < this.breakpoint) {
+            authSection.style.display = 'none';
+        } else {
+            authSection.style.display = 'flex';
+        }
     }
 
     /**
@@ -522,6 +573,50 @@ class CardComponent extends BaseComponent {
 }
 
 /**
+ * Componente global para botón flotante de WhatsApp
+ * Garantiza presencia única en todo el sitio sin duplicaciones.
+ */
+class WhatsAppButtonComponent extends BaseComponent {
+    constructor() {
+        super(document.body); // El body servirá como ancla para insertar el botón
+        this.phone = '+56985678296';
+        this.id = 'whatsapp-floating';
+    }
+
+    init() {
+        // Evitar duplicados si ya existe manualmente
+        if (document.getElementById(this.id)) {
+            console.log('ℹ️ Botón WhatsApp ya presente, no se duplica');
+            return;
+        }
+        this.render();
+        this.logInitialization();
+    }
+
+    buildURL() {
+        const base = 'https://wa.me/';
+        const phoneDigits = this.phone.replace(/[^0-9]/g, '');
+        const msg = encodeURIComponent('Hola, quisiera más información sobre sus servicios.');
+        return `${base}${phoneDigits}?text=${msg}`;
+    }
+
+    render() {
+        const a = document.createElement('a');
+        a.id = this.id;
+        a.href = this.buildURL();
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.ariaLabel = 'Contactar por WhatsApp';
+        a.className = 'floating-whatsapp-btn';
+        a.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.487 5.235 3.487 8.413 0 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.003 2.011.564 3.935 1.597 5.66l-1.023 3.748 3.826-1.004zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.501-.173 0-.371-.025-.57-.025-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.227 1.36.195 1.871.118.571-.078 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+            </svg>`;
+        document.body.appendChild(a);
+    }
+}
+
+/**
  * Clase principal para gestionar toda la aplicación
  * Actúa como un controlador principal que inicializa todos los componentes
  */
@@ -577,6 +672,11 @@ class AppManager {
             card.init();
             this.components.set(`card-${index}`, card);
         });
+
+    // Inicializar botón flotante de WhatsApp global
+    const whatsappBtn = new WhatsAppButtonComponent();
+    whatsappBtn.init();
+    this.components.set('whatsapp', whatsappBtn);
     }
 
     /**
