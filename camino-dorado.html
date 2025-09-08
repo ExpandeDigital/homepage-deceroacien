@@ -1,30 +1,27 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- Meta principales -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>El Camino Dorado - 31 Micro Herramientas para Escalar | DE CERO A CIEN</title>
-    <meta name="description" content="Explora El Camino Dorado: 5 fases y 31 micro herramientas impulsadas por IA para idear, construir, traccionar y escalar tu negocio." />
-    <meta name="keywords" content="camino dorado, herramientas startup, product market fit, escalabilidad, emprendimiento, DE CERO A CIEN" />
-    <meta name="author" content="DE CERO A CIEN" />
-    <meta property="og:title" content="El Camino Dorado - DE CERO A CIEN" />
-    <meta property="og:description" content="31 micro herramientas para avanzar de idea a negocio maduro." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.deceroacien.app/camino-dorado.html" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Camino Dorado: Transforma tu Idea en un Negocio Imparable | DE CERO A CIEN</title>
+    <meta name="description" content="Descubre el Camino Dorado y convierte tu visión en un modelo de negocio estructurado y exitoso. Las herramientas que necesitas para triunfar están aquí. ¡Actúa ahora!">
+    <meta name="keywords" content="camino dorado, emprendimiento, validación, escalabilidad, product market fit, DE CERO A CIEN">
+    <meta name="author" content="DE CERO A CIEN">
+    <meta property="og:title" content="El Camino Dorado - DE CERO A CIEN">
+    <meta property="og:description" content="31 micro herramientas para idear, validar, traccionar y escalar tu negocio.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://deceroacien.com/camino-dorado.html">
 
-    <!-- Preload fuentes -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style" />
+    <!-- Preload & Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
 
-    <!-- Tailwind / Fuentes / CSS unificado -->
+    <!-- Tailwind + Estilos unificados -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="assets/styles/common.css" />
-    <link rel="stylesheet" href="assets/styles/mobile.css" />
-
-    <!-- Configuración Tailwind acorde al sistema -->
+    <link rel="stylesheet" href="assets/styles/common.css">
+    <link rel="stylesheet" href="assets/styles/mobile.css">
     <script>
         tailwind.config = {
             theme: {
@@ -41,48 +38,50 @@
             }
         }
     </script>
+
+    <!-- Estilos locales mínimos SOLO para bloques propios -->
+    <style>
+        .urgent-cta { position: relative; overflow: hidden; z-index:1; }
+        .urgent-cta::before { content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%; background:conic-gradient(transparent, rgba(255,255,255,.5), transparent 30%); animation:spinBorder 4s linear infinite; z-index:-1; }
+        @keyframes spinBorder { to { transform: rotate(360deg);} }
+    </style>
 </head>
 <body class="base-container antialiased">
 
     <!-- HEADER UNIFICADO -->
-    <header class="header-component"><!-- Generado dinámicamente --></header>
+    <header class="header-component">
+        <!-- Contenido generado dinámicamente por components.js -->
+    </header>
 
     <!-- ===== CONTENIDO DE LA PÁGINA "CAMINO DORADO" ===== -->
-    <main class="main-content">
-        <!-- HERO -->
-        <section class="main-section py-16 sm:py-24 text-center">
-            <div class="section-container">
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-200 leading-tight">
-                    El <span class="highlight-text">Camino Dorado</span>
-                </h1>
-                <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">31 micro herramientas impulsadas por IA para avanzar desde la ideación hasta la madurez empresarial.</p>
-                <div class="mt-10">
-                    <a href="#fases" class="btn-primary text-base">Explorar Fases &rarr;</a>
-                </div>
-            </div>
+    <main>
+        <!-- Sección Hero -->
+        <section class="text-center py-20 px-6">
+            <h1 class="text-5xl md:text-6xl font-black leading-tight">
+                Bienvenido al
+                <span class="highlight-text block mt-2">Camino Dorado</span>
+            </h1>
+            <p class="text-xl mt-4 max-w-3xl mx-auto text-gray-300">El lugar donde guiamos tu crecimiento, apoyamos tu innovación y aceleramos tu transformación.</p>
         </section>
 
-        <!-- BLOQUE DESTACADO CTA SUPERIOR -->
-        <section class="py-8">
-            <div class="section-container">
-                <div class="card-component card-spotlight p-8 lg:p-10 text-center bg-gradient-to-r from-[#FBBF24] via-[#f5b323] to-[#FBBF24] relative overflow-hidden">
-                    <div class="absolute inset-0 mix-blend-overlay opacity-20 bg-[radial-gradient(circle_at_30%_30%,white,transparent_60%)]"></div>
-                    <h2 class="text-2xl sm:text-3xl font-black text-[#0a1f2f]">¡Tu Ventaja Empieza Ahora!</h2>
-                    <p class="mt-3 text-[#0a1f2f] font-medium max-w-2xl mx-auto">Otros están validando hoy. El tiempo que esperas es terreno que cedes. Activa tu proceso y toma velocidad diferencial.</p>
-                    <div class="mt-6">
-                        <a href="#cta-final" class="cta-button-large bg-[#0a1f2f] text-white hover:brightness-110">Quiero Empezar</a>
-                    </div>
-                </div>
+        <!-- Sección de Urgencia y CTA Principal -->
+        <section class="container mx-auto max-w-4xl px-6">
+             <div class="urgent-cta bg-gradient-to-r from-[#FFBF24] to-[#D4AF37] text-[#0A1F2F] text-center p-8 md:p-12 rounded-lg shadow-2xl">
+                <h2 class="text-3xl font-black">¡APÚRATE! TU IDEA NO ESPERA</h2>
+                <p class="mt-2 text-lg">Puede haber otros como tú con la misma visión. El éxito es para quienes dan el primer paso. <strong>Es momento de tomar acción.</strong></p>
+                <a href="#cta-final" class="mt-6 inline-block bg-[#0A1F2F] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-800 transition-transform transform hover:scale-105">
+                    ¡Quiero Empezar AHORA!
+                </a>
             </div>
         </section>
 
         <!-- Secciones de Contenido -->
-        <div id="fases" class="section-container py-10 space-y-12">
+        <div class="container mx-auto max-w-7xl px-6 py-16 space-y-12">
             
             <!-- ===== SECCIÓN DE HERRAMIENTAS ACTUALIZADA Y DETALLADA ===== -->
-            <div class="service-card-large p-8">
-                <h2 class="text-3xl font-bold mb-4 text-center text-white">31 Micro Herramientas: <span class="highlight-text">IA Trabajando para Ti</span></h2>
-                <p class="text-gray-400 mb-10 text-center max-w-2xl mx-auto">Todo lo que necesitas para construir, validar, escalar y consolidar tu negocio. Sin humo, sin fricción: sólo progreso estructurado.</p>
+            <div class="bg-gray-800/50 p-8 rounded-lg">
+                <h2 class="text-3xl font-bold mb-4 text-center">31 micro herramientas la IA trabajando para ti</h2>
+                <p class="text-gray-300 mb-10 text-center max-w-2xl mx-auto">No hay secretos ni sorpresas. Esto es todo lo que tendrás para construir, validar y escalar tu negocio, fase por fase.</p>
                 
                 <!-- Contenedor principal de las fases -->
                 <div class="space-y-12">
@@ -159,25 +158,26 @@
 
         </div>
 
-        <!-- CTA FINAL -->
-        <section id="cta-final" class="main-section py-20">
-            <div class="section-container">
-                <div class="card-component card-spotlight p-10 lg:p-14 text-center bg-secondary-dark relative overflow-hidden">
-                    <h2 class="text-3xl font-black text-white">Activa Tu Camino Hoy</h2>
-                    <p class="mt-4 text-gray-400 max-w-2xl mx-auto">El primer paso crea inercia. Escríbenos y te ayudamos a priorizar tu siguiente hito en menos de 24 horas.</p>
-                    <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="contacto.html" class="btn-primary text-base">Hablar con el Equipo &rarr;</a>
-                        <a href="servicios.html" class="cta-button">Ver Servicios</a>
-                    </div>
-                </div>
+        <!-- Sección CTA Final -->
+        <section id="cta-final" class="py-20 px-6">
+            <div class="urgent-cta bg-gradient-to-r from-[#FFBF24] to-[#D4AF37] text-[#0A1F2F] text-center p-8 md:p-12 rounded-lg shadow-2xl max-w-4xl mx-auto">
+                <h2 class="text-3xl font-black">No Dejes que tu Futuro se Escape</h2>
+                <p class="mt-2 text-lg">El primer paso es el más difícil, pero también el más importante. Da clic abajo y empieza a construir el negocio que tienes en mente.</p>
+                <a href="URL_A_TU_FORMULARIO_O_CONTACTO" class="mt-6 inline-block bg-[#0A1F2F] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-800 transition-transform transform hover:scale-105">
+                    Ingresar a la Plataforma
+                </a>
             </div>
         </section>
     </main>
-    <!-- FOOTER UNIFICADO -->
-    <footer class="footer-component"><!-- Generado dinámicamente --></footer>
 
-    <!-- Scripts -->
+    <!-- FOOTER UNIFICADO -->
+    <footer class="footer-component">
+        <!-- Contenido generado dinámicamente por components.js -->
+    </footer>
+
+    <!-- Scripts de componentes compartidos -->
     <script src="assets/js/components.js"></script>
+
 </body>
 </html>
 
