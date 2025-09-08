@@ -1,66 +1,64 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Meta tags esenciales para SEO y responsividad -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Conferencias - DE CERO A CIEN</title>
     <meta name="description" content="Catálogo completo de conferencias estratégicas DE CERO A CIEN. Conferencias de alto impacto sobre estrategia, emprendimiento y sinergia Humano-IA.">
-    <meta name="keywords" content="conferencias, estrategia empresarial, emprendimiento, inteligencia artificial, eventos corporativos, catálogo">
+    <meta name="keywords" content="conferencias, estrategia empresarial, emprendimiento, inteligencia artificial, eventos corporativos, catálogo, DE CERO A CIEN">
+    <meta name="author" content="DE CERO A CIEN">
     
-    <!-- Configuración de Tailwind CSS -->
+    <!-- Título de la página -->
+    <title>Catálogo de Conferencias - DE CERO A CIEN</title>
+    
+    <!-- Favicons y meta tags para redes sociales -->
+    <meta property="og:title" content="Catálogo de Conferencias - DE CERO A CIEN">
+    <meta property="og:description" content="Catálogo completo de conferencias estratégicas DE CERO A CIEN. Conferencias de alto impacto sobre estrategia, emprendimiento y sinergia Humano-IA.">
+    <meta property="og:url" content="https://www.deceroacien.app/conferencias_catalogo.html">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Preload de recursos críticos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
+    
+    <!-- Hojas de estilo -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles/common.css">
+    <link rel="stylesheet" href="assets/styles/mobile.css">
+    
+    <!-- Configuración de Tailwind personalizada -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    colors: {
+                        'primary-dark': '#0a1f2f',
+                        'secondary-dark': '#112240',
+                        'accent-gold': '#FBBF24',
+                        'text-light': '#e6f1ff',
+                        'border-custom': '#1e2d4d'
+                    },
                     fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
+                        'sans': ['Inter', 'sans-serif']
                     }
                 }
             }
         }
     </script>
-    
-    <!-- CSS Unificado del Sistema -->
-    <link rel="stylesheet" href="assets/styles/common.css">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    
-    <!-- JavaScript del Sistema de Componentes -->
-    <script src="assets/js/components.js" defer></script>
 </head>
-<body class="antialiased font-inter">
+<body class="base-container antialiased">
 
     <!-- HEADER UNIFICADO -->
     <header class="header-component">
-        <nav class="header-nav">
-            <!-- Logo principal -->
-            <a href="index.html" class="header-logo">DE CERO A CIEN</a>
-            
-            <!-- Navegación principal (desktop) -->
-            <div class="header-nav-links">
-                <a href="index.html" class="header-link">Inicio</a>
-                <a href="nosotros.html" class="header-link">Nosotros</a>
-                <a href="servicios.html" class="header-link">Servicios</a>
-                <a href="metodologia.html" class="header-link">Metodología</a>
-                <a href="contacto.html" class="header-link">Contacto</a>
-                
-                <!-- Sección de autenticación -->
-                <div class="header-auth-section">
-                    <a href="#" class="header-login-link">Ingresa</a>
-                    <a href="#" class="header-register-btn">Regístrate</a>
-                </div>
-            </div>
-        </nav>
+        <!-- El contenido del header se genera dinamicamente por JavaScript -->
     </header>
 
-    <main>
+    <main class="main-content">
         <!-- Hero Section -->
-        <section class="py-20 sm:py-28">
-            <div class="container mx-auto max-w-5xl px-6 text-center">
+        <section class="main-section py-20 sm:py-28">
+            <div class="section-container max-w-5xl text-center">
                 <h1 class="text-4xl sm:text-5xl font-bold section-title">Lleva la Estrategia <span class="highlight-text">DE CERO A CIEN</span> a Tu Evento</h1>
                 <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Conferencias de alto impacto sobre estrategia, emprendimiento y la sinergia Humano-IA, diseñadas para transformar la mentalidad de tu equipo y acelerar resultados.</p>
             </div>
@@ -68,7 +66,7 @@
 
         <!-- Conferences Catalog -->
         <section class="pb-20 sm:pb-28">
-            <div class="container mx-auto max-w-7xl px-6">
+            <div class="section-container max-w-7xl">
                 <h2 class="text-3xl font-bold text-center section-title mb-12">Catálogo de Conferencias Estratégicas</h2>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     

@@ -395,6 +395,7 @@ class FooterComponent extends BaseComponent {
                     <div class="footer-section">
                         <h3>Herramientas</h3>
                         <ul>
+                            <li><a href="conferencias_catalogo.html" class="footer-link">Conferencias</a></li>
                             <li><a href="#" class="footer-link">Integraciones con IA</a></li>
                             <li><a href="#" class="footer-link">Diagnósticos con IA</a></li>
                             <li><a href="#" class="footer-link">Bootcamp (Pronto)</a></li>

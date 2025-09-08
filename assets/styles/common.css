@@ -293,6 +293,11 @@
     color: var(--color-accent-gold);
 }
 
+/* Clase adicional para texto dorado */
+.gold-text {
+    color: var(--color-accent-gold);
+}
+
 /* Clase para botones principales */
 .btn-primary {
     background-color: var(--color-accent-gold);
@@ -312,6 +317,101 @@
     background-color: #f59e0b;
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
+}
+
+/* Botón CTA para catálogos de servicios - Versión compacta del btn-primary */
+.cta-button {
+    background: linear-gradient(135deg, var(--color-accent-gold) 0%, #f59e0b 100%);
+    color: var(--color-primary-dark);
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all var(--transition-normal);
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-align: center;
+    min-width: 160px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.cta-button:hover {
+    background: linear-gradient(135deg, #f59e0b 0%, var(--color-accent-gold) 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2);
+    color: var(--color-primary-dark);
+}
+
+.cta-button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+/* Botón CTA grande para páginas principales */
+.cta-button-large {
+    background: linear-gradient(135deg, var(--color-accent-gold) 0%, #f59e0b 100%);
+    color: var(--color-primary-dark);
+    font-weight: 700;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all var(--transition-normal);
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    text-align: center;
+    min-width: 200px;
+    box-shadow: 0 8px 25px -5px rgb(251 191 36 / 0.3);
+}
+
+.cta-button-large:hover {
+    background: linear-gradient(135deg, #f59e0b 0%, var(--color-accent-gold) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px -5px rgb(251 191 36 / 0.4);
+    color: var(--color-primary-dark);
+}
+
+/* Adaptaciones responsivas para CTAs */
+.cta-button.w-full {
+    min-width: auto;
+    width: 100%;
+}
+
+.cta-button-large.w-full {
+    min-width: auto;
+    width: 100%;
+}
+
+/* Tarjetas de servicios */
+.service-card-large {
+    background-color: var(--color-secondary-dark);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: var(--spacing-xl);
+    transition: all var(--transition-normal);
+}
+
+.service-card-large:hover {
+    border-color: var(--color-border-light);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.service-card {
+    background-color: var(--color-secondary-dark);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: var(--spacing-lg);
+    transition: all var(--transition-normal);
+}
+
+.service-card:hover {
+    border-color: var(--color-border-light);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-1px);
 }
 
 /* Clase para secciones principales */
