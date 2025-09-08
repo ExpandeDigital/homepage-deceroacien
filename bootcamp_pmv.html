@@ -23,6 +23,7 @@
     
     <!-- CSS Unificado del Sistema -->
     <link rel="stylesheet" href="assets/styles/common.css">
+    <link rel="stylesheet" href="assets/styles/mobile.css">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,32 +37,13 @@
 
     <!-- HEADER UNIFICADO -->
     <header class="header-component">
-        <nav class="header-nav">
-            <!-- Logo principal -->
-            <a href="index.html" class="header-logo">DE CERO A CIEN</a>
-            
-            <!-- Navegación principal (desktop) -->
-            <div class="header-nav-links">
-                <a href="index.html" class="header-link">Inicio</a>
-                <a href="nosotros.html" class="header-link">Nosotros</a>
-                <a href="servicios.html" class="header-link">Servicios</a>
-                <a href="metodologia.html" class="header-link">Metodología</a>
-                <a href="contacto.html" class="header-link">Contacto</a>
-                
-                <!-- Sección de autenticación -->
-                <div class="header-auth-section">
-                    <a href="#" class="header-login-link">Ingresa</a>
-                    <a href="#" class="header-register-btn">Regístrate</a>
-                </div>
-            </div>
-        </nav>
-    </header>
+        <!-- El contenido del header se genera dinamicamente por JavaScript -->
     </header>
 
-    <main>
+    <main class="main-content">
         <!-- Hero Section -->
-        <section class="py-20 sm:py-24 bg-[#0a1f2f]">
-            <div class="container mx-auto max-w-5xl px-6 text-center">
+        <section class="main-section py-20 sm:py-24">
+            <div class="section-container max-w-5xl text-center">
                 <p class="font-semibold highlight-text">Bootcamp Fases 1 & 2</p>
                 <h1 class="text-4xl sm:text-6xl font-bold section-title mt-4">Lanza tu PMV en 8 Semanas</h1>
                 <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Te guiamos, paso a paso y en comunidad, a través de las Fases 1 y 2 de nuestro método. En 8 semanas, transformarás tu idea en un Producto Mínimo Viable (PMV) validado y lanzado al mercado.</p>
@@ -73,7 +55,7 @@
 
         <!-- Info Bar -->
         <div class="border-y border-gray-800">
-            <div class="container mx-auto max-w-6xl px-6">
+            <div class="section-container max-w-6xl">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center py-6">
                     <div>
                         <p class="text-gray-400 text-sm">Duración</p>
@@ -96,22 +78,22 @@
         </div>
 
         <!-- What's Included Section -->
-        <section class="py-20 sm:py-28">
-            <div class="container mx-auto max-w-6xl px-6">
+        <section class="main-section py-20 sm:py-28">
+            <div class="section-container max-w-6xl">
                 <div class="text-center">
                     <h2 class="text-3xl sm:text-4xl font-bold section-title">¿Qué Incluye el Bootcamp?</h2>
                     <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">Te entregamos un ecosistema de aprendizaje integral para asegurar tu éxito.</p>
                 </div>
-                <div class="grid md:grid-cols-3 gap-8 mt-16">
-                    <div class="bg-[#112240] p-8 rounded-lg border border-gray-800">
+                <div class="responsive-grid md:grid-cols-3 gap-8 mt-16">
+                    <div class="card-component">
                         <h3 class="text-xl font-bold text-white">El Taller: Plataforma SaaS</h3>
                         <p class="mt-3 text-gray-400">Acceso total a las micro-herramientas de "El Camino Dorado" para aplicar cada concepto de forma práctica y guiada.</p>
                     </div>
-                    <div class="bg-[#112240] p-8 rounded-lg border border-gray-800">
+                    <div class="card-component">
                         <h3 class="text-xl font-bold text-white">Mentorías Grupales Semanales</h3>
                         <p class="mt-3 text-gray-400">Una sesión en vivo por semana vía Meet para resolver dudas, recibir feedback directo del mentor y aprender de la comunidad.</p>
                     </div>
-                    <div class="bg-[#112240] p-8 rounded-lg border border-gray-800">
+                    <div class="card-component">
                         <h3 class="text-xl font-bold text-white">Material de Apoyo Exclusivo</h3>
                         <p class="mt-3 text-gray-400">Acceso a la "Biblioteca Maestra" con guías, Kits de Estudio, mapas mentales y material descargable para cada módulo.</p>
                     </div>
@@ -120,15 +102,15 @@
         </section>
 
         <!-- Curriculum Section -->
-        <section class="py-20 sm:py-28 bg-[#112240]">
-             <div class="container mx-auto max-w-4xl px-6">
+        <section class="main-section py-20 sm:py-28 bg-[var(--color-secondary-dark)]">
+             <div class="section-container max-w-4xl">
                 <div class="text-center">
                     <h2 class="text-3xl sm:text-4xl font-bold section-title">El Viaje: Semana a Semana</h2>
                     <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">Un programa intensivo de 8 semanas para llevarte de la idea a la acción.</p>
                 </div>
                 <div class="mt-16 space-y-4 week-accordion">
                     <!-- Week 1 -->
-                    <details class="bg-[#0a1f2f] rounded-lg border border-gray-800 overflow-hidden">
+                    <details class="card-component">
                         <summary class="p-6 cursor-pointer flex justify-between items-center">
                             <h3 class="text-lg font-semibold text-white">Semana 1: El Primer Mapa</h3>
                             <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -138,7 +120,7 @@
                         </div>
                     </details>
                     <!-- Week 2 -->
-                    <details class="bg-[#0a1f2f] rounded-lg border border-gray-800 overflow-hidden">
+                    <details class="card-component">
                         <summary class="p-6 cursor-pointer flex justify-between items-center">
                             <h3 class="text-lg font-semibold text-white">Semana 2: El Rostro del Cliente</h3>
                             <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -148,7 +130,7 @@
                         </div>
                     </details>
                     <!-- Weeks 3-8 placeholder, expand as needed -->
-                     <details class="bg-[#0a1f2f] rounded-lg border border-gray-800 overflow-hidden">
+                     <details class="card-component">
                         <summary class="p-6 cursor-pointer flex justify-between items-center">
                             <h3 class="text-lg font-semibold text-white">Semanas 3-8: Construcción y Lanzamiento</h3>
                              <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -162,8 +144,8 @@
         </section>
 
          <!-- Final CTA -->
-        <section class="py-20 sm:py-28">
-            <div class="container mx-auto max-w-4xl px-6 text-center">
+        <section class="main-section py-20 sm:py-28">
+            <div class="section-container max-w-4xl text-center">
                 <h2 class="text-3xl sm:text-4xl font-bold section-title">¿Listo para Construir tu Legado?</h2>
                 <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Deja de soñar y empieza a construir. Únete a la próxima cohorte y transforma tu idea en un negocio real con el mapa correcto y el acompañamiento que necesitas.</p>
                 <div class="mt-10">
@@ -174,73 +156,14 @@
 
     </main>
 
+
     <!-- FOOTER UNIFICADO -->
     <footer class="footer-component">
-        <div class="footer-container">
-            <div class="footer-content">
-                <!-- Sección de Enlaces Principales -->
-                <div class="footer-section">
-                    <h3 class="footer-section-title">Enlaces Rápidos</h3>
-                    <ul class="footer-links-list">
-                        <li><a href="index.html" class="footer-link">Inicio</a></li>
-                        <li><a href="nosotros.html" class="footer-link">Nosotros</a></li>
-                        <li><a href="servicios.html" class="footer-link">Servicios</a></li>
-                        <li><a href="metodologia.html" class="footer-link">Metodología</a></li>
-                        <li><a href="contacto.html" class="footer-link">Contacto</a></li>
-                    </ul>
-                </div>
-
-                <!-- Sección de Servicios -->
-                <div class="footer-section">
-                    <h3 class="footer-section-title">Servicios</h3>
-                    <ul class="footer-links-list">
-                        <li><a href="servicios.html" class="footer-link">Consultoría Premium</a></li>
-                        <li><a href="academy.html" class="footer-link">Academy</a></li>
-                        <li><a href="metodologia.html" class="footer-link">El Camino Dorado</a></li>
-                        <li><a href="diagnostico.html" class="footer-link">Diagnósticos con IA</a></li>
-                    </ul>
-                </div>
-
-                <!-- Sección de Recursos -->
-                <div class="footer-section">
-                    <h3 class="footer-section-title">Recursos</h3>
-                    <ul class="footer-links-list">
-                        <li><a href="#" class="footer-link">Integraciones con IA</a></li>
-                        <li><a href="bootcamp_pmv.html" class="footer-link active-link">Bootcamp PMV</a></li>
-                        <li><a href="bootcamp_pmf.html" class="footer-link">Bootcamp PMF</a></li>
-                        <li><a href="bootcamp_growth.html" class="footer-link">Bootcamp Growth</a></li>
-                        <li><a href="#" class="footer-link">Masterclasses</a></li>
-                        <li><a href="#" class="footer-link">Conecta (Pronto)</a></li>
-                    </ul>
-                </div>
-
-                <!-- Sección Legal -->
-                <div class="footer-section">
-                    <h3 class="footer-section-title">Legal</h3>
-                    <ul class="footer-links-list">
-                        <li><a href="terminos.html" class="footer-link">Términos y Condiciones</a></li>
-                        <li><a href="politica_privacidad.html" class="footer-link">Política de Privacidad</a></li>
-                    </ul>
-                </div>
-
-                <!-- Sección de Contacto -->
-                <div class="footer-section">
-                    <h3 class="footer-section-title">Contacto</h3>
-                    <ul class="footer-links-list">
-                        <li><a href="tel:+56985678296" class="footer-link">+56 9 8567 8296</a></li>
-                        <li><a href="mailto:hola@deceroacien.app" class="footer-link">hola@deceroacien.app</a></li>
-                        <li><a href="https://www.deceroacien.app" target="_blank" class="footer-link">www.deceroacien.app</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <!-- Línea de separación y copyright -->
-            <div class="footer-bottom">
-                <p class="footer-copyright">© 2025 DE CERO A CIEN. Todos los derechos reservados.</p>
-            </div>
-        </div>
+        <!-- El contenido del footer se genera dinamicamente por JavaScript -->
     </footer>
-    
+
+    <!-- Scripts JavaScript -->
+    <script src="assets/js/components.js"></script>
     <!-- Script personalizado para funcionalidad específica del bootcamp -->
     <script>
         /**

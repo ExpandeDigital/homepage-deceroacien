@@ -178,46 +178,39 @@ class HeaderComponent extends BaseComponent {
      */
     init() {
         super.init(); // Llamar al método padre
-        this.setActiveLink();
+        this.generateHeaderHTML();
         this.createMobileMenu();
-        this.handleResponsiveChanges();
+        console.log('Header inicializado correctamente con HTML dinámico');
     }
 
     /**
-     * Establece el enlace activo basado en la página actual
-     * Implementa lógica para destacar visualmente la sección actual
-     * 
-     * ALGORITMO:
-     * 1. Remover clases 'active' de todos los enlaces
-     * 2. Comparar href de cada enlace con página actual
-     * 3. Marcar como activo el enlace coincidente
+     * Genera el HTML completo del header
      */
-    setActiveLink() {
-        const links = this.element.querySelectorAll('.header-link');
-        
-        links.forEach(link => {
-            // Limpiar estado activo anterior
-            link.classList.remove('active');
-            
-            const href = link.getAttribute('href');
-            if (href) {
-                // Extraer nombre de página del href
-                const linkPage = href.replace('.html', '').replace('./', '');
+    generateHeaderHTML() {
+        const headerHTML = `
+            <nav class="header-nav">
+                <!-- Logo principal -->
+                <a href="index.html" class="header-logo">DE CERO A CIEN</a>
                 
-                // Lógica de comparación con manejo de casos especiales
-                const isCurrentPage = linkPage === this.currentPage || 
-                                    (this.currentPage === 'index' && linkPage === 'index') ||
-                                    (this.currentPage === '' && linkPage === 'index');
+                <!-- Navegación principal (desktop) -->
+                <div class="header-nav-links">
+                    <a href="index.html" class="header-link ${this.currentPage === 'index' ? 'active' : ''}">Inicio</a>
+                    <a href="nosotros.html" class="header-link ${this.currentPage === 'nosotros' ? 'active' : ''}">Nosotros</a>
+                    <a href="servicios.html" class="header-link ${this.currentPage === 'servicios' ? 'active' : ''}">Servicios</a>
+                    <a href="metodologia.html" class="header-link ${this.currentPage === 'metodologia' ? 'active' : ''}">Metodología</a>
+                    <a href="contacto.html" class="header-link ${this.currentPage === 'contacto' ? 'active' : ''}">Contacto</a>
+                    <a href="academy.html" class="header-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a>
+                </div>
                 
-                if (isCurrentPage) {
-                    link.classList.add('active');
-                    // Marcar como página actual para accesibilidad
-                    link.setAttribute('aria-current', 'page');
-                } else {
-                    link.removeAttribute('aria-current');
-                }
-            }
-        });
+                <!-- Sección de autenticación -->
+                <div class="header-auth-section">
+                    <a href="#" class="header-login-link">Ingresa</a>
+                    <a href="#" class="header-register-btn">Regístrate</a>
+                </div>
+            </nav>
+        `;
+
+        this.element.innerHTML = headerHTML;
     }
 
     /**
@@ -330,33 +323,133 @@ class HeaderComponent extends BaseComponent {
 }
 
 /**
- * Clase para manejar el componente Footer
- * Maneja la funcionalidad específica del footer
+ * CLASE ESPECIALIZADA - FooterComponent
+ * 
+ * Extiende BaseComponent para generar y manejar específicamente el footer del sitio.
+ * Genera dinámicamente todo el HTML del footer para mantener consistencia.
+ * 
+ * CARACTERÍSTICAS:
+ * - Generación dinámica de HTML
+ * - Enlaces contextuales según la página actual
+ * - Estructura responsive
+ * - Información de contacto centralizada
  */
 class FooterComponent extends BaseComponent {
     constructor(element) {
         super(element);
+        this.currentPage = this.getCurrentPage();
         this.currentYear = new Date().getFullYear();
     }
 
     /**
-     * Inicializa el footer
+     * Determina la página actual para marcar enlaces activos
      */
-    init() {
-        super.init();
-        this.updateCopyright();
-        this.handleExternalLinks();
-        console.log('Footer inicializado correctamente');
+    getCurrentPage() {
+        const path = window.location.pathname;
+        const filename = path.split('/').pop() || 'index.html';
+        return filename.replace('.html', '') || 'index';
     }
 
     /**
-     * Actualiza el año en el copyright
+     * Inicializa el footer generando su HTML dinámicamente
      */
-    updateCopyright() {
-        const copyrightElement = this.element.querySelector('.footer-copyright');
-        if (copyrightElement) {
-            copyrightElement.textContent = `© ${this.currentYear} DE CERO A CIEN. Todos los derechos reservados.`;
-        }
+    init() {
+        super.init();
+        this.generateFooterHTML();
+        this.bindEvents();
+        console.log('✅ FooterComponent inicializado correctamente');
+    }
+
+    /**
+     * Genera el HTML completo del footer
+     */
+    generateFooterHTML() {
+        const footerHTML = `
+            <div class="footer-container">
+                <!-- Grid de secciones del footer -->
+                <div class="footer-grid">
+                    <!-- Sección: Enlaces Rápidos -->
+                    <div class="footer-section">
+                        <h3>Enlaces Rápidos</h3>
+                        <ul>
+                            <li><a href="index.html" class="footer-link ${this.currentPage === 'index' ? 'active' : ''}">Inicio</a></li>
+                            <li><a href="nosotros.html" class="footer-link ${this.currentPage === 'nosotros' ? 'active' : ''}">Nosotros</a></li>
+                            <li><a href="servicios.html" class="footer-link ${this.currentPage === 'servicios' ? 'active' : ''}">Servicios</a></li>
+                            <li><a href="metodologia.html" class="footer-link ${this.currentPage === 'metodologia' ? 'active' : ''}">Metodología</a></li>
+                            <li><a href="contacto.html" class="footer-link ${this.currentPage === 'contacto' ? 'active' : ''}">Contacto</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Sección: Recursos -->
+                    <div class="footer-section">
+                        <h3>Recursos</h3>
+                        <ul>
+                            <li><a href="bootcamp_pmf.html" class="footer-link ${this.currentPage === 'bootcamp_pmf' ? 'active' : ''}">El Camino Dorado</a></li>
+                            <li><a href="servicios.html" class="footer-link">Servicios Premium</a></li>
+                            <li><a href="academy.html" class="footer-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a></li>
+                            <li><a href="#" class="footer-link">Conecta (Pronto)</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Sección: Herramientas -->
+                    <div class="footer-section">
+                        <h3>Herramientas</h3>
+                        <ul>
+                            <li><a href="#" class="footer-link">Integraciones con IA</a></li>
+                            <li><a href="#" class="footer-link">Diagnósticos con IA</a></li>
+                            <li><a href="#" class="footer-link">Bootcamp (Pronto)</a></li>
+                            <li><a href="#" class="footer-link">Blog (Pronto)</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Sección: Legal -->
+                    <div class="footer-section">
+                        <h3>Legal</h3>
+                        <ul>
+                            <li><a href="terminos.html" class="footer-link ${this.currentPage === 'terminos' ? 'active' : ''}">Términos y Condiciones</a></li>
+                            <li><a href="politica_privacidad.html" class="footer-link ${this.currentPage === 'politica_privacidad' ? 'active' : ''}">Política de Privacidad</a></li>
+                            <li><a href="#" class="footer-link">Política de Cookies</a></li>
+                            <li><a href="#" class="footer-link">Aviso Legal</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Sección: Contacto -->
+                    <div class="footer-section">
+                        <h3>Contacto</h3>
+                        <ul>
+                            <li><a href="tel:+56985678296" class="footer-link">+56 985 678 296</a></li>
+                            <li><a href="mailto:hola@deceroacien.app" class="footer-link">hola@deceroacien.app</a></li>
+                            <li><a href="https://www.deceroacien.app" target="_blank" class="footer-link">www.deceroacien.app</a></li>
+                            <li><a href="contacto.html" class="footer-link">Formulario de Contacto</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Línea inferior con copyright -->
+                <div class="footer-bottom">
+                    <p class="footer-copyright">© ${this.currentYear} DE CERO A CIEN. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        `;
+
+        this.element.innerHTML = footerHTML;
+    }
+
+    /**
+     * Vincula eventos específicos del footer
+     */
+    bindEvents() {
+        // Manejar enlaces externos
+        this.handleExternalLinks();
+        
+        // Agregar tracking para enlaces del footer si es necesario
+        const footerLinks = this.element.querySelectorAll('.footer-link');
+        footerLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                // Aquí puedes agregar analytics o tracking
+                console.log(`📊 Footer link clicked: ${link.textContent}`);
+            });
+        });
     }
 
     /**
