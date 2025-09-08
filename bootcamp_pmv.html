@@ -1,39 +1,54 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Meta tags esenciales para SEO y responsividad -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootcamp: Lanza tu PMV en 8 Semanas - DE CERO A CIEN ACADEMY</title>
     <meta name="description" content="Bootcamp intensivo de 8 semanas para lanzar tu Producto Mínimo Viable. De la idea al mercado con validación real.">
-    <meta name="keywords" content="pmv, producto mínimo viable, bootcamp, startup, emprendimiento, validación, lanzamiento">
+    <meta name="keywords" content="pmv, producto mínimo viable, bootcamp, startup, emprendimiento, validación, lanzamiento, DE CERO A CIEN">
+    <meta name="author" content="DE CERO A CIEN">
     
-    <!-- Configuración de Tailwind CSS -->
+    <!-- Título de la página -->
+    <title>Bootcamp: Lanza tu PMV en 8 Semanas - DE CERO A CIEN ACADEMY</title>
+    
+    <!-- Favicons y meta tags para redes sociales -->
+    <meta property="og:title" content="Bootcamp: Lanza tu PMV - DE CERO A CIEN">
+    <meta property="og:description" content="Bootcamp intensivo de 8 semanas para lanzar tu Producto Mínimo Viable. De la idea al mercado con validación real.">
+    <meta property="og:url" content="https://www.deceroacien.app/bootcamp_pmv.html">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Preload de recursos críticos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
+    
+    <!-- Hojas de estilo -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles/common.css">
+    <link rel="stylesheet" href="assets/styles/mobile.css">
+    
+    <!-- Configuración de Tailwind personalizada -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    colors: {
+                        'primary-dark': '#0a1f2f',
+                        'secondary-dark': '#112240',
+                        'accent-gold': '#FBBF24',
+                        'text-light': '#e6f1ff',
+                        'border-custom': '#1e2d4d'
+                    },
                     fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
+                        'sans': ['Inter', 'sans-serif']
                     }
                 }
             }
         }
     </script>
-    
-    <!-- CSS Unificado del Sistema -->
-    <link rel="stylesheet" href="assets/styles/common.css">
-    <link rel="stylesheet" href="assets/styles/mobile.css">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    
-    <!-- JavaScript del Sistema de Componentes -->
-    <script src="assets/js/components.js" defer></script>
 </head>
-<body class="antialiased font-inter">
+<body class="base-container antialiased">
 
     <!-- HEADER UNIFICADO -->
     <header class="header-component">

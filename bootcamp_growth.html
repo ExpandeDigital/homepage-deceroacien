@@ -1,49 +1,64 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Meta tags esenciales para SEO y responsividad -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootcamp: Construye tu Máquina de Crecimiento en 8 Semanas - DE CERO A CIEN ACADEMY</title>
     <meta name="description" content="Bootcamp intensivo de 8 semanas para construir tu máquina de crecimiento. Pasa de fundador a CEO con sistemas escalables.">
-    <meta name="keywords" content="crecimiento, escalabilidad, sistemas, ceo, fundador, máquina de crecimiento, bootcamp">
+    <meta name="keywords" content="crecimiento, escalabilidad, sistemas, ceo, fundador, máquina de crecimiento, bootcamp, DE CERO A CIEN">
+    <meta name="author" content="DE CERO A CIEN">
     
-    <!-- Configuración de Tailwind CSS -->
+    <!-- Título de la página -->
+    <title>Bootcamp: Construye tu Máquina de Crecimiento en 8 Semanas - DE CERO A CIEN ACADEMY</title>
+    
+    <!-- Favicons y meta tags para redes sociales -->
+    <meta property="og:title" content="Bootcamp: Máquina de Crecimiento - DE CERO A CIEN">
+    <meta property="og:description" content="Bootcamp intensivo de 8 semanas para construir tu máquina de crecimiento. Pasa de fundador a CEO con sistemas escalables.">
+    <meta property="og:url" content="https://www.deceroacien.app/bootcamp_growth.html">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Preload de recursos críticos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
+    
+    <!-- Hojas de estilo -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles/common.css">
+    <link rel="stylesheet" href="assets/styles/mobile.css">
+    
+    <!-- Configuración de Tailwind personalizada -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    colors: {
+                        'primary-dark': '#0a1f2f',
+                        'secondary-dark': '#112240',
+                        'accent-gold': '#FBBF24',
+                        'text-light': '#e6f1ff',
+                        'border-custom': '#1e2d4d'
+                    },
                     fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
+                        'sans': ['Inter', 'sans-serif']
                     }
                 }
             }
         }
     </script>
-    
-    <!-- CSS Unificado del Sistema -->
-    <link rel="stylesheet" href="assets/styles/common.css">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    
-    <!-- JavaScript del Sistema de Componentes -->
-    <script src="assets/js/components.js" defer></script>
 </head>
-<body class="antialiased font-inter">
+<body class="base-container antialiased">
 
     <!-- HEADER UNIFICADO -->
     <header class="header-component">
         <!-- El contenido del header se genera dinamicamente por JavaScript -->
     </header>
-    </header>
 
-    <main>
+    <main class="main-content">
         <!-- Hero Section -->
-        <section class="py-20 sm:py-24 bg-[#0a1f2f]">
-            <div class="container mx-auto max-w-5xl px-6 text-center">
+        <section class="main-section py-20 sm:py-24">
+            <div class="section-container max-w-5xl text-center">
                 <p class="font-semibold highlight-text">Bootcamp Fase 4</p>
                 <h1 class="text-4xl sm:text-6xl font-bold section-title mt-4">Construye tu Máquina de Crecimiento en 8 Semanas</h1>
                 <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Has encontrado el Product-Market Fit. Ahora es el momento de pisar el acelerador. En este bootcamp, pasarás de ser un fundador que 'hace de todo' a un CEO que construye sistemas para escalar las ventas, el marketing y el equipo de forma predecible.</p>
@@ -55,7 +70,7 @@
 
         <!-- Info Bar -->
         <div class="border-y border-gray-800">
-            <div class="container mx-auto max-w-6xl px-6">
+            <div class="section-container max-w-6xl">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center py-6">
                     <div>
                         <p class="text-gray-400 text-sm">Duración</p>
