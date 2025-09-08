@@ -1,0 +1,403 @@
+/* 
+ * ARCHIVO CSS COMÚN PARA TODA LA APLICACIÓN
+ * Implementa un sistema de diseño unificado con componentes reutilizables
+ * Sigue principios de programación orientada a objetos aplicados a CSS
+ */
+
+/* ========================================
+   VARIABLES CSS (Simulando propiedades de clase)
+   ======================================== */
+:root {
+    /* Paleta de colores principal */
+    --color-primary-dark: #0a1f2f;        /* Azul oscuro principal */
+    --color-secondary-dark: #112240;       /* Azul secundario para tarjetas */
+    --color-accent-gold: #FBBF24;          /* Dorado para highlights */
+    --color-text-light: #e6f1ff;          /* Texto principal claro */
+    --color-text-gray: #64748b;           /* Texto secundario */
+    --color-text-white: #ccd6f6;          /* Texto blanco suave */
+    --color-border: #1e2d4d;              /* Bordes */
+    --color-border-light: #334155;        /* Bordes más claros */
+    
+    /* Tipografía */
+    --font-family-primary: 'Inter', sans-serif;
+    --font-size-small: 0.875rem;          /* 14px */
+    --font-size-base: 1rem;               /* 16px */
+    --font-size-large: 1.125rem;          /* 18px */
+    --font-size-xl: 1.5rem;               /* 24px */
+    
+    /* Espaciado */
+    --spacing-xs: 0.25rem;                /* 4px */
+    --spacing-sm: 0.5rem;                 /* 8px */
+    --spacing-md: 1rem;                   /* 16px */
+    --spacing-lg: 1.5rem;                 /* 24px */
+    --spacing-xl: 2rem;                   /* 32px */
+    --spacing-2xl: 3rem;                  /* 48px */
+    
+    /* Sombras y efectos */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --shadow-hover: 0 10px 30px -15px rgba(2,12,27,0.7);
+    
+    /* Transiciones */
+    --transition-fast: 0.15s ease-in-out;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* ========================================
+   CLASE BASE (Base Class)
+   ======================================== */
+.base-container {
+    font-family: var(--font-family-primary);
+    background-color: var(--color-primary-dark);
+    color: var(--color-text-light);
+    min-height: 100vh;
+}
+
+/* ========================================
+   CLASE HEADER (Header Component Class)
+   ======================================== */
+.header-component {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: rgba(10, 31, 47, 0.8);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.header-nav {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: var(--spacing-md) var(--spacing-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-logo {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--color-accent-gold);
+    text-decoration: none;
+    transition: opacity var(--transition-fast);
+}
+
+.header-logo:hover {
+    opacity: 0.8;
+}
+
+.header-nav-links {
+    display: none;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+/* Mostrar navegación en pantallas medianas y grandes */
+@media (min-width: 768px) {
+    .header-nav-links {
+        display: flex;
+    }
+}
+
+.header-link {
+    color: var(--color-text-gray);
+    text-decoration: none;
+    font-size: var(--font-size-small);
+    font-weight: 500;
+    transition: color var(--transition-normal);
+    position: relative;
+}
+
+.header-link:hover {
+    color: var(--color-accent-gold);
+}
+
+.header-link.active {
+    color: var(--color-accent-gold);
+    font-weight: 600;
+}
+
+/* Efecto underline animado para links activos */
+.header-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--color-accent-gold);
+    animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
+.header-auth-section {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding-left: var(--spacing-sm);
+}
+
+.header-login-link {
+    color: var(--color-text-gray);
+    text-decoration: none;
+    font-size: var(--font-size-small);
+    font-weight: 600;
+    transition: color var(--transition-normal);
+}
+
+.header-login-link:hover {
+    color: var(--color-accent-gold);
+}
+
+.header-register-btn {
+    background-color: var(--color-accent-gold);
+    color: var(--color-primary-dark);
+    font-weight: 700;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: var(--font-size-small);
+    transition: all var(--transition-normal);
+    border: none;
+    cursor: pointer;
+}
+
+.header-register-btn:hover {
+    background-color: #f59e0b;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ========================================
+   CLASE FOOTER (Footer Component Class)
+   ======================================== */
+.footer-component {
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-secondary-dark);
+    margin-top: auto;
+}
+
+.footer-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.footer-section h3 {
+    font-weight: 600;
+    color: white;
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-base);
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-section li {
+    margin-bottom: var(--spacing-sm);
+}
+
+.footer-link {
+    color: var(--color-text-gray);
+    text-decoration: none;
+    font-size: var(--font-size-small);
+    transition: color var(--transition-normal);
+}
+
+.footer-link:hover {
+    color: var(--color-accent-gold);
+}
+
+.footer-bottom {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--spacing-xl);
+    text-align: center;
+}
+
+.footer-copyright {
+    color: var(--color-text-gray);
+    font-size: 0.75rem;
+    margin: 0;
+}
+
+/* ========================================
+   COMPONENTES REUTILIZABLES (Reusable Components)
+   ======================================== */
+
+/* Clase para tarjetas (Card Component) */
+.card-component {
+    background-color: var(--color-secondary-dark);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: var(--spacing-xl);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.card-component:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* Clase para texto destacado */
+.highlight-text {
+    color: var(--color-accent-gold);
+}
+
+/* Clase para botones principales */
+.btn-primary {
+    background-color: var(--color-accent-gold);
+    color: var(--color-primary-dark);
+    font-weight: 700;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all var(--transition-normal);
+    border: none;
+    cursor: pointer;
+    font-size: var(--font-size-base);
+}
+
+.btn-primary:hover {
+    background-color: #f59e0b;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Clase para secciones principales */
+.main-section {
+    padding: var(--spacing-2xl) 0;
+}
+
+.section-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+/* ========================================
+   EFECTOS Y ANIMACIONES (Effects & Animations)
+   ======================================== */
+
+/* Efecto de spotlight para tarjetas destacadas */
+.card-spotlight {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-spotlight::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 75%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(251, 191, 36, 0.15),
+        transparent
+    );
+    transform: skewX(-25deg);
+    transition: left 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.card-spotlight:hover::before {
+    left: 150%;
+}
+
+/* Animación de marquee */
+.marquee-content {
+    display: inline-block;
+    animation: marquee 30s linear infinite;
+}
+
+@keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* ========================================
+   UTILIDADES RESPONSIVAS (Responsive Utilities)
+   ======================================== */
+
+/* Ocultar elementos en móvil */
+.hidden-mobile {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .hidden-mobile {
+        display: block;
+    }
+}
+
+/* Mostrar solo en móvil */
+.mobile-only {
+    display: block;
+}
+
+@media (min-width: 768px) {
+    .mobile-only {
+        display: none;
+    }
+}
+
+/* Grid responsivo */
+.responsive-grid {
+    display: grid;
+    gap: var(--spacing-lg);
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+    .responsive-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .responsive-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ========================================
+   ACCESIBILIDAD (Accessibility)
+   ======================================== */
+
+/* Mejorar focus para navegación por teclado */
+.header-link:focus,
+.footer-link:focus,
+.btn-primary:focus {
+    outline: 2px solid var(--color-accent-gold);
+    outline-offset: 2px;
+}
+
+/* Reducir animaciones para usuarios que lo prefieren */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .card-spotlight::before {
+        transition: none;
+    }
+}

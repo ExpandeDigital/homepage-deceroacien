@@ -1,167 +1,267 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Meta tags esenciales para SEO y responsividad -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nosotros - De Cero a Cien</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="Conoce la historia y misión de DE CERO A CIEN. Tu conexión directa al ecosistema emprendedor.">
+    <meta name="keywords" content="emprendimiento, startups, crecimiento empresarial, metodología, consultoría, nosotros">
+    <meta name="author" content="DE CERO A CIEN">
+    
+    <!-- Título de la página -->
+    <title>Nosotros - DE CERO A CIEN</title>
+    
+    <!-- Favicons y meta tags para redes sociales -->
+    <meta property="og:title" content="Nosotros - DE CERO A CIEN">
+    <meta property="og:description" content="Conoce la historia y misión de DE CERO A CIEN. Tu conexión directa al ecosistema emprendedor.">
+    <meta property="og:url" content="https://www.deceroacien.app/nosotros.html">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Preload de recursos críticos -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
+    
+    <!-- Hojas de estilo -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles/common.css">
+    <link rel="stylesheet" href="assets/styles/mobile.css">
+    
+    <!-- Configuración de Tailwind personalizada -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#0a1f2f',
+                        'secondary-dark': '#112240',
+                        'accent-gold': '#FBBF24',
+                        'text-light': '#e6f1ff',
+                        'border-custom': '#1e2d4d'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Estilos específicos para la página Nosotros -->
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0a192f; /* Azul Oscuro de la Homepage */
-            color: #e6f1ff; /* Blanco Hueso para texto */
-        }
-        .header-link {
-            color: #cbd5e1;
-            transition: color 0.3s ease;
-        }
-        .header-link:hover {
-            color: #FBBF24; /* Dorado */
-        }
-        .active-link {
-            color: #FBBF24; /* Dorado */
-            font-weight: 600;
-        }
-        .section-title {
-            color: #ccd6f6;
-            font-weight: 700;
-        }
-        .highlight-text {
-            color: #FBBF24; /* Dorado */
-        }
-        .footer-link {
-             color: #8892b0;
-             transition: color 0.3s ease;
-        }
-        .footer-link:hover {
-            color: #FBBF24; /* Dorado */
-        }
+        /* Estilos específicos para tarjetas de fundadores */
         .founder-card {
-            background-color: #112240;
+            background-color: var(--color-secondary-dark);
             border-radius: 12px;
-            padding: 2rem;
+            padding: var(--spacing-xl);
             text-align: center;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        
+        .founder-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        /* Estilo para títulos de sección */
+        .section-title {
+            color: var(--color-text-white);
+            font-weight: 700;
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="base-container antialiased">
 
-    <!-- Header -->
-    <header class="sticky top-0 z-50 bg-[#0a192f]/80 backdrop-blur-lg">
-        <nav class="container mx-auto max-w-7xl px-6 py-5 flex justify-between items-center">
-            <a href="index.html" class="text-2xl font-bold highlight-text">DE CERO A CIEN</a>
-            <div class="hidden md:flex items-center space-x-8">
+    <!-- HEADER UNIFICADO -->
+    <header class="header-component">
+        <nav class="header-nav">
+            <!-- Logo principal -->
+            <a href="index.html" class="header-logo">DE CERO A CIEN</a>
+            
+            <!-- Navegación principal (desktop) -->
+            <div class="header-nav-links">
                 <a href="index.html" class="header-link">Inicio</a>
-                <a href="nosotros.html" class="active-link">Nosotros</a>
+                <a href="nosotros.html" class="header-link active">Nosotros</a>
                 <a href="servicios.html" class="header-link">Servicios</a>
                 <a href="metodologia.html" class="header-link">Metodología</a>
                 <a href="contacto.html" class="header-link">Contacto</a>
+                
+                <!-- Sección de autenticación -->
+                <div class="header-auth-section">
+                    <a href="#" class="header-login-link">Ingresa</a>
+                    <a href="#" class="header-register-btn">Regístrate</a>
+                </div>
             </div>
         </nav>
     </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="py-20 sm:py-28">
-            <div class="container mx-auto max-w-4xl px-6">
-                <h1 class="text-4xl sm:text-5xl font-bold section-title leading-tight">Ya no estás solo en la cima de la montaña.</h1>
-                <div class="mt-8 text-lg text-gray-400 space-y-6">
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+        <!-- Sección Hero -->
+        <section class="main-section py-20 sm:py-28">
+            <div class="section-container max-w-4xl">
+                <h1 class="text-4xl sm:text-5xl font-bold section-title leading-tight fade-in">
+                    Ya no estás solo en la cima de la montaña.
+                </h1>
+                <div class="mt-8 text-lg text-gray-400 space-y-6 fade-in">
                     <p>
-                        Hay un momento en la vida de todo emprendedor de una claridad brutal y una soledad abrumadora. Es cuando te das cuenta de que la cima, el lugar desde donde se toman las decisiones estratégicas, es un lugar increíblemente solitario. Tu equipo confía en tu visión, y tu familia en tu fortaleza. Pero, ¿en quién confías tú cuando la niebla no te deja ver el siguiente paso?
+                        Hay un momento en la vida de todo emprendedor de una claridad brutal y una soledad abrumadora. 
+                        Es cuando te das cuenta de que la cima, el lugar desde donde se toman las decisiones estratégicas, 
+                        es un lugar increíblemente solitario. Tu equipo confía en tu visión, y tu familia en tu fortaleza. 
+                        Pero, ¿en quién confías tú cuando la niebla no te deja ver el siguiente paso?
                     </p>
                     <p>
-                        Hemos visto a fundadores brillantes, con ideas que podían cambiar el mundo, fracasar. No por falta de pasión, sino por falta de un mapa y de un co-piloto. Fracasaron ahogados en un mar de información, pero sedientos de sabiduría. Fracasaron porque <strong class="text-gray-300">la soledad del estratega es el enemigo silencioso del crecimiento.</strong>
+                        Hemos visto a fundadores brillantes, con ideas que podían cambiar el mundo, fracasar. 
+                        No por falta de pasión, sino por falta de un mapa y de un co-piloto. Fracasaron ahogados 
+                        en un mar de información, pero sedientos de sabiduría. Fracasaron porque 
+                        <strong class="text-gray-300">la soledad del estratega es el enemigo silencioso del crecimiento.</strong>
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- Founders Section -->
-        <section class="py-20 sm:py-28 bg-[#112240]">
-             <div class="container mx-auto max-w-5xl px-6">
-                <h2 class="text-3xl sm:text-4xl font-bold section-title text-center">Nuestra Historia: La Tríada Fundacional</h2>
-                <p class="mt-4 text-lg text-gray-400 text-center max-w-3xl mx-auto">
-                    Somos una familia que ha vivido la montaña rusa de construir un negocio desde cero. Unimos nuestras experiencias para crear el co-piloto que a nosotros nos hubiese gustado tener.
+        <!-- Sección de Fundadores -->
+        <section class="main-section py-20 sm:py-28 bg-[var(--color-secondary-dark)]">
+            <div class="section-container max-w-5xl">
+                <h2 class="text-3xl sm:text-4xl font-bold section-title text-center slide-in-left">
+                    Nuestra Historia: La Tríada Fundacional
+                </h2>
+                <p class="mt-4 text-lg text-gray-400 text-center max-w-3xl mx-auto slide-in-right">
+                    Somos una familia que ha vivido la montaña rusa de construir un negocio desde cero. 
+                    Unimos nuestras experiencias para crear el co-piloto que a nosotros nos hubiese gustado tener.
                 </p>
-                <div class="mt-16 grid md:grid-cols-3 gap-8">
-                    <!-- Cristian Jofré -->
-                    <div class="founder-card">
+                
+                <!-- Grid de fundadores -->
+                <div class="mt-16 responsive-grid md:grid-cols-3">
+                    <!-- Cristian Jofré - El Estratega -->
+                    <div class="founder-card fade-in">
                         <h3 class="text-2xl font-bold text-white">Cristian Jofré</h3>
                         <p class="mt-2 highlight-text font-semibold">CEO - El Estratega</p>
                         <p class="mt-4 text-gray-400 text-sm">
-                            Con más de 5 años de experiencia validando modelos de negocio, Cristian es el encargado de trazar el mapa, asegurando que cada paso esté fundamentado en una estrategia sólida y orientada a resultados.
+                            Con más de 5 años de experiencia validando modelos de negocio, Cristian es el encargado 
+                            de trazar el mapa, asegurando que cada paso esté fundamentado en una estrategia sólida 
+                            y orientada a resultados.
                         </p>
                     </div>
-                    <!-- Claudia Guerra -->
-                    <div class="founder-card">
+                    
+                    <!-- Claudia Guerra - La Humanista -->
+                    <div class="founder-card fade-in">
                         <h3 class="text-2xl font-bold text-white">Claudia Guerra</h3>
                         <p class="mt-2 highlight-text font-semibold">CRO - La Humanista</p>
                         <p class="mt-4 text-gray-400 text-sm">
-                            Claudia es la experta en construir puentes y comunidades. Su rol es asegurar que la experiencia del emprendedor sea el centro de nuestro ecosistema, transformando la soledad en colaboración.
+                            Claudia es la experta en construir puentes y comunidades. Su rol es asegurar que la 
+                            experiencia del emprendedor sea el centro de nuestro ecosistema, transformando la 
+                            soledad en colaboración.
                         </p>
                     </div>
-                    <!-- Ignacio Jofré -->
-                    <div class="founder-card">
+                    
+                    <!-- Ignacio Jofré - El Arquitecto Tecnológico -->
+                    <div class="founder-card fade-in">
                         <h3 class="text-2xl font-bold text-white">Ignacio Jofré</h3>
                         <p class="mt-2 highlight-text font-semibold">CTO - El Arquitecto Tecnológico</p>
                         <p class="mt-4 text-gray-400 text-sm">
-                            Ignacio es quien traduce la estrategia en herramientas. Como arquitecto de IA, se asegura de que la tecnología sea un multiplicador de potencia que simplifica lo complejo y acelera el crecimiento.
+                            Ignacio es quien traduce la estrategia en herramientas. Como arquitecto de IA, se asegura 
+                            de que la tecnología sea un multiplicador de potencia que simplifica lo complejo y acelera 
+                            el crecimiento.
                         </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Philosophy Section -->
-        <section class="py-20 sm:py-28">
-            <div class="container mx-auto max-w-4xl px-6">
-                <h2 class="text-3xl sm:text-4xl font-bold section-title">Nuestra Convicción Inquebrantable</h2>
-                 <div class="mt-8 text-lg text-gray-400 space-y-6">
+        <!-- Sección de Filosofía -->
+        <section class="main-section py-20 sm:py-28">
+            <div class="section-container max-w-4xl">
+                <h2 class="text-3xl sm:text-4xl font-bold section-title fade-in">
+                    Nuestra Convicción Inquebrantable
+                </h2>
+                <div class="mt-8 text-lg text-gray-400 space-y-6 fade-in">
                     <p>
-                        Creemos en una verdad fundamental: <strong class="text-gray-300">ningún emprendedor debería tener que construir el futuro a ciegas y en soledad.</strong> Creemos que la estrategia no es un lujo, sino el oxígeno que mantiene viva a una startup.
+                        Creemos en una verdad fundamental: 
+                        <strong class="text-gray-300">ningún emprendedor debería tener que construir el futuro a ciegas y en soledad.</strong> 
+                        Creemos que la estrategia no es un lujo, sino el oxígeno que mantiene viva a una startup.
                     </p>
-                     <p>
-                        No ofrecemos respuestas mágicas. Ofrecemos <span class="highlight-text">Claridad Radical</span>. Fusionamos el rigor analítico con un enfoque obsesivo en los resultados prácticos. Forjamos alianzas, no transacciones, porque tu éxito es nuestro éxito.
+                    <p>
+                        No ofrecemos respuestas mágicas. Ofrecemos <span class="highlight-text">Claridad Radical</span>. 
+                        Fusionamos el rigor analítico con un enfoque obsesivo en los resultados prácticos. 
+                        Forjamos alianzas, no transacciones, porque tu éxito es nuestro éxito.
                     </p>
                 </div>
             </div>
         </section>
     </main>
     
-    <!-- Footer -->
-    <footer class="border-t border-gray-800 mt-16">
-        <div class="container mx-auto max-w-7xl px-6 py-12">
-            <div class="grid md:grid-cols-3 gap-8 text-center md:text-left">
-                <div>
-                    <h3 class="text-lg font-semibold section-title">DE CERO A CIEN</h3>
-                    <p class="mt-2 text-gray-400 text-sm">Tu Conexión al Ecosistema Emprendedor.</p>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold section-title">Enlaces Rápidos</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="index.html" class="footer-link">Inicio</a></li>
-                        <li><a href="nosotros.html" class="footer-link">Nosotros</a></li>
-                        <li><a href="servicios.html" class="footer-link">Servicios</a></li>
+    <!-- FOOTER UNIFICADO -->
+    <footer class="footer-component">
+        <div class="footer-container">
+            <!-- Grid de secciones del footer -->
+            <div class="footer-grid">
+                <!-- Sección: Acerca de -->
+                <div class="footer-section">
+                    <h3>Acerca de DE CERO A CIEN</h3>
+                    <ul>
+                        <li><a href="nosotros.html" class="footer-link">Nuestra Historia</a></li>
                         <li><a href="metodologia.html" class="footer-link">Metodología</a></li>
-                        <li><a href="contacto.html" class="footer-link">Contacto</a></li>
+                        <li><a href="#" class="footer-link">Equipo</a></li>
+                        <li><a href="#" class="footer-link">Misión y Visión</a></li>
                     </ul>
                 </div>
-                <div>
-                    <h3 class="text-lg font-semibold section-title">Contacto</h3>
-                     <p class="mt-4 text-gray-400 text-sm">
-                        Email: contacto@deceroacien.com <br>
-                        Teléfono: +569 85678296
-                    </p>
+                
+                <!-- Sección: Recursos -->
+                <div class="footer-section">
+                    <h3>Recursos</h3>
+                    <ul>
+                        <li><a href="bootcamp_pmf.html" class="footer-link">El Camino Dorado</a></li>
+                        <li><a href="servicios.html" class="footer-link">Servicios Premium</a></li>
+                        <li><a href="academy.html" class="footer-link">Academy</a></li>
+                        <li><a href="#" class="footer-link">Conecta (Pronto)</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Sección: Herramientas -->
+                <div class="footer-section">
+                    <h3>Herramientas</h3>
+                    <ul>
+                        <li><a href="#" class="footer-link">Integraciones con IA</a></li>
+                        <li><a href="#" class="footer-link">Diagnósticos con IA</a></li>
+                        <li><a href="#" class="footer-link">Bootcamp (Pronto)</a></li>
+                        <li><a href="#" class="footer-link">Blog (Pronto)</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Sección: Legal -->
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="terminos.html" class="footer-link">Términos y Condiciones</a></li>
+                        <li><a href="politica_privacidad.html" class="footer-link">Política de Privacidad</a></li>
+                        <li><a href="#" class="footer-link">Política de Cookies</a></li>
+                        <li><a href="#" class="footer-link">Aviso Legal</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Sección: Contacto -->
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li><a href="tel:+56985678296" class="footer-link">+56 985 678 296</a></li>
+                        <li><a href="mailto:hola@deceroacien.app" class="footer-link">hola@deceroacien.app</a></li>
+                        <li><a href="https://www.deceroacien.app" target="_blank" class="footer-link">www.deceroacien.app</a></li>
+                        <li><a href="contacto.html" class="footer-link">Formulario de Contacto</a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="mt-12 border-t border-gray-800 pt-8 text-center">
-                 <p class="text-gray-500 text-sm">© 2025 DE CERO A CIEN. Todos los derechos reservados.</p>
+            
+            <!-- Línea inferior con copyright -->
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 DE CERO A CIEN. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
+
+    <!-- Scripts JavaScript -->
+    <script src="assets/js/components.js"></script>
 
 </body>
 </html>

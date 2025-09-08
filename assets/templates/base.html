@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Meta tags esenciales para SEO y responsividad -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{PAGE_DESCRIPTION}">
+    <meta name="keywords" content="emprendimiento, startups, crecimiento empresarial, metodología, consultoría">
+    <meta name="author" content="DE CERO A CIEN">
+    
+    <!-- Título dinámico de la página -->
+    <title>{PAGE_TITLE} - DE CERO A CIEN</title>
+    
+    <!-- Favicons y meta tags para redes sociales -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <meta property="og:title" content="{PAGE_TITLE} - DE CERO A CIEN">
+    <meta property="og:description" content="{PAGE_DESCRIPTION}">
+    <meta property="og:image" content="assets/og-image.jpg">
+    <meta property="og:url" content="https://www.deceroacien.app">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Preload de recursos críticos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
+    
+    <!-- Hojas de estilo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles/common.css">
+    <link rel="stylesheet" href="assets/styles/mobile.css">
+    
+    <!-- Configuración de Tailwind personalizada -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#0a1f2f',
+                        'secondary-dark': '#112240',
+                        'accent-gold': '#FBBF24',
+                        'text-light': '#e6f1ff',
+                        'border-custom': '#1e2d4d'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="base-container antialiased">
+
+    <!-- HEADER UNIFICADO PARA TODA LA APLICACIÓN -->
+    <header class="header-component">
+        <nav class="header-nav">
+            <!-- Logo principal -->
+            <a href="index.html" class="header-logo">DE CERO A CIEN</a>
+            
+            <!-- Navegación principal (desktop) -->
+            <div class="header-nav-links">
+                <a href="index.html" class="header-link">Inicio</a>
+                <a href="nosotros.html" class="header-link">Nosotros</a>
+                <a href="servicios.html" class="header-link">Servicios</a>
+                <a href="metodologia.html" class="header-link">Metodología</a>
+                <a href="contacto.html" class="header-link">Contacto</a>
+                
+                <!-- Sección de autenticación -->
+                <div class="header-auth-section">
+                    <a href="#" class="header-login-link">Ingresa</a>
+                    <a href="#" class="header-register-btn">Regístrate</a>
+                </div>
+            </div>
+            
+            <!-- Botón de menú móvil (se genera dinámicamente via JavaScript) -->
+        </nav>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL DE LA PÁGINA -->
+    <main class="main-content">
+        {PAGE_CONTENT}
+    </main>
+
+    <!-- FOOTER UNIFICADO PARA TODA LA APLICACIÓN -->
+    <footer class="footer-component">
+        <div class="footer-container">
+            <!-- Grid de secciones del footer -->
+            <div class="footer-grid">
+                <!-- Sección: Acerca de -->
+                <div class="footer-section">
+                    <h3>Acerca de DE CERO A CIEN</h3>
+                    <ul>
+                        <li><a href="nosotros.html" class="footer-link">Nuestra Historia</a></li>
+                        <li><a href="metodologia.html" class="footer-link">Metodología</a></li>
+                        <li><a href="#" class="footer-link">Equipo</a></li>
+                        <li><a href="#" class="footer-link">Misión y Visión</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Sección: Recursos -->
+                <div class="footer-section">
+                    <h3>Recursos</h3>
+                    <ul>
+                        <li><a href="bootcamp_pmf.html" class="footer-link">El Camino Dorado</a></li>
+                        <li><a href="servicios.html" class="footer-link">Servicios Premium</a></li>
+                        <li><a href="academy.html" class="footer-link">Academy</a></li>
+                        <li><a href="#" class="footer-link">Conecta (Pronto)</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Sección: Herramientas -->
+                <div class="footer-section">
+                    <h3>Herramientas</h3>
+                    <ul>
+                        <li><a href="#" class="footer-link">Integraciones con IA</a></li>
+                        <li><a href="#" class="footer-link">Diagnósticos con IA</a></li>
+                        <li><a href="#" class="footer-link">Bootcamp (Pronto)</a></li>
+                        <li><a href="#" class="footer-link">Blog (Pronto)</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Sección: Legal -->
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="terminos.html" class="footer-link">Términos y Condiciones</a></li>
+                        <li><a href="politica_privacidad.html" class="footer-link">Política de Privacidad</a></li>
+                        <li><a href="#" class="footer-link">Política de Cookies</a></li>
+                        <li><a href="#" class="footer-link">Aviso Legal</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Sección: Contacto -->
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li><a href="tel:+56985678296" class="footer-link">+56 985 678 296</a></li>
+                        <li><a href="mailto:hola@deceroacien.app" class="footer-link">hola@deceroacien.app</a></li>
+                        <li><a href="https://www.deceroacien.app" target="_blank" class="footer-link">www.deceroacien.app</a></li>
+                        <li><a href="contacto.html" class="footer-link">Formulario de Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Sección: Síguenos -->
+                <div class="footer-section">
+                    <h3>Síguenos</h3>
+                    <ul>
+                        <li><a href="#" class="footer-link">LinkedIn</a></li>
+                        <li><a href="#" class="footer-link">Twitter</a></li>
+                        <li><a href="#" class="footer-link">Instagram</a></li>
+                        <li><a href="#" class="footer-link">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Línea inferior con copyright -->
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 DE CERO A CIEN. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts JavaScript -->
+    <script src="assets/js/components.js"></script>
+    
+    <!-- Scripts adicionales específicos de la página -->
+    {PAGE_SCRIPTS}
+    
+    <!-- Analytics y tracking (cuando sea necesario) -->
+    <script>
+        // Configuración de analytics
+        // Google Analytics, Facebook Pixel, etc.
+    </script>
+</body>
+</html>
