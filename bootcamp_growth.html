@@ -4,100 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bootcamp: Construye tu Máquina de Crecimiento en 8 Semanas - DE CERO A CIEN ACADEMY</title>
+    <meta name="description" content="Bootcamp intensivo de 8 semanas para construir tu máquina de crecimiento. Pasa de fundador a CEO con sistemas escalables.">
+    <meta name="keywords" content="crecimiento, escalabilidad, sistemas, ceo, fundador, máquina de crecimiento, bootcamp">
+    
+    <!-- Configuración de Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- CSS Unificado del Sistema -->
+    <link rel="stylesheet" href="assets/styles/common.css">
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0a1f2f;
-            color: #e6f1ff;
-        }
-        .header-link {
-            color: #cbd5e1;
-            transition: color 0.3s ease;
-        }
-        .header-link:hover, .footer-link:hover {
-            color: #FBBF24;
-        }
-        .active-link {
-            color: #FBBF24;
-            font-weight: 600;
-        }
-        .section-title {
-            color: #ccd6f6;
-            font-weight: 700;
-        }
-        .highlight-text {
-            color: #FBBF24;
-        }
-        .login-button {
-            color: #cbd5e1;
-            font-weight: 600;
-            transition: color 0.3s ease;
-            padding: 8px 12px;
-        }
-        .login-button:hover {
-            color: #FBBF24;
-        }
-        .register-button {
-            background-color: #FBBF24;
-            color: #0a1f2f;
-            font-weight: 700;
-            padding: 8px 16px;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-        .register-button:hover {
-            background-color: #FCD34D;
-        }
-        .footer-link {
-            color: #94a3b8;
-        }
-        .cta-button-large {
-            display: inline-block;
-            background-color: #FBBF24;
-            color: #0a1f2f;
-            font-weight: 700;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-size: 1.125rem;
-        }
-        .cta-button-large:hover {
-            background-color: #FCD34D;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(251, 191, 36, 0.3);
-        }
-        .week-accordion details > summary {
-            list-style: none;
-        }
-        .week-accordion details > summary::-webkit-details-marker {
-            display: none;
-        }
-    </style>
+    
+    <!-- JavaScript del Sistema de Componentes -->
+    <script src="assets/js/components.js" defer></script>
 </head>
-<body class="antialiased">
+<body class="antialiased font-inter">
 
-    <!-- Header -->
-    <header class="sticky top-0 z-50 bg-[#0a1f2f]/80 backdrop-blur-lg">
-        <nav class="container mx-auto max-w-7xl px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="text-2xl font-bold highlight-text">DE CERO A CIEN</a>
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="index.html" class="header-link text-sm">Inicio</a>
-                <a href="nosotros.html" class="header-link text-sm">Nosotros</a>
-                <a href="servicios.html" class="header-link text-sm">Servicios</a>
-                <a href="metodologia.html" class="header-link text-sm">Metodología</a>
-                <a href="contacto.html" class="header-link text-sm">Contacto</a>
-                 <div class="pl-2 flex items-center space-x-2">
-                    <a href="#" class="login-button text-sm">Ingresa</a>
-                    <a href="#" class="register-button text-sm">Regístrate</a>
+    <!-- HEADER UNIFICADO -->
+    <header class="header-component">
+        <nav class="header-nav">
+            <!-- Logo principal -->
+            <a href="index.html" class="header-logo">DE CERO A CIEN</a>
+            
+            <!-- Navegación principal (desktop) -->
+            <div class="header-nav-links">
+                <a href="index.html" class="header-link">Inicio</a>
+                <a href="nosotros.html" class="header-link">Nosotros</a>
+                <a href="servicios.html" class="header-link">Servicios</a>
+                <a href="metodologia.html" class="header-link">Metodología</a>
+                <a href="contacto.html" class="header-link">Contacto</a>
+                
+                <!-- Sección de autenticación -->
+                <div class="header-auth-section">
+                    <a href="#" class="header-login-link">Ingresa</a>
+                    <a href="#" class="header-register-btn">Regístrate</a>
                 </div>
             </div>
         </nav>
+    </header>
     </header>
 
     <main>
@@ -226,13 +184,14 @@
 
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-gray-800">
-        <div class="container mx-auto max-w-7xl px-6 py-12">
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 text-sm">
-                 <div>
-                    <h3 class="font-semibold text-white">Enlaces Rápidos</h3>
-                    <ul class="mt-4 space-y-2">
+    <!-- FOOTER UNIFICADO -->
+    <footer class="footer-component">
+        <div class="footer-container">
+            <div class="footer-content">
+                <!-- Sección de Enlaces Principales -->
+                <div class="footer-section">
+                    <h3 class="footer-section-title">Enlaces Rápidos</h3>
+                    <ul class="footer-links-list">
                         <li><a href="index.html" class="footer-link">Inicio</a></li>
                         <li><a href="nosotros.html" class="footer-link">Nosotros</a></li>
                         <li><a href="servicios.html" class="footer-link">Servicios</a></li>
@@ -240,52 +199,68 @@
                         <li><a href="contacto.html" class="footer-link">Contacto</a></li>
                     </ul>
                 </div>
-                <div>
-                    <h3 class="font-semibold text-white">Recursos y Herramientas</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="#" class="footer-link">El Camino Dorado</a></li>
-                        <li><a href="servicios.html" class="footer-link">Servicios empresariales premium</a></li>
+
+                <!-- Sección de Servicios -->
+                <div class="footer-section">
+                    <h3 class="footer-section-title">Servicios</h3>
+                    <ul class="footer-links-list">
+                        <li><a href="servicios.html" class="footer-link">Consultoría Premium</a></li>
                         <li><a href="academy.html" class="footer-link">Academy</a></li>
+                        <li><a href="metodologia.html" class="footer-link">El Camino Dorado</a></li>
+                        <li><a href="diagnostico.html" class="footer-link">Diagnósticos con IA</a></li>
+                    </ul>
+                </div>
+
+                <!-- Sección de Recursos -->
+                <div class="footer-section">
+                    <h3 class="footer-section-title">Recursos</h3>
+                    <ul class="footer-links-list">
+                        <li><a href="#" class="footer-link">Integraciones con IA</a></li>
+                        <li><a href="bootcamp_growth.html" class="footer-link active-link">Bootcamp Growth</a></li>
+                        <li><a href="bootcamp_pmv.html" class="footer-link">Bootcamp PMV</a></li>
+                        <li><a href="bootcamp_pmf.html" class="footer-link">Bootcamp PMF</a></li>
+                        <li><a href="#" class="footer-link">Masterclasses</a></li>
                         <li><a href="#" class="footer-link">Conecta (Pronto)</a></li>
                     </ul>
                 </div>
-                <div>
-                    <h3 class="font-semibold text-white">Recursos y Herramientas</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="#" class="footer-link">Integraciones con IA</a></li>
-                        <li><a href="diagnostico.html" class="footer-link">Diagnósticos rápidos con IA</a></li>
-                        <li><a href="academy.html" class="footer-link">Bootcamp (Pronto)</a></li>
-                        <li><a href="#" class="footer-link">Descargables</a></li>
-                        <li><a href="#" class="footer-link">Videos</a></li>
-                        <li><a href="#" class="footer-link">Audio</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white">Legal</h3>
-                    <ul class="mt-4 space-y-2">
+
+                <!-- Sección Legal -->
+                <div class="footer-section">
+                    <h3 class="footer-section-title">Legal</h3>
+                    <ul class="footer-links-list">
                         <li><a href="terminos.html" class="footer-link">Términos y Condiciones</a></li>
                         <li><a href="politica_privacidad.html" class="footer-link">Política de Privacidad</a></li>
                     </ul>
                 </div>
-                <div>
-                    <h3 class="font-semibold text-white">Contacto</h3>
-                    <ul class="mt-4 space-y-2">
+
+                <!-- Sección de Contacto -->
+                <div class="footer-section">
+                    <h3 class="footer-section-title">Contacto</h3>
+                    <ul class="footer-links-list">
                         <li><a href="tel:+56985678296" class="footer-link">+56 9 8567 8296</a></li>
                         <li><a href="mailto:hola@deceroacien.app" class="footer-link">hola@deceroacien.app</a></li>
                         <li><a href="https://www.deceroacien.app" target="_blank" class="footer-link">www.deceroacien.app</a></li>
                     </ul>
                 </div>
             </div>
-             <div class="mt-12 border-t border-gray-800 pt-8 text-center">
-                 <p class="text-gray-500 text-xs">© 2025 DE CERO A CIEN. Todos los derechos reservados.</p>
+            
+            <!-- Línea de separación y copyright -->
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 DE CERO A CIEN. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
     
+    <!-- Script personalizado para funcionalidad específica del bootcamp -->
     <script>
+        /**
+         * Manejo de acordeones para el cronograma semanal del bootcamp
+         * Permite expandir/contraer las semanas y cierra automáticamente otras cuando se abre una nueva
+         */
         document.querySelectorAll('.week-accordion details').forEach((detail) => {
             detail.addEventListener('toggle', (event) => {
                 if (detail.open) {
+                    // Cerrar todos los otros acordeones cuando se abre uno nuevo
                     document.querySelectorAll('.week-accordion details').forEach((otherDetail) => {
                         if (otherDetail !== detail) {
                             otherDetail.removeAttribute('open');

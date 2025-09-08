@@ -3,59 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marketing Digital Estratégico - De Cero a Cien</title>
+    
+    <!-- SEO Optimizado -->
+    <title>Catálogo de Marketing Digital Estratégico - DE CERO A CIEN</title>
+    <meta name="description" content="Catálogo completo de servicios de marketing digital estratégico de DE CERO A CIEN. Growth marketing, marketing de contenidos, analítica digital y más.">
+    <meta name="keywords" content="marketing digital, growth marketing, marketing estratégico, DE CERO A CIEN, marketing de contenidos, analítica digital">
+    <meta name="author" content="DE CERO A CIEN">
+    
+    <!-- Open Graph para redes sociales -->
+    <meta property="og:title" content="Marketing Digital Estratégico - DE CERO A CIEN">
+    <meta property="og:description" content="Catálogo de servicios de marketing digital estratégico para el crecimiento empresarial.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://deceroacien.com/marketing_catalogo.html">
+    
+    <!-- Arquitectura CSS y JS Unificada -->
+    <link rel="stylesheet" href="assets/styles/common.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0a192f; /* Azul Noche */
-            color: #F9FAFB;
-        }
-        .gold-text {
-            color: #FBBF24; /* Dorado */
-        }
-        .service-card {
-            background-color: #172a45; /* Azul Noche más claro */
-            border: 1px solid rgba(251, 191, 36, 0.2);
-            transition: all 0.3s ease;
-        }
-        .service-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            border-color: rgba(251, 191, 36, 0.6);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        .cta-button {
-            display: inline-block;
-            background-color: #FBBF24; /* Dorado */
-            color: #0a192f; /* Azul Noche */
-            font-weight: 700;
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-        .cta-button:hover {
-            background-color: #FCD34D; /* Dorado más claro */
-            transform: scale(1.05);
-        }
-    </style>
 </head>
-<body class="antialiased">
+<body class="base-container">
 
-    <!-- Header -->
-    <header class="sticky top-0 z-50 bg-[#0a192f]/80 backdrop-blur-lg border-b border-gray-800">
-        <nav class="container mx-auto max-w-7xl px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold gold-text">De Cero a Cien</a>
-            <!-- Puedes reemplazar '#' con la URL de la página principal, ej: 'index.html' -->
-            <a href="index.html" class="text-gray-300 hover:text-white transition-colors text-sm font-semibold flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-                VOLVER A SERVICIOS
-            </a>
+    <!-- HEADER UNIFICADO -->
+    <header class="header-component">
+        <nav class="header-nav">
+            <a href="index.html" class="header-logo">DE CERO A CIEN</a>
+            <div class="header-nav-links">
+                <a href="index.html" class="header-link">Inicio</a>
+                <a href="nosotros.html" class="header-link">Nosotros</a>
+                <a href="servicios.html" class="header-link">Servicios</a>
+                <a href="metodologia.html" class="header-link">Metodología</a>
+                <a href="contacto.html" class="header-link">Contacto</a>
+                <a href="academy.html" class="header-link">Academy</a>
+            </div>
+            <div class="header-auth-section">
+                <a href="#" class="header-login-link">Ingresa</a>
+                <a href="#" class="header-register-btn">Regístrate</a>
+            </div>
         </nav>
     </header>
 
@@ -326,13 +311,76 @@
         </section>
     </main>
     
-    <!-- Footer -->
-    <footer class="border-t border-gray-800 mt-16">
-        <div class="container mx-auto max-w-7xl px-6 py-12 text-center">
-            <p class="text-2xl font-bold gold-text">De Cero a Cien</p>
-            <p class="mt-4 text-gray-400">© 2024 De Cero a Cien. Todos los derechos reservados.</p>
+    <!-- FOOTER UNIFICADO -->
+    <footer class="footer-component">
+        <div class="footer-container">
+            <!-- Grid de secciones del footer -->
+            <div class="footer-grid">
+                <!-- Sección: Acerca de -->
+                <div class="footer-section">
+                    <h3>Acerca de DE CERO A CIEN</h3>
+                    <ul>
+                        <li><a href="nosotros.html" class="footer-link">Nuestra Historia</a></li>
+                        <li><a href="metodologia.html" class="footer-link">Metodología</a></li>
+                        <li><a href="#" class="footer-link">Equipo</a></li>
+                        <li><a href="#" class="footer-link">Misión y Visión</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Sección: Marketing (Destacada para la página actual) -->
+                <div class="footer-section">
+                    <h3>Marketing Digital</h3>
+                    <ul>
+                        <li><a href="marketing_catalogo.html" class="footer-link active">Catálogo Completo</a></li>
+                        <li><a href="#" class="footer-link">Growth Marketing</a></li>
+                        <li><a href="#" class="footer-link">Marketing de Contenidos</a></li>
+                        <li><a href="#" class="footer-link">Analítica Digital</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Sección: Recursos -->
+                <div class="footer-section">
+                    <h3>Recursos</h3>
+                    <ul>
+                        <li><a href="bootcamp_pmf.html" class="footer-link">El Camino Dorado</a></li>
+                        <li><a href="servicios.html" class="footer-link">Servicios Premium</a></li>
+                        <li><a href="academy.html" class="footer-link">Academy</a></li>
+                        <li><a href="desarrollo_catalogo.html" class="footer-link">Desarrollo Digital</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Sección: Legal -->
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="terminos.html" class="footer-link">Términos y Condiciones</a></li>
+                        <li><a href="politica_privacidad.html" class="footer-link">Política de Privacidad</a></li>
+                        <li><a href="#" class="footer-link">Política de Cookies</a></li>
+                        <li><a href="#" class="footer-link">Aviso Legal</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Sección: Contacto -->
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li><a href="tel:+56985678296" class="footer-link">+56 985 678 296</a></li>
+                        <li><a href="mailto:hola@deceroacien.app" class="footer-link">hola@deceroacien.app</a></li>
+                        <li><a href="https://www.deceroacien.app" target="_blank" class="footer-link">www.deceroacien.app</a></li>
+                        <li><a href="contacto.html" class="footer-link">Formulario de Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Línea inferior con copyright -->
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 DE CERO A CIEN. Todos los derechos reservados.</p>
+            </div>
         </div>
     </footer>
+
+    <!-- Scripts JavaScript Unificados -->
+    <script src="assets/js/components.js" defer></script>
 
     <!-- Floating WhatsApp Button -->
     <a href="https://wa.me/56985678296?text=Hola,%20quisiera%20consultar%20sobre%20sus%20servicios." 

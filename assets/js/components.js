@@ -1,97 +1,220 @@
 /**
- * SISTEMA DE COMPONENTES JAVASCRIPT
- * Implementa programación orientada a objetos para componentes reutilizables
- * Maneja la lógica común de header, footer y otros elementos interactivos
+ * SISTEMA DE COMPONENTES JAVASCRIPT ORIENTADO A OBJETOS
+ * 
+ * Este archivo implementa un sistema completo de componentes reutilizables
+ * siguiendo los principios de Programación Orientada a Objetos (POO):
+ * 
+ * PATRONES IMPLEMENTADOS:
+ * - Factory Pattern: Para crear instancias de componentes
+ * - Observer Pattern: Para manejo de eventos
+ * - Singleton Pattern: Para el gestor principal de la aplicación
+ * - Strategy Pattern: Para diferentes tipos de componentes
+ * 
+ * ARQUITECTURA:
+ * 1. BaseComponent: Clase abstracta base con funcionalidad común
+ * 2. Componentes especializados: HeaderComponent, FooterComponent, CardComponent
+ * 3. AppManager: Controlador principal que orquesta todos los componentes
+ * 4. Utilidades: Funciones helper y configuración global
  */
 
 /**
- * Clase base para todos los componentes
- * Proporciona funcionalidad común y estructura base
+ * CLASE BASE ABSTRACTA - BaseComponent
+ * 
+ * Actúa como clase padre para todos los componentes del sistema.
+ * Implementa el patrón Template Method para definir el ciclo de vida
+ * común de todos los componentes.
+ * 
+ * RESPONSABILIDADES:
+ * - Gestión del ciclo de vida (init, destroy)
+ * - Manejo básico de eventos
+ * - Validación de estado
+ * - Logging básico para debugging
  */
 class BaseComponent {
+    /**
+     * Constructor de la clase base
+     * @param {HTMLElement} element - Elemento DOM asociado al componente
+     */
     constructor(element) {
         this.element = element;
         this.isInitialized = false;
+        this.eventListeners = new Map(); // Registro de eventos para limpieza
     }
 
     /**
-     * Método para inicializar el componente
-     * Debe ser sobrescrito por las clases hijas
+     * Método template para inicializar el componente
+     * Define el flujo estándar de inicialización que siguen todos los componentes
+     * 
+     * PATRÓN: Template Method
+     * FLUJO: Validación → Marcado como inicializado → Eventos → Log
      */
     init() {
         if (this.isInitialized) {
-            console.warn('Componente ya inicializado');
+            console.warn(`Componente ${this.constructor.name} ya inicializado`);
             return;
         }
+        
         this.isInitialized = true;
         this.bindEvents();
+        this.logInitialization();
     }
 
     /**
-     * Método para vincular eventos
-     * Debe ser sobrescrito por las clases hijas si necesita eventos
+     * Método virtual para vincular eventos específicos del componente
+     * Las clases hijas deben sobrescribir este método si necesitan eventos
+     * 
+     * PATRÓN: Template Method (Hook Method)
      */
     bindEvents() {
         // Implementación por defecto vacía
+        // Las clases derivadas pueden sobrescribir este método
     }
 
     /**
-     * Método para destruir el componente y limpiar eventos
+     * Log de inicialización para debugging y monitoreo
+     * Ayuda en el desarrollo y troubleshooting
+     */
+    logInitialization() {
+        console.log(`✅ ${this.constructor.name} inicializado correctamente`);
+    }
+
+    /**
+     * Método para registrar event listeners con cleanup automático
+     * Evita memory leaks registrando todos los eventos para limpieza posterior
+     * 
+     * @param {string} event - Tipo de evento
+     * @param {Function} handler - Función manejadora
+     * @param {Object} options - Opciones del event listener
+     */
+    addEventListener(event, handler, options = {}) {
+        if (this.element) {
+            this.element.addEventListener(event, handler, options);
+            // Registrar para cleanup posterior
+            this.eventListeners.set(event, { handler, options });
+        }
+    }
+
+    /**
+     * Método para destruir el componente y limpiar recursos
+     * Implementa cleanup automático para evitar memory leaks
+     * 
+     * PATRÓN: Destructor simulado en JavaScript
      */
     destroy() {
-        if (this.element) {
-            this.element.removeEventListener('click', this.handleClick);
-        }
+        if (!this.isInitialized) return;
+
+        // Limpiar todos los event listeners registrados
+        this.eventListeners.forEach(({ handler }, event) => {
+            if (this.element) {
+                this.element.removeEventListener(event, handler);
+            }
+        });
+        
+        this.eventListeners.clear();
         this.isInitialized = false;
+        console.log(`🗑️ ${this.constructor.name} destruido y limpiado`);
     }
 }
 
 /**
- * Clase para manejar el componente Header
- * Extiende BaseComponent para heredar funcionalidad común
+ * CLASE ESPECIALIZADA - HeaderComponent
+ * 
+ * Extiende BaseComponent para manejar específicamente la navegación del sitio.
+ * Implementa funcionalidades avanzadas como:
+ * - Detección automática de página activa
+ * - Menú móvil responsivo
+ * - Gestión de estado de navegación
+ * 
+ * PATRONES IMPLEMENTADOS:
+ * - State Pattern: Para el estado del menú móvil (abierto/cerrado)
+ * - Observer Pattern: Para reaccionar a cambios de URL
+ * - Factory Pattern: Para crear elementos del menú móvil dinámicamente
  */
 class HeaderComponent extends BaseComponent {
+    /**
+     * Constructor del componente Header
+     * Inicializa propiedades específicas del header
+     */
     constructor(element) {
         super(element);
         this.mobileMenuButton = null;
         this.mobileMenu = null;
-        this.isMenuOpen = false;
-        this.currentPage = this.getCurrentPage();
+        this.isMenuOpen = false; // Estado del menú móvil
+        this.currentPage = this.getCurrentPage(); // Detección automática de página
+        this.breakpoint = 768; // Punto de quiebre para diseño responsivo
     }
 
     /**
-     * Determina la página actual basada en la URL
-     * @returns {string} Nombre de la página actual
+     * Determina la página actual basada en la URL del navegador
+     * Utiliza el pathname para extraer el nombre del archivo actual
+     * 
+     * @returns {string} Nombre de la página actual sin extensión
+     * 
+     * EJEMPLOS:
+     * - "/index.html" → "index"
+     * - "/nosotros.html" → "nosotros"
+     * - "/" → "index" (página por defecto)
      */
     getCurrentPage() {
         const path = window.location.pathname;
         const filename = path.split('/').pop() || 'index.html';
-        return filename.replace('.html', '');
+        
+        // Remover extensión .html y manejar casos especiales
+        let pageName = filename.replace('.html', '');
+        
+        // Si está vacío o es raíz, usar 'index' como defecto
+        if (!pageName || pageName === '') {
+            pageName = 'index';
+        }
+        
+        return pageName;
     }
 
     /**
-     * Inicializa el header y establece el enlace activo
+     * Inicializa el header con todas sus funcionalidades
+     * Sobrescribe el método de la clase padre para agregar lógica específica
+     * 
+     * PATRÓN: Template Method Override
      */
     init() {
-        super.init();
+        super.init(); // Llamar al método padre
         this.setActiveLink();
         this.createMobileMenu();
-        console.log('Header inicializado correctamente');
+        this.handleResponsiveChanges();
     }
 
     /**
      * Establece el enlace activo basado en la página actual
+     * Implementa lógica para destacar visualmente la sección actual
+     * 
+     * ALGORITMO:
+     * 1. Remover clases 'active' de todos los enlaces
+     * 2. Comparar href de cada enlace con página actual
+     * 3. Marcar como activo el enlace coincidente
      */
     setActiveLink() {
         const links = this.element.querySelectorAll('.header-link');
+        
         links.forEach(link => {
+            // Limpiar estado activo anterior
             link.classList.remove('active');
+            
             const href = link.getAttribute('href');
             if (href) {
-                const linkPage = href.replace('.html', '');
-                if (linkPage === this.currentPage || 
-                    (this.currentPage === 'index' && linkPage === 'index')) {
+                // Extraer nombre de página del href
+                const linkPage = href.replace('.html', '').replace('./', '');
+                
+                // Lógica de comparación con manejo de casos especiales
+                const isCurrentPage = linkPage === this.currentPage || 
+                                    (this.currentPage === 'index' && linkPage === 'index') ||
+                                    (this.currentPage === '' && linkPage === 'index');
+                
+                if (isCurrentPage) {
                     link.classList.add('active');
+                    // Marcar como página actual para accesibilidad
+                    link.setAttribute('aria-current', 'page');
+                } else {
+                    link.removeAttribute('aria-current');
                 }
             }
         });

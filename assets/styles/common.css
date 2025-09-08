@@ -2,71 +2,90 @@
  * ARCHIVO CSS COMÚN PARA TODA LA APLICACIÓN
  * Implementa un sistema de diseño unificado con componentes reutilizables
  * Sigue principios de programación orientada a objetos aplicados a CSS
+ * 
+ * ARQUITECTURA DEL SISTEMA:
+ * 1. Variables CSS (Propiedades de clase simuladas)
+ * 2. Clases base (Herencia base)
+ * 3. Componentes especializados (Clases derivadas)
+ * 4. Utilidades y modificadores (Mixins y helpers)
+ * 5. Estados y animaciones (Comportamientos dinámicos)
  */
 
 /* ========================================
-   VARIABLES CSS (Simulando propiedades de clase)
+   VARIABLES CSS - SISTEMA DE TOKENS DE DISEÑO
+   Actúan como propiedades estáticas de una clase base
+   Permiten centralizar y reutilizar valores en todo el sistema
    ======================================== */
 :root {
-    /* Paleta de colores principal */
-    --color-primary-dark: #0a1f2f;        /* Azul oscuro principal */
-    --color-secondary-dark: #112240;       /* Azul secundario para tarjetas */
-    --color-accent-gold: #FBBF24;          /* Dorado para highlights */
-    --color-text-light: #e6f1ff;          /* Texto principal claro */
-    --color-text-gray: #64748b;           /* Texto secundario */
-    --color-text-white: #ccd6f6;          /* Texto blanco suave */
-    --color-border: #1e2d4d;              /* Bordes */
-    --color-border-light: #334155;        /* Bordes más claros */
+    /* Paleta de colores principal - Define la identidad visual */
+    --color-primary-dark: #0a1f2f;        /* Azul oscuro principal - fondo base */
+    --color-secondary-dark: #112240;       /* Azul secundario para tarjetas y contenedores */
+    --color-accent-gold: #FBBF24;          /* Dorado para highlights y CTAs */
+    --color-text-light: #e6f1ff;          /* Texto principal claro para buena legibilidad */
+    --color-text-gray: #64748b;           /* Texto secundario con menor jerarquía */
+    --color-text-white: #ccd6f6;          /* Texto blanco suave para encabezados */
+    --color-border: #1e2d4d;              /* Bordes sutiles entre elementos */
+    --color-border-light: #334155;        /* Bordes más claros para separadores */
     
-    /* Tipografía */
-    --font-family-primary: 'Inter', sans-serif;
-    --font-size-small: 0.875rem;          /* 14px */
-    --font-size-base: 1rem;               /* 16px */
-    --font-size-large: 1.125rem;          /* 18px */
-    --font-size-xl: 1.5rem;               /* 24px */
+    /* Sistema tipográfico - Consistencia en fuentes */
+    --font-family-primary: 'Inter', sans-serif;  /* Fuente principal moderna y legible */
+    --font-size-small: 0.875rem;          /* 14px - Texto pequeño y labels */
+    --font-size-base: 1rem;               /* 16px - Texto base estándar */
+    --font-size-large: 1.125rem;          /* 18px - Texto destacado */
+    --font-size-xl: 1.5rem;               /* 24px - Títulos de sección */
     
-    /* Espaciado */
-    --spacing-xs: 0.25rem;                /* 4px */
-    --spacing-sm: 0.5rem;                 /* 8px */
-    --spacing-md: 1rem;                   /* 16px */
-    --spacing-lg: 1.5rem;                 /* 24px */
-    --spacing-xl: 2rem;                   /* 32px */
-    --spacing-2xl: 3rem;                  /* 48px */
+    /* Sistema de espaciado - Ritmo visual consistente */
+    --spacing-xs: 0.25rem;                /* 4px - Espaciado mínimo */
+    --spacing-sm: 0.5rem;                 /* 8px - Espaciado pequeño */
+    --spacing-md: 1rem;                   /* 16px - Espaciado estándar */
+    --spacing-lg: 1.5rem;                 /* 24px - Espaciado grande */
+    --spacing-xl: 2rem;                   /* 32px - Espaciado extra grande */
+    --spacing-2xl: 3rem;                  /* 48px - Espaciado para secciones */
     
-    /* Sombras y efectos */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-    --shadow-hover: 0 10px 30px -15px rgba(2,12,27,0.7);
+    /* Sistema de sombras - Profundidad y jerarquía visual */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);           /* Sombra sutil */
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);       /* Sombra pronunciada */
+    --shadow-hover: 0 10px 30px -15px rgba(2,12,27,0.7);  /* Sombra para estados hover */
     
-    /* Transiciones */
-    --transition-fast: 0.15s ease-in-out;
-    --transition-normal: 0.3s ease;
-    --transition-slow: 0.5s ease;
+    /* Sistema de transiciones - Animaciones consistentes */
+    --transition-fast: 0.15s ease-in-out;    /* Transiciones rápidas para micro-interacciones */
+    --transition-normal: 0.3s ease;          /* Transiciones estándar para la mayoría de elementos */
+    --transition-slow: 0.5s ease;            /* Transiciones lentas para cambios importantes */
 }
 
 /* ========================================
-   CLASE BASE (Base Class)
+   CLASE BASE - CONTENEDOR PRINCIPAL
+   Actúa como clase base de la cual heredan todos los elementos
+   Define el comportamiento fundamental de la aplicación
    ======================================== */
 .base-container {
     font-family: var(--font-family-primary);
     background-color: var(--color-primary-dark);
     color: var(--color-text-light);
     min-height: 100vh;
+    /* Asegura que la aplicación ocupe toda la altura de la ventana */
+    display: flex;
+    flex-direction: column;
 }
 
 /* ========================================
-   CLASE HEADER (Header Component Class)
+   CLASE HEADER - COMPONENTE DE NAVEGACIÓN
+   Implementa el patrón Singleton para navegación única y consistente
+   Maneja el estado activo y la responsividad de forma automática
    ======================================== */
 .header-component {
+    /* Posicionamiento fijo para navegación persistente */
     position: sticky;
     top: 0;
     z-index: 50;
+    /* Efecto de cristal esmerilado para modernidad visual */
     background-color: rgba(10, 31, 47, 0.8);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--color-border);
 }
 
 .header-nav {
+    /* Layout flexbox para distribución automática del espacio */
     max-width: 1280px;
     margin: 0 auto;
     padding: var(--spacing-md) var(--spacing-lg);
@@ -75,6 +94,7 @@
     align-items: center;
 }
 
+/* Logo principal - Elemento de identidad de marca */
 .header-logo {
     font-size: var(--font-size-xl);
     font-weight: 700;
@@ -87,19 +107,21 @@
     opacity: 0.8;
 }
 
+/* Contenedor de navegación - Oculto por defecto en móvil */
 .header-nav-links {
     display: none;
     align-items: center;
     gap: var(--spacing-lg);
 }
 
-/* Mostrar navegación en pantallas medianas y grandes */
+/* Mostrar navegación en pantallas medianas y grandes - Responsive Design */
 @media (min-width: 768px) {
     .header-nav-links {
         display: flex;
     }
 }
 
+/* Enlaces de navegación - Patrón Observer para estado activo */
 .header-link {
     color: var(--color-text-gray);
     text-decoration: none;
@@ -109,16 +131,18 @@
     position: relative;
 }
 
+/* Estado hover - Feedback visual inmediato */
 .header-link:hover {
     color: var(--color-accent-gold);
 }
 
+/* Estado activo - Indica la página actual */
 .header-link.active {
     color: var(--color-accent-gold);
     font-weight: 600;
 }
 
-/* Efecto underline animado para links activos */
+/* Efecto underline animado para links activos - Mejora la UX */
 .header-link.active::after {
     content: '';
     position: absolute;
@@ -130,11 +154,19 @@
     animation: slideIn 0.3s ease-in-out;
 }
 
+/* Animación de aparición del indicador activo */
 @keyframes slideIn {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
+    from { 
+        transform: scaleX(0); 
+        transform-origin: center;
+    }
+    to { 
+        transform: scaleX(1);
+        transform-origin: center;
+    }
 }
 
+/* Sección de autenticación - Agrupación lógica de elementos relacionados */
 .header-auth-section {
     display: flex;
     align-items: center;
@@ -142,6 +174,7 @@
     padding-left: var(--spacing-sm);
 }
 
+/* Enlace de login - Estilo minimalista */
 .header-login-link {
     color: var(--color-text-gray);
     text-decoration: none;
@@ -154,6 +187,7 @@
     color: var(--color-accent-gold);
 }
 
+/* Botón de registro - CTA prominente siguiendo jerarquía visual */
 .header-register-btn {
     background-color: var(--color-accent-gold);
     color: var(--color-primary-dark);
@@ -167,6 +201,7 @@
     cursor: pointer;
 }
 
+/* Estado hover para el botón de registro - Feedback táctil */
 .header-register-btn:hover {
     background-color: #f59e0b;
     transform: translateY(-1px);
