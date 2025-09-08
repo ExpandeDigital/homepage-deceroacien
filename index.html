@@ -11,48 +11,10 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0a1f2f; /* Azul Oscuro de la Homepage */
-            color: #e6f1ff; /* Blanco Hueso para texto */
+            background-color: #0a1f2f;
+            color: #e6f1ff;
         }
-        .header-link {
-            color: #cbd5e1;
-            transition: color 0.3s ease;
-        }
-        .header-link:hover {
-            color: #FBBF24; /* Dorado */
-        }
-        .active-link {
-            color: #FBBF24; /* Dorado */
-            font-weight: 600;
-        }
-        .section-title {
-            color: #ccd6f6;
-            font-weight: 700;
-        }
-        .highlight-text {
-            color: #FBBF24; /* Dorado */
-        }
-        .footer-link {
-             color: #8892b0;
-             transition: color 0.3s ease;
-        }
-        .footer-link:hover {
-            color: #FBBF24; /* Dorado */
-        }
-        .cta-button {
-            display: inline-block;
-            background-color: #FBBF24;
-            color: #0a192f;
-            font-weight: 700;
-            padding: 14px 32px;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        .cta-button:hover {
-            background-color: #FCD34D;
-            transform: translateY(-2px);
-        }
+        .highlight-text { color: #FBBF24; }
         .card {
             background-color: #112240;
             border: 1px solid #1e2d4d;
@@ -62,62 +24,57 @@
         }
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px -15px rgba(0,0,0,0.7);
-        }
-        /* Animación para el slider */
-        .marquee {
-            overflow: hidden;
-            white-space: nowrap;
-            box-sizing: border-box;
+            box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
         }
         .marquee-content {
             display: inline-block;
-            animation: marquee 20s linear infinite;
+            animation: marquee 30s linear infinite;
         }
         @keyframes marquee {
             0%   { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
-        /* Botones del Header */
-        .login-button {
-            color: #cbd5e1;
-            font-weight: 600;
-            transition: color 0.3s ease;
-            padding: 8px 12px;
+        /* Efecto de Luz para la tarjeta destacada */
+        .card-spotlight {
+            position: relative;
+            overflow: hidden;
         }
-        .login-button:hover {
-            color: #FBBF24; /* Dorado */
+        .card-spotlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 75%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(251, 191, 36, 0.15), /* Luz dorada semi-transparente */
+                transparent
+            );
+            transform: skewX(-25deg);
+            transition: left 0.9s cubic-bezier(0.23, 1, 0.32, 1);
         }
-        .register-button {
-            background-color: #FBBF24;
-            color: #0a192f;
-            font-weight: 700;
-            padding: 8px 16px;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-        .register-button:hover {
-            background-color: #FCD34D;
+        .card-spotlight:hover::before {
+            left: 150%;
         }
     </style>
 </head>
 <body class="antialiased">
 
     <!-- Header -->
-    <header class="sticky top-0 z-50 bg-[#0a192f]/80 backdrop-blur-lg">
+    <header class="sticky top-0 z-50 bg-[#0a1f2f]/80 backdrop-blur-lg">
         <nav class="container mx-auto max-w-7xl px-6 py-4 flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold highlight-text">DE CERO A CIEN</a>
             <div class="hidden md:flex items-center space-x-6">
-                <a href="index.html" class="active-link text-sm">Inicio</a>
-                <a href="<a href="nosotros.html">Nosotros</a>.html" class="header-link text-sm"><a href="nosotros.html">Nosotros</a></a>
-                <a href="servicios.html" class="header-link text-sm">Servicios</a>
-                <a href="metodologia.html" class="header-link text-sm">Metodología</a>
-                <a href="<a href="contacto.html">Contacto</a>.html" class="header-link text-sm"><a href="contacto.html">Contacto</a></a>
-                
+                <a href="index.html" class="text-yellow-400 font-semibold text-sm">Inicio</a>
+                <a href="nosotros.html" class="text-gray-300 hover:text-yellow-400 transition-colors text-sm">Nosotros</a>
+                <a href="servicios.html" class="text-gray-300 hover:text-yellow-400 transition-colors text-sm">Servicios</a>
+                <a href="metodologia.html" class="text-gray-300 hover:text-yellow-400 transition-colors text-sm">Metodología</a>
+                <a href="contacto.html" class="text-gray-300 hover:text-yellow-400 transition-colors text-sm">Contacto</a>
                 <div class="pl-2 flex items-center space-x-2">
-                    <a href="#" class="login-button text-sm">Ingresa</a>
-                    <a href="#" class="register-button text-sm">Regístrate</a>
+                    <a href="#" class="font-semibold text-sm text-gray-300 hover:text-yellow-400 transition-colors">Ingresa</a>
+                    <a href="#" class="bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded-md text-sm hover:bg-yellow-300 transition-colors">Regístrate</a>
                 </div>
             </div>
         </nav>
@@ -127,76 +84,82 @@
         <!-- Welcome Section -->
         <section class="py-20 sm:py-24 text-center">
             <div class="container mx-auto max-w-4xl px-6">
-                <h1 class="text-4xl sm:text-5xl font-bold section-title">
-                    Te damos la bienvenida a<br>
-                    <span class="highlight-text">DE CERO A CIEN</span>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-200">
+                    Bienvenido a <span class="highlight-text">DE CERO A CIEN</span>
                 </h1>
-                <p class="mt-4 text-lg text-gray-400">Tu Conexión al Ecosistema Emprendedor</p>
+                <p class="mt-4 text-lg text-gray-400">Tu Conexión Directa al Ecosistema Emprendedor</p>
             </div>
         </section>
 
-        <!-- Marquee Slider -->
-        <div class="marquee bg-[#112240] py-4">
-            <div class="marquee-content">
-                <span class="text-lg font-semibold text-white mx-8">Para Emprendimientos Dinámicos y Startup</span>
-                <span class="text-lg font-semibold text-white mx-8">Para Emprendimientos Dinámicos y Startup</span>
-                <span class="text-lg font-semibold text-white mx-8">Para Emprendimientos Dinámicos y Startup</span>
-                <span class="text-lg font-semibold text-white mx-8">Para Emprendimientos Dinámicos y Startup</span>
+        <!-- Marquee Slider Mejorado -->
+        <div class="overflow-hidden bg-gradient-to-r from-[#112240] via-[#172a46] to-[#112240] py-4 border-y border-gray-800">
+            <div class="marquee-content flex items-center">
+                <p class="flex items-center text-lg font-semibold text-white mx-8">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-yellow-400"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                    Para Emprendimientos Dinámicos y Startups
+                </p>
+                <p class="flex items-center text-lg font-semibold text-white mx-8">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-yellow-400"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                    Para Emprendimientos Dinámicos y Startups
+                </p>
+                 <p class="flex items-center text-lg font-semibold text-white mx-8">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-yellow-400"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                    Para Emprendimientos Dinámicos y Startups
+                </p>
+                 <p class="flex items-center text-lg font-semibold text-white mx-8">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-yellow-400"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                    Para Emprendimientos Dinámicos y Startups
+                </p>
             </div>
         </div>
 
-        <!-- Services Section -->
+        <!-- SECCIÓN DESTACADA: El Camino Dorado -->
         <section class="py-20 sm:py-28">
-            <div class="container mx-auto max-w-6xl px-6">
-                <div class="grid lg:grid-cols-2 gap-12">
-                    <!-- El Camino Dorado -->
-                    <div class="card flex flex-col">
-                        <h2 class="text-2xl font-bold highlight-text">EL CAMINO DORADO</h2>
-                        <p class="mt-3 text-gray-400">¿Qué es? Son 31 micro herramientas de gestión para que el emprendedor o emprendedora, desarrollen su idea de negocio en 5 fases.</p>
-                        <ul class="mt-6 space-y-2 text-gray-300">
-                            <li><span class="highlight-text font-semibold">Fase 1:</span> Ideación y Validación</li>
-                            <li><span class="highlight-text font-semibold">Fase 2:</span> Construcción del PMV</li>
-                            <li><span class="highlight-text font-semibold">Fase 3:</span> Tracción y Product-Market fit</li>
-                            <li><span class="highlight-text font-semibold">Fase 4:</span> Crecimiento y Escalabilidad</li>
-                            <li><span class="highlight-text font-semibold">Fase 5:</span> Consolidación y Madurez</li>
-                        </ul>
-                        <div class="mt-8 pt-4 border-t border-gray-700">
-                            <a href="#" class="font-semibold text-white hover:highlight-text transition-colors">Conocer más &rarr;</a>
-                        </div>
+            <div class="container mx-auto max-w-5xl px-6">
+                 <div class="card card-spotlight p-8 lg:p-12">
+                    <div class="text-center">
+                        <h2 class="text-3xl lg:text-4xl font-black highlight-text">EL CAMINO DORADO</h2>
+                        <p class="mt-4 text-lg text-gray-400 max-w-2xl mx-auto">Nuestra joya de la corona. Son 31 micro herramientas de gestión para que desarrolles tu idea de negocio en 5 fases, desde la ideación hasta la consolidación.</p>
                     </div>
-
-                    <!-- Servicios Empresariales Premium -->
-                    <div class="card flex flex-col">
-                        <h2 class="text-2xl font-bold highlight-text">SERVICIOS EMPRESARIALES PREMIUM</h2>
-                        <p class="mt-3 text-gray-400">¿Qué es? Es una batería con más de 20 de servicios especializados para empresas, distribuidos en 5 áreas.</p>
-                        <ul class="mt-6 space-y-2 text-gray-300">
-                           <li><span class="font-semibold">1.</span> Marketing Digital y Desarrollo Web</li>
-                           <li><span class="font-semibold">2.</span> Desarrollo de software profesional avanzado</li>
-                           <li><span class="font-semibold">3.</span> Consultoría operacional a empresas</li>
-                           <li><span class="font-semibold">4.</span> Mentorías 1 a 1</li>
-                           <li><span class="font-semibold">5.</span> Conferencias</li>
-                        </ul>
-                        <div class="mt-8 pt-4 border-t border-gray-700">
-                            <a href="servicios.html" class="font-semibold text-white hover:highlight-text transition-colors">Explorar Servicios &rarr;</a>
-                        </div>
+                    <ul class="mt-8 grid grid-cols-1 sm:grid-cols-6 gap-4 text-center">
+                        <li class="sm:col-span-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800"><span class="highlight-text font-semibold block text-sm">Fase 1:</span><span class="text-xs text-gray-400">Ideación</span></li>
+                        <li class="sm:col-span-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800"><span class="highlight-text font-semibold block text-sm">Fase 2:</span><span class="text-xs text-gray-400">PMV</span></li>
+                        <li class="sm:col-span-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800"><span class="highlight-text font-semibold block text-sm">Fase 3:</span><span class="text-xs text-gray-400">Tracción</span></li>
+                        <li class="sm:col-span-3 lg:col-span-2 lg:col-start-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800"><span class="highlight-text font-semibold block text-sm">Fase 4:</span><span class="text-xs text-gray-400">Escalabilidad</span></li>
+                        <li class="sm:col-span-3 lg:col-span-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800"><span class="highlight-text font-semibold block text-sm">Fase 5:</span><span class="text-xs text-gray-400">Madurez</span></li>
+                    </ul>
+                    <div class="mt-10 text-center">
+                        <a href="bootcamp_pmf.html" class="bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-md hover:bg-yellow-300 transition-colors text-lg">Conocer más &rarr;</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- CTA Sections -->
-        <section class="py-20 text-center">
-             <div class="container mx-auto max-w-4xl px-6">
-                <h3 class="text-3xl font-bold section-title">DE CERO A CIEN</h3>
-                <p class="mt-4 text-lg text-gray-400">Tu emprendimiento será desarrollado mediante una metodología profesional y rigurosa, cumpliendo con todas las etapas que validan un producto o servicio robusto y preparado, listo para salir al mercado.</p>
-             </div>
-        </section>
-        
-        <section class="pb-20 text-center">
-             <div class="container mx-auto max-w-4xl px-6">
-                <h3 class="text-3xl font-bold section-title">DE CERO A CIEN</h3>
-                <p class="mt-4 text-lg text-gray-400">Liderazgo Estratégico y Soluciones Digitales que Multiplican tu Eficiencia.</p>
-             </div>
+        <!-- Otros Servicios -->
+        <section class="pb-20 sm:pb-28">
+            <div class="container mx-auto max-w-6xl px-6">
+                 <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-gray-200">Más Soluciones para tu Crecimiento</h3>
+                </div>
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <!-- Servicios Empresariales -->
+                    <div class="card">
+                        <h2 class="text-2xl font-bold highlight-text">SERVICIOS EMPRESARIALES</h2>
+                        <p class="mt-3 text-gray-400">Una batería con más de 20 servicios especializados para empresas, en 5 áreas clave.</p>
+                        <div class="mt-auto pt-6">
+                            <a href="servicios.html" class="font-semibold text-white hover:highlight-text transition-colors">Explorar Servicios &rarr;</a>
+                        </div>
+                    </div>
+                    <!-- Academy -->
+                     <div class="card">
+                        <h2 class="text-2xl font-bold highlight-text">ACADEMY</h2>
+                        <p class="mt-3 text-gray-400">Cursos, talleres y recursos de formación para potenciar tus habilidades y las de tu equipo.</p>
+                        <div class="mt-auto pt-6">
+                            <a href="academy.html" class="font-semibold text-white hover:highlight-text transition-colors">Ingresar a la Academia &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
     </main>
@@ -206,48 +169,45 @@
         <div class="container mx-auto max-w-7xl px-6 py-12">
             <div class="grid grid-cols-2 md:grid-cols-5 gap-8 text-sm">
                 <div>
-                    <h3 class="font-semibold text-white">Enlaces Rápidos</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="index.html" class="footer-link">Inicio</a></li>
-                        <li><a href="<a href="nosotros.html">Nosotros</a>.html" class="footer-link"><a href="nosotros.html">Nosotros</a></a></li>
-                        <li><a href="servicios.html" class="footer-link">Servicios</a></li>
-                        <li><a href="metodologia.html" class="footer-link">Metodología</a></li>
-                        <li><a href="<a href="contacto.html">Contacto</a>.html" class="footer-link"><a href="contacto.html">Contacto</a></a></li>
+                    <h3 class="font-semibold text-white mb-4">Enlaces Rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-yellow-400 transition-colors">Inicio</a></li>
+                        <li><a href="nosotros.html" class="text-gray-400 hover:text-yellow-400 transition-colors">Nosotros</a></li>
+                        <li><a href="servicios.html" class="text-gray-400 hover:text-yellow-400 transition-colors">Servicios</a></li>
+                        <li><a href="metodologia.html" class="text-gray-400 hover:text-yellow-400 transition-colors">Metodología</a></li>
+                        <li><a href="contacto.html" class="text-gray-400 hover:text-yellow-400 transition-colors">Contacto</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="font-semibold text-white">Recursos y Herramientas</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="#" class="footer-link">El Camino Dorado</a></li>
-                        <li><a href="servicios.html" class="footer-link">Servicios empresariales premium</a></li>
-                        <li><a href="#" class="footer-link">Academy (Pronto)</a></li>
-                        <li><a href="#" class="footer-link">Conecta (Pronto)</a></li>
+                    <h3 class="font-semibold text-white mb-4">Recursos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="bootcamp_pmf.html" class="text-gray-400 hover:text-yellow-400 transition-colors">El Camino Dorado</a></li>
+                        <li><a href="servicios.html" class="text-gray-400 hover:text-yellow-400 transition-colors">Servicios Premium</a></li>
+                        <li><a href="academy.html" class="text-gray-400 hover:text-yellow-400 transition-colors">Academy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">Conecta (Pronto)</a></li>
+                    </ul>
+                </div>
+                 <div>
+                    <h3 class="font-semibold text-white mb-4">Herramientas</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">Integraciones con IA</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">Diagnósticos con IA</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">Bootcamp (Pronto)</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="font-semibold text-white">Recursos y Herramientas</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="#" class="footer-link">Integraciones con IA</a></li>
-                        <li><a href="#" class="footer-link">Diagnósticos rápidos con IA</a></li>
-                        <li><a href="#" class="footer-link">Bootcamp (Pronto)</a></li>
-                        <li><a href="#" class="footer-link">Descargables</a></li>
-                        <li><a href="#" class="footer-link">Videos</a></li>
-                        <li><a href="#" class="footer-link">Audio</a></li>
+                    <h3 class="font-semibold text-white mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="terminos.html" class="text-gray-400 hover:text-yellow-400 transition-colors">Términos y Condiciones</a></li>
+                        <li><a href="politica_privacidad.html" class="text-gray-400 hover:text-yellow-400 transition-colors">Política de Privacidad</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="font-semibold text-white">Legal</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="#" class="footer-link">Términos y Condiciones</a></li>
-                        <li><a href="#" class="footer-link">Política de Privacidad</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white"><a href="contacto.html">Contacto</a></h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="tel:+56985678296" class="footer-link">+56985678296</a></li>
-                        <li><a href="mailto:hola@deceroacien.app" class="footer-link">hola@deceroacien.app</a></li>
-                        <li><a href="https://www.deceroacien.app" target="_blank" class="footer-link">www.deceroacien.app</a></li>
+                    <h3 class="font-semibold text-white mb-4">Contacto</h3>
+                    <ul class="space-y-2">
+                        <li><a href="tel:+56985678296" class="text-gray-400 hover:text-yellow-400 transition-colors">+56985678296</a></li>
+                        <li><a href="mailto:hola@deceroacien.app" class="text-gray-400 hover:text-yellow-400 transition-colors">hola@deceroacien.app</a></li>
+                        <li><a href="https://www.deceroacien.app" target="_blank" class="text-gray-400 hover:text-yellow-400 transition-colors">www.deceroacien.app</a></li>
                     </ul>
                 </div>
             </div>
@@ -259,11 +219,5 @@
 
 </body>
 </html>
-
-
-
-
-
-
 
 
