@@ -192,7 +192,7 @@ class HeaderComponent extends BaseComponent {
             <nav class="header-nav">
                 <!-- Logo principal -->
                 <a href="index.html" class="header-logo" aria-label="Inicio DE CERO A CIEN">
-                    <img src="assets/logo_de_cero_a_cien_.png" alt="DE CERO A CIEN" class="header-logo-img" loading="lazy" />
+                    <img src="assets/logo_de_cero_a_cien_blanco_y_dorado.png" alt="DE CERO A CIEN" class="header-logo-img" loading="lazy" />
                 </a>
                 
                 <!-- Navegación principal (desktop) -->
@@ -435,10 +435,10 @@ class FooterComponent extends BaseComponent {
                     <div class="footer-section">
                         <h3>Recursos</h3>
                         <ul>
-                            <li><a href="bootcamp_pmf.html" class="footer-link ${this.currentPage === 'bootcamp_pmf' ? 'active' : ''}">El Camino Dorado</a></li>
+                            <li><a href="camino-dorado.html" class="footer-link ${this.currentPage === 'camino-dorado' ? 'active' : ''}">El Camino Dorado</a></li>
                             <li><a href="servicios.html" class="footer-link">Servicios Premium</a></li>
                             <li><a href="academy.html" class="footer-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a></li>
-                            <li><a href="#" class="footer-link">Conecta (Pronto)</a></li>
+                            <li><a href="javascript:void(0)" class="footer-link disabled" aria-disabled="true" tabindex="-1">Conecta <span class="ml-1 inline-block px-2 py-0.5 text-[10px] rounded bg-yellow-500/20 text-yellow-300">En construcción</span></a></li>
                         </ul>
                     </div>
                     
@@ -447,10 +447,10 @@ class FooterComponent extends BaseComponent {
                         <h3>Herramientas</h3>
                         <ul>
                             <li><a href="conferencias_catalogo.html" class="footer-link">Conferencias</a></li>
-                            <li><a href="#" class="footer-link">Integraciones con IA</a></li>
-                            <li><a href="#" class="footer-link">Diagnósticos con IA</a></li>
-                            <li><a href="#" class="footer-link">Bootcamp (Pronto)</a></li>
-                            <li><a href="#" class="footer-link">Blog (Pronto)</a></li>
+                            <li><a href="javascript:void(0)" class="footer-link disabled" aria-disabled="true" tabindex="-1">Integraciones con IA <span class="ml-1 inline-block px-2 py-0.5 text-[10px] rounded bg-yellow-500/20 text-yellow-300">En construcción</span></a></li>
+                            <li><a href="javascript:void(0)" class="footer-link disabled" aria-disabled="true" tabindex="-1">Diagnósticos con IA <span class="ml-1 inline-block px-2 py-0.5 text-[10px] rounded bg-yellow-500/20 text-yellow-300">En construcción</span></a></li>
+                            <li><a href="javascript:void(0)" class="footer-link disabled" aria-disabled="true" tabindex="-1">Bootcamp <span class="ml-1 inline-block px-2 py-0.5 text-[10px] rounded bg-yellow-500/20 text-yellow-300">En construcción</span></a></li>
+                            <li><a href="javascript:void(0)" class="footer-link disabled" aria-disabled="true" tabindex="-1">Blog <span class="ml-1 inline-block px-2 py-0.5 text-[10px] rounded bg-yellow-500/20 text-yellow-300">En construcción</span></a></li>
                         </ul>
                     </div>
                     
@@ -460,8 +460,8 @@ class FooterComponent extends BaseComponent {
                         <ul>
                             <li><a href="terminos.html" class="footer-link ${this.currentPage === 'terminos' ? 'active' : ''}">Términos y Condiciones</a></li>
                             <li><a href="politica_privacidad.html" class="footer-link ${this.currentPage === 'politica_privacidad' ? 'active' : ''}">Política de Privacidad</a></li>
-                            <li><a href="#" class="footer-link">Política de Cookies</a></li>
-                            <li><a href="#" class="footer-link">Aviso Legal</a></li>
+                            <li><a href="politica_cookies.html" class="footer-link ${this.currentPage === 'politica_cookies' ? 'active' : ''}">Política de Cookies</a></li>
+                            <li><a href="aviso_legal.html" class="footer-link ${this.currentPage === 'aviso_legal' ? 'active' : ''}">Aviso Legal</a></li>
                         </ul>
                     </div>
                     
