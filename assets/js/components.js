@@ -509,8 +509,8 @@ class FooterComponent extends BaseComponent {
                 <li><a href="${this.basePath}nosotros.html" class="footer-link ${this.currentPage === 'nosotros' ? 'active' : ''}">Nosotros</a></li>
                 <li><a href="${this.basePath}servicios.html" class="footer-link ${this.currentPage === 'servicios' ? 'active' : ''}">Servicios</a></li>
                 <li><a href="${this.basePath}metodologia.html" class="footer-link ${this.currentPage === 'metodologia' ? 'active' : ''}">Metodología</a></li>
-                <li><a href="${this.basePath}contacto.html" class="footer-link ${this.currentPage === 'contacto' ? 'active' : ''}">Contacto</a></li>
-                        </ul>
+                <li><a href="${this.basePath}blog.html" class="footer-link ${this.currentPage === 'blog' ? 'active' : ''}">Blog</a></li>
+            </ul>
                     </div>
                     
                     <!-- Sección: Recursos -->
@@ -520,22 +520,12 @@ class FooterComponent extends BaseComponent {
                 <li><a href="${this.basePath}camino-dorado.html" class="footer-link ${this.currentPage === 'camino-dorado' ? 'active' : ''}">El Camino Dorado</a></li>
                 <li><a href="${this.basePath}servicios.html" class="footer-link">Servicios Premium</a></li>
                 <li><a href="${this.basePath}academy.html" class="footer-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a></li>
-                            <li><a href="javascript:void(0)" class="footer-link disabled" aria-disabled="true" tabindex="-1">Conecta <span class="ml-1 inline-block px-2 py-0.5 text-[10px] rounded bg-yellow-500/20 text-yellow-300">En construcción</span></a></li>
-                        </ul>
-                    </div>
-                    
-                    <!-- Sección: Herramientas -->
-                    <div class="footer-section">
-                        <h3>Herramientas</h3>
-                        <ul>
+                <li><a href="javascript:void(0)" class="footer-link disabled" aria-disabled="true" tabindex="-1">Diagnósticos con IA <span class="ml-1 inline-block px-2 py-0.5 text-[10px] rounded bg-yellow-500/20 text-yellow-300">En construcción</span></a></li>
+                <li><a href="${this.basePath}conecta.html" class="footer-link ${this.currentPage === 'conecta' ? 'active' : ''}">Conecta</a></li>
                 <li><a href="${this.basePath}conferencias_catalogo.html" class="footer-link">Conferencias</a></li>
-                            <li><a href="javascript:void(0)" class="footer-link disabled" aria-disabled="true" tabindex="-1">Integraciones con IA <span class="ml-1 inline-block px-2 py-0.5 text-[10px] rounded bg-yellow-500/20 text-yellow-300">En construcción</span></a></li>
-                            <li><a href="javascript:void(0)" class="footer-link disabled" aria-disabled="true" tabindex="-1">Diagnósticos con IA <span class="ml-1 inline-block px-2 py-0.5 text-[10px] rounded bg-yellow-500/20 text-yellow-300">En construcción</span></a></li>
-                            <li><a href="javascript:void(0)" class="footer-link disabled" aria-disabled="true" tabindex="-1">Bootcamp <span class="ml-1 inline-block px-2 py-0.5 text-[10px] rounded bg-yellow-500/20 text-yellow-300">En construcción</span></a></li>
-                            <li><a href="javascript:void(0)" class="footer-link disabled" aria-disabled="true" tabindex="-1">Blog <span class="ml-1 inline-block px-2 py-0.5 text-[10px] rounded bg-yellow-500/20 text-yellow-300">En construcción</span></a></li>
-                        </ul>
-                    </div>
-                    
+            </ul>
+        </div>
+
                     <!-- Sección: Legal -->
                     <div class="footer-section">
                         <h3>Legal</h3>
