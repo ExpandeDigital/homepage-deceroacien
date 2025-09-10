@@ -164,7 +164,14 @@
             const userQuery = "Tema del mes: " + topic + ". Audiencia: " + audience + ".";
 
             try {
-                const apiKey = "";
+                // Prompt the user for their API key (do not commit API keys to version control)
+                const apiKey = prompt("Por favor, ingresa tu API key de Gemini:");
+                if (!apiKey) {
+                    loadingDiv.classList.add('hidden');
+                    errorMessage.textContent = "No se proporcionó la API key.";
+                    errorMessage.classList.remove('hidden');
+                    return;
+                }
                 const apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=" + apiKey;
                 const payload = {
                     systemInstruction: { parts: [{ text: systemPrompt }] },
