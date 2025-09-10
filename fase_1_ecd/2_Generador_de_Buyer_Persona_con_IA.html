@@ -71,13 +71,13 @@
 </head>
 <body class="antialiased">
 
-    <!-- Header del Portal (Simplificado) -->
-    <header class="sticky top-0 z-50 bg-[#0a192f]/80 backdrop-blur-lg border-b border-gray-800">
+    <!-- Subheader local (contenedor neutro) -->
+    <div class="sticky top-0 z-50 bg-[#0a192f]/80 backdrop-blur-lg border-b border-gray-800">
         <nav class="container mx-auto max-w-7xl px-6 py-3 flex justify-between items-center">
             <a href="portal-alumno.html" class="text-lg font-bold highlight-text">← Volver al Centro de Formación</a>
             <span class="text-sm text-slate-300">Bienvenido, [Nombre Alumno]</span>
         </nav>
-    </header>
+    </div>
 
     <main class="container mx-auto max-w-7xl px-6 py-12">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -237,21 +237,20 @@
             errorMessage.classList.add('hidden');
             loadingDiv.classList.remove('hidden');
             
-            const systemPrompt = `Actúa como un experto en marketing y creación de "Buyer Personas". Tu tarea es crear un perfil detallado y realista de un cliente ideal, extrapolando de forma creativa a partir de la información dada. La respuesta debe ser exclusivamente un objeto JSON.`;
+            const systemPrompt = "Actúa como un experto en marketing y creación de 'Buyer Personas'. Tu tarea es crear un perfil detallado y realista de un cliente ideal, extrapolando de forma creativa a partir de la información dada. La respuesta debe ser exclusivamente un objeto JSON.";
 
-            const userQuery = `
-                Basado en la siguiente información, genera un perfil de Buyer Persona:
-                - Producto: ${productDesc}
-                - Datos Demográficos: ${demographics}
-                - Puntos de Dolor: ${painPoints}
-                - Gustos y Comportamientos: ${behaviors}
-                
-                El perfil JSON debe incluir: name (nombre completo), age (número), location (ciudad, país), role (profesión), bio (biografía corta y narrativa), tastes_preferences (lista de 3 gustos), reference_brands (lista de 3 marcas), goals (lista de 3 metas) y frustrations (lista de 3 frustraciones).
-            `;
+            const userQuery = (
+                "Basado en la siguiente información, genera un perfil de Buyer Persona:\n" +
+                "- Producto: " + productDesc + "\n" +
+                "- Datos Demográficos: " + demographics + "\n" +
+                "- Puntos de Dolor: " + painPoints + "\n" +
+                "- Gustos y Comportamientos: " + behaviors + "\n\n" +
+                "El perfil JSON debe incluir: name (nombre completo), age (número), location (ciudad, país), role (profesión), bio (biografía corta y narrativa), tastes_preferences (lista de 3 gustos), reference_brands (lista de 3 marcas), goals (lista de 3 metas) y frustrations (lista de 3 frustraciones)."
+            );
 
             try {
                 const apiKey = "";
-                const apiUrl = \`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=\${apiKey}\`;
+                const apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=" + apiKey;
 
                 const payload = {
                     systemInstruction: { parts: [{ text: systemPrompt }] },
@@ -309,7 +308,7 @@
                 populateList('persona-goals', persona.goals);
                 populateList('persona-frustrations', persona.frustrations);
 
-                document.getElementById('persona-image').src = \`https://placehold.co/200x200/0a1f2f/FBBF24?text=\${persona.name.charAt(0)}\`;
+                document.getElementById('persona-image').src = "https://placehold.co/200x200/0a1f2f/FBBF24?text=" + persona.name.charAt(0);
 
                 loadingDiv.classList.add('hidden');
                 personaContent.classList.remove('hidden');

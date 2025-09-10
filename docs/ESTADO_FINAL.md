@@ -408,7 +408,7 @@ El sistema DE CERO A CIEN ahora cuenta con:
 ---
 
 ### **📞 Contacto del Proyecto**
-- **Web:** https://www.deceroacien.app
+- **Web:** https://deceroacien.app
 - **Email:** hola@deceroacien.app
 - **Teléfono:** +56 985 678 296
 

@@ -553,7 +553,7 @@ class FooterComponent extends BaseComponent {
                         <ul>
                             <li><a href="tel:+56985678296" class="footer-link">+56 985 678 296</a></li>
                 <li><a href="mailto:hola@deceroacien.app" class="footer-link">hola@deceroacien.app</a></li>
-                <li><a href="https://www.deceroacien.app" target="_blank" class="footer-link">www.deceroacien.app</a></li>
+                <li><a href="https://deceroacien.app" target="_blank" class="footer-link">www.deceroacien.app</a></li>
                 <li><a href="${this.basePath}contacto.html" class="footer-link">Formulario de Contacto</a></li>
                         </ul>
                     </div>

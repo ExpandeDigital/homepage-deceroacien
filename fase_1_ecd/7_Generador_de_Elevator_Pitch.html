@@ -60,12 +60,12 @@
 </head>
 <body class="antialiased">
 
-    <header class="sticky top-0 z-50 bg-[#0a192f]/80 backdrop-blur-lg border-b border-gray-800">
+    <div class="sticky top-0 z-50 bg-[#0a192f]/80 backdrop-blur-lg border-b border-gray-800">
         <nav class="container mx-auto max-w-7xl px-6 py-3 flex justify-between items-center">
             <a href="portal-alumno.html" class="text-lg font-bold highlight-text">← Volver al Centro de Formación</a>
             <span class="text-sm text-slate-300">Bienvenido, [Nombre Alumno]</span>
         </nav>
-    </header>
+    </div>
 
     <main class="container mx-auto max-w-7xl px-6 py-12">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -151,20 +151,20 @@
             resultTextarea.value = '';
             
             const systemPrompt = "Actúa como un experto en copywriting y storytelling. Tu tarea es tomar los 7 componentes de un elevator pitch y unirlos en un párrafo único, fluido, natural y persuasivo. No uses listas ni enumeraciones. La respuesta debe ser solo el párrafo del pitch.";
-            const userQuery = `
-                Componentes:
-                1. Para: ${values[0]}
-                2. Que necesita/problema: ${values[1]}
-                3. Nuestro producto: ${values[2]}
-                4. Es un/a: ${values[3]}
-                5. Que beneficio clave ofrece: ${values[4]}
-                6. A diferencia de: ${values[5]}
-                7. Nuestra solución (diferenciador): ${values[6]}
-            `;
+            const userQuery = (
+                "Componentes:\n" +
+                "1. Para: " + values[0] + "\n" +
+                "2. Que necesita/problema: " + values[1] + "\n" +
+                "3. Nuestro producto: " + values[2] + "\n" +
+                "4. Es un/a: " + values[3] + "\n" +
+                "5. Que beneficio clave ofrece: " + values[4] + "\n" +
+                "6. A diferencia de: " + values[5] + "\n" +
+                "7. Nuestra solución (diferenciador): " + values[6]
+            );
 
             try {
                 const apiKey = "";
-                const apiUrl = \`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=\${apiKey}\`;
+                const apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=" + apiKey;
 
                 const payload = {
                     systemInstruction: { parts: [{ text: systemPrompt }] },

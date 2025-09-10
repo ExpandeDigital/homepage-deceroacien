@@ -128,7 +128,7 @@ const CONFIG = {
                     <ul>
                         <li><a href="tel:+56985678296" class="footer-link">+56 985 678 296</a></li>
                         <li><a href="mailto:hola@deceroacien.app" class="footer-link">hola@deceroacien.app</a></li>
-                        <li><a href="https://www.deceroacien.app" target="_blank" class="footer-link">www.deceroacien.app</a></li>
+                        <li><a href="https://deceroacien.app" target="_blank" class="footer-link">www.deceroacien.app</a></li>
                         <li><a href="contacto.html" class="footer-link">Formulario de Contacto</a></li>
                     </ul>
                 </div>
@@ -164,7 +164,7 @@ const CONFIG = {
     <!-- Favicons y meta tags para redes sociales -->
     <meta property="og:title" content="{{TITLE}} - DE CERO A CIEN">
     <meta property="og:description" content="{{DESCRIPTION}}">
-    <meta property="og:url" content="https://www.deceroacien.app/{{FILENAME}}">
+    <meta property="og:url" content="https://deceroacien.app/{{FILENAME}}">
     <meta name="twitter:card" content="summary_large_image">
     
     <!-- Preload de recursos críticos -->

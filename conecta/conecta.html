@@ -92,8 +92,8 @@
 </head>
 <body class="gradient-bg">
 
-    <!-- Header -->
-    <header class="py-6 px-4 md:px-8 absolute w-full z-10">
+    <!-- Barra local (no header global) -->
+    <div class="py-6 px-4 md:px-8 absolute w-full z-10">
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold text-white tracking-wider">
                 DE CERO A CIEN <span class="text-dorado">CONECTA</span>
@@ -102,7 +102,7 @@
                 Unirse a la Tribu
             </a>
         </div>
-    </header>
+    </div>
 
     <!-- Hero Section -->
     <main class="relative pt-32 pb-20 md:pt-48 md:pb-32">
@@ -300,13 +300,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="py-8 bg-azul-oscuro border-t border-dorado/10">
-        <div class="container mx-auto px-4 text-center text-gray-500">
-             <p>&copy; 2025 DE CERO A CIEN. Todos los derechos reservados.</p>
-             <p class="text-sm mt-2">Construyendo una tribu de fundadores que dejan un legado.</p>
-        </div>
-    </footer>
+    <!-- Footer local eliminado: el global de components se encarga del pie de página -->
 
     <script>
         // Script para acordeón

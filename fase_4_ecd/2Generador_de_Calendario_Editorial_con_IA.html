@@ -62,12 +62,12 @@
 </head>
 <body class="antialiased">
 
-    <header class="sticky top-0 z-50 bg-[#0a192f]/80 backdrop-blur-lg border-b border-gray-800">
+    <div class="sticky top-0 z-50 bg-[#0a192f]/80 backdrop-blur-lg border-b border-gray-800">
         <nav class="container mx-auto max-w-7xl px-6 py-3 flex justify-between items-center">
             <a href="portal-alumno.html" class="text-lg font-bold highlight-text">← Volver al Centro de Formación</a>
             <span class="text-sm text-slate-300">Bienvenido, [Nombre Alumno]</span>
         </nav>
-    </header>
+    </div>
 
     <main class="container mx-auto max-w-7xl px-6 py-12">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -161,11 +161,11 @@
             loadingDiv.classList.remove('hidden');
             
             const systemPrompt = "Actúa como un estratega de contenido experto. Genera un calendario editorial de 4 semanas en formato JSON. La respuesta debe ser un objeto JSON con una clave 'weeks', que es un array de 4 objetos. Cada objeto 'week' debe tener un 'theme' y un array 'content' con al menos 3 piezas de contenido. Cada pieza de contenido debe tener 'channel' (Blog, LinkedIn, Instagram, Video), 'title', y 'description' (2-3 puntos clave).";
-            const userQuery = `Tema del mes: ${topic}. Audiencia: ${audience}.`;
+            const userQuery = "Tema del mes: " + topic + ". Audiencia: " + audience + ".";
 
             try {
                 const apiKey = "";
-                const apiUrl = \`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=\${apiKey}\`;
+                const apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=" + apiKey;
                 const payload = {
                     systemInstruction: { parts: [{ text: systemPrompt }] },
                     contents: [{ parts: [{ text: userQuery }] }],
@@ -230,20 +230,20 @@
                 
                 let contentHtml = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-3">';
                 week.content.forEach(item => {
-                    contentHtml += `
-                        <div class="content-card p-3 rounded-md">
-                            <span class="text-xs font-bold highlight-text">${item.channel}</span>
-                            <h5 class="font-semibold text-sm mt-1 text-white">${item.title}</h5>
-                            <p class="text-xs text-gray-400 mt-2">${item.description.replace(/\n/g, '<br>')}</p>
-                        </div>
-                    `;
+                    contentHtml += (
+                        '<div class="content-card p-3 rounded-md">' +
+                            '<span class="text-xs font-bold highlight-text">' + item.channel + '</span>' +
+                            '<h5 class="font-semibold text-sm mt-1 text-white">' + item.title + '</h5>' +
+                            '<p class="text-xs text-gray-400 mt-2">' + (item.description || '').replace(/\n/g, '<br>') + '</p>' +
+                        '</div>'
+                    );
                 });
                 contentHtml += '</div>';
 
-                weekEl.innerHTML = `
-                    <h4 class="font-bold text-white">Semana ${index + 1}: <span class="font-normal text-gray-300">${week.theme}</span></h4>
-                    ${contentHtml}
-                `;
+                weekEl.innerHTML = (
+                    '<h4 class="font-bold text-white">Semana ' + (index + 1) + ': ' + '<span class="font-normal text-gray-300">' + week.theme + '</span></h4>' +
+                    contentHtml
+                );
                 calendarContent.appendChild(weekEl);
             });
         }
@@ -252,5 +252,6 @@
         function descargar() { alert('Funcionalidad "Descargar": ¡Próximamente!'); }
         function compartir() { alert('Funcionalidad "Compartir": ¡Próximamente!'); }
     </script>
+    <script src="../assets/js/components.js"></script>
 </body>
 </html>

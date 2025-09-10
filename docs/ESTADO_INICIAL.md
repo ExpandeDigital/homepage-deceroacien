@@ -73,7 +73,7 @@
 ### **`index.html`**
 ```html
 <!-- ESTADO PREVIO -->
-<header class="sticky top-0 z-50 bg-[#0a1f2f]/80 backdrop-blur-lg">
+<div class="sticky top-0 z-50 bg-[#0a1f2f]/80 backdrop-blur-lg">
     <!-- Navegación más completa pero con clases no reutilizables -->
 </header>
 ```
