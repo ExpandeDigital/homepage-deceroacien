@@ -506,6 +506,20 @@
     color: var(--color-text-light);
 }
 
+/* Overrides: botones dentro de artículos (.prose) */
+.prose a.btn-primary,
+.prose a.cta-button,
+.prose a.cta-button-large {
+    color: var(--color-primary-dark);
+    text-decoration: none;
+}
+.prose a.btn-primary:hover,
+.prose a.cta-button:hover,
+.prose a.cta-button-large:hover {
+    color: var(--color-primary-dark);
+    text-decoration: none;
+}
+
 /* ========================================
    EFECTOS Y ANIMACIONES (Effects & Animations)
    ======================================== */
