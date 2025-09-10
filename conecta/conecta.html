@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DE CERO A CIEN CONECTA - El Fin de la Soledad del Estratega</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #101326; /* Azul Oscuro Base */
+            color: #f8f9fa; /* Gris Claro */
+        }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .bg-azul-medianoche { background-color: #1a1f3a; }
+        .bg-azul-oscuro { background-color: #101326; }
+        .text-dorado { color: #d4af37; }
+        .border-dorado { border-color: #d4af37; }
+        .bg-dorado { background-color: #d4af37; }
+        .hover\:bg-dorado-claro:hover { background-color: #e6c866; }
+        .gradient-bg { background: linear-gradient(180deg, #1a1f3a 0%, #101326 100%); }
+        .feature-card {
+            background-color: rgba(42, 49, 84, 0.5);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+        /* --- Estilos para el Slider de Iconos --- */
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        .slider {
+            background: #101326;
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.125);
+            height: 120px;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        .slider::before,
+        .slider::after {
+            background: linear-gradient(to right, #101326 0%, rgba(255, 255, 255, 0) 100%);
+            content: "";
+            height: 120px;
+            position: absolute;
+            width: 200px;
+            z-index: 2;
+        }
+        .slider::after {
+            right: 0;
+            top: 0;
+            transform: rotateZ(180deg);
+        }
+        .slider::before {
+            left: 0;
+            top: 0;
+        }
+        .slider .slide-track {
+            animation: scroll 40s linear infinite;
+            display: flex;
+            width: calc(250px * 14); 
+        }
+        .slider .slide {
+            height: 120px;
+            width: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #a7a9be;
+            transition: opacity 0.3s ease;
+        }
+        .slider .slide:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="gradient-bg">
+
+    <!-- Barra local (no header global) -->
+    <div class="py-6 px-4 md:px-8 absolute w-full z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white tracking-wider">
+                DE CERO A CIEN <span class="text-dorado">CONECTA</span>
+            </h1>
+            <a href="#unirse" class="bg-dorado text-azul-medianoche font-bold py-2 px-6 rounded-lg shadow-lg hover:bg-dorado-claro transition duration-300 hidden sm:block">
+                Unirse a la Tribu
+            </a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <main class="relative pt-32 pb-20 md:pt-48 md:pb-32">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="font-serif text-4xl md:text-6xl font-bold text-white leading-tight mb-4">El Fin de la Soledad del Estratega.</h2>
+            <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+                Bienvenido a CONECTA, el campus digital donde los fundadores se reúnen para aprender, colaborar y construir su legado. Deja de tomar decisiones a ciegas. Encuentra tu tribu.
+            </p>
+            <a href="#unirse" class="bg-dorado text-azul-medianoche font-bold text-lg py-4 px-10 rounded-lg shadow-2xl hover:bg-dorado-claro transition duration-300 inline-block">
+                Descubre Tu Comunidad
+            </a>
+        </div>
+    </main>
+
+    <!-- Widget: Slider de Iconos -->
+    <section class="slider my-16">
+        <div class="slide-track">
+            <!-- 7 Slides Originales -->
+            <div class="slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <p class="mt-2 text-sm">Espacios de Colaboración</p>
+            </div>
+            <div class="slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 2H8.6c-.4 0-.8.2-1.1.5-.3.3-.5.7-.5 1.1v12.8c0 .4.2.8.5 1.1.3.3.7.5 1.1.5h9.8c.4 0 .8-.2 1.1-.5.3-.3.5-.7.5-1.1V6.5L15.5 2z"/><path d="M3 7.6v12.8c0 .4.2.8.5 1.1.3.3.7.5 1.1.5h9.8"/><path d="M15 2v5h5"/></svg>
+                <p class="mt-2 text-sm">Contenido Exclusivo</p>
+            </div>
+            <div class="slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>
+                <p class="mt-2 text-sm">Eventos Premium</p>
+            </div>
+            <div class="slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/><circle cx="12" cy="8" r="2"/><path d="M15 13a3 3 0 1 0-6 0"/></svg>
+                <p class="mt-2 text-sm">Directorio de Empresas</p>
+            </div>
+            <div class="slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+                <p class="mt-2 text-sm">Programas de Crecimiento</p>
+            </div>
+            <div class="slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"/><path d="M22 18a10 10 0 1 0-20 0"/></svg>
+                <p class="mt-2 text-sm">Conecta Kids</p>
+            </div>
+            <div class="slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                <p class="mt-2 text-sm">Certificación "Sello De Cero a Cien"</p>
+            </div>
+            <!-- 7 Slides Duplicados para el efecto infinito -->
+            <div class="slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <p class="mt-2 text-sm">Espacios de Colaboración</p>
+            </div>
+            <div class="slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 2H8.6c-.4 0-.8.2-1.1.5-.3.3-.5.7-.5 1.1v12.8c0 .4.2.8.5 1.1.3.3.7.5 1.1.5h9.8c.4 0 .8-.2 1.1-.5.3-.3.5-.7.5-1.1V6.5L15.5 2z"/><path d="M3 7.6v12.8c0 .4.2.8.5 1.1.3.3.7.5 1.1.5h9.8"/><path d="M15 2v5h5"/></svg>
+                <p class="mt-2 text-sm">Contenido Exclusivo</p>
+            </div>
+            <div class="slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>
+                <p class="mt-2 text-sm">Eventos Premium</p>
+            </div>
+            <div class="slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/><circle cx="12" cy="8" r="2"/><path d="M15 13a3 3 0 1 0-6 0"/></svg>
+                <p class="mt-2 text-sm">Directorio de Empresas</p>
+            </div>
+            <div class="slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+                <p class="mt-2 text-sm">Programas de Crecimiento</p>
+            </div>
+            <div class="slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"/><path d="M22 18a10 10 0 1 0-20 0"/></svg>
+                <p class="mt-2 text-sm">Conecta Kids</p>
+            </div>
+            <div class="slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                <p class="mt-2 text-sm">Certificación "Sello De Cero a Cien"</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Pilares / Características -->
+    <section id="pilares" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h3 class="font-serif text-3xl md:text-4xl font-bold text-white">Un Ecosistema Diseñado para Ti</h3>
+                <p class="text-gray-400 mt-2 max-w-2xl mx-auto">No es solo un foro. Es un campus integral con todo lo que necesitas para llevar tu visión al siguiente nivel.</p>
+            </div>
+
+            <!-- Grupo 1: Pilares del Ecosistema -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <div class="feature-card p-8 rounded-xl">
+                    <div class="mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h4 class="font-serif text-2xl font-bold text-white mb-2">Espacios de Colaboración</h4>
+                    <p class="text-gray-300">Desde un Foro Principal para resolver dudas hasta grupos privados por cohorte y canales temáticos.</p>
+                </div>
+                <div class="feature-card p-8 rounded-xl">
+                    <div class="mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 2H8.6c-.4 0-.8.2-1.1.5-.3.3-.5.7-.5 1.1v12.8c0 .4.2.8.5 1.1.3.3.7.5 1.1.5h9.8c.4 0 .8-.2 1.1-.5.3-.3.5-.7.5-1.1V6.5L15.5 2z"/><path d="M3 7.6v12.8c0 .4.2.8.5 1.1.3.3.7.5 1.1.5h9.8"/><path d="M15 2v5h5"/></svg>
+                    </div>
+                    <h4 class="font-serif text-2xl font-bold text-white mb-2">Contenido Exclusivo</h4>
+                    <p class="text-gray-300">Accede a la revista "Legado", compite en simulaciones de mercado y participa en trivias interactivas.</p>
+                </div>
+                <div class="feature-card p-8 rounded-xl">
+                     <div class="mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>
+                    </div>
+                    <h4 class="font-serif text-2xl font-bold text-white mb-2">Eventos Premium</h4>
+                    <p class="text-gray-300">Participa en "Café con el Mentor", "Demo Days" comunitarios y masterclasses con expertos.</p>
+                </div>
+            </div>
+
+            <!-- Grupo 2: Universo de Oportunidades -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="feature-card p-8 rounded-xl">
+                    <div class="mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/><circle cx="12" cy="8" r="2"/><path d="M15 13a3 3 0 1 0-6 0"/></svg>
+                    </div>
+                    <h4 class="font-serif text-2xl font-bold text-white mb-2">Directorio de Empresas</h4>
+                    <p class="text-gray-300">Obtén visibilidad. Lista tu negocio en nuestro directorio exclusivo para conectar con otros miembros y socios.</p>
+                </div>
+                <div class="feature-card p-8 rounded-xl">
+                    <div class="mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+                    </div>
+                    <h4 class="font-serif text-2xl font-bold text-white mb-2">Programas de Crecimiento</h4>
+                    <p class="text-gray-300">Conviértete en embajador y obtén recompensas por ayudarnos a hacer crecer la comunidad.</p>
+                </div>
+                <div class="feature-card p-8 rounded-xl">
+                     <div class="mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"/><path d="M22 18a10 10 0 1 0-20 0"/></svg>
+                    </div>
+                    <h4 class="font-serif text-2xl font-bold text-white mb-2">Conecta Kids</h4>
+                    <p class="text-gray-300">Recursos y actividades diseñadas para compartir tu pasión de construir junto a tu familia.</p>
+                </div>
+                <div class="feature-card p-8 rounded-xl">
+                     <div class="mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                    </div>
+                    <h4 class="font-serif text-2xl font-bold text-white mb-2">Certificación "Sello De Cero a Cien"</h4>
+                    <p class="text-gray-300">Valida tu proyecto. Otorgamos nuestro sello a empresas que demuestran un modelo de negocios robusto.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Widget: Preguntas Frecuentes (Acordeón) -->
+    <section class="py-20 bg-azul-oscuro">
+        <div class="container mx-auto px-4 max-w-3xl">
+            <div class="text-center mb-12">
+                <h3 class="font-serif text-3xl md:text-4xl font-bold text-white">Preguntas Frecuentes</h3>
+            </div>
+            <div class="space-y-4">
+                <!-- Pregunta 1 -->
+                <div class="border border-dorado/20 rounded-lg">
+                    <button class="accordion-header w-full flex justify-between items-center p-6 text-left">
+                        <span class="text-lg font-semibold text-white">¿Quién puede unirse a CONECTA?</span>
+                        <svg class="w-6 h-6 text-dorado transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content px-6 pb-6">
+                        <p class="text-gray-300">El acceso a CONECTA está incluido en la suscripción principal a la plataforma DE CERO A CIEN y en la inscripción a cualquiera de nuestros programas de la ACADEMY. Es un beneficio exclusivo para los miembros activos de nuestro ecosistema.</p>
+                    </div>
+                </div>
+                <!-- Pregunta 2 -->
+                <div class="border border-dorado/20 rounded-lg">
+                    <button class="accordion-header w-full flex justify-between items-center p-6 text-left">
+                        <span class="text-lg font-semibold text-white">¿Qué tipo de eventos encontraré?</span>
+                        <svg class="w-6 h-6 text-dorado transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content px-6 pb-6">
+                        <p class="text-gray-300">Ofrecemos una variedad de eventos exclusivos diseñados para acelerar tu crecimiento, incluyendo sesiones mensuales de Q&A en vivo ("Café con el Mentor"), eventos trimestrales para presentar tu proyecto a la comunidad ("Demo Day") y masterclasses con expertos en áreas clave como legal, contabilidad y marketing avanzado.</p>
+                    </div>
+                </div>
+                <!-- Pregunta 3 -->
+                <div class="border border-dorado/20 rounded-lg">
+                    <button class="accordion-header w-full flex justify-between items-center p-6 text-left">
+                        <span class="text-lg font-semibold text-white">¿Cómo funciona la integración con la plataforma principal?</span>
+                        <svg class="w-6 h-6 text-dorado transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content px-6 pb-6">
+                        <p class="text-gray-300">Implementamos un sistema de Single Sign-On (SSO). Esto significa que una vez que inicies sesión en tu cuenta de DE CERO A CIEN, tendrás acceso automático y fluido a CONECTA sin necesidad de volver a introducir tus credenciales. Una experiencia de usuario unificada y sin fricciones.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Acceso y CTA Final -->
+    <section id="unirse" class="py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="font-serif text-3xl md:text-4xl font-bold text-white max-w-2xl mx-auto">Tu viaje como estratega solitario termina hoy.</h3>
+            <p class="text-lg text-gray-300 mt-4 mb-8">El acceso a CONECTA es el motor de retención y pertenencia de nuestro ecosistema.</p>
+            <a href="#" class="bg-dorado text-azul-medianoche font-bold text-lg py-4 px-10 rounded-lg shadow-2xl hover:bg-dorado-claro transition duration-300 inline-block">
+                Únete y Empieza a Construir
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer local eliminado: el global de components se encarga del pie de página -->
+
+    <script>
+        // Script para acordeón
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const icon = header.querySelector('svg');
+
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    accordionHeaders.forEach(otherHeader => {
+                        otherHeader.nextElementSibling.style.maxHeight = null;
+                        otherHeader.querySelector('svg').style.transform = 'rotate(0deg)';
+                    });
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    icon.style.transform = 'rotate(180deg)';
+                } 
+            });
+        });
+    </script>
+
+    <script src="../assets/js/components.js"></script>
+</body>
+</html>
+

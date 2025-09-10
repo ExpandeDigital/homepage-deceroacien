@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego: Dilema del PMV - DE CERO A CIEN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-noche: #1a1f3a;
+            --dorado: #d4af37;
+            --texto-claro: #e0e1e9;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--azul-noche);
+            color: var(--texto-claro);
+        }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .info-section .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.25rem;
+        }
+        .info-section .info-icon {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            margin-top: 2px;
+            font-size: 20px;
+        }
+        .feature-card {
+            background: linear-gradient(145deg, #2a3154, #1a1f3a);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            cursor: grab;
+        }
+        .drop-zone {
+            background-color: rgba(0,0,0,0.2);
+            border: 2px dashed rgba(255,255,255,0.2);
+            min-height: 100px;
+            transition: background-color 0.3s ease;
+        }
+        .drop-zone.over {
+            background-color: rgba(212, 175, 55, 0.2);
+        }
+        .dragging {
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body class="bg-[var(--azul-noche)] flex items-center justify-center min-h-screen p-4">
+
+    <!-- Pantalla de Información Inicial -->
+    <div id="info-screen" class="w-full max-w-2xl mx-auto">
+        <h1 class="font-serif text-3xl font-bold text-center text-white mb-6">Dilema del PMV</h1>
+        <div class="bg-black/20 p-6 rounded-lg text-sm text-[var(--texto-claro)] border border-white/10">
+            <p class="font-bold text-lg text-center text-white mb-6">Herramienta de la Fase 2: Construcción del PMV</p>
+            
+            <div class="info-section space-y-4">
+                <div class="info-item">
+                    <span class="info-icon">🎯</span>
+                    <div>
+                        <h3 class="font-bold text-white">Objetivo</h3>
+                        <p class="text-gray-300">Entrenar la habilidad de tomar decisiones estratégicas de priorización para definir el alcance de un Producto Mínimo Viable (PMV) que entregue valor real al cliente sin exceder el presupuesto.</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                     <span class="info-icon">⭐</span>
+                    <div>
+                        <h3 class="font-bold text-white">Importancia</h3>
+                        <p class="text-gray-300">El éxito de un lanzamiento a menudo depende de la disciplina para enfocarse en lo esencial. Construir demasiado puede llevar a la bancarrota; construir muy poco puede no resolver el problema del cliente.</p>
+                    </div>
+                </div>
+                 <div class="info-item">
+                     <span class="info-icon">⚙️</span>
+                    <div>
+                        <h3 class="font-bold text-white">¿Qué es lo que hace?</h3>
+                        <p class="text-gray-300">Te presenta un caso de negocio, un presupuesto y 10 funcionalidades con sus costos. Deberás arrastrar cada funcionalidad a las categorías del método MoSCoW para definir tu PMV. El resultado dependerá de tu priorización.</p>
+                    </div>
+                </div>
+                 <div class="info-item">
+                     <span class="info-icon">💡</span>
+                    <div>
+                        <h3 class="font-bold text-white">¿Para qué me sirve?</h3>
+                        <p class="text-gray-300">Este juego te fuerza a pensar críticamente sobre qué es "indispensable" versus qué es "deseable". Es la práctica perfecta antes de usar la herramienta H2 (Fase 2): Matriz de Priorización del Camino Dorado.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <button id="start-game-btn" class="mt-8 bg-[var(--dorado)] text-[var(--azul-noche)] font-bold text-lg py-3 px-10 rounded-lg">
+                ¡Entendido, Iniciar Simulación!
+            </button>
+        </div>
+    </div>
+
+    <!-- Pantalla de Juego -->
+    <div id="game-container" class="hidden w-full max-w-7xl mx-auto">
+        <div class="text-center mb-6">
+            <h1 class="font-serif text-4xl font-bold text-white">Dilema del PMV</h1>
+            <p id="case-description" class="text-gray-300 mt-2 max-w-3xl mx-auto"></p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+            <!-- Columna de Features -->
+            <div class="lg:col-span-2">
+                <h3 class="font-bold text-lg text-[var(--dorado)] mb-4">Funcionalidades Propuestas:</h3>
+                <div id="features-area" class="space-y-3">
+                    <!-- Las features se generan aquí -->
+                </div>
+            </div>
+
+            <!-- Columnas de MoSCoW -->
+            <div class="lg:col-span-3">
+                 <div class="flex justify-between items-center bg-black/20 p-3 rounded-lg mb-4">
+                    <h3 class="font-bold text-lg text-white">Prioriza tu PMV (Arrastra aquí):</h3>
+                    <div class="text-right">
+                        <p class="text-sm text-gray-400">Presupuesto PMV:</p>
+                        <p id="budget-display" class="text-xl font-bold"></p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-green-500/10 p-2 rounded-lg"><h4 class="font-bold text-center text-green-400">Must-Have</h4><div id="must-have" class="drop-zone p-2 rounded-lg mt-2"></div></div>
+                    <div class="bg-blue-500/10 p-2 rounded-lg"><h4 class="font-bold text-center text-blue-400">Should-Have</h4><div id="should-have" class="drop-zone p-2 rounded-lg mt-2"></div></div>
+                    <div class="bg-purple-500/10 p-2 rounded-lg"><h4 class="font-bold text-center text-purple-400">Could-Have</h4><div id="could-have" class="drop-zone p-2 rounded-lg mt-2"></div></div>
+                    <div class="bg-red-500/10 p-2 rounded-lg"><h4 class="font-bold text-center text-red-400">Won't-Have</h4><div id="wont-have" class="drop-zone p-2 rounded-lg mt-2"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 text-center">
+            <button id="launch-btn" class="bg-[var(--dorado)] text-[var(--azul-noche)] font-bold text-lg py-3 px-10 rounded-lg shadow-lg">
+                ¡Lanzar PMV y Ver Resultado!
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal de Resultado -->
+    <div id="result-modal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center p-4 z-50">
+        <div class="bg-[var(--azul-noche)] border-2 border-[var(--dorado)] rounded-xl shadow-2xl w-full max-w-lg text-center p-8">
+            <h2 id="result-title" class="font-serif text-4xl font-bold"></h2>
+            <p id="result-score" class="text-6xl font-black text-[var(--dorado)] my-4"></p>
+            <p id="result-feedback" class="text-[var(--texto-claro)] mb-6"></p>
+            <div class="flex gap-4 justify-center">
+                <button id="info-back-btn" class="bg-gray-500 text-white font-bold text-lg py-3 px-8 rounded-lg">Ver Explicación</button>
+                <button id="play-again-btn" class="bg-[var(--dorado)] text-[var(--azul-noche)] font-bold text-lg py-3 px-8 rounded-lg">Jugar de Nuevo</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Elementos del DOM ---
+            const infoScreen = document.getElementById('info-screen');
+            const gameContainer = document.getElementById('game-container');
+            const resultModal = document.getElementById('result-modal');
+            const startGameBtn = document.getElementById('start-game-btn');
+            const caseDescription = document.getElementById('case-description');
+            const budgetDisplay = document.getElementById('budget-display');
+            const featuresArea = document.getElementById('features-area');
+            const dropZones = document.querySelectorAll('.drop-zone');
+            const launchBtn = document.getElementById('launch-btn');
+            const resultTitle = document.getElementById('result-title');
+            const resultScore = document.getElementById('result-score');
+            const resultFeedback = document.getElementById('result-feedback');
+            const playAgainBtn = document.getElementById('play-again-btn');
+            const infoBackBtn = document.getElementById('info-back-btn');
+
+            // --- Estado del Juego ---
+            let currentCase;
+            const budget = 50000;
+
+            const cases = [{
+                description: 'Estás creando una app de delivery de comida saludable. Tu objetivo es lanzar un PMV para validar si los usuarios pagarán por el servicio.',
+                features: [
+                    { id: 'f1', text: 'Registro de usuario y login', cost: 8000, priority: 'must-have', score: 20 },
+                    { id: 'f2', text: 'Ver menú y platos del día', cost: 10000, priority: 'must-have', score: 20 },
+                    { id: 'f3', text: 'Hacer un pedido y pagar', cost: 15000, priority: 'must-have', score: 20 },
+                    { id: 'f4', text: 'Seguimiento del pedido en mapa', cost: 12000, priority: 'should-have', score: 10 },
+                    { id: 'f5', text: 'Calificar y dejar reseñas', cost: 7000, priority: 'should-have', score: 10 },
+                    { id: 'f6', text: 'Programa de lealtad (puntos)', cost: 9000, priority: 'could-have', score: 5 },
+                    { id: 'f7', text: 'Filtros de búsqueda por alergias', cost: 6000, priority: 'could-have', score: 5 },
+                    { id: 'f8', text: 'Chat en vivo con soporte', cost: 11000, priority: 'wont-have', score: 0 },
+                    { id: 'f9', text: 'Recomendaciones con IA', cost: 18000, priority: 'wont-have', score: 0 },
+                    { id: 'f10', text: 'Modo oscuro en la app', cost: 3000, priority: 'could-have', score: 0 },
+                ]
+            }];
+
+            function showScreen(screen) {
+                infoScreen.classList.add('hidden');
+                gameContainer.classList.add('hidden');
+                if (screen === 'info') infoScreen.classList.remove('hidden');
+                if (screen === 'game') gameContainer.classList.remove('hidden');
+            }
+            
+            function initGame() {
+                resultModal.classList.add('hidden');
+                currentCase = cases[0];
+                caseDescription.textContent = currentCase.description;
+                featuresArea.innerHTML = '';
+                dropZones.forEach(dz => dz.innerHTML = '');
+                
+                currentCase.features.forEach(feature => {
+                    const card = document.createElement('div');
+                    card.id = feature.id;
+                    card.className = 'feature-card p-3 rounded-lg';
+                    card.draggable = true;
+                    card.innerHTML = `<p class="font-bold text-sm">${feature.text}</p><p class="text-xs text-gray-400">Costo: $${feature.cost.toLocaleString()}</p>`;
+                    card.addEventListener('dragstart', dragStart);
+                    featuresArea.appendChild(card);
+                });
+                updateBudget();
+                showScreen('game');
+            }
+
+            function updateBudget() {
+                const mustHaveZone = document.getElementById('must-have');
+                let currentCost = 0;
+                mustHaveZone.childNodes.forEach(node => {
+                    const feature = currentCase.features.find(f => f.id === node.id);
+                    if (feature) currentCost += feature.cost;
+                });
+                
+                const remaining = budget - currentCost;
+                budgetDisplay.textContent = `$${remaining.toLocaleString()}`;
+                budgetDisplay.classList.toggle('text-red-500', remaining < 0);
+            }
+
+            // Drag and Drop Logic
+            let draggedItem = null;
+            function dragStart(e) {
+                draggedItem = e.target;
+                setTimeout(() => e.target.classList.add('dragging'), 0);
+            }
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', e => {
+                    e.preventDefault();
+                    zone.classList.add('over');
+                });
+                zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+                zone.addEventListener('drop', e => {
+                    e.preventDefault();
+                    zone.classList.remove('over');
+                    if (draggedItem) {
+                        zone.appendChild(draggedItem);
+                        draggedItem.classList.remove('dragging');
+                        draggedItem = null;
+                        updateBudget();
+                    }
+                });
+            });
+
+            function calculateScore() {
+                let score = 0;
+                let feedback = '';
+                let totalCost = 0;
+                const mustHaveFeatures = [];
+                
+                document.getElementById('must-have').childNodes.forEach(node => {
+                    const feature = currentCase.features.find(f => f.id === node.id);
+                    if(feature) {
+                        totalCost += feature.cost;
+                        mustHaveFeatures.push(feature);
+                        if(feature.priority === 'must-have') score += feature.score;
+                        else score -= 10; // Penalización por priorizar mal
+                    }
+                });
+
+                if (totalCost > budget) {
+                    score = 0;
+                    feedback = '¡Te pasaste del presupuesto! Un PMV debe ser austero. No se puede lanzar.';
+                    resultTitle.textContent = '¡Presupuesto Excedido!';
+                    resultTitle.style.color = '#ef4444';
+                } else {
+                     const essentialFeaturesCount = mustHaveFeatures.filter(f => f.priority === 'must-have').length;
+                     if(essentialFeaturesCount < 3) {
+                         score = Math.max(0, score - 30);
+                         feedback = 'Tu PMV es demasiado simple. No resuelve el problema central del cliente y probablemente fracasará en el mercado.';
+                         resultTitle.textContent = 'Lanzamiento Fallido';
+                         resultTitle.style.color = '#f97316';
+                     } else {
+                         score += document.getElementById('wont-have').childNodes.length * 5; // Puntos por descartar
+                         feedback = '¡Lanzamiento exitoso! Has priorizado bien, enfocándote en el valor y respetando el presupuesto. Tienes una base sólida para empezar a iterar.';
+                         resultTitle.textContent = '¡PMV Exitoso!';
+                         resultTitle.style.color = '#22c55e';
+                     }
+                }
+                
+                resultScore.textContent = `${Math.max(0, score)}/100`;
+                resultFeedback.textContent = feedback;
+                resultModal.classList.remove('hidden');
+ CERO A CIEN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-noche: #1a1f3a;
+            --dorado: #d4af37;
+            --texto-claro: #e0e1e9;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--azul-noche);
+            color: var(--texto-claro);
+        }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .info-section .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.25rem;
+        }
+        .info-section .info-icon {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            margin-top: 2px;
+            font-size: 20px;
+        }
+        .pitch-card {
+            background: linear-gradient(145deg, #2a3154, #1a1f3a);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .pitch-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--dorado);
+        }
+        .pitch-card.selected {
+            background: var(--dorado);
+            color: var(--azul-noche);
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .pitch-slot {
+            background-color: rgba(0,0,0,0.2);
+            border: 2px dashed rgba(255,255,255,0.2);
+        }
+        .timer-bar {
+            transition: width 1s linear;
+        }
+    </style>
+</head>
+<body class="bg-[var(--azul-noche)] flex items-center justify-center min-h-screen p-4">
+
+    <!-- Pantalla de Información Inicial -->
+    <div id="info-screen" class="w-full max-w-2xl mx-auto">
+        <h1 class="font-serif text-3xl font-bold text-center text-white mb-6">El Pitch Maestro</h1>
+        <div class="bg-black/20 p-6 rounded-lg text-sm text-[var(--texto-claro)] border border-white/10">
+            <p class="font-bold text-lg text-center text-white mb-6">Herramienta de la Fase 1: Ideación y Validación</p>
+            
+            <div class="info-section space-y-4">
+                <div class="info-item">
+                    <span class="info-icon">🎯</span>
+                    <div>
+                        <h3 class="font-bold text-white">Objetivo</h3>
+                        <p class="text-gray-300">Entrenar la habilidad de síntesis y comunicación efectiva, aprendiendo a estructurar y presentar una idea de negocio de forma clara, concisa y persuasiva en menos de 60 segundos.</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                     <span class="info-icon">⭐</span>
+                    <div>
+                        <h3 class="font-bold text-white">Importancia</h3>
+                        <p class="text-gray-300">Un buen "Elevator Pitch" puede abrir puertas a clientes, socios e inversores. Es la destilación de todo tu trabajo en un mensaje potente que genera interés inmediato.</p>
+                    </div>
+                </div>
+                 <div class="info-item">
+                     <span class="info-icon">⚙️</span>
+                    <div>
+                        <h3 class="font-bold text-white">¿Qué es lo que hace?</h3>
+                        <p class="text-gray-300">Te presenta un caso de negocio y una serie de "cartas" con frases. Tu desafío es seleccionar y ordenar las cartas correctas para construir el pitch más coherente y efectivo antes de que se acabe el tiempo.</p>
+                    </div>
+                </div>
+                 <div class="info-item">
+                     <span class="info-icon">💡</span>
+                    <div>
+                        <h3 class="font-bold text-white">¿Para qué me sirve?</h3>
+                        <p class="text-gray-300">Te prepara para comunicar tu propuesta de valor de forma rápida y estructurada en cualquier situación. Es la práctica ideal para luego usar la herramienta H7: Generador de Elevator Pitch del Camino Dorado.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <button id="start-game-btn" class="mt-8 bg-[var(--dorado)] text-[var(--azul-noche)] font-bold text-lg py-3 px-10 rounded-lg">
+                ¡Entendido, Aceptar el Desafío!
+            </button>
+        </div>
+    </div>
+
+    <!-- Pantalla de Juego -->
+    <div id="game-container" class="hidden w-full max-w-5xl mx-auto">
+        <div class="text-center mb-6">
+            <h1 class="font-serif text-4xl font-bold text-white">El Pitch Maestro</h1>
+            <div class="mt-4 w-full bg-gray-700 rounded-full h-4">
+                <div id="timer-bar" class="bg-[var(--dorado)] h-4 rounded-full timer-bar" style="width: 100%;"></div>
+            </div>
+            <p id="timer-display" class="text-2xl font-bold text-white mt-2">60</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Columna Izquierda: Pitch Construido -->
+            <div>
+                <h3 class="font-bold text-lg text-[var(--dorado)] mb-2">Caso de Negocio:</h3>
+                <div id="business-case" class="bg-black/20 p-4 rounded-lg mb-4"></div>
+                
+                <h3 class="font-bold text-lg text-[var(--dorado)] mb-2">Tu Pitch:</h3>
+                <div id="pitch-area" class="space-y-2">
+                    <!-- Los slots del pitch se generan aquí -->
+                </div>
+            </div>
+
+            <!-- Columna Derecha: Cartas Disponibles -->
+            <div>
+                <h3 class="font-bold text-lg text-[var(--dorado)] mb-2">Cartas Disponibles:</h3>
+                <div id="cards-area" class="grid grid-cols-2 gap-3">
+                    <!-- Las cartas se generan aquí -->
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 text-center">
+            <button id="check-pitch-btn" class="bg-[var(--dorado)] text-[var(--azul-noche)] font-bold text-lg py-3 px-10 rounded-lg shadow-lg">
+                ¡Revisar mi Pitch!
+            </button>
+        </div>
+    </div>
+    
+    <!-- Modal de Resultado -->
+    <div id="result-modal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center p-4 z-50">
+        <div class="bg-[var(--azul-noche)] border-2 border-[var(--dorado)] rounded-xl shadow-2xl w-full max-w-lg text-center p-8">
+            <h2 id="result-title" class="font-serif text-4xl font-bold"></h2>
+            <p id="result-score" class="text-6xl font-black text-[var(--dorado)] my-4"></p>
+            <p id="result-feedback" class="text-[var(--texto-claro)] mb-6"></p>
+            <div class="flex gap-4 justify-center">
+                <button id="info-back-btn" class="bg-gray-500 text-white font-bold text-lg py-3 px-8 rounded-lg">Ver Explicación</button>
+                <button id="play-again-btn" class="bg-[var(--dorado)] text-[var(--azul-noche)] font-bold text-lg py-3 px-8 rounded-lg">Jugar de Nuevo</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Elementos del DOM ---
+            const infoScreen = document.getElementById('info-screen');
+            const gameContainer = document.getElementById('game-container');
+            const resultModal = document.getElementById('result-modal');
+            const startGameBtn = document.getElementById('start-game-btn');
+            const timerBar = document.getElementById('timer-bar');
+            const timerDisplay = document.getElementById('timer-display');
+            const businessCaseEl = document.getElementById('business-case');
+            const pitchArea = document.getElementById('pitch-area');
+            const cardsArea = document.getElementById('cards-area');
+            const checkPitchBtn = document.getElementById('check-pitch-btn');
+            const resultTitle = document.getElementById('result-title');
+            const resultScore = document.getElementById('result-score');
+            const resultFeedback = document.getElementById('result-feedback');
+            const playAgainBtn = document.getElementById('play-again-btn');
+            const infoBackBtn = document.getElementById('info-back-btn');
+
+            // --- Estado del Juego ---
+            let timerInterval;
+            let timeLeft;
+            let currentPitch = [];
+            let currentCase;
+
+            const cases = [
+                {
+                    name: 'Café de Especialidad a Domicilio',
+                    description: 'Un servicio de suscripción mensual que entrega granos de café recién tostado de pequeños productores a la puerta de tu casa.',
+                    pitchStructure: ['target', 'problem', 'solution', 'secret_sauce'],
+                    cards: [
+                        { id: 'target', text: 'Para amantes del café que trabajan desde casa', score: 10 },
+                        { id: 'problem', text: 'y están cansados del café de supermercado', score: 10 },
+                        { id: 'solution', text: 'ofrecemos una suscripción de café de especialidad', score: 10 },
+                        { id: 'secret_sauce', text: 'curado por expertos y entregado en 48 horas.', score: 10 },
+                        { id: 'distractor1', text: 'vendemos tazas y molinillos', score: -5 },
+                        { id: 'distractor2', text: 'con envío gratis en todo el país', score: 0 },
+                        { id: 'distractor3', text: 'nuestro café es el más barato', score: -10 },
+                        { id: 'distractor4', text: 'disponible en todas las grandes tiendas', score: -5 },
+                    ]
+                },
+                 {
+                    name: 'App de Jardinería para Principiantes',
+                    description: 'Una aplicación móvil que usa IA para identificar plantas con una foto y da instrucciones de cuidado paso a paso.',
+                    pitchStructure: ['target', 'problem', 'solution', 'secret_sauce'],
+                    cards: [
+                        { id: 'target', text: 'Para habitantes de ciudad que quieren tener plantas', score: 10 },
+                        { id: 'problem', text: 'pero no saben cómo cuidarlas', score: 10 },
+                        { id: 'solution', text: 'creamos una app que identifica tus plantas', score: 10 },
+                        { id: 'secret_sauce', text: 'y te envía recordatorios inteligentes de riego.', score: 10 },
+                        { id: 'distractor1', text: 'tenemos un blog sobre flores', score: -5 },
+                        { id: 'distractor2', text: 'nuestra app es muy bonita', score: 0 },
+                        { id: 'distractor3', text: 'incluyendo plantas exóticas de todo el mundo', score: -5 },
+                        { id: 'distractor4', text: 'con maceteros de regalo', score: -10 },
+                    ]
+                }
+            ];
+
+            function showScreen(screen) {
+                infoScreen.classList.add('hidden');
+                gameContainer.classList.add('hidden');
+                if (screen === 'info') infoScreen.classList.remove('hidden');
+                if (screen === 'game') gameContainer.classList.remove('hidden');
+            }
+
+            function initGame() {
+                resultModal.classList.add('hidden');
+                currentPitch = [];
+                currentCase = cases[Math.floor(Math.random() * cases.length)];
+                
+                businessCaseEl.innerHTML = `<p class="font-bold text-white">${currentCase.name}</p><p class="text-sm text-gray-300">${currentCase.description}</p>`;
+                
+                setupPitchSlots();
+                setupCards();
+                startTimer();
+                showScreen('game');
+            }
+            
+            function setupPitchSlots() {
+                pitchArea.innerHTML = '';
+                for (let i = 0; i < currentCase.pitchStructure.length; i++) {
+                    const slot = document.createElement('div');
+                    slot.className = 'pitch-slot p-3 rounded-lg min-h-[60px] flex items-center justify-center';
+                    slot.innerHTML = `<span class="text-gray-500 text-sm">Parte ${i + 1} del Pitch</span>`;
+                    slot.dataset.index = i;
+                    pitchArea.appendChild(slot);
+                }
+            }
+            
+            function setupCards() {
+                cardsArea.innerHTML = '';
+                const shuffledCards = [...currentCase.cards].sort(() => Math.random() - 0.5);
+                shuffledCards.forEach(card => {
+                    const cardEl = document.createElement('div');
+                    cardEl.className = 'pitch-card p-3 rounded-lg text-sm';
+                    cardEl.textContent = card.text;
+                    cardEl.dataset.cardId = card.id;
+                    cardEl.addEventListener('click', () => selectCard(card, cardEl));
+                    cardsArea.appendChild(cardEl);
+                });
+            }
+
+            function selectCard(card, cardEl) {
+                if (currentPitch.length >= currentCase.pitchStructure.length || cardEl.classList.contains('selected')) return;
+
+                const nextSlotIndex = currentPitch.length;
+                const slotEl = pitchArea.querySelector(`[data-index='${nextSlotIndex}']`);
+                
+                slotEl.innerHTML = `<p class="font-semibold">${card.text}</p>`;
+                slotEl.style.borderStyle = 'solid';
+                slotEl.style.borderColor = 'var(--dorado)';
+                
+                currentPitch.push(card);
+                cardEl.classList.add('selected');
+            }
+
+            function startTimer() {
+                timeLeft = 60;
+                timerDisplay.textContent = timeLeft;
+                timerBar.style.width = '100%';
+                
+                clearInterval(timerInterval);
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    timerDisplay.textContent = timeLeft;
+                    timerBar.style.width = `${(timeLeft / 60) * 100}%`;
+                    if (timeLeft <= 10) {
+                        timerBar.style.backgroundColor = '#ef4444'; // Rojo peligro
+                    }
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        checkPitch();
+                    }
+                }, 1000);
+            }
+
+            function checkPitch() {
+                clearInterval(timerInterval);
+                let totalScore = 0;
+                let feedback = '';
+
+                // Score por estructura correcta
+                for(let i=0; i < currentPitch.length; i++) {
+                    if (currentPitch[i].id === currentCase.pitchStructure[i]) {
+                        totalScore += 20; // Puntos extra por orden correcto
+                    }
+                }
+                // Score por cartas individuales
+                currentPitch.forEach(card => {
+                    totalScore += card.score;
+                });
+                
+                if (totalScore >= 75) {
+                    resultTitle.textContent = "¡Pitch Maestro!";
+                    resultTitle.style.color = '#22c55e'; // Verde éxito
+                    feedback = "¡Excelente! Has construido un pitch claro, coherente y persuasivo. Tu mensaje es potente y va directo al punto.";
+                } else if (totalScore >= 40) {
+                    resultTitle.textContent = "Buen Intento";
+                     resultTitle.style.color = 'var(--dorado)';
+                    feedback = "Tienes una buena base, pero algunas partes del pitch podrían ser más fuertes o estar en un orden más lógico. ¡Sigue practicando!";
+                } else {
+                     resultTitle.textContent = "Necesita Mejorar";
+                     resultTitle.style.color = '#ef4444'; // Rojo peligro
+                    feedback = "Tu pitch parece confuso. Asegúrate de elegir solo las ideas más importantes y presentarlas en un orden que cuente una historia clara.";
+                }
+
+                resultScore.textContent = `${Math.max(0, totalScore)}/100`;
+                resultFeedback.textContent = feedback;
+                resultModal.classList.remove('hidden');
+            }
+
+            startGameBtn.addEventListener('click', initGame);
+            checkPitchBtn.addEventListener('click', checkPitch);
+            playAgainBtn.addEventListener('click', initGame);
+            infoBackBtn.addEventListener('click', () => {
+                resultModal.classList.add('hidden');
+                showScreen('info');
+            });
+        });
+    </script>
+    <script src="../assets/js/components.js"></script>
+</body>
+</html>

@@ -1,109 +1,64 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Meta tags esenciales para SEO y responsividad -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bootcamp intensivo de 6 semanas para encontrar tu Product-Market Fit. Aprende a construir un negocio que tus clientes amen.">
+    <meta name="keywords" content="product-market fit, bootcamp, startup, emprendimiento, negocio, clientes, validación, DE CERO A CIEN">
+    <meta name="author" content="DE CERO A CIEN">
+    
+    <!-- Título de la página -->
     <title>Bootcamp: Encuentra tu Product-Market Fit en 6 Semanas - DE CERO A CIEN ACADEMY</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Favicons y meta tags para redes sociales -->
+    <meta property="og:title" content="Bootcamp: Encuentra tu Product-Market Fit - DE CERO A CIEN">
+    <meta property="og:description" content="Bootcamp intensivo de 6 semanas para encontrar tu Product-Market Fit. Aprende a construir un negocio que tus clientes amen.">
+    <meta property="og:url" content="https://deceroacien.app/bootcamp_pmf.html">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Preload de recursos críticos -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
+    
+    <!-- Hojas de estilo -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0a1f2f;
-            color: #e6f1ff;
+    <link rel="stylesheet" href="assets/styles/common.css">
+    <link rel="stylesheet" href="assets/styles/mobile.css">
+    
+    <!-- Configuración de Tailwind personalizada -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#0a1f2f',
+                        'secondary-dark': '#112240',
+                        'accent-gold': '#FBBF24',
+                        'text-light': '#e6f1ff',
+                        'border-custom': '#1e2d4d'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif']
+                    }
+                }
+            }
         }
-        .header-link {
-            color: #cbd5e1;
-            transition: color 0.3s ease;
-        }
-        .header-link:hover, .footer-link:hover {
-            color: #FBBF24;
-        }
-        .active-link {
-            color: #FBBF24;
-            font-weight: 600;
-        }
-        .section-title {
-            color: #ccd6f6;
-            font-weight: 700;
-        }
-        .highlight-text {
-            color: #FBBF24;
-        }
-        .login-button {
-            color: #cbd5e1;
-            font-weight: 600;
-            transition: color 0.3s ease;
-            padding: 8px 12px;
-        }
-        .login-button:hover {
-            color: #FBBF24;
-        }
-        .register-button {
-            background-color: #FBBF24;
-            color: #0a1f2f;
-            font-weight: 700;
-            padding: 8px 16px;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-        .register-button:hover {
-            background-color: #FCD34D;
-        }
-        .footer-link {
-            color: #94a3b8;
-        }
-        .cta-button-large {
-            display: inline-block;
-            background-color: #FBBF24;
-            color: #0a1f2f;
-            font-weight: 700;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-size: 1.125rem;
-        }
-        .cta-button-large:hover {
-            background-color: #FCD34D;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(251, 191, 36, 0.3);
-        }
-        .week-accordion details > summary {
-            list-style: none;
-        }
-        .week-accordion details > summary::-webkit-details-marker {
-            display: none;
-        }
-    </style>
+    </script>
 </head>
-<body class="antialiased">
+<body class="base-container antialiased">
 
-    <!-- Header -->
-    <header class="sticky top-0 z-50 bg-[#0a1f2f]/80 backdrop-blur-lg">
-        <nav class="container mx-auto max-w-7xl px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="text-2xl font-bold highlight-text">DE CERO A CIEN</a>
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="index.html" class="header-link text-sm">Inicio</a>
-                <a href="nosotros.html" class="header-link text-sm">Nosotros</a>
-                <a href="servicios.html" class="header-link text-sm">Servicios</a>
-                <a href="metodologia.html" class="header-link text-sm">Metodología</a>
-                <a href="contacto.html" class="header-link text-sm">Contacto</a>
-                 <div class="pl-2 flex items-center space-x-2">
-                    <a href="#" class="login-button text-sm">Ingresa</a>
-                    <a href="#" class="register-button text-sm">Regístrate</a>
-                </div>
-            </div>
-        </nav>
+    <!-- HEADER UNIFICADO -->
+    <header class="header-component">
+        <!-- El contenido del header se genera dinamicamente por JavaScript -->
     </header>
 
-    <main>
+    <main class="main-content">
         <!-- Hero Section -->
-        <section class="py-20 sm:py-24 bg-[#0a1f2f]">
-            <div class="container mx-auto max-w-5xl px-6 text-center">
+        <section class="main-section py-20 sm:py-24">
+            <div class="section-container max-w-5xl text-center">
                 <p class="font-semibold highlight-text">Bootcamp Fase 3</p>
                 <h1 class="text-4xl sm:text-6xl font-bold section-title mt-4">Encuentra tu Product-Market Fit en 6 Semanas</h1>
                 <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Tu producto ya está en el mercado, pero la tracción es esquiva. En este bootcamp intensivo, te sumergirás en un ciclo de data, feedback y experimentación para encontrar el anhelado Product-Market Fit y construir un negocio que tus clientes amen de verdad.</p>
@@ -115,7 +70,7 @@
 
         <!-- Info Bar -->
         <div class="border-y border-gray-800">
-            <div class="container mx-auto max-w-6xl px-6">
+            <div class="section-container max-w-6xl">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center py-6">
                     <div>
                         <p class="text-gray-400 text-sm">Duración</p>
@@ -138,22 +93,22 @@
         </div>
 
         <!-- What's Included Section -->
-        <section class="py-20 sm:py-28">
-            <div class="container mx-auto max-w-6xl px-6">
+        <section class="main-section py-20 sm:py-28">
+            <div class="section-container max-w-6xl">
                 <div class="text-center">
                     <h2 class="text-3xl sm:text-4xl font-bold section-title">¿Qué Incluye el Bootcamp?</h2>
                     <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">Te entregamos un ecosistema de aprendizaje integral para asegurar tu éxito.</p>
                 </div>
-                <div class="grid md:grid-cols-3 gap-8 mt-16">
-                    <div class="bg-[#112240] p-8 rounded-lg border border-gray-800">
+                <div class="responsive-grid md:grid-cols-3 gap-8 mt-16">
+                    <div class="card-component">
                         <h3 class="text-xl font-bold text-white">El Taller: Plataforma SaaS</h3>
                         <p class="mt-3 text-gray-400">Acceso total a las micro-herramientas de "El Camino Dorado" para aplicar cada concepto de forma práctica y guiada.</p>
                     </div>
-                    <div class="bg-[#112240] p-8 rounded-lg border border-gray-800">
+                    <div class="card-component">
                         <h3 class="text-xl font-bold text-white">Mentorías Grupales Semanales</h3>
                         <p class="mt-3 text-gray-400">Una sesión en vivo por semana vía Meet para resolver dudas, recibir feedback directo del mentor y aprender de la comunidad.</p>
                     </div>
-                    <div class="bg-[#112240] p-8 rounded-lg border border-gray-800">
+                    <div class="card-component">
                         <h3 class="text-xl font-bold text-white">Material de Apoyo Exclusivo</h3>
                         <p class="mt-3 text-gray-400">Acceso a la "Biblioteca Maestra" con guías, Kits de Estudio, mapas mentales y material descargable para cada módulo.</p>
                     </div>
@@ -162,15 +117,15 @@
         </section>
 
         <!-- Curriculum Section -->
-        <section class="py-20 sm:py-28 bg-[#112240]">
-             <div class="container mx-auto max-w-4xl px-6">
+        <section class="main-section py-20 sm:py-28 bg-[var(--color-secondary-dark)]">
+             <div class="section-container max-w-4xl">
                 <div class="text-center">
                     <h2 class="text-3xl sm:text-4xl font-bold section-title">El Viaje: Semana a Semana</h2>
                     <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">Un programa intensivo de 6 semanas para encontrar el ajuste perfecto con tu mercado.</p>
                 </div>
                 <div class="mt-16 space-y-4 week-accordion">
                     <!-- Week 1 -->
-                    <details class="bg-[#0a1f2f] rounded-lg border border-gray-800 overflow-hidden">
+                    <details class="card-component">
                         <summary class="p-6 cursor-pointer flex justify-between items-center">
                             <h3 class="text-lg font-semibold text-white">Semana 1: El Pulso del Negocio</h3>
                             <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -180,7 +135,7 @@
                         </div>
                     </details>
                     <!-- Week 2 -->
-                    <details class="bg-[#0a1f2f] rounded-lg border border-gray-800 overflow-hidden">
+                    <details class="card-component">
                         <summary class="p-6 cursor-pointer flex justify-between items-center">
                             <h3 class="text-lg font-semibold text-white">Semana 2: La Voz del Cliente</h3>
                             <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -190,7 +145,7 @@
                         </div>
                     </details>
                     <!-- Week 3 -->
-                    <details class="bg-[#0a1f2f] rounded-lg border border-gray-800 overflow-hidden">
+                    <details class="card-component">
                         <summary class="p-6 cursor-pointer flex justify-between items-center">
                             <h3 class="text-lg font-semibold text-white">Semana 3: El Veredicto del Mercado</h3>
                             <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -200,7 +155,7 @@
                         </div>
                     </details>
                     <!-- Week 4 -->
-                    <details class="bg-[#0a1f2f] rounded-lg border border-gray-800 overflow-hidden">
+                    <details class="card-component">
                         <summary class="p-6 cursor-pointer flex justify-between items-center">
                             <h3 class="text-lg font-semibold text-white">Semana 4: La Matemática de la Rentabilidad</h3>
                             <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -210,7 +165,7 @@
                         </div>
                     </details>
                      <!-- Week 5 -->
-                    <details class="bg-[#0a1f2f] rounded-lg border border-gray-800 overflow-hidden">
+                    <details class="card-component">
                         <summary class="p-6 cursor-pointer flex justify-between items-center">
                             <h3 class="text-lg font-semibold text-white">Semana 5: El Laboratorio de Optimización</h3>
                             <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -220,7 +175,7 @@
                         </div>
                     </details>
                     <!-- Week 6 -->
-                    <details class="bg-[#0a1f2f] rounded-lg border border-gray-800 overflow-hidden">
+                    <details class="card-component">
                         <summary class="p-6 cursor-pointer flex justify-between items-center">
                             <h3 class="text-lg font-semibold text-white">Semana 6: El Plan de Ataque</h3>
                             <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -234,8 +189,8 @@
         </section>
 
          <!-- Final CTA -->
-        <section class="py-20 sm:py-28">
-            <div class="container mx-auto max-w-4xl px-6 text-center">
+        <section class="main-section py-20 sm:py-28">
+            <div class="section-container max-w-4xl text-center">
                 <h2 class="text-3xl sm:text-4xl font-bold section-title">Construye un Negocio que tus Clientes Amen</h2>
                 <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Deja de adivinar. Únete a la próxima cohorte y aprende a usar los datos y el feedback para encontrar el Product-Market Fit y asegurar el futuro de tu negocio.</p>
                 <div class="mt-10">
@@ -246,66 +201,24 @@
 
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-gray-800">
-        <div class="container mx-auto max-w-7xl px-6 py-12">
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 text-sm">
-                 <div>
-                    <h3 class="font-semibold text-white">Enlaces Rápidos</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="index.html" class="footer-link">Inicio</a></li>
-                        <li><a href="nosotros.html" class="footer-link">Nosotros</a></li>
-                        <li><a href="servicios.html" class="footer-link">Servicios</a></li>
-                        <li><a href="metodologia.html" class="footer-link">Metodología</a></li>
-                        <li><a href="contacto.html" class="footer-link">Contacto</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white">Recursos y Herramientas</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="#" class="footer-link">El Camino Dorado</a></li>
-                        <li><a href="servicios.html" class="footer-link">Servicios empresariales premium</a></li>
-                        <li><a href="academy.html" class="footer-link">Academy</a></li>
-                        <li><a href="#" class="footer-link">Conecta (Pronto)</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white">Recursos y Herramientas</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="#" class="footer-link">Integraciones con IA</a></li>
-                        <li><a href="diagnostico.html" class="footer-link">Diagnósticos rápidos con IA</a></li>
-                        <li><a href="academy.html" class="footer-link">Bootcamp (Pronto)</a></li>
-                        <li><a href="#" class="footer-link">Descargables</a></li>
-                        <li><a href="#" class="footer-link">Videos</a></li>
-                        <li><a href="#" class="footer-link">Audio</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white">Legal</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="terminos.html" class="footer-link">Términos y Condiciones</a></li>
-                        <li><a href="politica_privacidad.html" class="footer-link">Política de Privacidad</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white">Contacto</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="tel:+56985678296" class="footer-link">+56 9 8567 8296</a></li>
-                        <li><a href="mailto:hola@deceroacien.app" class="footer-link">hola@deceroacien.app</a></li>
-                        <li><a href="https://www.deceroacien.app" target="_blank" class="footer-link">www.deceroacien.app</a></li>
-                    </ul>
-                </div>
-            </div>
-             <div class="mt-12 border-t border-gray-800 pt-8 text-center">
-                 <p class="text-gray-500 text-xs">© 2025 DE CERO A CIEN. Todos los derechos reservados.</p>
-            </div>
-        </div>
+    <!-- FOOTER UNIFICADO -->
+    <footer class="footer-component">
+        <!-- El contenido del footer se genera dinamicamente por JavaScript -->
     </footer>
-    
+
+    <!-- Scripts JavaScript -->
+    <script src="assets/js/components.js"></script>
+
+    <!-- Script personalizado para funcionalidad específica del bootcamp -->
     <script>
+        /**
+         * Manejo de acordeones para el cronograma semanal del bootcamp
+         * Permite expandir/contraer las semanas y cierra automáticamente otras cuando se abre una nueva
+         */
         document.querySelectorAll('.week-accordion details').forEach((detail) => {
             detail.addEventListener('toggle', (event) => {
                 if (detail.open) {
+                    // Cerrar todos los otros acordeones cuando se abre uno nuevo
                     document.querySelectorAll('.week-accordion details').forEach((otherDetail) => {
                         if (otherDetail !== detail) {
                             otherDetail.removeAttribute('open');

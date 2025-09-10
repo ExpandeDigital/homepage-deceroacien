@@ -1,216 +1,357 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Meta tags esenciales para SEO y responsividad -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Descubre nuestra metodología 'El Camino Dorado' - Un sistema probado para llevar tu startup de cero a cien.">
+    <meta name="keywords" content="emprendimiento, startups, crecimiento empresarial, metodología, el camino dorado, PMF">
+    <meta name="author" content="DE CERO A CIEN">
+    
+    <!-- Título de la página -->
     <title>Metodología - DE CERO A CIEN</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Favicons y meta tags para redes sociales -->
+    <meta property="og:title" content="Metodología - DE CERO A CIEN">
+    <meta property="og:description" content="Descubre nuestra metodología 'El Camino Dorado' - Un sistema probado para llevar tu startup de cero a cien.">
+    <meta property="og:url" content="https://deceroacien.app/metodologia.html">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Preload de recursos críticos -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
+    
+    <!-- Hojas de estilo -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0a1f2f;
-            color: #e6f1ff;
+    <link rel="stylesheet" href="assets/styles/common.css">
+    <link rel="stylesheet" href="assets/styles/mobile.css">
+    
+    <!-- Configuración de Tailwind personalizada -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#0a1f2f',
+                        'secondary-dark': '#112240',
+                        'accent-gold': '#FBBF24',
+                        'text-light': '#e6f1ff',
+                        'border-custom': '#1e2d4d'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif']
+                    }
+                }
+            }
         }
-        .header-link {
-            color: #cbd5e1;
-            transition: color 0.3s ease;
-        }
-        .header-link:hover {
-            color: #FBBF24;
-        }
-        .active-link {
-            color: #FBBF24;
-            font-weight: 600;
-        }
-        .section-title {
-            color: #ccd6f6;
-            font-weight: 700;
-        }
-        .highlight-text {
-            color: #FBBF24;
-        }
-        .card {
-            background-color: #112240;
-            border: 1px solid #1e2d4d;
-            border-radius: 12px;
-            padding: 2.5rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px -15px rgba(0,0,0,0.7);
-        }
-        .step-card {
-            background-color: rgba(17, 34, 64, 0.5);
-            border-left: 4px solid #FBBF24;
-        }
-        .login-button {
-            color: #cbd5e1;
-            font-weight: 600;
-            transition: color 0.3s ease;
-            padding: 8px 12px;
-        }
-        .login-button:hover {
-            color: #FBBF24;
-        }
-        .register-button {
-            background-color: #FBBF24;
-            color: #0a1f2f;
-            font-weight: 700;
-            padding: 8px 16px;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-        .register-button:hover {
-            background-color: #FCD34D;
-        }
-    </style>
+    </script>
+    
+    <!-- Estilos específicos para la página de metodología (centralizados en common.css) -->
 </head>
-<body class="antialiased">
+<body class="base-container antialiased">
 
-    <!-- Header -->
-    <header class="sticky top-0 z-50 bg-[#0a192f]/80 backdrop-blur-lg">
-        <nav class="container mx-auto max-w-7xl px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="text-2xl font-bold highlight-text">DE CERO A CIEN</a>
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="index.html" class="header-link text-sm">Inicio</a>
-                <a href="nosotros.html" class="header-link text-sm">Nosotros</a>
-                <a href="servicios.html" class="header-link text-sm">Servicios</a>
-                <a href="metodologia.html" class="active-link text-sm">Metodología</a>
-                <a href="contacto.html" class="header-link text-sm">Contacto</a>
-                <div class="pl-2 flex items-center space-x-2">
-                    <a href="#" class="login-button text-sm">Ingresa</a>
-                    <a href="#" class="register-button text-sm">Regístrate</a>
-                </div>
-            </div>
-        </nav>
+    <!-- HEADER UNIFICADO -->
+    <header class="header-component">
+        <!-- El contenido del header se genera dinamicamente por JavaScript -->
     </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="py-20 sm:py-28 text-center">
-            <div class="container mx-auto max-w-4xl px-6">
-                <h1 class="text-4xl sm:text-5xl font-bold section-title">No necesitas más <span class="highlight-text">"Tips"</span>, necesitas un <span class="highlight-text">Mapa</span>.</h1>
-                <p class="mt-6 text-lg text-gray-400">Reemplazamos el ruido por un sistema y el caos por la claridad. Nuestra metodología es un "Camino Dorado", una hoja de ruta probada que te guía paso a paso desde la concepción de tu idea hasta la consolidación de tu legado.</p>
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+        <!-- Sección Hero -->
+        <section class="main-section py-20 sm:py-28">
+            <div class="section-container max-w-4xl text-center">
+                <h1 class="text-4xl sm:text-5xl font-bold section-title leading-tight fade-in">
+                    No necesitas más <span class="highlight-text">"Tips"</span>, necesitas un <span class="highlight-text">Mapa</span>
+                </h1>
+                <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto fade-in">
+                    Reemplazamos el ruido por un sistema y el caos por la claridad. Nuestra metodología es un 
+                    "Camino Dorado", una hoja de ruta probada que te guía paso a paso desde la concepción de tu 
+                    idea hasta la consolidación de tu legado.
+                </p>
             </div>
         </section>
 
-        <!-- El Camino Dorado Section -->
-        <section class="pb-20 sm:pb-28">
-            <div class="container mx-auto max-w-5xl px-6">
-                <h2 class="text-3xl font-bold text-center section-title">El Camino Dorado: Nuestras 5 Fases</h2>
-                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="step-card p-6 rounded-lg">
-                        <h3 class="text-xl font-bold highlight-text">Fase 1: Ideación y Validación</h3>
-                        <p class="mt-2 text-gray-400">Desde la chispa inicial hasta la validación rigurosa de tu idea en el mercado.</p>
+        <!-- Sección El Camino Dorado: Las 5 Fases -->
+        <section class="main-section pb-20 sm:pb-28">
+            <div class="section-container max-w-6xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold section-title">
+                        El Camino Dorado: <span class="highlight-text">Nuestras 5 Fases</span>
+                    </h2>
+                    <div class="progress-indicator max-w-md mx-auto mt-4"></div>
+                </div>
+                
+                <div class="responsive-grid lg:grid-cols-3 gap-8">
+                    <!-- Fase 1 -->
+                    <div class="methodology-step-card">
+                        <div class="step-number">1</div>
+                        <h3 class="text-xl font-bold highlight-text mb-3">Ideación y Validación</h3>
+                        <p class="text-gray-400 leading-relaxed">
+                            Desde la chispa inicial hasta la validación rigurosa de tu idea en el mercado. 
+                            Transformamos intuiciones en hipótesis comprobables.
+                        </p>
+                        <ul class="mt-4 text-sm text-gray-500 space-y-1">
+                            <li>• Definición del problema</li>
+                            <li>• Investigación de mercado</li>
+                            <li>• Validación con usuarios</li>
+                        </ul>
                     </div>
-                    <div class="step-card p-6 rounded-lg">
-                        <h3 class="text-xl font-bold highlight-text">Fase 2: Construcción del PMV</h3>
-                        <p class="mt-2 text-gray-400">Desarrollamos tu Producto Mínimo Viable, la primera versión funcional de tu visión.</p>
+                    
+                    <!-- Fase 2 -->
+                    <div class="methodology-step-card">
+                        <div class="step-number">2</div>
+                        <h3 class="text-xl font-bold highlight-text mb-3">Construcción del PMV</h3>
+                        <p class="text-gray-400 leading-relaxed">
+                            Desarrollamos tu Producto Mínimo Viable, la primera versión funcional 
+                            de tu visión con el menor esfuerzo posible.
+                        </p>
+                        <ul class="mt-4 text-sm text-gray-500 space-y-1">
+                            <li>• Diseño de funcionalidades core</li>
+                            <li>• Desarrollo ágil</li>
+                            <li>• Testing con usuarios beta</li>
+                        </ul>
                     </div>
-                    <div class="step-card p-6 rounded-lg">
-                        <h3 class="text-xl font-bold highlight-text">Fase 3: Tracción y Product-Market Fit</h3>
-                        <p class="mt-2 text-gray-400">Encontramos a tus primeros clientes y ajustamos el producto hasta que el mercado no pueda vivir sin él.</p>
+                    
+                    <!-- Fase 3 -->
+                    <div class="methodology-step-card">
+                        <div class="step-number">3</div>
+                        <h3 class="text-xl font-bold highlight-text mb-3">Tracción y Product-Market Fit</h3>
+                        <p class="text-gray-400 leading-relaxed">
+                            Encontramos a tus primeros clientes y ajustamos el producto hasta que 
+                            el mercado no pueda vivir sin él.
+                        </p>
+                        <ul class="mt-4 text-sm text-gray-500 space-y-1">
+                            <li>• Adquisición de usuarios</li>
+                            <li>• Iteración basada en feedback</li>
+                            <li>• Métricas de engagement</li>
+                        </ul>
                     </div>
-                     <div class="step-card p-6 rounded-lg lg:col-start-2">
-                        <h3 class="text-xl font-bold highlight-text">Fase 4: Crecimiento y Escalabilidad</h3>
-                        <p class="mt-2 text-gray-400">Construimos la máquina de crecimiento para llevar tu negocio al siguiente nivel de forma sostenible.</p>
+                    
+                    <!-- Fase 4 -->
+                    <div class="methodology-step-card lg:col-start-2">
+                        <div class="step-number">4</div>
+                        <h3 class="text-xl font-bold highlight-text mb-3">Crecimiento y Escalabilidad</h3>
+                        <p class="text-gray-400 leading-relaxed">
+                            Construimos la máquina de crecimiento para llevar tu negocio al 
+                            siguiente nivel de forma sostenible.
+                        </p>
+                        <ul class="mt-4 text-sm text-gray-500 space-y-1">
+                            <li>• Optimización de conversión</li>
+                            <li>• Automatización de procesos</li>
+                            <li>• Expansión de mercado</li>
+                        </ul>
                     </div>
-                    <div class="step-card p-6 rounded-lg">
-                        <h3 class="text-xl font-bold highlight-text">Fase 5: Consolidación y Madurez</h3>
-                        <p class="mt-2 text-gray-400">Optimizamos operaciones y solidificamos tu posición en el mercado para asegurar tu legado.</p>
+                    
+                    <!-- Fase 5 -->
+                    <div class="methodology-step-card">
+                        <div class="step-number">5</div>
+                        <h3 class="text-xl font-bold highlight-text mb-3">Consolidación y Madurez</h3>
+                        <p class="text-gray-400 leading-relaxed">
+                            Optimizamos operaciones y solidificamos tu posición en el mercado 
+                            para asegurar tu legado.
+                        </p>
+                        <ul class="mt-4 text-sm text-gray-500 space-y-1">
+                            <li>• Eficiencia operacional</li>
+                            <li>• Liderazgo de mercado</li>
+                            <li>• Preparación para exit</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Two Routes Section -->
-        <section class="pb-20 sm:pb-28">
-            <div class="container mx-auto max-w-7xl px-6">
-                <h2 class="text-3xl font-bold text-center section-title">Dos Caminos, Un Mapa</h2>
-                <p class="mt-4 text-center text-lg text-gray-400 max-w-3xl mx-auto">Reconocemos que no todos los emprendimientos son iguales. Por eso, nuestro sistema se adapta a tu ambición con dos rutas personalizadas.</p>
-                <div class="mt-12 grid lg:grid-cols-2 gap-12">
-                    <div class="card">
-                        <h3 class="text-2xl font-bold highlight-text">Ruta Startup (El Fórmula 1)</h3>
-                        <p class="mt-4 text-gray-400">Para quienes buscan crecimiento exponencial y capital de riesgo. Nos enfocamos en la velocidad de aprendizaje, la escalabilidad y la disrupción del mercado.</p>
+        <!-- Sección Dos Caminos -->
+        <section class="main-section pb-20 sm:pb-28">
+            <div class="section-container max-w-7xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold section-title">
+                        Dos Caminos, <span class="highlight-text">Un Mapa</span>
+                    </h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">
+                        Reconocemos que no todos los emprendimientos son iguales. Por eso, nuestro sistema 
+                        se adapta a tu ambición con dos rutas personalizadas.
+                    </p>
+                </div>
+                
+                <div class="responsive-grid lg:grid-cols-2 gap-12">
+                    <!-- Ruta Startup -->
+                    <div class="methodology-phase">
+                        <div class="text-center mb-8">
+                            <div class="inline-block p-4 bg-yellow-400/10 rounded-full mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" 
+                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                     class="text-yellow-400">
+                                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold highlight-text">Ruta Startup</h3>
+                            <p class="text-sm text-gray-400">(El Fórmula 1)</p>
+                        </div>
+                        <p class="text-gray-400 leading-relaxed mb-6">
+                            Para quienes buscan crecimiento exponencial y capital de riesgo. Nos enfocamos en la 
+                            velocidad de aprendizaje, la escalabilidad y la disrupción del mercado.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <h4 class="font-semibold text-white mb-2">Características:</h4>
+                                <ul class="text-gray-400 space-y-1">
+                                    <li>• Alto riesgo, alto retorno</li>
+                                    <li>• Búsqueda de capital VC</li>
+                                    <li>• Escalabilidad global</li>
+                                    <li>• Innovación disruptiva</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white mb-2">Enfoque:</h4>
+                                <ul class="text-gray-400 space-y-1">
+                                    <li>• Crecimiento exponencial</li>
+                                    <li>• Métricas de tracción</li>
+                                    <li>• Product-Market Fit</li>
+                                    <li>• Exit estratégico</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card">
-                        <h3 class="text-2xl font-bold highlight-text">Ruta Emprendimiento Dinámico (El 4x4)</h3>
-                        <p class="mt-4 text-gray-400">Para quienes buscan construir un negocio sostenible y rentable. Nos enfocamos en el flujo de caja positivo, el liderazgo de nicho y la reinversión de beneficios.</p>
+                    
+                    <!-- Ruta Emprendimiento Dinámico -->
+                    <div class="methodology-phase">
+                        <div class="text-center mb-8">
+                            <div class="inline-block p-4 bg-yellow-400/10 rounded-full mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" 
+                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                     class="text-yellow-400">
+                                    <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                    <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                    <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold highlight-text">Emprendimiento Dinámico</h3>
+                            <p class="text-sm text-gray-400">(El 4x4)</p>
+                        </div>
+                        <p class="text-gray-400 leading-relaxed mb-6">
+                            Para quienes buscan construir un negocio sostenible y rentable. Nos enfocamos en el 
+                            flujo de caja positivo, el liderazgo de nicho y la reinversión de beneficios.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <h4 class="font-semibold text-white mb-2">Características:</h4>
+                                <ul class="text-gray-400 space-y-1">
+                                    <li>• Riesgo controlado</li>
+                                    <li>• Financiación propia</li>
+                                    <li>• Crecimiento sostenible</li>
+                                    <li>• Liderazgo de nicho</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white mb-2">Enfoque:</h4>
+                                <ul class="text-gray-400 space-y-1">
+                                    <li>• Flujo de caja positivo</li>
+                                    <li>• Reinversión de beneficios</li>
+                                    <li>• Eficiencia operacional</li>
+                                    <li>• Legado duradero</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-         <!-- Sinergia Humano-IA Section -->
-        <section class="pb-20 sm:pb-28 text-center">
-            <div class="container mx-auto max-w-4xl px-6">
-                <h2 class="text-3xl font-bold section-title">Sinergia Humano-IA: Nuestra Ventaja Injusta</h2>
-                <p class="mt-6 text-lg text-gray-400">Nuestra filosofía es simple: "La máquina debe hacer el trabajo pesado. El humano debe hacer el trabajo del corazón". Utilizamos la Inteligencia Artificial como un multiplicador de potencia para acelerar la ejecución, permitiendo que tú, el fundador o fundadora, te enfoques en lo que realmente importa: la estrategia y la toma de decisiones críticas.</p>
+        <!-- Sección Sinergia Humano-IA -->
+        <section class="main-section pb-20 sm:pb-28">
+            <div class="section-container max-w-5xl text-center">
+                <h2 class="text-3xl font-bold section-title mb-6">
+                    Sinergia Humano-IA: <span class="highlight-text">Nuestra Ventaja Injusta</span>
+                </h2>
+                <p class="text-lg text-gray-400 max-w-4xl mx-auto leading-relaxed">
+                    Nuestra filosofía es simple: <strong class="text-white">"La máquina debe hacer el trabajo pesado. 
+                    El humano debe hacer el trabajo del corazón"</strong>. Utilizamos la Inteligencia Artificial como 
+                    un multiplicador de potencia para acelerar la ejecución, permitiendo que tú, el fundador o 
+                    fundadora, te enfoques en lo que realmente importa: la estrategia y la toma de decisiones críticas.
+                </p>
+                
+                <div class="mt-12 responsive-grid lg:grid-cols-3 gap-8">
+                    <div class="card-component text-left">
+                        <div class="text-center mb-4">
+                            <div class="inline-block p-3 bg-yellow-400/10 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                     class="text-yellow-400">
+                                    <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"></path>
+                                    <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-3">La IA Acelera</h3>
+                        <p class="text-gray-400 text-sm">
+                            Automatización de tareas repetitivas, análisis de datos en tiempo real, 
+                            y generación de insights predictivos para optimizar decisiones.
+                        </p>
+                    </div>
+                    
+                    <div class="card-component text-left">
+                        <div class="text-center mb-4">
+                            <div class="inline-block p-3 bg-yellow-400/10 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                     class="text-yellow-400">
+                                    <path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-3">El Humano Guía</h3>
+                        <p class="text-gray-400 text-sm">
+                            Visión estratégica, creatividad, intuición empresarial y construcción 
+                            de relaciones significativas que solo el elemento humano puede aportar.
+                        </p>
+                    </div>
+                    
+                    <div class="card-component text-left">
+                        <div class="text-center mb-4">
+                            <div class="inline-block p-3 bg-yellow-400/10 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                     class="text-yellow-400">
+                                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                                    <path d="M4 22h16"></path>
+                                    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-3">Juntos Escalan</h3>
+                        <p class="text-gray-400 text-sm">
+                            La sinergia perfecta que multiplica la capacidad de ejecución 
+                            mientras preserva la esencia humana del emprendimiento.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="mt-12">
+                    <a href="camino-dorado.html" class="btn-primary inline-block">
+                        Conocer El Camino Dorado
+                    </a>
+                </div>
             </div>
         </section>
-
     </main>
     
-    <!-- Footer -->
-    <footer class="border-t border-gray-800">
-        <div class="container mx-auto max-w-7xl px-6 py-12">
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 text-sm">
-                <div>
-                    <h3 class="font-semibold text-white">Enlaces Rápidos</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="index.html" class="footer-link">Inicio</a></li>
-                        <li><a href="nosotros.html" class="footer-link">Nosotros</a></li>
-                        <li><a href="servicios.html" class="footer-link">Servicios</a></li>
-                        <li><a href="metodologia.html" class="footer-link">Metodología</a></li>
-                        <li><a href="contacto.html" class="footer-link">Contacto</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white">Recursos y Herramientas</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="#" class="footer-link">El Camino Dorado</a></li>
-                        <li><a href="servicios.html" class="footer-link">Servicios empresariales premium</a></li>
-                        <li><a href="#" class="footer-link">Academy (Pronto)</a></li>
-                        <li><a href="#" class="footer-link">Conecta (Pronto)</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white">Recursos y Herramientas</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="#" class="footer-link">Integraciones con IA</a></li>
-                        <li><a href="#" class="footer-link">Diagnósticos rápidos con IA</a></li>
-                        <li><a href="#" class="footer-link">Bootcamp (Pronto)</a></li>
-                        <li><a href="#" class="footer-link">Descargables</a></li>
-                        <li><a href="#" class="footer-link">Videos</a></li>
-                        <li><a href="#" class="footer-link">Audio</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white">Legal</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="#" class="footer-link">Términos y Condiciones</a></li>
-                        <li><a href="#" class="footer-link">Política de Privacidad</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white">Contacto</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="tel:+56985678296" class="footer-link">+56985678296</a></li>
-                        <li><a href="mailto:hola@deceroacien.app" class="footer-link">hola@deceroacien.app</a></li>
-                        <li><a href="https://www.deceroacien.app" target="_blank" class="footer-link">www.deceroacien.app</a></li>
-                    </ul>
-                </div>
-            </div>
-             <div class="mt-12 border-t border-gray-800 pt-8 text-center">
-                 <p class="text-gray-500 text-xs">© 2025 DE CERO A CIEN. Todos los derechos reservados.</p>
-            </div>
-        </div>
+    <!-- FOOTER UNIFICADO -->
+    <footer class="footer-component">
+        <!-- El contenido del footer se genera dinamicamente por JavaScript -->
     </footer>
+
+    <!-- Scripts JavaScript -->
+    <script src="assets/js/components.js"></script>
 
 </body>
 </html>

@@ -3,99 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desarrollo de Soluciones Digitales - DE CERO A CIEN</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- SEO Optimizado -->
+    <title>Catálogo de Desarrollo de Soluciones Digitales - DE CERO A CIEN</title>
+    <meta name="description" content="Catálogo completo de servicios de desarrollo de soluciones digitales de DE CERO A CIEN. Desarrollo web, apps móviles, sistemas empresariales y más.">
+    <meta name="keywords" content="desarrollo de software, soluciones digitales, desarrollo web, apps móviles, DE CERO A CIEN, sistemas empresariales, tecnología">
+    <meta name="author" content="DE CERO A CIEN">
+    
+    <!-- Open Graph para redes sociales -->
+    <meta property="og:title" content="Desarrollo de Soluciones Digitales - DE CERO A CIEN">
+    <meta property="og:description" content="Catálogo de servicios de desarrollo de software y soluciones digitales personalizadas.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://deceroacien.app/desarrollo_catalogo.html">
+    
+    <!-- Preload de recursos críticos -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
+    
+    <!-- Hojas de estilo -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0a1f2f;
-            color: #e6f1ff;
+    <link rel="stylesheet" href="assets/styles/common.css">
+    <link rel="stylesheet" href="assets/styles/mobile.css">
+    
+    <!-- Configuración de Tailwind personalizada -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#0a1f2f',
+                        'secondary-dark': '#112240',
+                        'accent-gold': '#FBBF24',
+                        'text-light': '#e6f1ff',
+                        'border-custom': '#1e2d4d'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif']
+                    }
+                }
+            }
         }
-        .header-link {
-            color: #cbd5e1;
-            transition: color 0.3s ease;
-        }
-        .header-link:hover, .footer-link:hover {
-            color: #FBBF24;
-        }
-        .active-link {
-            color: #FBBF24;
-            font-weight: 600;
-        }
-        .section-title {
-            color: #ccd6f6;
-            font-weight: 700;
-        }
-        .highlight-text {
-            color: #FBBF24;
-        }
-        .service-card-large {
-            background-color: #112240;
-            border-radius: 12px;
-            padding: 2rem;
-            border: 1px solid #1e2d4d;
-        }
-        .cta-button {
-            display: inline-block;
-            background-color: #FBBF24;
-            color: #0a1f2f;
-            font-weight: 600;
-            padding: 10px 20px;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-            text-align: center;
-        }
-        .cta-button:hover {
-            background-color: #FCD34D;
-        }
-        .login-button {
-            color: #cbd5e1;
-            font-weight: 600;
-            transition: color 0.3s ease;
-            padding: 8px 12px;
-        }
-        .login-button:hover {
-            color: #FBBF24;
-        }
-        .register-button {
-            background-color: #FBBF24;
-            color: #0a1f2f;
-            font-weight: 700;
-            padding: 8px 16px;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-        .register-button:hover {
-            background-color: #FCD34D;
-        }
-        .footer-link {
-            color: #94a3b8;
-        }
-    </style>
+    </script>
 </head>
-<body class="antialiased">
+<body class="base-container antialiased">
 
-    <!-- Header -->
-    <header class="sticky top-0 z-50 bg-[#0a192f]/80 backdrop-blur-lg">
-        <nav class="container mx-auto max-w-7xl px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="text-2xl font-bold highlight-text">DE CERO A CIEN</a>
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="index.html" class="header-link text-sm">Inicio</a>
-                <a href="nosotros.html" class="header-link text-sm">Nosotros</a>
-                <a href="servicios.html" class="active-link text-sm">Servicios</a>
-                <a href="metodologia.html" class="header-link text-sm">Metodología</a>
-                <a href="contacto.html" class="header-link text-sm">Contacto</a>
-                 <div class="pl-2 flex items-center space-x-2">
-                    <a href="#" class="login-button text-sm">Ingresa</a>
-                    <a href="#" class="register-button text-sm">Regístrate</a>
-                </div>
-            </div>
-        </nav>
+    <!-- HEADER UNIFICADO -->
+    <header class="header-component">
+        <!-- El contenido del header se genera dinamicamente por JavaScript -->
     </header>
 
     <main>
@@ -297,62 +253,13 @@
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-gray-800">
-        <div class="container mx-auto max-w-7xl px-6 py-12">
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 text-sm">
-                 <div>
-                    <h3 class="font-semibold text-white">Enlaces Rápidos</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="index.html" class="footer-link">Inicio</a></li>
-                        <li><a href="nosotros.html" class="footer-link">Nosotros</a></li>
-                        <li><a href="servicios.html" class="footer-link">Servicios</a></li>
-                        <li><a href="metodologia.html" class="footer-link">Metodología</a></li>
-                        <li><a href="contacto.html" class="footer-link">Contacto</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white">Recursos y Herramientas</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="#" class="footer-link">El Camino Dorado</a></li>
-                        <li><a href="servicios.html" class="footer-link">Servicios empresariales premium</a></li>
-                        <li><a href="#" class="footer-link">Academy (Pronto)</a></li>
-                        <li><a href="#" class="footer-link">Conecta (Pronto)</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white">Recursos y Herramientas</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="#" class="footer-link">Integraciones con IA</a></li>
-                        <li><a href="#" class="footer-link">Diagnósticos rápidos con IA</a></li>
-                        <li><a href="#" class="footer-link">Bootcamp (Pronto)</a></li>
-                        <li><a href="#" class="footer-link">Descargables</a></li>
-                        <li><a href="#" class="footer-link">Videos</a></li>
-                        <li><a href="#" class="footer-link">Audio</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white">Legal</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="#" class="footer-link">Términos y Condiciones</a></li>
-                        <li><a href="#" class="footer-link">Política de Privacidad</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white">Contacto</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="tel:+56985678296" class="footer-link">+56985678296</a></li>
-                        <li><a href="mailto:hola@deceroacien.app" class="footer-link">hola@deceroacien.app</a></li>
-                        <li><a href="https://www.deceroacien.app" target="_blank" class="footer-link">www.deceroacien.app</a></li>
-                    </ul>
-                </div>
-            </div>
-             <div class="mt-12 border-t border-gray-800 pt-8 text-center">
-                 <p class="text-gray-500 text-xs">© 2025 DE CERO A CIEN. Todos los derechos reservados.</p>
-            </div>
-        </div>
+    <!-- FOOTER UNIFICADO -->
+    <footer class="footer-component">
+        <!-- El contenido del footer se genera dinamicamente por JavaScript -->
     </footer>
 
+    <!-- Scripts JavaScript -->
+    <script src="assets/js/components.js"></script>
 </body>
 </html>
 

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programas de Crecimiento - DE CERO A CIEN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-noche: #1a1f3a;
+            --azul-oscuro: #101326;
+            --dorado: #d4af37;
+            --dorado-hover: #b8941f;
+            --texto-claro: #f0f2f5;
+            --texto-secundario: #a7a9be;
+            --borde-sutil: rgba(212, 175, 55, 0.2);
+            --fondo-seccion: linear-gradient(180deg, var(--azul-noche) 0%, var(--azul-oscuro) 100%);
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--azul-oscuro); }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .tab.active { 
+            border-bottom-color: var(--dorado);
+            color: var(--dorado);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .modal-backdrop { transition: opacity 0.3s ease; }
+        .modal-content { transition: transform 0.3s ease, opacity 0.3s ease; }
+    </style>
+</head>
+<body class="bg-[var(--azul-oscuro)] text-[var(--texto-claro)]">
+
+    <!-- Header -->
+    <header class="text-center py-20 px-4" style="background: var(--fondo-seccion);">
+        <h1 class="font-serif text-4xl md:text-6xl font-bold text-white">Haz Crecer el Ecosistema.</h1>
+        <p class="text-lg md:text-xl text-[var(--texto-secundario)] mt-4 max-w-3xl mx-auto">Conviértete en un socio estratégico o en un embajador de nuestra marca y obtén recompensas por ayudarnos a terminar con la soledad del estratega.</p>
+    </header>
+
+    <!-- Sección de selección de programa -->
+    <div class="container mx-auto px-4 -mt-16 relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
+        <a href="#landing-referidos" class="bg-[var(--azul-noche)] p-8 rounded-xl border border-[var(--borde-sutil)] text-center hover:border-[var(--dorado)] transition-all duration-300">
+            <h2 class="font-serif text-2xl font-bold text-white mb-2">Programa de Referidos</h2>
+            <p class="text-[var(--texto-secundario)]">Exclusivo para nuestros miembros. Invita a otros fundadores y gana "Monedas de Oro" para canjear por programas de la ACADEMY.</p>
+        </a>
+        <a href="#landing-afiliados" class="bg-[var(--azul-noche)] p-8 rounded-xl border border-[var(--borde-sutil)] text-center hover:border-[var(--dorado)] transition-all duration-300">
+            <h2 class="font-serif text-2xl font-bold text-white mb-2">Programa de Afiliados</h2>
+            <p class="text-[var(--texto-secundario)]">Para marketers e influencers. Gana comisiones en dinero por cada nuevo cliente que traigas a nuestro ecosistema.</p>
+        </a>
+    </div>
+
+    <!-- 1. Landing Page del Programa de Referidos -->
+    <section id="landing-referidos" class="py-20 px-4 bg-[var(--azul-oscuro)]">
+        <div class="container mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div class="text-center md:text-left">
+                <span class="text-sm font-bold text-[var(--dorado)]">EXCLUSIVO PARA MIEMBROS</span>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-white mt-2">Convierte tu Lealtad en Conocimiento</h2>
+                <p class="text-[var(--texto-secundario)] mt-4">Nuestros mejores embajadores son los fundadores que viven la transformación día a día. Por eso, recompensamos tu apoyo con lo más valioso que tenemos: acceso a formación de élite en nuestra ACADEMY.</p>
+                <div class="mt-6 space-y-4">
+                    <p class="text-lg"><strong class="text-[var(--dorado)]">Tu Recompensa:</strong> Gana <strong class="font-bold">50 "Monedas de Oro"</strong> por cada amigo que se convierta en cliente de pago.</p>
+                    <p class="text-lg"><strong class="text-[var(--dorado)]">Tu Premio:</strong> Acumula monedas y canjéalas por acceso gratuito a nuestros Bootcamps y Masterclasses.</p>
+                </div>
+                <a href="#dashboard-user" class="mt-8 inline-block bg-[var(--dorado)] text-[var(--azul-noche)] font-bold text-lg py-3 px-8 rounded-lg shadow-lg hover:bg-[var(--dorado-hover)] transition-colors duration-300">
+                    Ir a mi Panel de Referidos
+                </a>
+            </div>
+            <div class="bg-[var(--azul-noche)] p-8 rounded-xl border border-[var(--borde-sutil)]">
+                <h3 class="font-serif text-xl font-bold text-center mb-4 text-white">¿Cómo funciona?</h3>
+                <ol class="relative border-l border-[var(--borde-sutil)] ml-4">                  
+                    <li class="mb-10 ml-8">            
+                        <span class="absolute flex items-center justify-center w-8 h-8 bg-[var(--dorado)] text-[var(--azul-noche)] rounded-full -left-4 font-bold">1</span>
+                        <h4 class="font-semibold text-white">Copia tu Enlace Único</h4>
+                        <p class="text-sm text-[var(--texto-secundario)]">Encuéntralo en tu panel de usuario.</p>
+                    </li>
+                    <li class="mb-10 ml-8">
+                        <span class="absolute flex items-center justify-center w-8 h-8 bg-[var(--dorado)] text-[var(--azul-noche)] rounded-full -left-4 font-bold">2</span>
+                        <h4 class="font-semibold text-white">Compártelo con tu Red</h4>
+                        <p class="text-sm text-[var(--texto-secundario)]">Invita a otros fundadores a unirse.</p>
+                    </li>
+                    <li class="ml-8">
+                        <span class="absolute flex items-center justify-center w-8 h-8 bg-[var(--dorado)] text-[var(--azul-noche)] rounded-full -left-4 font-bold">3</span>
+                        <h4 class="font-semibold text-white">Gana y Acumula</h4>
+                        <p class="text-sm text-[var(--texto-secundario)]">Recibe Monedas de Oro por cada nuevo miembro y desbloquea tu próximo Bootcamp.</p>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 2. Landing Page del Programa de Afiliados -->
+    <section id="landing-afiliados" class="py-20 px-4" style="background: var(--fondo-seccion);">
+         <div class="container mx-auto grid md:grid-cols-2 gap-12 items-center">
+             <div class="bg-[var(--azul-noche)] p-8 rounded-xl border border-[var(--borde-sutil)] order-2 md:order-1">
+                <h3 class="font-serif text-xl font-bold text-center mb-4 text-white">El Flujo del Afiliado</h3>
+                <ol class="relative border-l border-[var(--borde-sutil)] ml-4">                  
+                    <li class="mb-10 ml-8">            
+                        <span class="absolute flex items-center justify-center w-8 h-8 bg-[var(--dorado)] text-[var(--azul-noche)] rounded-full -left-4 font-bold">1</span>
+                        <h4 class="font-semibold text-white">Postula al Programa</h4>
+                        <p class="text-sm text-[var(--texto-secundario)]">Aseguramos una red de afiliados de alta calidad.</p>
+                    </li>
+                    <li class="mb-10 ml-8">
+                        <span class="absolute flex items-center justify-center w-8 h-8 bg-[var(--dorado)] text-[var(--azul-noche)] rounded-full -left-4 font-bold">2</span>
+                        <h4 class="font-semibold text-white">Comparte y Promociona</h4>
+                        <p class="text-sm text-[var(--texto-secundario)]">Usa tu enlace y nuestra biblioteca de recursos para atraer a tu audiencia.</p>
+                    </li>
+                    <li class="ml-8">
+                        <span class="absolute flex items-center justify-center w-8 h-8 bg-[var(--dorado)] text-[var(--azul-noche)] rounded-full -left-4 font-bold">3</span>
+                        <h4 class="font-semibold text-white">Gana Comisiones</h4>
+                        <p class="text-sm text-[var(--texto-secundario)]">Recibe pagos mensuales por cada conversión exitosa.</p>
+                    </li>
+                </ol>
+            </div>
+            <div class="text-center md:text-left order-1 md:order-2">
+                <span class="text-sm font-bold text-[var(--dorado)]">PARA MARKETERS E INFLUENCERS</span>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-white mt-2">Monetiza tu Audiencia con un Producto Premium</h2>
+                <p class="text-[var(--texto-secundario)] mt-4">Si tienes una audiencia de emprendedores, startups o profesionales de negocio, nuestro programa de afiliados te ofrece una oportunidad de generar ingresos recurrentes promocionando un ecosistema de alto valor y probada eficacia.</p>
+                <div class="mt-6 space-y-4">
+                    <p class="text-lg"><strong class="text-[var(--dorado)]">Tu Comisión:</strong> Gana <strong class="font-bold">$25 USD en dinero</strong> por cada nuevo cliente de pago que traigas a la plataforma.</p>
+                    <p class="text-lg"><strong class="text-[var(--dorado)]">Tus Recursos:</strong> Accede a una biblioteca de activos de marketing listos para usar (guías, banners, etc.).</p>
+                </div>
+                <button id="apply-affiliate-btn" class="mt-8 inline-block bg-white text-[var(--azul-noche)] font-bold text-lg py-3 px-8 rounded-lg shadow-lg hover:bg-gray-200 transition-colors duration-300">
+                    Postular como Afiliado
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Dashboard de Usuario (Simulado) -->
+    <section id="dashboard-user" class="py-20 px-4 bg-[var(--azul-oscuro)]">
+        <div class="container mx-auto max-w-4xl">
+            <h2 class="font-serif text-3xl md:text-4xl font-bold text-white text-center mb-12">Mis Programas de Crecimiento</h2>
+            
+            <div class="bg-[var(--azul-noche)] rounded-xl border border-[var(--borde-sutil)] p-4 sm:p-8">
+                <!-- Pestañas -->
+                <div class="border-b border-[var(--borde-sutil)] mb-8">
+                    <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                        <button id="tab-referidos" class="tab active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg">Mi Panel de Referidos</button>
+                        <button id="tab-afiliados" class="tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg text-[var(--texto-secundario)] hover:text-white">Mi Panel de Afiliado</button>
+                    </nav>
+                </div>
+
+                <!-- Contenido de la pestaña de Referidos -->
+                <div id="content-referidos" class="tab-content active">
+                    <h3 class="font-serif text-xl text-white mb-4">Invita a un fundador, gana conocimiento.</h3>
+                    <div class="bg-[var(--azul-oscuro)] p-4 rounded-lg">
+                        <label class="text-sm font-semibold text-[var(--texto-secundario)]">Tu enlace de referido único:</label>
+                        <div class="flex items-center gap-4 mt-2">
+                            <input id="referral-link" type="text" value="https://deceroacien.app/ref/javierperez" readonly class="w-full bg-gray-900/50 p-2 rounded text-sm text-[var(--texto-claro)] border-0">
+                            <button id="copy-referral-btn" class="bg-[var(--dorado)] text-[var(--azul-noche)] font-semibold text-sm px-4 py-2 rounded hover:bg-[var(--dorado-hover)]">Copiar</button>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <h4 class="font-semibold text-white">Tu Bóveda Virtual</h4>
+                        <div class="bg-[var(--azul-oscuro)] p-6 rounded-lg mt-2 text-center">
+                            <p class="text-sm text-[var(--texto-secundario)]">Balance Actual</p>
+                            <p class="font-serif text-5xl font-bold text-[var(--dorado)] my-2">150</p>
+                            <p class="font-bold text-white">Monedas de Oro</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <h4 class="font-semibold text-white">Tu Próximo Premio</h4>
+                        <div class="bg-[var(--azul-oscuro)] p-6 rounded-lg mt-2">
+                            <p class="text-sm text-white font-bold mb-2">Bootcamp: Lanza tu PMV en 8 Semanas</p>
+                            <div class="w-full bg-gray-700 rounded-full h-4">
+                                <div id="progress-bar" class="bg-[var(--dorado)] h-4 rounded-full" style="width: 15%;"></div>
+                            </div>
+                            <p class="text-xs text-[var(--texto-secundario)] mt-2 text-right">150 / 1000 Monedas de Oro</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contenido de la pestaña de Afiliados -->
+                <div id="content-afiliados" class="tab-content">
+                    <h3 class="font-serif text-xl text-white mb-4">Bienvenido a tu panel de socio.</h3>
+                     <div class="bg-[var(--azul-oscuro)] p-4 rounded-lg">
+                        <label class="text-sm font-semibold text-[var(--texto-secundario)]">Tu enlace de afiliado único:</label>
+                        <div class="flex items-center gap-4 mt-2">
+                            <input id="affiliate-link" type="text" value="https://deceroacien.app/aff/cristianjofre" readonly class="w-full bg-gray-900/50 p-2 rounded text-sm text-[var(--texto-claro)] border-0">
+                            <button id="copy-affiliate-btn" class="bg-[var(--dorado)] text-[var(--azul-noche)] font-semibold text-sm px-4 py-2 rounded hover:bg-[var(--dorado-hover)]">Copiar</button>
+                        </div>
+                    </div>
+
+                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+                        <div class="bg-[var(--azul-oscuro)] p-4 rounded-lg text-center">
+                            <p class="text-sm text-[var(--texto-secundario)]">Clics</p>
+                            <p class="text-2xl font-bold text-white">452</p>
+                        </div>
+                        <div class="bg-[var(--azul-oscuro)] p-4 rounded-lg text-center">
+                            <p class="text-sm text-[var(--texto-secundario)]">Conversiones</p>
+                            <p class="text-2xl font-bold text-white">8</p>
+                        </div>
+                         <div class="bg-[var(--azul-oscuro)] p-4 rounded-lg text-center">
+                            <p class="text-sm text-[var(--texto-secundario)]">Comisiones Pendientes</p>
+                            <p class="text-2xl font-bold text-white">$50.00</p>
+                        </div>
+                         <div class="bg-[var(--azul-oscuro)] p-4 rounded-lg text-center">
+                            <p class="text-sm text-[var(--texto-secundario)]">Comisiones Pagadas</p>
+                            <p class="text-2xl font-bold text-white">$150.00</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 text-center">
+                        <button class="bg-white text-[var(--azul-noche)] font-bold py-3 px-6 rounded-lg hover:bg-gray-200 transition-colors duration-300">
+                            Acceder a Biblioteca de Recursos
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Confirmación -->
+    <div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center p-4 z-50 modal-backdrop">
+        <div class="modal-content bg-[var(--azul-noche)] rounded-xl shadow-2xl w-full max-w-md border border-[var(--borde-sutil)] text-center p-8 transform scale-95 opacity-0">
+            <h3 class="font-serif text-2xl font-bold text-[var(--dorado)] mb-4">¡Postulación Enviada!</h3>
+            <p class="text-[var(--texto-claro)] mb-6">Gracias por tu interés en nuestro Programa de Afiliados. Serás redirigido a nuestra plataforma asociada para completar tu registro y ser evaluado por nuestro equipo.</p>
+            <button id="close-confirmation-btn" class="bg-[var(--dorado)] text-[var(--azul-noche)] font-bold px-6 py-2 rounded-lg hover:bg-[var(--dorado-hover)]">Entendido</button>
+        </div>
+    </div>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Lógica de Pestañas (Tabs) ---
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(item => {
+                    item.classList.remove('active');
+                    item.classList.add('text-[var(--texto-secundario)]', 'hover:text-white');
+                });
+                tab.classList.add('active');
+                tab.classList.remove('text-[var(--texto-secundario)]', 'hover:text-white');
+
+                const target = tab.id.replace('tab-', 'content-');
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if (content.id === target) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // --- Lógica de Botones de Copiar ---
+        const setupCopyButton = (buttonId, inputId) => {
+            const button = document.getElementById(buttonId);
+            const input = document.getElementById(inputId);
+            if (button && input) {
+                button.addEventListener('click', () => {
+                    input.select();
+                    document.execCommand('copy');
+                    const originalText = button.innerText;
+                    button.innerText = '¡Copiado!';
+                    setTimeout(() => {
+                        button.innerText = originalText;
+                    }, 2000);
+                });
+            }
+        };
+        setupCopyButton('copy-referral-btn', 'referral-link');
+        setupCopyButton('copy-affiliate-btn', 'affiliate-link');
+        
+        // --- Lógica de Modal Afiliados ---
+        const confirmationModal = document.getElementById('confirmation-modal');
+        const openModal = (modal) => {
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+                modal.querySelector('.modal-content').classList.remove('scale-95', 'opacity-0');
+                modal.querySelector('.modal-content').classList.add('scale-100', 'opacity-100');
+            }, 10);
+        };
+
+        const closeModal = (modal) => {
+            modal.querySelector('.modal-content').classList.add('scale-95', 'opacity-0');
+            modal.querySelector('.modal-content').classList.remove('scale-100', 'opacity-100');
+            modal.classList.remove('opacity-100');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        };
+
+        document.getElementById('apply-affiliate-btn').addEventListener('click', () => openModal(confirmationModal));
+        document.getElementById('close-confirmation-btn').addEventListener('click', () => closeModal(confirmationModal));
+        confirmationModal.addEventListener('click', (e) => {
+            if (e.target === confirmationModal) closeModal(confirmationModal);
+        });
+    });
+    </script>
+    <script src="../assets/js/components.js"></script>
+</body>
+</html>
