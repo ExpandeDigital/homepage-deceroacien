@@ -1,227 +1,247 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Meta tags esenciales para SEO y responsividad -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contacta con DE CERO A CIEN. Tu conexión directa al ecosistema emprendedor para hacer crecer tu startup.">
+    <meta name="keywords" content="emprendimiento, startups, crecimiento empresarial, metodología, consultoría, contacto">
+    <meta name="author" content="DE CERO A CIEN">
+    
+    <!-- Título de la página -->
     <title>Contacto - DE CERO A CIEN</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Favicons y meta tags para redes sociales -->
+    <meta property="og:title" content="Contacto - DE CERO A CIEN">
+    <meta property="og:description" content="Contacta con DE CERO A CIEN. Tu conexión directa al ecosistema emprendedor para hacer crecer tu startup.">
+    <meta property="og:url" content="https://deceroacien.app/contacto.html">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Preload de recursos críticos -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
+    
+    <!-- Hojas de estilo -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0a1f2f;
-            color: #e6f1ff;
+    <link rel="stylesheet" href="assets/styles/common.css">
+    <link rel="stylesheet" href="assets/styles/mobile.css">
+    
+    <!-- Configuración de Tailwind personalizada -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#0a1f2f',
+                        'secondary-dark': '#112240',
+                        'accent-gold': '#FBBF24',
+                        'text-light': '#e6f1ff',
+                        'border-custom': '#1e2d4d'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif']
+                    }
+                }
+            }
         }
-        .header-link {
-            color: #cbd5e1;
-            transition: color 0.3s ease;
-        }
-        .header-link:hover {
-            color: #FBBF24;
-        }
-        .active-link {
-            color: #FBBF24;
-            font-weight: 600;
-        }
-        .section-title {
-            color: #ccd6f6;
-            font-weight: 700;
-        }
-        .highlight-text {
-            color: #FBBF24;
-        }
-        .form-input {
-            background-color: #112240;
-            border: 1px solid #233554;
-            color: #ccd6f6;
-            border-radius: 6px;
-            padding: 12px 16px;
-            transition: border-color 0.3s ease;
-            width: 100%;
-        }
-        .form-input:focus {
-            outline: none;
-            border-color: #FBBF24;
-        }
-        .submit-button {
-            background-color: #FBBF24;
-            color: #0a1f2f;
-            font-weight: 700;
-            padding: 12px 24px;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-            width: 100%;
-        }
-        .submit-button:hover {
-            background-color: #FCD34D;
-        }
-        .login-button {
-            color: #cbd5e1;
-            font-weight: 600;
-            transition: color 0.3s ease;
-            padding: 8px 12px;
-        }
-        .login-button:hover {
-            color: #FBBF24;
-        }
-        .register-button {
-            background-color: #FBBF24;
-            color: #0a1f2f;
-            font-weight: 700;
-            padding: 8px 16px;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-        .register-button:hover {
-            background-color: #FCD34D;
-        }
-    </style>
+    </script>
+    
+    <!-- Estilos específicos para la página de contacto (centralizados en common.css) -->
 </head>
-<body class="antialiased">
+<body class="base-container antialiased">
 
-    <!-- Header -->
-    <header class="sticky top-0 z-50 bg-[#0a192f]/80 backdrop-blur-lg">
-        <nav class="container mx-auto max-w-7xl px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="text-2xl font-bold highlight-text">DE CERO A CIEN</a>
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="index.html" class="header-link text-sm">Inicio</a>
-                <a href="nosotros.html" class="header-link text-sm">Nosotros</a>
-                <a href="servicios.html" class="header-link text-sm">Servicios</a>
-                <a href="metodologia.html" class="header-link text-sm">Metodología</a>
-                <a href="contacto.html" class="active-link text-sm">Contacto</a>
-                <div class="pl-2 flex items-center space-x-2">
-                    <a href="#" class="login-button text-sm">Ingresa</a>
-                    <a href="#" class="register-button text-sm">Regístrate</a>
-                </div>
-            </div>
-        </nav>
+    <!-- HEADER UNIFICADO -->
+    <header class="header-component">
+        <!-- El contenido del header se genera dinamicamente por JavaScript -->
     </header>
 
-    <main>
-        <!-- Contact Section -->
-        <section class="py-20 sm:py-28">
-            <div class="container mx-auto max-w-4xl px-6">
-                <div class="text-center">
-                    <h1 class="text-4xl sm:text-5xl font-bold section-title">Conversemos.</h1>
-                    <p class="mt-6 text-lg text-gray-400">¿Listo para llevar tu negocio DE CERO A CIEN? Completa el formulario o contáctanos directamente. Estamos aquí para escucharte y construir tu legado, juntos.</p>
-                </div>
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+        <!-- Sección Hero -->
+        <section class="main-section py-20 sm:py-28">
+            <div class="section-container max-w-4xl text-center">
+                <h1 class="text-4xl sm:text-5xl font-bold section-title leading-tight fade-in">
+                    Hablemos de tu <span class="highlight-text">Próximo Paso</span>
+                </h1>
+                <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto fade-in">
+                    ¿Listo para llevar tu startup al siguiente nivel? Cuéntanos sobre tu proyecto 
+                    y descubre cómo podemos ayudarte a acelerar tu crecimiento.
+                </p>
+            </div>
+        </section>
 
-                <div class="mt-16 grid md:grid-cols-2 gap-12 items-start">
-                    <!-- Contact Form -->
-                    <div class="bg-[#112240] p-8 rounded-lg border border-[#233554]">
-                        <form action="#" method="POST">
-                            <div class="space-y-6">
-                                <div>
-                                    <label for="name" class="block text-sm font-medium text-gray-300">Nombre Completo</label>
-                                    <input type="text" name="name" id="name" required class="mt-1 form-input">
-                                </div>
-                                <div>
-                                    <label for="email" class="block text-sm font-medium text-gray-300">Correo Electrónico</label>
-                                    <input type="email" name="email" id="email" required class="mt-1 form-input">
-                                </div>
-                                <div>
-                                    <label for="message" class="block text-sm font-medium text-gray-300">Tu Mensaje</label>
-                                    <textarea name="message" id="message" rows="4" required class="mt-1 form-input"></textarea>
-                                </div>
-                                <div>
-                                    <button type="submit" class="submit-button">Enviar Mensaje</button>
-                                </div>
+        <!-- Sección de Contacto -->
+        <section class="main-section pb-20 sm:pb-28">
+            <div class="section-container max-w-6xl">
+                <div class="responsive-grid lg:grid-cols-2 gap-12">
+                    
+                    <!-- Formulario de Contacto -->
+                    <div class="card-component">
+                        <h2 class="text-2xl font-bold text-white mb-6">Envíanos un Mensaje</h2>
+                        <form class="space-y-6" action="#" method="POST">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-300 mb-2">
+                                    Nombre Completo *
+                                </label>
+                                <input type="text" id="name" name="name" required 
+                                       class="form-input" placeholder="Tu nombre completo">
                             </div>
+                            
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-300 mb-2">
+                                    Email *
+                                </label>
+                                <input type="email" id="email" name="email" required 
+                                       class="form-input" placeholder="tu@email.com">
+                            </div>
+                            
+                            <div>
+                                <label for="company" class="block text-sm font-medium text-gray-300 mb-2">
+                                    Empresa / Startup
+                                </label>
+                                <input type="text" id="company" name="company" 
+                                       class="form-input" placeholder="Nombre de tu empresa">
+                            </div>
+                            
+                            <div>
+                                <label for="stage" class="block text-sm font-medium text-gray-300 mb-2">
+                                    Etapa de tu Startup
+                                </label>
+                                <select id="stage" name="stage" class="form-input">
+                                    <option value="">Selecciona una etapa</option>
+                                    <option value="idea">Solo tengo una idea</option>
+                                    <option value="validation">Validando mi idea</option>
+                                    <option value="mvp">Desarrollando MVP</option>
+                                    <option value="launch">Listo para lanzar</option>
+                                    <option value="growth">En fase de crecimiento</option>
+                                    <option value="scale">Escalando el negocio</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-300 mb-2">
+                                    Mensaje *
+                                </label>
+                                <textarea id="message" name="message" rows="4" required 
+                                          class="form-input" 
+                                          placeholder="Cuéntanos más sobre tu proyecto y cómo podemos ayudarte..."></textarea>
+                            </div>
+                            
+                            <button type="submit" class="submit-button">
+                                Enviar Mensaje
+                            </button>
                         </form>
                     </div>
-
-                    <!-- Contact Info -->
-                    <div class="pt-8">
-                        <h3 class="text-2xl font-bold section-title">Información de Contacto</h3>
-                        <p class="mt-2 text-gray-400">Para consultas directas o agendar una sesión de diagnóstico.</p>
-                        <ul class="mt-6 space-y-4">
-                            <li class="flex items-start">
-                                <svg class="w-6 h-6 mr-4 text-yellow-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                                <div>
-                                    <h4 class="font-semibold text-white">Email</h4>
-                                    <a href="mailto:hola@deceroacien.app" class="text-yellow-400 hover:text-yellow-300">hola@deceroacien.app</a>
+                    
+                    <!-- Información de Contacto -->
+                    <div class="space-y-8">
+                        <div class="contact-info-card">
+                            <h3 class="text-xl font-bold text-white mb-4">Información de Contacto</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" 
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                         class="mr-3 text-yellow-400">
+                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                    </svg>
+                                    <a href="tel:+56985678296" class="text-gray-300 hover:text-yellow-400 transition-colors">
+                                        +56 985 678 296
+                                    </a>
                                 </div>
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-6 h-6 mr-4 text-yellow-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                                <div>
-                                    <h4 class="font-semibold text-white">Teléfono / WhatsApp</h4>
-                                    <a href="https://wa.me/56985678296" target="_blank" class="text-yellow-400 hover:text-yellow-300">+56 9 8567 8296</a>
+                                
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" 
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                         class="mr-3 text-yellow-400">
+                                        <path d="m4 4 16 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8l16-4z"></path>
+                                        <polyline points="6,10 12,13 18,10"></polyline>
+                                    </svg>
+                                    <a href="mailto:hola@deceroacien.app" class="text-gray-300 hover:text-yellow-400 transition-colors">
+                                        hola@deceroacien.app
+                                    </a>
                                 </div>
-                            </li>
-                             <li class="flex items-start">
-                                <svg class="w-6 h-6 mr-4 text-yellow-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9V3m0 18a9 9 0 009-9m-9 9a9 9 0 00-9-9"></path></svg>
-                                <div>
-                                    <h4 class="font-semibold text-white">Web</h4>
-                                    <a href="https://www.deceroacien.app" target="_blank" class="text-yellow-400 hover:text-yellow-300">www.deceroacien.app</a>
+                                
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" 
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                         class="mr-3 text-yellow-400">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <path d="m9 12 2 2 4-4"></path>
+                                    </svg>
+                                    <a href="https://deceroacien.app" target="_blank" 
+                                       class="text-gray-300 hover:text-yellow-400 transition-colors">
+                                        www.deceroacien.app
+                                    </a>
                                 </div>
-                            </li>
-                        </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-info-card">
+                            <h3 class="text-xl font-bold text-white mb-4">Horarios de Atención</h3>
+                            <div class="space-y-2 text-gray-300">
+                                <p><span class="font-semibold">Lunes a Viernes:</span> 9:00 - 18:00</p>
+                                <p><span class="font-semibold">Sábados:</span> 10:00 - 14:00</p>
+                                <p><span class="font-semibold">Domingos:</span> Cerrado</p>
+                                <p class="text-sm text-gray-400 mt-4">
+                                    * Horario Chile Continental (UTC-3)
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-info-card">
+                            <h3 class="text-xl font-bold text-white mb-4">¿Necesitas Ayuda Inmediata?</h3>
+                            <p class="text-gray-300 mb-4">
+                                Si tienes una consulta urgente o necesitas soporte inmediato, 
+                                no dudes en contactarnos directamente.
+                            </p>
+                            <a href="tel:+56985678296" class="btn-primary text-center block">
+                                Llamar Ahora
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
+        <!-- Accesos rápidos -->
+        <section class="main-section py-16">
+            <div class="section-container">
+                <div class="text-center mb-10">
+                    <h3 class="text-3xl font-bold text-gray-200">Accesos rápidos</h3>
+                    <p class="mt-2 text-gray-400">Llega en un clic a nuestros espacios clave.</p>
+                </div>
+                <div class="responsive-grid lg:grid-cols-3">
+                    <a href="portal-alumno.html" class="card-component slide-in-left">
+                        <h4 class="text-xl font-bold highlight-text">Portal del Alumno</h4>
+                        <p class="mt-2 text-gray-400">Centro de formación con herramientas por fase.</p>
+                        <span class="mt-4 inline-block card-primary-link">Entrar &rarr;</span>
+                    </a>
+                    <a href="conecta/conecta.html" class="card-component fade-in">
+                        <h4 class="text-xl font-bold highlight-text">Conecta</h4>
+                        <p class="mt-2 text-gray-400">Comunidad, pertenencia y eventos.</p>
+                        <span class="mt-4 inline-block card-primary-link">Ver más &rarr;</span>
+                    </a>
+                    <a href="consultoria.html" class="card-component slide-in-right">
+                        <h4 class="text-xl font-bold highlight-text">Consultoría 1:1</h4>
+                        <p class="mt-2 text-gray-400">Acompañamiento estratégico personalizado.</p>
+                        <span class="mt-4 inline-block card-primary-link">Agendar &rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
     </main>
     
-    <!-- Footer -->
-    <footer class="border-t border-gray-800">
-        <div class="container mx-auto max-w-7xl px-6 py-12">
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 text-sm">
-                <div>
-                    <h3 class="font-semibold text-white">Enlaces Rápidos</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="index.html" class="footer-link">Inicio</a></li>
-                        <li><a href="nosotros.html" class="footer-link">Nosotros</a></li>
-                        <li><a href="servicios.html" class="footer-link">Servicios</a></li>
-                        <li><a href="metodologia.html" class="footer-link">Metodología</a></li>
-                        <li><a href="contacto.html" class="footer-link">Contacto</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white">Recursos y Herramientas</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="#" class="footer-link">El Camino Dorado</a></li>
-                        <li><a href="servicios.html" class="footer-link">Servicios empresariales premium</a></li>
-                        <li><a href="#" class="footer-link">Academy (Pronto)</a></li>
-                        <li><a href="#" class="footer-link">Conecta (Pronto)</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white">Recursos y Herramientas</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="#" class="footer-link">Integraciones con IA</a></li>
-                        <li><a href="#" class="footer-link">Diagnósticos rápidos con IA</a></li>
-                        <li><a href="#" class="footer-link">Bootcamp (Pronto)</a></li>
-                        <li><a href="#" class="footer-link">Descargables</a></li>
-                        <li><a href="#" class="footer-link">Videos</a></li>
-                        <li><a href="#" class="footer-link">Audio</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white">Legal</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="#" class="footer-link">Términos y Condiciones</a></li>
-                        <li><a href="#" class="footer-link">Política de Privacidad</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white">Contacto</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="tel:+56985678296" class="footer-link">+56985678296</a></li>
-                        <li><a href="mailto:hola@deceroacien.app" class="footer-link">hola@deceroacien.app</a></li>
-                        <li><a href="https://www.deceroacien.app" target="_blank" class="footer-link">www.deceroacien.app</a></li>
-                    </ul>
-                </div>
-            </div>
-             <div class="mt-12 border-t border-gray-800 pt-8 text-center">
-                 <p class="text-gray-500 text-xs">© 2025 DE CERO A CIEN. Todos los derechos reservados.</p>
-            </div>
-        </div>
+    <!-- FOOTER UNIFICADO -->
+    <footer class="footer-component">
+        <!-- El contenido del footer se genera dinamicamente por JavaScript -->
     </footer>
 
+    <!-- Scripts JavaScript -->
+    <script src="assets/js/components.js"></script>
 </body>
 </html>

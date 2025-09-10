@@ -1,101 +1,78 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Meta tags esenciales para SEO y responsividad -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tu conexión directa al ecosistema emprendedor. Metodología probada para llevar tu startup de cero a cien.">
+    <meta name="keywords" content="emprendimiento, startups, crecimiento empresarial, metodología, consultoría, DE CERO A CIEN">
+    <meta name="author" content="DE CERO A CIEN">
+    
+    <!-- Título de la página -->
     <title>DE CERO A CIEN - Tu Conexión al Ecosistema Emprendedor</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Favicons y meta tags para redes sociales -->
+    <meta property="og:title" content="DE CERO A CIEN - Tu Conexión al Ecosistema Emprendedor">
+    <meta property="og:description" content="Tu conexión directa al ecosistema emprendedor. Metodología probada para llevar tu startup de cero a cien.">
+    <meta property="og:url" content="https://deceroacien.app">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Preload de recursos críticos -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
+    
+    <!-- Hojas de estilo -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0a1f2f;
-            color: #e6f1ff;
+    <link rel="stylesheet" href="assets/styles/common.css">
+    <link rel="stylesheet" href="assets/styles/mobile.css">
+    
+    <!-- Configuración de Tailwind personalizada -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#0a1f2f',
+                        'secondary-dark': '#112240',
+                        'accent-gold': '#FBBF24',
+                        'text-light': '#e6f1ff',
+                        'border-custom': '#1e2d4d'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif']
+                    }
+                }
+            }
         }
-        .highlight-text { color: #FBBF24; }
-        .card {
-            background-color: #112240;
-            border: 1px solid #1e2d4d;
-            border-radius: 12px;
-            padding: 2rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
-        }
-        .marquee-content {
-            display: inline-block;
-            animation: marquee 30s linear infinite;
-        }
-        @keyframes marquee {
-            0%   { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        /* Efecto de Luz para la tarjeta destacada */
-        .card-spotlight {
-            position: relative;
-            overflow: hidden;
-        }
-        .card-spotlight::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -150%;
-            width: 75%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(251, 191, 36, 0.15), /* Luz dorada semi-transparente */
-                transparent
-            );
-            transform: skewX(-25deg);
-            transition: left 0.9s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        .card-spotlight:hover::before {
-            left: 150%;
-        }
-    </style>
+    </script>
 </head>
-<body class="antialiased">
+<body class="base-container antialiased">
 
-    <!-- Header -->
-    <header class="sticky top-0 z-50 bg-[#0a1f2f]/80 backdrop-blur-lg">
-        <nav class="container mx-auto max-w-7xl px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="text-2xl font-bold highlight-text">DE CERO A CIEN</a>
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="index.html" class="text-yellow-400 font-semibold text-sm">Inicio</a>
-                <a href="nosotros.html" class="text-gray-300 hover:text-yellow-400 transition-colors text-sm">Nosotros</a>
-                <a href="servicios.html" class="text-gray-300 hover:text-yellow-400 transition-colors text-sm">Servicios</a>
-                <a href="metodologia.html" class="text-gray-300 hover:text-yellow-400 transition-colors text-sm">Metodología</a>
-                <a href="contacto.html" class="text-gray-300 hover:text-yellow-400 transition-colors text-sm">Contacto</a>
-                <div class="pl-2 flex items-center space-x-2">
-                    <a href="#" class="font-semibold text-sm text-gray-300 hover:text-yellow-400 transition-colors">Ingresa</a>
-                    <a href="#" class="bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded-md text-sm hover:bg-yellow-300 transition-colors">Regístrate</a>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <!-- HEADER UNIFICADO -->
+    <header class="header-component"></header>
 
-    <main>
-        <!-- Welcome Section -->
-        <section class="py-20 sm:py-24 text-center">
-            <div class="container mx-auto max-w-4xl px-6">
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-200">
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+        <!-- Sección de bienvenida -->
+        <section class="main-section py-20 sm:py-24 text-center">
+            <div class="section-container">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-200 fade-in">
                     Bienvenido a <span class="highlight-text">DE CERO A CIEN</span>
                 </h1>
-                <p class="mt-4 text-lg text-gray-400">Tu Conexión Directa al Ecosistema Emprendedor</p>
+                <p class="mt-4 text-lg text-gray-400 fade-in">Tu Conexión Directa al Ecosistema Emprendedor</p>
             </div>
         </section>
 
-        <!-- Marquee Slider Mejorado -->
+        <!-- Marquee Slider Mejorado con comentarios explicativos -->
         <div class="overflow-hidden bg-gradient-to-r from-[#112240] via-[#172a46] to-[#112240] py-4 border-y border-gray-800">
             <div class="marquee-content flex items-center">
+                <!-- Texto de marquee con icono de estrella -->
                 <p class="flex items-center text-lg font-semibold text-white mx-8">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-yellow-400"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-yellow-400">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
                     Para Emprendimientos Dinámicos y Startups
                 </p>
                 <p class="flex items-center text-lg font-semibold text-white mx-8">
@@ -114,109 +91,127 @@
         </div>
 
         <!-- SECCIÓN DESTACADA: El Camino Dorado -->
-        <section class="py-20 sm:py-28">
-            <div class="container mx-auto max-w-5xl px-6">
-                 <div class="card card-spotlight p-8 lg:p-12">
+        <section class="main-section py-20 sm:py-28">
+            <div class="section-container">
+                <!-- Tarjeta principal con efecto spotlight -->
+                <div class="card-component card-spotlight p-8 lg:p-12">
                     <div class="text-center">
                         <h2 class="text-3xl lg:text-4xl font-black highlight-text">EL CAMINO DORADO</h2>
-                        <p class="mt-4 text-lg text-gray-400 max-w-2xl mx-auto">Nuestra joya de la corona. Son 31 micro herramientas de gestión para que desarrolles tu idea de negocio en 5 fases, desde la ideación hasta la consolidación.</p>
+                        <p class="mt-4 text-lg text-gray-400 max-w-2xl mx-auto">
+                            Nuestra joya de la corona. Son 31 micro herramientas de gestión para que desarrolles 
+                            tu idea de negocio en 5 fases, desde la ideación hasta la consolidación.
+                        </p>
                     </div>
+                    
+                    <!-- Grid de fases del camino dorado -->
                     <ul class="mt-8 grid grid-cols-1 sm:grid-cols-6 gap-4 text-center">
-                        <li class="sm:col-span-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800"><span class="highlight-text font-semibold block text-sm">Fase 1:</span><span class="text-xs text-gray-400">Ideación</span></li>
-                        <li class="sm:col-span-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800"><span class="highlight-text font-semibold block text-sm">Fase 2:</span><span class="text-xs text-gray-400">PMV</span></li>
-                        <li class="sm:col-span-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800"><span class="highlight-text font-semibold block text-sm">Fase 3:</span><span class="text-xs text-gray-400">Tracción</span></li>
-                        <li class="sm:col-span-3 lg:col-span-2 lg:col-start-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800"><span class="highlight-text font-semibold block text-sm">Fase 4:</span><span class="text-xs text-gray-400">Escalabilidad</span></li>
-                        <li class="sm:col-span-3 lg:col-span-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800"><span class="highlight-text font-semibold block text-sm">Fase 5:</span><span class="text-xs text-gray-400">Madurez</span></li>
+                        <li class="sm:col-span-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800">
+                            <span class="highlight-text font-semibold block text-sm">Fase 1:</span>
+                            <span class="text-xs text-gray-400">Ideación</span>
+                        </li>
+                        <li class="sm:col-span-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800">
+                            <span class="highlight-text font-semibold block text-sm">Fase 2:</span>
+                            <span class="text-xs text-gray-400">PMV</span>
+                        </li>
+                        <li class="sm:col-span-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800">
+                            <span class="highlight-text font-semibold block text-sm">Fase 3:</span>
+                            <span class="text-xs text-gray-400">Tracción</span>
+                        </li>
+                        <li class="sm:col-span-3 lg:col-span-2 lg:col-start-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800">
+                            <span class="highlight-text font-semibold block text-sm">Fase 4:</span>
+                            <span class="text-xs text-gray-400">Escalabilidad</span>
+                        </li>
+                        <li class="sm:col-span-3 lg:col-span-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800">
+                            <span class="highlight-text font-semibold block text-sm">Fase 5:</span>
+                            <span class="text-xs text-gray-400">Madurez</span>
+                        </li>
                     </ul>
+                    
+                    <!-- CTA principal -->
                     <div class="mt-10 text-center">
-                        <a href="bootcamp_pmf.html" class="bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-md hover:bg-yellow-300 transition-colors text-lg">Conocer más &rarr;</a>
+                        <a href="camino-dorado.html" class="btn-primary text-lg card-primary-link">
+                            Conocer más &rarr;
+                        </a>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Otros Servicios -->
-        <section class="pb-20 sm:pb-28">
-            <div class="container mx-auto max-w-6xl px-6">
-                 <div class="text-center mb-12">
+        <section class="main-section pb-20 sm:pb-28">
+            <div class="section-container">
+                <!-- Título de la sección -->
+                <div class="text-center mb-12 fade-in">
                     <h3 class="text-3xl font-bold text-gray-200">Más Soluciones para tu Crecimiento</h3>
                 </div>
-                <div class="grid lg:grid-cols-2 gap-8">
+                
+                <!-- Grid de servicios adicionales -->
+                <div class="responsive-grid lg:grid-cols-2">
                     <!-- Servicios Empresariales -->
-                    <div class="card">
+                    <div class="card-component slide-in-left">
                         <h2 class="text-2xl font-bold highlight-text">SERVICIOS EMPRESARIALES</h2>
-                        <p class="mt-3 text-gray-400">Una batería con más de 20 servicios especializados para empresas, en 5 áreas clave.</p>
+                        <p class="mt-3 text-gray-400 flex-grow">
+                            Una batería con más de 20 servicios especializados para empresas, en 5 áreas clave.
+                        </p>
                         <div class="mt-auto pt-6">
-                            <a href="servicios.html" class="font-semibold text-white hover:highlight-text transition-colors">Explorar Servicios &rarr;</a>
+                            <a href="servicios.html" class="font-semibold text-white hover:text-yellow-400 transition-colors card-primary-link">
+                                Explorar Servicios &rarr;
+                            </a>
                         </div>
                     </div>
+                    
                     <!-- Academy -->
-                     <div class="card">
+                    <div class="card-component slide-in-right">
                         <h2 class="text-2xl font-bold highlight-text">ACADEMY</h2>
-                        <p class="mt-3 text-gray-400">Cursos, talleres y recursos de formación para potenciar tus habilidades y las de tu equipo.</p>
+                        <p class="mt-3 text-gray-400 flex-grow">
+                            Cursos, talleres y recursos de formación para potenciar tus habilidades y las de tu equipo.
+                        </p>
                         <div class="mt-auto pt-6">
-                            <a href="academy.html" class="font-semibold text-white hover:highlight-text transition-colors">Ingresar a la Academia &rarr;</a>
+                            <a href="academy.html" class="font-semibold text-white hover:text-yellow-400 transition-colors card-primary-link">
+                                Ingresar a la Academia &rarr;
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Accesos rápidos -->
+        <section class="main-section py-16">
+            <div class="section-container">
+                <div class="text-center mb-10">
+                    <h3 class="text-3xl font-bold text-gray-200">Accesos rápidos</h3>
+                    <p class="mt-2 text-gray-400">Ingresa directo a las áreas clave del ecosistema.</p>
+                </div>
+                <div class="responsive-grid lg:grid-cols-3">
+                    <a href="portal-alumno.html" class="card-component slide-in-left">
+                        <h4 class="text-xl font-bold highlight-text">Portal del Alumno</h4>
+                        <p class="mt-2 text-gray-400">Centro de formación con todas las herramientas por fases.</p>
+                        <span class="mt-4 inline-block card-primary-link">Entrar &rarr;</span>
+                    </a>
+                    <a href="conecta/conecta.html" class="card-component fade-in">
+                        <h4 class="text-xl font-bold highlight-text">Conecta</h4>
+                        <p class="mt-2 text-gray-400">Comunidad y eventos para potenciar tu red y aprendizaje.</p>
+                        <span class="mt-4 inline-block card-primary-link">Ver más &rarr;</span>
+                    </a>
+                    <a href="consultoria.html" class="card-component slide-in-right">
+                        <h4 class="text-xl font-bold highlight-text">Consultoría 1:1</h4>
+                        <p class="mt-2 text-gray-400">Acompañamiento estratégico personalizado para tu proyecto.</p>
+                        <span class="mt-4 inline-block card-primary-link">Agendar &rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
     </main>
     
-    <!-- Footer -->
-    <footer class="border-t border-gray-800">
-        <div class="container mx-auto max-w-7xl px-6 py-12">
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 text-sm">
-                <div>
-                    <h3 class="font-semibold text-white mb-4">Enlaces Rápidos</h3>
-                    <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-400 hover:text-yellow-400 transition-colors">Inicio</a></li>
-                        <li><a href="nosotros.html" class="text-gray-400 hover:text-yellow-400 transition-colors">Nosotros</a></li>
-                        <li><a href="servicios.html" class="text-gray-400 hover:text-yellow-400 transition-colors">Servicios</a></li>
-                        <li><a href="metodologia.html" class="text-gray-400 hover:text-yellow-400 transition-colors">Metodología</a></li>
-                        <li><a href="contacto.html" class="text-gray-400 hover:text-yellow-400 transition-colors">Contacto</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white mb-4">Recursos</h3>
-                    <ul class="space-y-2">
-                        <li><a href="bootcamp_pmf.html" class="text-gray-400 hover:text-yellow-400 transition-colors">El Camino Dorado</a></li>
-                        <li><a href="servicios.html" class="text-gray-400 hover:text-yellow-400 transition-colors">Servicios Premium</a></li>
-                        <li><a href="academy.html" class="text-gray-400 hover:text-yellow-400 transition-colors">Academy</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">Conecta (Pronto)</a></li>
-                    </ul>
-                </div>
-                 <div>
-                    <h3 class="font-semibold text-white mb-4">Herramientas</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">Integraciones con IA</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">Diagnósticos con IA</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">Bootcamp (Pronto)</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white mb-4">Legal</h3>
-                    <ul class="space-y-2">
-                        <li><a href="terminos.html" class="text-gray-400 hover:text-yellow-400 transition-colors">Términos y Condiciones</a></li>
-                        <li><a href="politica_privacidad.html" class="text-gray-400 hover:text-yellow-400 transition-colors">Política de Privacidad</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white mb-4">Contacto</h3>
-                    <ul class="space-y-2">
-                        <li><a href="tel:+56985678296" class="text-gray-400 hover:text-yellow-400 transition-colors">+56985678296</a></li>
-                        <li><a href="mailto:hola@deceroacien.app" class="text-gray-400 hover:text-yellow-400 transition-colors">hola@deceroacien.app</a></li>
-                        <li><a href="https://www.deceroacien.app" target="_blank" class="text-gray-400 hover:text-yellow-400 transition-colors">www.deceroacien.app</a></li>
-                    </ul>
-                </div>
-            </div>
-             <div class="mt-12 border-t border-gray-800 pt-8 text-center">
-                 <p class="text-gray-500 text-xs">© 2025 DE CERO A CIEN. Todos los derechos reservados.</p>
-            </div>
-        </div>
+    <!-- FOOTER UNIFICADO -->
+    <footer class="footer-component">
+        <!-- El contenido del footer se genera dinamicamente por JavaScript -->
     </footer>
 
+    <!-- Scripts JavaScript -->
+    <script src="assets/js/components.js"></script>
 </body>
 </html>
 

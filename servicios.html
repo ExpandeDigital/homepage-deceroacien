@@ -1,183 +1,141 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Meta tags esenciales para SEO y responsividad -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Descubre nuestros servicios empresariales especializados para el crecimiento de tu startup.">
+    <meta name="keywords" content="emprendimiento, startups, crecimiento empresarial, metodología, consultoría, servicios">
+    <meta name="author" content="DE CERO A CIEN">
+    
+    <!-- Título de la página -->
     <title>Servicios - DE CERO A CIEN</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Favicons y meta tags para redes sociales -->
+    <meta property="og:title" content="Servicios - DE CERO A CIEN">
+    <meta property="og:description" content="Descubre nuestros servicios empresariales especializados para el crecimiento de tu startup.">
+    <meta property="og:url" content="https://deceroacien.app/servicios.html">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Preload de recursos críticos -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
+    
+    <!-- Hojas de estilo -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0a1f2f;
-            color: #e6f1ff;
+    <link rel="stylesheet" href="assets/styles/common.css">
+    <link rel="stylesheet" href="assets/styles/mobile.css">
+    
+    <!-- Configuración de Tailwind personalizada -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#0a1f2f',
+                        'secondary-dark': '#112240',
+                        'accent-gold': '#FBBF24',
+                        'text-light': '#e6f1ff',
+                        'border-custom': '#1e2d4d'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif']
+                    }
+                }
+            }
         }
-        .header-link {
-            color: #cbd5e1;
-            transition: color 0.3s ease;
-        }
-        .header-link:hover, .footer-link:hover {
-            color: #FBBF24;
-        }
-        .active-link {
-            color: #FBBF24;
-            font-weight: 600;
-        }
-        .section-title {
-            color: #ccd6f6;
-            font-weight: 700;
-        }
-        .highlight-text {
-            color: #FBBF24;
-        }
-        .service-card {
-            background-color: #112240;
-            border-radius: 12px;
-            padding: 2.5rem;
-            border: 1px solid #1e2d4d;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-        .service-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(251, 191, 36, 0.4);
-        }
-        .cta-button {
-            display: inline-block;
-            border: 1px solid #FBBF24;
-            color: #FBBF24;
-            font-weight: 600;
-            padding: 10px 20px;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-        .cta-button:hover {
-            background-color: #FBBF24;
-            color: #0a1f2f;
-        }
-        .login-button {
-            color: #cbd5e1;
-            font-weight: 600;
-            transition: color 0.3s ease;
-            padding: 8px 12px;
-        }
-        .login-button:hover {
-            color: #FBBF24;
-        }
-        .register-button {
-            background-color: #FBBF24;
-            color: #0a1f2f;
-            font-weight: 700;
-            padding: 8px 16px;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-        .register-button:hover {
-            background-color: #FCD34D;
-        }
-        .footer-link {
-            color: #94a3b8;
-        }
-        .soon-tag {
-            background-color: rgba(251, 191, 36, 0.1);
-            color: #FBBF24;
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 2px 8px;
-            border-radius: 9999px;
-            margin-left: 8px;
-        }
-    </style>
+    </script>
+    
+    <!-- Estilos específicos para la página de servicios (centralizados en common.css) -->
 </head>
-<body class="antialiased">
+<body class="base-container antialiased">
 
-    <!-- Header -->
-    <header class="sticky top-0 z-50 bg-[#0a192f]/80 backdrop-blur-lg">
-        <nav class="container mx-auto max-w-7xl px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="text-2xl font-bold highlight-text">DE CERO A CIEN</a>
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="index.html" class="header-link text-sm">Inicio</a>
-                <a href="nosotros.html" class="header-link text-sm">Nosotros</a>
-                <a href="servicios.html" class="active-link text-sm">Servicios</a>
-                <a href="metodologia.html" class="header-link text-sm">Metodología</a>
-                <a href="contacto.html" class="header-link text-sm">Contacto</a>
-                 <div class="pl-2 flex items-center space-x-2">
-                    <a href="#" class="login-button text-sm">Ingresa</a>
-                    <a href="#" class="register-button text-sm">Regístrate</a>
-                </div>
-            </div>
-        </nav>
+    <!-- HEADER UNIFICADO -->
+    <header class="header-component">
+        <!-- El contenido del header se genera dinamicamente por JavaScript -->
     </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="py-20 sm:py-28">
-            <div class="container mx-auto max-w-5xl px-6 text-center">
-                <h1 class="text-4xl sm:text-5xl font-bold section-title">Nuestro Ecosistema de <span class="highlight-text">Servicios</span></h1>
-                <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Soluciones diseñadas para acompañarte en cada etapa de tu viaje, desde la idea hasta la consolidación de tu legado.</p>
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+        <!-- Sección Hero -->
+        <section class="main-section py-20 sm:py-28">
+            <div class="section-container max-w-4xl text-center">
+                <h1 class="text-4xl sm:text-5xl font-bold section-title leading-tight fade-in">
+                    Servicios Diseñados para <span class="highlight-text">Acelerar tu Crecimiento</span>
+                </h1>
+                <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto fade-in">
+                    Una batería completa de servicios especializados en 5 áreas clave para que tu startup 
+                    pase del concepto a la consolidación con estrategia y eficiencia.
+                </p>
             </div>
         </section>
 
-        <!-- Services List -->
-        <section class="pb-20 sm:pb-28">
-            <div class="container mx-auto max-w-4xl px-6">
-                <div class="space-y-10">
-
+        <!-- Grid de Servicios Principales -->
+        <section class="main-section pb-20 sm:pb-28">
+            <div class="section-container">
+                <div class="responsive-grid lg:grid-cols-2 gap-8">
+                    
                     <!-- El Camino Dorado -->
-                    <div class="service-card">
-                        <h2 class="text-2xl font-bold text-white">El Camino Dorado</h2>
-                        <p class="mt-3 text-gray-400 flex-grow">Nuestra metodología de 31 micro-herramientas de gestión, potenciadas por IA, para que desarrolles tu idea de negocio en 5 fases. Es el mapa que te guía desde la incertidumbre a la claridad.</p>
+                    <div class="service-card card-spotlight slide-in-left">
+                        <h2 class="text-2xl font-bold text-white flex items-center">
+                            <span class="highlight-text">EL CAMINO DORADO</span>
+                        </h2>
+                        <p class="mt-3 text-gray-400 flex-grow">
+                            Nuestra metodología insignia. 31 micro-herramientas estructuradas en 5 fases 
+                            que te llevan desde la ideación hasta la consolidación de tu startup.
+                        </p>
                         <div class="mt-6">
-                            <a href="metodologia.html" class="cta-button">Explorar Metodología</a>
-                        </div>
-                    </div>
-                    
-                    <!-- Servicios Empresariales Premium -->
-                    <div class="service-card">
-                        <h2 class="text-2xl font-bold text-white">Servicios Empresariales Premium</h2>
-                        <p class="mt-3 text-gray-400 flex-grow">Nuestro brazo ejecutor. Un conjunto de servicios especializados para empresas que necesitan resultados tangibles, divididos en nuestras dos grandes áreas de expertise.</p>
-                        <div class="mt-4 text-gray-300">
-                            <p class="font-semibold text-white">Componentes Clave:</p>
-                            <ul class="list-disc list-inside mt-2">
-                                <li>Marketing Digital Estratégico</li>
-                                <li>Desarrollo de Soluciones Digitales</li>
-                                <li>Mentorías 1 a 1</li>
-                            </ul>
-                        </div>
-                        <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <a href="marketing_catalogo.html" class="cta-button">Ver Catálogo de Marketing</a>
-                            <a href="desarrollo_catalogo.html" class="cta-button">Ver Catálogo de Desarrollo</a>
+                            <a href="camino-dorado.html" class="cta-button card-primary-link">
+                                Comenzar el Camino &rarr;
+                            </a>
                         </div>
                     </div>
 
-                    <!-- Conferencias -->
-                    <div class="service-card">
-                        <h2 class="text-2xl font-bold text-white">Conferencias</h2>
-                        <p class="mt-3 text-gray-400 flex-grow">Llevamos la estrategia y la visión de DE CERO A CIEN directamente a tu evento o equipo directivo. Charlas de alto impacto diseñadas para inspirar, educar y transformar.</p>
+                    <!-- Servicios Empresariales Premium -->
+                    <div class="service-card slide-in-right">
+                        <h2 class="text-2xl font-bold text-white">SERVICIOS EMPRESARIALES</h2>
+                        <p class="mt-3 text-gray-400 flex-grow">
+                            Más de 20 servicios especializados distribuidos en 5 áreas estratégicas: 
+                            Estrategia, Operaciones, Marketing, Tecnología y Finanzas.
+                        </p>
                         <div class="mt-6">
-                            <a href="conferencias_catalogo.html" class="cta-button">Ver Catálogo de Conferencias</a>
+                            <a href="#servicios-detalle" class="cta-button card-primary-link">
+                                Ver Servicios &rarr;
+                            </a>
+                            <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                                <a href="consultoria.html" class="underline hover:text-yellow-400">Consultoría 1:1</a>
+                                <a href="marketing_catalogo.html" class="underline hover:text-yellow-400">Catálogo de Marketing</a>
+                                <a href="desarrollo_catalogo.html" class="underline hover:text-yellow-400">Catálogo de Desarrollo</a>
+                                <a href="conferencias_catalogo.html" class="underline hover:text-yellow-400">Conferencias</a>
+                            </div>
                         </div>
                     </div>
-                    
+
                     <!-- Academy -->
-                    <div class="service-card opacity-60">
-                        <h2 class="text-2xl font-bold text-white flex items-center">Academy <span class="soon-tag">Pronto</span></h2>
-                        <p class="mt-3 text-gray-500 flex-grow">La unidad de formación escalable. Un itinerario de Bootcamps y Masterclasses que cubren las 5 fases de nuestro "Camino Dorado" para que aprendas a tu propio ritmo.</p>
+                    <div class="service-card disabled fade-in">
+                        <h2 class="text-2xl font-bold text-white flex items-center">
+                            Academy <span class="soon-tag">Pronto</span>
+                        </h2>
+                        <p class="mt-3 text-gray-400 flex-grow">
+                            La unidad de formación escalable. Un itinerario de Bootcamps y Masterclasses 
+                            que cubren las 5 fases de nuestro "Camino Dorado" para que aprendas a tu propio ritmo.
+                        </p>
                         <div class="mt-6">
                             <span class="cta-button cursor-not-allowed opacity-50">Próximamente</span>
                         </div>
                     </div>
 
                     <!-- Conecta -->
-                    <div class="service-card opacity-60">
-                        <h2 class="text-2xl font-bold text-white flex items-center">Conecta <span class="soon-tag">Pronto</span></h2>
-                        <p class="mt-3 text-gray-500 flex-grow">La comunidad que combate la "soledad del estratega". Un espacio para fomentar la interacción, el aprendizaje entre pares y la generación de alianzas estratégicas.</p>
+                    <div class="service-card disabled fade-in">
+                        <h2 class="text-2xl font-bold text-white flex items-center">
+                            Conecta <span class="soon-tag">Pronto</span>
+                        </h2>
+                        <p class="mt-3 text-gray-400 flex-grow">
+                            La comunidad que combate la "soledad del estratega". Un espacio para fomentar 
+                            la interacción, el aprendizaje entre pares y la generación de alianzas estratégicas.
+                        </p>
                         <div class="mt-6">
                             <span class="cta-button cursor-not-allowed opacity-50">Próximamente</span>
                         </div>
@@ -187,15 +145,141 @@
             </div>
         </section>
 
+        <!-- Sección Detalle de Servicios Empresariales -->
+        <section id="servicios-detalle" class="main-section py-20 bg-[var(--color-secondary-dark)]">
+            <div class="section-container">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl sm:text-4xl font-bold section-title slide-in-left">
+                        Servicios Empresariales por Área
+                    </h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto slide-in-right">
+                        Servicios especializados organizados en 5 áreas estratégicas clave para el 
+                        crecimiento sostenible de tu empresa.
+                    </p>
+                </div>
+
+                <!-- Grid de Áreas de Servicio -->
+                <div class="responsive-grid lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                    
+                    <!-- Estrategia -->
+                    <div class="card-component text-center fade-in">
+                        <h3 class="text-xl font-bold text-white mb-3">
+                            <span class="highlight-text">📋 Estrategia</span>
+                        </h3>
+                        <ul class="text-sm text-gray-400 space-y-2">
+                            <li>• Validación de modelo de negocio</li>
+                            <li>• Análisis de mercado</li>
+                            <li>• Planificación estratégica</li>
+                            <li>• Definición de KPIs</li>
+                        </ul>
+                    </div>
+
+                    <!-- Operaciones -->
+                    <div class="card-component text-center fade-in">
+                        <h3 class="text-xl font-bold text-white mb-3">
+                            <span class="highlight-text">⚙️ Operaciones</span>
+                        </h3>
+                        <ul class="text-sm text-gray-400 space-y-2">
+                            <li>• Optimización de procesos</li>
+                            <li>• Gestión de la cadena de valor</li>
+                            <li>• Automatización</li>
+                            <li>• Control de calidad</li>
+                        </ul>
+                    </div>
+
+                    <!-- Marketing -->
+                    <div class="card-component text-center fade-in">
+                        <h3 class="text-xl font-bold text-white mb-3">
+                            <span class="highlight-text">📢 Marketing</span>
+                        </h3>
+                        <ul class="text-sm text-gray-400 space-y-2">
+                            <li>• Estrategia de marca</li>
+                            <li>• Marketing digital</li>
+                            <li>• Growth hacking</li>
+                            <li>• Análisis de métricas</li>
+                        </ul>
+                    </div>
+
+                    <!-- Tecnología -->
+                    <div class="card-component text-center fade-in">
+                        <h3 class="text-xl font-bold text-white mb-3">
+                            <span class="highlight-text">💻 Tecnología</span>
+                        </h3>
+                        <ul class="text-sm text-gray-400 space-y-2">
+                            <li>• Desarrollo de MVP</li>
+                            <li>• Arquitectura de sistemas</li>
+                            <li>• Integración de IA</li>
+                            <li>• Seguridad y escalabilidad</li>
+                        </ul>
+                    </div>
+
+                    <!-- Finanzas -->
+                    <div class="card-component text-center fade-in">
+                        <h3 class="text-xl font-bold text-white mb-3">
+                            <span class="highlight-text">💰 Finanzas</span>
+                        </h3>
+                        <ul class="text-sm text-gray-400 space-y-2">
+                            <li>• Modelado financiero</li>
+                            <li>• Búsqueda de inversión</li>
+                            <li>• Control de costos</li>
+                            <li>• Análisis de rentabilidad</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <!-- CTA para contactar -->
+                <div class="text-center mt-16">
+                    <p class="text-lg text-gray-400 mb-6">
+                        ¿Necesitas un servicio específico para tu startup?
+                    </p>
+                    <a href="contacto.html" class="btn-primary text-lg">
+                        Hablemos de tu Proyecto &rarr;
+                    </a>
+                    <div class="mt-6 flex flex-wrap gap-4 justify-center text-sm text-gray-400">
+                        <a href="consultoria.html" class="underline hover:text-yellow-400">Agenda una Consultoría 1:1</a>
+                        <a href="portal-alumno.html" class="underline hover:text-yellow-400">Portal del Alumno</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Accesos rápidos -->
+        <section class="main-section py-16">
+            <div class="section-container">
+                <div class="text-center mb-10">
+                    <h3 class="text-3xl font-bold text-gray-200">Accesos rápidos</h3>
+                    <p class="mt-2 text-gray-400">Navega directo a las áreas más consultadas.</p>
+                </div>
+                <div class="responsive-grid lg:grid-cols-3">
+                    <a href="portal-alumno.html" class="card-component slide-in-left">
+                        <h4 class="text-xl font-bold highlight-text">Portal del Alumno</h4>
+                        <p class="mt-2 text-gray-400">Herramientas por fases para ejecutar tu estrategia.</p>
+                        <span class="mt-4 inline-block card-primary-link">Entrar &rarr;</span>
+                    </a>
+                    <a href="conecta/conecta.html" class="card-component fade-in">
+                        <h4 class="text-xl font-bold highlight-text">Conecta</h4>
+                        <p class="mt-2 text-gray-400">Comunidad, eventos y pertenencia al ecosistema.</p>
+                        <span class="mt-4 inline-block card-primary-link">Ver más &rarr;</span>
+                    </a>
+                    <a href="consultoria.html" class="card-component slide-in-right">
+                        <h4 class="text-xl font-bold highlight-text">Consultoría 1:1</h4>
+                        <p class="mt-2 text-gray-400">Acompañamiento estratégico personalizado.</p>
+                        <span class="mt-4 inline-block card-primary-link">Agendar &rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-gray-800">
-        <div class="container mx-auto max-w-7xl px-6 py-12 text-center">
-             <p class="text-gray-500 text-xs">© 2025 DE CERO A CIEN. Todos los derechos reservados.</p>
-        </div>
+    <!-- FOOTER UNIFICADO -->
+    <footer class="footer-component">
+        <!-- El contenido del footer se genera dinamicamente por JavaScript -->
     </footer>
+
+    <!-- Scripts JavaScript -->
+    <script src="assets/js/components.js"></script>
 
 </body>
 </html>
-
