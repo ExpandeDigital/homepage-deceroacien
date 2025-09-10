@@ -32,7 +32,7 @@
             background-color: #334155;
             color: #FBBF24;
         }
-        .form-input {
+    .form-input {
             background-color: #0a1f2f;
             border: 1px solid #1e2d4d;
             color: #cbd5e1;
@@ -127,26 +127,135 @@
     </main>
 
     <script>
-        const veryInput = document.getElementById('very-disappointed');
-        const somewhatInput = document.getElementById('somewhat-disappointed');
-        const notInput = document.getElementById('not-disappointed');
-        
-        const scoreEl = document.getElementById('pmf-score');
-        const verdictEl = document.getElementById('pmf-verdict');
-        const interpretationEl = document.getElementById('pmf-interpretation');
-        const resultBox = document.getElementById('result-box');
+        (function() {
+            const veryInput = document.getElementById('very-disappointed');
+            const somewhatInput = document.getElementById('somewhat-disappointed');
+            const notInput = document.getElementById('not-disappointed');
 
-        function calculatePMF() {
-            const very = parseInt(veryInput.value) || 0;
-            const somewhat = parseInt(somewhatInput.value) || 0;
-            const not = parseInt(notInput.value) || 0;
+            const scoreEl = document.getElementById('pmf-score');
+            const verdictEl = document.getElementById('pmf-verdict');
+            const interpretationEl = document.getElementById('pmf-interpretation');
+            const resultBox = document.getElementById('result-box');
 
-            const total = very + somewhat + not;
-            
-            if (total === 0) {
-                scoreEl.textContent = '0%';
-                verdictEl.textContent = 'Esperando datos...';
-                interpretationEl.textContent = 'Introduce el número de respuestas en cada categoría para calcular tu resultado.';
-                resultBox.classList.remove('border-green-500', 'border-red-500');
-                verdictEl.classList.remove('text
+            function formatPct(n) {
+                return `${Math.round(n)}%`;
+            }
+
+            function setClasses(el, add, remove) {
+                if (remove && remove.length) el.classList.remove(...remove);
+                if (add && add.length) el.classList.add(...add);
+            }
+
+            function calculatePMF() {
+                const very = parseInt(veryInput.value) || 0;
+                const somewhat = parseInt(somewhatInput.value) || 0;
+                const not = parseInt(notInput.value) || 0;
+
+                const total = very + somewhat + not;
+
+                if (total === 0) {
+                    scoreEl.textContent = '0%';
+                    verdictEl.textContent = 'Esperando datos...';
+                    interpretationEl.textContent = 'Introduce el número de respuestas en cada categoría para calcular tu resultado.';
+                    setClasses(resultBox, [], ['border-green-500','border-red-500']);
+                    setClasses(verdictEl, ['text-slate-300'], ['text-green-400','text-red-400']);
+                    return;
+                }
+
+                const pct = (very / total) * 100;
+                scoreEl.textContent = formatPct(pct);
+
+                if (pct >= 40) {
+                    verdictEl.textContent = '¡Señales fuertes de Product-Market Fit!';
+                    interpretationEl.textContent = 'Puedes empezar a escalar con cuidado: mantén el foco en retención y calidad de experiencia.';
+                    setClasses(resultBox, ['border-green-500'], ['border-red-500']);
+                    setClasses(verdictEl, ['text-green-400'], ['text-red-400','text-slate-300']);
+                } else {
+                    verdictEl.textContent = 'Aún no hay PMF';
+                    interpretationEl.textContent = 'Itera sobre propuesta de valor, segmentos de cliente y experiencia del producto antes de acelerar.';
+                    setClasses(resultBox, ['border-red-500'], ['border-green-500']);
+                    setClasses(verdictEl, ['text-red-400'], ['text-green-400','text-slate-300']);
+                }
+            }
+
+            // Acciones
+            window.guardar = function guardar() {
+                const data = {
+                    very: parseInt(veryInput.value) || 0,
+                    somewhat: parseInt(somewhatInput.value) || 0,
+                    not: parseInt(notInput.value) || 0,
+                    computedAt: new Date().toISOString()
+                };
+                try {
+                    localStorage.setItem('pmf-calculator', JSON.stringify(data));
+                    alert('Datos guardados localmente.');
+                } catch (_) {
+                    alert('No se pudo guardar localmente.');
+                }
+            }
+
+            window.descargar = function descargar() {
+                const data = {
+                    very: parseInt(veryInput.value) || 0,
+                    somewhat: parseInt(somewhatInput.value) || 0,
+                    not: parseInt(notInput.value) || 0,
+                };
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'pmf_resultados.json';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                URL.revokeObjectURL(url);
+            }
+
+            window.compartir = async function compartir() {
+                const params = new URLSearchParams({
+                    very: veryInput.value || '0',
+                    some: somewhatInput.value || '0',
+                    not: notInput.value || '0'
+                }).toString();
+                const shareUrl = `${location.origin}${location.pathname}?${params}`;
+                try {
+                    await navigator.clipboard.writeText(shareUrl);
+                    alert('Enlace copiado al portapapeles.');
+                } catch (_) {
+                    alert(shareUrl);
+                }
+            }
+
+            // Cargar estado de URL o localStorage
+            (function hydrate() {
+                const sp = new URLSearchParams(location.search);
+                const very = sp.get('very');
+                const some = sp.get('some');
+                const not = sp.get('not');
+                if (very || some || not) {
+                    if (very !== null) veryInput.value = very;
+                    if (some !== null) somewhatInput.value = some;
+                    if (not !== null) notInput.value = not;
+                } else {
+                    try {
+                        const saved = JSON.parse(localStorage.getItem('pmf-calculator') || 'null');
+                        if (saved) {
+                            veryInput.value = saved.very || 0;
+                            somewhatInput.value = saved.somewhat || 0;
+                            notInput.value = saved.not || 0;
+                        }
+                    } catch(_) {}
+                }
+            })();
+
+            veryInput.addEventListener('input', calculatePMF);
+            somewhatInput.addEventListener('input', calculatePMF);
+            notInput.addEventListener('input', calculatePMF);
+
+            calculatePMF();
+        })();
+    </script>
+    <script src="../assets/js/components.js"></script>
+</body>
+</html>
 

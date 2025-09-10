@@ -18,6 +18,86 @@
  */
 
 /**
+ * Utilidades y configuración global
+ */
+const GlobalConfig = {
+    basePath: '' // Prefijo para rutas relativas ("", "../", "../../", etc.)
+};
+
+/**
+ * Detecta el basePath a partir del src del script que carga este archivo.
+ * Permite que las rutas del header/footer funcionen desde subcarpetas.
+ */
+function detectBasePath() {
+    try {
+        const scripts = document.getElementsByTagName('script');
+        for (let i = 0; i < scripts.length; i++) {
+            const src = scripts[i].getAttribute('src') || '';
+            // Buscar el script de components.js en cualquier nivel
+            if (/assets\/js\/components\.js$/.test(src)) {
+                // Extraer la parte previa a "assets/js/components.js"
+                const withoutFile = src.replace(/assets\/js\/components\.js$/, '');
+                GlobalConfig.basePath = withoutFile || '';
+                break;
+            }
+        }
+    } catch (e) {
+        console.warn('No se pudo detectar basePath automáticamente, usando ""');
+        GlobalConfig.basePath = '';
+    }
+}
+
+// Detectar basePath lo antes posible
+if (typeof document !== 'undefined') {
+    detectBasePath();
+}
+
+/**
+ * Inyecta estilos globales si no están presentes (common.css y mobile.css)
+ */
+function ensureGlobalStyles() {
+    try {
+        const head = document.head || document.getElementsByTagName('head')[0];
+        const existing = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
+            .map(l => l.getAttribute('href') || '');
+
+        const styles = [
+            `${GlobalConfig.basePath}assets/styles/common.css`,
+            `${GlobalConfig.basePath}assets/styles/mobile.css`
+        ];
+
+        styles.forEach(href => {
+            const already = existing.some(e => e.endsWith(href.replace(GlobalConfig.basePath, '')) || e === href);
+            if (!already) {
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = href;
+                head.appendChild(link);
+            }
+        });
+    } catch (e) {
+        console.warn('No se pudieron inyectar estilos globales:', e);
+    }
+}
+
+/**
+ * Crea placeholders de header/footer si no existen en el DOM
+ */
+function ensureHeaderFooterPlaceholders() {
+    const body = document.body;
+    if (!document.querySelector('.header-component')) {
+        const header = document.createElement('header');
+        header.className = 'header-component';
+        body.insertAdjacentElement('afterbegin', header);
+    }
+    if (!document.querySelector('.footer-component')) {
+        const footer = document.createElement('footer');
+        footer.className = 'footer-component';
+        body.insertAdjacentElement('beforeend', footer);
+    }
+}
+
+/**
  * CLASE BASE ABSTRACTA - BaseComponent
  * 
  * Actúa como clase padre para todos los componentes del sistema.
@@ -142,6 +222,7 @@ class HeaderComponent extends BaseComponent {
         this.isMenuOpen = false; // Estado del menú móvil
         this.currentPage = this.getCurrentPage(); // Detección automática de página
         this.breakpoint = 768; // Punto de quiebre para diseño responsivo
+        this.basePath = GlobalConfig.basePath || '';
     }
 
     /**
@@ -188,21 +269,21 @@ class HeaderComponent extends BaseComponent {
      * Genera el HTML completo del header
      */
     generateHeaderHTML() {
-        const headerHTML = `
+    const headerHTML = `
             <nav class="header-nav">
                 <!-- Logo principal -->
-                <a href="index.html" class="header-logo" aria-label="Inicio DE CERO A CIEN">
-                    <img src="assets/logo_de_cero_a_cien_blanco_y_dorado.png" alt="DE CERO A CIEN" class="header-logo-img" loading="lazy" />
+        <a href="${this.basePath}index.html" class="header-logo" aria-label="Inicio DE CERO A CIEN">
+            <img src="${this.basePath}assets/logo_de_cero_a_cien_blanco_y_dorado.png" alt="DE CERO A CIEN" class="header-logo-img" loading="lazy" />
                 </a>
                 
                 <!-- Navegación principal (desktop) -->
                 <div class="header-nav-links">
-                    <a href="index.html" class="header-link ${this.currentPage === 'index' ? 'active' : ''}">Inicio</a>
-                    <a href="nosotros.html" class="header-link ${this.currentPage === 'nosotros' ? 'active' : ''}">Nosotros</a>
-                    <a href="servicios.html" class="header-link ${this.currentPage === 'servicios' ? 'active' : ''}">Servicios</a>
-                    <a href="metodologia.html" class="header-link ${this.currentPage === 'metodologia' ? 'active' : ''}">Metodología</a>
-                    <a href="contacto.html" class="header-link ${this.currentPage === 'contacto' ? 'active' : ''}">Contacto</a>
-                    <a href="academy.html" class="header-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a>
+            <a href="${this.basePath}index.html" class="header-link ${this.currentPage === 'index' ? 'active' : ''}">Inicio</a>
+            <a href="${this.basePath}nosotros.html" class="header-link ${this.currentPage === 'nosotros' ? 'active' : ''}">Nosotros</a>
+            <a href="${this.basePath}servicios.html" class="header-link ${this.currentPage === 'servicios' ? 'active' : ''}">Servicios</a>
+            <a href="${this.basePath}metodologia.html" class="header-link ${this.currentPage === 'metodologia' ? 'active' : ''}">Metodología</a>
+            <a href="${this.basePath}contacto.html" class="header-link ${this.currentPage === 'contacto' ? 'active' : ''}">Contacto</a>
+            <a href="${this.basePath}academy.html" class="header-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a>
                 </div>
                 
                 <!-- Sección de autenticación -->
@@ -256,13 +337,13 @@ class HeaderComponent extends BaseComponent {
      * @returns {string} HTML del menú móvil
      */
     getMobileMenuHTML() {
-        return `
+    return `
             <div class="mobile-menu-content">
-                <a href="index.html" class="mobile-menu-link">Inicio</a>
-                <a href="nosotros.html" class="mobile-menu-link">Nosotros</a>
-                <a href="servicios.html" class="mobile-menu-link">Servicios</a>
-                <a href="metodologia.html" class="mobile-menu-link">Metodología</a>
-                <a href="contacto.html" class="mobile-menu-link">Contacto</a>
+        <a href="${this.basePath}index.html" class="mobile-menu-link">Inicio</a>
+        <a href="${this.basePath}nosotros.html" class="mobile-menu-link">Nosotros</a>
+        <a href="${this.basePath}servicios.html" class="mobile-menu-link">Servicios</a>
+        <a href="${this.basePath}metodologia.html" class="mobile-menu-link">Metodología</a>
+        <a href="${this.basePath}contacto.html" class="mobile-menu-link">Contacto</a>
                 <div class="mobile-menu-auth">
                     <a href="#" class="mobile-auth-link">Ingresa</a>
                     <a href="#" class="mobile-register-btn">Regístrate</a>
@@ -390,6 +471,7 @@ class FooterComponent extends BaseComponent {
         super(element);
         this.currentPage = this.getCurrentPage();
         this.currentYear = new Date().getFullYear();
+    this.basePath = GlobalConfig.basePath || '';
     }
 
     /**
@@ -415,7 +497,7 @@ class FooterComponent extends BaseComponent {
      * Genera el HTML completo del footer
      */
     generateFooterHTML() {
-        const footerHTML = `
+    const footerHTML = `
             <div class="footer-container">
                 <!-- Grid de secciones del footer -->
                 <div class="footer-grid">
@@ -423,11 +505,11 @@ class FooterComponent extends BaseComponent {
                     <div class="footer-section">
                         <h3>Enlaces Rápidos</h3>
                         <ul>
-                            <li><a href="index.html" class="footer-link ${this.currentPage === 'index' ? 'active' : ''}">Inicio</a></li>
-                            <li><a href="nosotros.html" class="footer-link ${this.currentPage === 'nosotros' ? 'active' : ''}">Nosotros</a></li>
-                            <li><a href="servicios.html" class="footer-link ${this.currentPage === 'servicios' ? 'active' : ''}">Servicios</a></li>
-                            <li><a href="metodologia.html" class="footer-link ${this.currentPage === 'metodologia' ? 'active' : ''}">Metodología</a></li>
-                            <li><a href="contacto.html" class="footer-link ${this.currentPage === 'contacto' ? 'active' : ''}">Contacto</a></li>
+                <li><a href="${this.basePath}index.html" class="footer-link ${this.currentPage === 'index' ? 'active' : ''}">Inicio</a></li>
+                <li><a href="${this.basePath}nosotros.html" class="footer-link ${this.currentPage === 'nosotros' ? 'active' : ''}">Nosotros</a></li>
+                <li><a href="${this.basePath}servicios.html" class="footer-link ${this.currentPage === 'servicios' ? 'active' : ''}">Servicios</a></li>
+                <li><a href="${this.basePath}metodologia.html" class="footer-link ${this.currentPage === 'metodologia' ? 'active' : ''}">Metodología</a></li>
+                <li><a href="${this.basePath}contacto.html" class="footer-link ${this.currentPage === 'contacto' ? 'active' : ''}">Contacto</a></li>
                         </ul>
                     </div>
                     
@@ -435,9 +517,9 @@ class FooterComponent extends BaseComponent {
                     <div class="footer-section">
                         <h3>Recursos</h3>
                         <ul>
-                            <li><a href="camino-dorado.html" class="footer-link ${this.currentPage === 'camino-dorado' ? 'active' : ''}">El Camino Dorado</a></li>
-                            <li><a href="servicios.html" class="footer-link">Servicios Premium</a></li>
-                            <li><a href="academy.html" class="footer-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a></li>
+                <li><a href="${this.basePath}camino-dorado.html" class="footer-link ${this.currentPage === 'camino-dorado' ? 'active' : ''}">El Camino Dorado</a></li>
+                <li><a href="${this.basePath}servicios.html" class="footer-link">Servicios Premium</a></li>
+                <li><a href="${this.basePath}academy.html" class="footer-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a></li>
                             <li><a href="javascript:void(0)" class="footer-link disabled" aria-disabled="true" tabindex="-1">Conecta <span class="ml-1 inline-block px-2 py-0.5 text-[10px] rounded bg-yellow-500/20 text-yellow-300">En construcción</span></a></li>
                         </ul>
                     </div>
@@ -446,7 +528,7 @@ class FooterComponent extends BaseComponent {
                     <div class="footer-section">
                         <h3>Herramientas</h3>
                         <ul>
-                            <li><a href="conferencias_catalogo.html" class="footer-link">Conferencias</a></li>
+                <li><a href="${this.basePath}conferencias_catalogo.html" class="footer-link">Conferencias</a></li>
                             <li><a href="javascript:void(0)" class="footer-link disabled" aria-disabled="true" tabindex="-1">Integraciones con IA <span class="ml-1 inline-block px-2 py-0.5 text-[10px] rounded bg-yellow-500/20 text-yellow-300">En construcción</span></a></li>
                             <li><a href="javascript:void(0)" class="footer-link disabled" aria-disabled="true" tabindex="-1">Diagnósticos con IA <span class="ml-1 inline-block px-2 py-0.5 text-[10px] rounded bg-yellow-500/20 text-yellow-300">En construcción</span></a></li>
                             <li><a href="javascript:void(0)" class="footer-link disabled" aria-disabled="true" tabindex="-1">Bootcamp <span class="ml-1 inline-block px-2 py-0.5 text-[10px] rounded bg-yellow-500/20 text-yellow-300">En construcción</span></a></li>
@@ -458,10 +540,10 @@ class FooterComponent extends BaseComponent {
                     <div class="footer-section">
                         <h3>Legal</h3>
                         <ul>
-                            <li><a href="terminos.html" class="footer-link ${this.currentPage === 'terminos' ? 'active' : ''}">Términos y Condiciones</a></li>
-                            <li><a href="politica_privacidad.html" class="footer-link ${this.currentPage === 'politica_privacidad' ? 'active' : ''}">Política de Privacidad</a></li>
-                            <li><a href="politica_cookies.html" class="footer-link ${this.currentPage === 'politica_cookies' ? 'active' : ''}">Política de Cookies</a></li>
-                            <li><a href="aviso_legal.html" class="footer-link ${this.currentPage === 'aviso_legal' ? 'active' : ''}">Aviso Legal</a></li>
+                <li><a href="${this.basePath}terminos.html" class="footer-link ${this.currentPage === 'terminos' ? 'active' : ''}">Términos y Condiciones</a></li>
+                <li><a href="${this.basePath}politica_privacidad.html" class="footer-link ${this.currentPage === 'politica_privacidad' ? 'active' : ''}">Política de Privacidad</a></li>
+                <li><a href="${this.basePath}politica_cookies.html" class="footer-link ${this.currentPage === 'politica_cookies' ? 'active' : ''}">Política de Cookies</a></li>
+                <li><a href="${this.basePath}aviso_legal.html" class="footer-link ${this.currentPage === 'aviso_legal' ? 'active' : ''}">Aviso Legal</a></li>
                         </ul>
                     </div>
                     
@@ -470,9 +552,9 @@ class FooterComponent extends BaseComponent {
                         <h3>Contacto</h3>
                         <ul>
                             <li><a href="tel:+56985678296" class="footer-link">+56 985 678 296</a></li>
-                            <li><a href="mailto:hola@deceroacien.app" class="footer-link">hola@deceroacien.app</a></li>
-                            <li><a href="https://www.deceroacien.app" target="_blank" class="footer-link">www.deceroacien.app</a></li>
-                            <li><a href="contacto.html" class="footer-link">Formulario de Contacto</a></li>
+                <li><a href="mailto:hola@deceroacien.app" class="footer-link">hola@deceroacien.app</a></li>
+                <li><a href="https://www.deceroacien.app" target="_blank" class="footer-link">www.deceroacien.app</a></li>
+                <li><a href="${this.basePath}contacto.html" class="footer-link">Formulario de Contacto</a></li>
                         </ul>
                     </div>
                 </div>
@@ -636,6 +718,9 @@ class AppManager {
         }
 
         try {
+            // Asegurar estilos y placeholders globales
+            ensureGlobalStyles();
+            ensureHeaderFooterPlaceholders();
             this.initializeComponents();
             this.setupGlobalEvents();
             this.isInitialized = true;
@@ -649,7 +734,7 @@ class AppManager {
      * Inicializa todos los componentes de la página
      */
     initializeComponents() {
-        // Inicializar Header
+    // Inicializar Header
         const headerElement = document.querySelector('.header-component');
         if (headerElement) {
             const header = new HeaderComponent(headerElement);
@@ -754,6 +839,8 @@ class AppManager {
 function initializeApp() {
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
+            // Redetectar basePath cuando DOM está listo por si el script fue diferido
+            detectBasePath();
             const app = new AppManager();
             app.init();
             
@@ -761,6 +848,7 @@ function initializeApp() {
             window.app = app;
         });
     } else {
+        detectBasePath();
         const app = new AppManager();
         app.init();
         window.app = app;
