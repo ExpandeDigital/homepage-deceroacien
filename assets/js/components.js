@@ -237,17 +237,27 @@ class HeaderComponent extends BaseComponent {
      * - "/" → "index" (página por defecto)
      */
     getCurrentPage() {
-        const path = window.location.pathname;
+        const path = window.location.pathname || '';
         const filename = path.split('/').pop() || 'index.html';
-        
-        // Remover extensión .html y manejar casos especiales
+
+        // Detección: si es un artículo del blog, marcamos como 'blog'
+        const p = path.toLowerCase();
+        const isBlogArticle = (
+            p.includes('no_te_enamores_de_tu_idea') ||
+            p.includes('tu_pmv_no_es_un_producto_barato') ||
+            p.includes('tu_producto_ya_existe_y_ahora_que_la') ||
+            p.includes('de_fundador_a_arquitecto_como_construir_una') ||
+            p.includes('ya_eres_grande_ahora_se_imborrable')
+        );
+        if (isBlogArticle) return 'blog';
+
+        // Remover extensión .html y manejar casos comunes
         let pageName = filename.replace('.html', '');
-        
-        // Si está vacío o es raíz, usar 'index' como defecto
+
         if (!pageName || pageName === '') {
             pageName = 'index';
         }
-        
+
         return pageName;
     }
 
@@ -482,8 +492,20 @@ class FooterComponent extends BaseComponent {
      * Determina la página actual para marcar enlaces activos
      */
     getCurrentPage() {
-        const path = window.location.pathname;
+        const path = window.location.pathname || '';
         const filename = path.split('/').pop() || 'index.html';
+
+        // Detección de artículos del blog para activar 'Blog'
+        const p = path.toLowerCase();
+        const isBlogArticle = (
+            p.includes('no_te_enamores_de_tu_idea') ||
+            p.includes('tu_pmv_no_es_un_producto_barato') ||
+            p.includes('tu_producto_ya_existe_y_ahora_que_la') ||
+            p.includes('de_fundador_a_arquitecto_como_construir_una') ||
+            p.includes('ya_eres_grande_ahora_se_imborrable')
+        );
+        if (isBlogArticle) return 'blog';
+
         return filename.replace('.html', '') || 'index';
     }
 
