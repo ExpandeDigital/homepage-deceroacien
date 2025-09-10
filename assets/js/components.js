@@ -355,6 +355,7 @@ class HeaderComponent extends BaseComponent {
     <a href="${this.basePath}nosotros.html" class="mobile-menu-link">Nosotros</a>
         <a href="${this.basePath}servicios.html" class="mobile-menu-link">Servicios</a>
         <a href="${this.basePath}metodologia.html" class="mobile-menu-link">Metodología</a>
+    <a href="${this.basePath}academy.html" class="mobile-menu-link">Academy</a>
     <a href="${this.basePath}blog.html" class="mobile-menu-link">Blog</a>
     <a href="${this.basePath}faq.html" class="mobile-menu-link">FAQ</a>
         <a href="${this.basePath}contacto.html" class="mobile-menu-link">Contacto</a>
@@ -548,7 +549,7 @@ class FooterComponent extends BaseComponent {
                 <li><a href="${this.basePath}servicios.html" class="footer-link">Servicios Premium</a></li>
                 <li><a href="${this.basePath}academy.html" class="footer-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a></li>
                 <li><a href="javascript:void(0)" class="footer-link disabled" aria-disabled="true" tabindex="-1">Diagnósticos con IA <span class="ml-1 inline-block px-2 py-0.5 text-[10px] rounded bg-yellow-500/20 text-yellow-300">En construcción</span></a></li>
-                <li><a href="${this.basePath}conecta.html" class="footer-link ${this.currentPage === 'conecta' ? 'active' : ''}">Conecta</a></li>
+                <li><a href="${this.basePath}conecta/conecta.html" class="footer-link ${this.currentPage === 'conecta' ? 'active' : ''}">Conecta</a></li>
                 <li><a href="${this.basePath}conferencias_catalogo.html" class="footer-link">Conferencias</a></li>
             </ul>
         </div>
