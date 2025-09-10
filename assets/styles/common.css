@@ -729,3 +729,10 @@
     box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
 }
 .form-input::placeholder { color: var(--color-text-gray); }
+
+/* Banner promocional reutilizable para llamados dentro de artículos */
+.promo-banner {
+    background-color: var(--color-secondary-dark);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+}
