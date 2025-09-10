@@ -1,0 +1,225 @@
+!DOCTYPE html
+html lang=es
+head
+    meta charset=UTF-8
+    meta name=viewport content=width=device-width, initial-scale=1.0
+    titleSistema de Recolección de Feedback  El Camino Doradotitle
+    script src=httpscdn.tailwindcss.comscript
+    link rel=preconnect href=httpsfonts.googleapis.com
+    link rel=preconnect href=httpsfonts.gstatic.com crossorigin
+    link href=httpsfonts.googleapis.comcss2family=Interwght@400;600;700;900&display=swap rel=stylesheet
+    style
+        body {
+            font-family 'Inter', sans-serif;
+            background-color #0a1f2f;
+            color #e6f1ff;
+        }
+        .highlight-text { color #FBBF24; }
+        .tool-container { background-color #112240; }
+        .doc-container { background-color #0a1f2f; }
+        .action-button {
+            background-color #1E293B;
+            color #cbd5e1;
+            padding 8px 12px;
+            border-radius 6px;
+            transition all 0.3s ease;
+            font-size 0.875rem;
+            font-weight 600;
+            border 1px solid #334155;
+            cursor pointer;
+        }
+        .action-buttonhover {
+            background-color #334155;
+            color #FBBF24;
+        }
+        .form-input, .form-textarea, .form-select {
+            background-color #0a1f2f;
+            border 1px solid #1e2d4d;
+            color #cbd5e1;
+            width 100%;
+            padding 10px;
+            border-radius 4px;
+        }
+        .form-inputplaceholder, .form-textareaplaceholder { color #475569; }
+        .form-inputfocus, .form-textareafocus, .form-selectfocus { outline none; border-color #FBBF24; }
+        .primary-button {
+            background-color #FBBF24;
+            color #0a1f2f;
+            font-weight 700;
+            padding 10px 24px;
+            border-radius 6px;
+            text-decoration none;
+            transition background-color 0.3s ease;
+            text-align center;
+            cursor pointer;
+        }
+    style
+head
+body class=antialiased
+
+    header class=sticky top-0 z-50 bg-[#0a192f]80 backdrop-blur-lg border-b border-gray-800
+        nav class=container mx-auto max-w-7xl px-6 py-3 flex justify-between items-center
+            a href=portal-alumno.html class=text-lg font-bold highlight-text← Volver al Centro de Formacióna
+            span class=text-sm text-slate-300Bienvenido, [Nombre Alumno]span
+        nav
+    header
+
+    main class=container mx-auto max-w-7xl px-6 py-12
+        div class=grid grid-cols-1 lggrid-cols-3 gap-8
+
+            aside class=lgcol-span-1 doc-container p-6 rounded-lg
+                h1 class=text-2xl font-black text-whiteSistema de Recolección de Feedbackh1
+                p class=text-sm highlight-text mt-1Herramienta de la Fase 3 Tracción y P-M Fitp
+                
+                div class=mt-8 space-y-6 text-gray-400 text-sm
+                    div
+                        h2 class=font-bold text-slate-300 text-base🎯 Objetivoh2
+                        p class=mt-1Crear un sistema estructurado para solicitar, recopilar y analizar el feedback de tus primeros usuarios de forma sistemática y accionable.p
+                    div
+                    div
+                        h2 class=font-bold text-slate-300 text-base⭐ Importanciah2
+                        p class=mt-1Tus primeros usuarios son tus mejores consultores, y su feedback es gratuito. Escucharlos activamente es la forma más rápida de encontrar el Product-Market Fit. Ignorarlos es la forma más rápida de construir un producto que a nadie le importa.p
+                    div
+                    div
+                        h2 class=font-bold text-slate-300 text-base⚙️ ¿Qué es lo que haceh2
+                        p class=mt-1Te permite construir un formulario de feedback personalizado. Puedes añadir preguntas abiertas, de opción múltiple o escalas de valoración para crear la encuesta perfecta que necesitas enviar a tus clientes para entender su experiencia, identificar puntos de dolor y descubrir nuevas oportunidades.p
+                    div
+                    div
+                        h2 class=font-bold text-slate-300 text-base💡 ¿Para qué me sirveh2
+                        p class=mt-1Para tomar decisiones de producto basadas en evidencia directa del cliente, no en suposiciones. Te sirve para priorizar las próximas funcionalidades, mejorar la experiencia de usuario y construir una comunidad de clientes leales que se sienten escuchados.p
+                    div
+                div
+            aside
+
+            div class=lgcol-span-2 tool-container p-6 rounded-lg
+                div class=flex flex-wrap items-center justify-between pb-4 border-b border-gray-700 gap-4
+                    h2 class=text-xl font-bold text-whiteConstruye tu Formulario de Feedbackh2
+                     div class=flex space-x-3
+                        button class=action-button onclick=guardar()💾 Guardarbutton
+                        button class=action-button onclick=descargar()📄 Descargarbutton
+                        button class=action-button onclick=compartir()🔗 Compartirbutton
+                    div
+                div
+
+                div class=mt-6
+                    h3 class=font-semibold text-white mb-21. Personaliza tu Formularioh3
+                     div class=bg-gray-90050 p-4 rounded-lg space-y-4
+                        input type=text id=form-title class=form-input value=Feedback sobre tu experiencia
+                        textarea id=form-description class=form-input rows=2Nos encantaría conocer tu opinión para seguir mejorando. ¡Gracias por tu tiempo!textarea
+                    div
+                div
+                
+                div class=mt-6
+                    h3 class=font-semibold text-white mb-42. Añade Preguntash3
+                    div class=bg-gray-90050 p-4 rounded-lg flex flex-wrap smflex-nowrap gap-4 items-end
+                        div class=flex-grow
+                            label for=question-text class=text-xs text-gray-400Texto de la preguntalabel
+                            input type=text id=question-text class=form-input placeholder=Ej ¿Qué es lo que más te gusta
+                        div
+                        div class=w-full smw-auto
+                            label for=question-type class=text-xs text-gray-400Tipo de preguntalabel
+                            select id=question-type class=form-select
+                                option value=textTexto Cortooption
+                                option value=textareaPárrafooption
+                                option value=ratingValoración (1-5)option
+                            select
+                        div
+                        button id=add-question-btn class=primary-button w-full smw-autoAñadirbutton
+                    div
+                div
+
+                div class=mt-6
+                     h3 class=font-semibold text-white mb-43. Vista Previa del Formularioh3
+                     div id=form-preview class=space-y-4 bg-gray-90050 p-6 rounded-lg
+                        !-- Las preguntas aparecerán aquí --
+                     div
+                div
+            div
+        div
+    main
+
+    script
+        const formTitleInput = document.getElementById('form-title');
+        const formDescriptionInput = document.getElementById('form-description');
+        const questionTextInput = document.getElementById('question-text');
+        const questionTypeInput = document.getElementById('question-type');
+        const addQuestionBtn = document.getElementById('add-question-btn');
+        const formPreview = document.getElementById('form-preview');
+
+        let questions = [
+            { text 'En general, ¿qué tan satisfecho estás con el producto', type 'rating' },
+            { text '¿Qué es lo que más te gusta o te resulta más útil', type 'textarea' },
+            { text '¿Hay algo que te haya resultado confuso o difícil de usar', type 'textarea' },
+            { text 'Si pudieras cambiar una sola cosa, ¿cuál sería', type 'text' },
+        ];
+
+        function renderForm() {
+            formPreview.innerHTML = `
+                h2 class=text-xl font-bold text-white${formTitleInput.value}h2
+                p class=text-sm text-gray-400${formDescriptionInput.value}p
+                div class=border-t border-gray-700 my-4div
+            `;
+            
+            if (questions.length === 0) {
+                formPreview.innerHTML += `p class=text-sm text-gray-500 text-center py-4Añade tu primera pregunta para empezar.p`;
+            }
+
+            questions.forEach((q, index) = {
+                const questionEl = document.createElement('div');
+                questionEl.className = 'py-2';
+                let inputHtml = '';
+                switch (q.type) {
+                    case 'text'
+                        inputHtml = `input type=text disabled class=form-input mt-2 placeholder=Respuesta corta`;
+                        break;
+                    case 'textarea'
+                        inputHtml = `textarea disabled class=form-input mt-2 rows=3 placeholder=Respuesta largatextarea`;
+                        break;
+                    case 'rating'
+                        inputHtml = `
+                            div class=flex space-x-2 mt-2
+                                ${[1,2,3,4,5].map(num = `button disabled class=w-10 h-10 rounded-full border border-gray-600 text-gray-400${num}button`).join('')}
+                            div
+                        `;
+                        break;
+                }
+                
+                questionEl.innerHTML = `
+                    div class=flex justify-between items-center
+                        label class=text-sm text-slate-300${index + 1}. ${q.text}label
+                        button class=list-action-button !p-1 text-xs !bg-red-800 hover!bg-red-700 onclick=deleteQuestion(${index})Borrarbutton
+                    div
+                    ${inputHtml}
+                `;
+                formPreview.appendChild(questionEl);
+            });
+        }
+        
+        formTitleInput.addEventListener('input', renderForm);
+        formDescriptionInput.addEventListener('input', renderForm);
+        
+        addQuestionBtn.addEventListener('click', () = {
+            const text = questionTextInput.value.trim();
+            if (!text) {
+                alert('Por favor, escribe el texto de la pregunta.');
+                return;
+            }
+            const type = questionTypeInput.value;
+            questions.push({ text, type });
+            questionTextInput.value = '';
+            renderForm();
+        });
+
+        function deleteQuestion(index) {
+            questions.splice(index, 1);
+            renderForm();
+        }
+
+        renderForm();
+
+        function guardar() { alert('Funcionalidad Guardar ¡Próximamente!'); }
+        function descargar() { alert('Funcionalidad Descargar ¡Próximamente!'); }
+        function compartir() { alert('Funcionalidad Compartir ¡Próximamente!'); }
+    script
+body
+html

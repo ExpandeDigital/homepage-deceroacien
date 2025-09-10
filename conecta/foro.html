@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototipo del Foro - DE CERO A CIEN CONECTA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-noche: #1a1f3a;
+            --azul-oscuro: #101326;
+            --dorado: #d4af37;
+            --dorado-hover: #b8941f;
+            --texto-claro: #f0f2f5;
+            --texto-secundario: #a7a9be;
+            --borde-sutil: rgba(212, 175, 55, 0.2);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-[var(--azul-oscuro)] text-[var(--texto-claro)]">
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-72 bg-[var(--azul-noche)] flex flex-col p-4 border-r border-[var(--borde-sutil)]">
+            <div class="flex items-center gap-3 mb-8 px-2">
+                <div class="w-10 h-10 bg-[var(--dorado)] rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-[var(--azul-noche)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                </div>
+                <h1 class="font-serif text-xl font-bold">Foro CONECTA</h1>
+            </div>
+
+            <button id="open-modal-btn" class="w-full bg-[var(--dorado)] text-[var(--azul-noche)] font-bold py-3 px-4 rounded-lg mb-6 hover:bg-[var(--dorado-hover)] transition-colors duration-300 flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                Crear Nuevo Post
+            </button>
+
+            <nav class="flex-grow">
+                <h2 class="text-sm font-semibold text-[var(--texto-secundario)] uppercase tracking-wider px-2 mb-2">Canales</h2>
+                <ul class="space-y-1" id="channel-list">
+                    <li><a href="#" data-channel="general" class="channel-link active flex items-center gap-3 px-3 py-2 rounded-md font-semibold bg-[var(--azul-oscuro)]"># General</a></li>
+                    <li><a href="#" data-channel="estrategia" class="channel-link flex items-center gap-3 px-3 py-2 rounded-md text-[var(--texto-secundario)] hover:bg-[rgba(255,255,255,0.05)]"># Estrategia y Finanzas</a></li>
+                    <li><a href="#" data-channel="marketing" class="channel-link flex items-center gap-3 px-3 py-2 rounded-md text-[var(--texto-secundario)] hover:bg-[rgba(255,255,255,0.05)]"># Marketing y Crecimiento</a></li>
+                    <li><a href="#" data-channel="producto" class="channel-link flex items-center gap-3 px-3 py-2 rounded-md text-[var(--texto-secundario)] hover:bg-[rgba(255,255,255,0.05)]"># Producto y Tecnología</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto scrollbar-hide">
+            <div id="content-area" class="p-8">
+                <!-- Contenido de #General -->
+                <div id="content-general" class="content-pane">
+                    <h2 class="font-serif text-3xl font-bold mb-6 border-b border-[var(--borde-sutil)] pb-4"># General</h2>
+                    
+                    <article class="bg-[var(--azul-noche)] rounded-xl p-6 mb-6">
+                        <div class="flex items-center mb-4">
+                            <img src="https://placehold.co/40x40/d4af37/1a1f3a?text=CJ" alt="Avatar" class="w-10 h-10 rounded-full mr-4">
+                            <div>
+                                <h3 class="font-bold text-lg">Cristian Jofré</h3>
+                                <p class="text-sm text-[var(--texto-secundario)]">Fundador & Mentor Principal</p>
+                            </div>
+                        </div>
+                        <h4 class="font-serif text-2xl font-bold text-[var(--dorado)] mb-4">¡Bienvenido a CONECTA! El fin de la soledad del estratega.</h4>
+                        <div class="space-y-4 text-gray-300">
+                            <p>Esta tribu nace con un solo propósito: ser el espacio seguro donde puedas compartir tus desafíos, celebrar tus victorias y encontrar el consejo que necesitas para construir tu legado. Aquí no hay preguntas tontas, solo emprendedores en el mismo viaje que tú.</p>
+                            <div class="bg-[var(--azul-oscuro)] p-4 rounded-lg border border-[var(--borde-sutil)]">
+                                <h5 class="font-bold mb-2">Reglas de la Comunidad:</h5>
+                                <ul class="list-disc list-inside space-y-1 text-sm">
+                                    <li><strong>Aporta valor, no solo pidas.</strong> El conocimiento es una calle de doble sentido.</li>
+                                    <li><strong>Debate con respeto, ataca las ideas, no a las personas.</strong> La crítica constructiva es bienvenida.</li>
+                                    <li><strong>Cero spam y autopromoción desmedida.</strong> Estamos para ayudarnos, no para vendernos.</li>
+                                    <li><strong>Confidencialidad.</strong> Lo que se comparte en la tribu, se queda en la tribu.</li>
+                                </ul>
+                            </div>
+                            <h5 class="font-bold pt-4">Encuesta Rápida: ¿Cuál es tu mayor desafío AHORA MISMO?</h5>
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <button class="poll-option flex-1 text-left bg-[var(--azul-oscuro)] p-3 rounded-lg border-2 border-[var(--borde-sutil)] hover:bg-[var(--azul-noche)] transition-colors">Validar mi idea de negocio</button>
+                                <button class="poll-option flex-1 text-left bg-[var(--azul-oscuro)] p-3 rounded-lg border-2 border-[var(--borde-sutil)] hover:bg-[var(--azul-noche)] transition-colors">Conseguir mis primeros clientes</button>
+                                <button class="poll-option flex-1 text-left bg-[var(--azul-oscuro)] p-3 rounded-lg border-2 border-[var(--borde-sutil)] hover:bg-[var(--azul-noche)] transition-colors">Escalar mis ventas</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Contenido de #Estrategia y Finanzas -->
+                <div id="content-estrategia" class="content-pane hidden">
+                    <h2 class="font-serif text-3xl font-bold mb-6 border-b border-[var(--borde-sutil)] pb-4"># Estrategia y Finanzas</h2>
+                    <article class="bg-[var(--azul-noche)] rounded-xl p-6">
+                        <h4 class="font-serif text-xl font-bold mb-2">Discusión: ¿Cobrar por horas o por valor?</h4>
+                        <p class="text-gray-300">Basado en el artículo de la última "DE CERO A CIEN Magazine", ¿cómo han hecho la transición de un modelo de precios basado en tiempo a uno basado en el valor que entregan? Compartan sus experiencias y dolores.</p>
+                    </article>
+                </div>
+
+                <!-- Contenido de #Marketing y Crecimiento -->
+                <div id="content-marketing" class="content-pane hidden">
+                    <h2 class="font-serif text-3xl font-bold mb-6 border-b border-[var(--borde-sutil)] pb-4"># Marketing y Crecimiento</h2>
+                     <article class="bg-[var(--azul-noche)] rounded-xl p-6">
+                        <h4 class="font-serif text-xl font-bold mb-2">Caso de Estudio: La "Ventaja Injusta"</h4>
+                        <p class="text-gray-300">El concepto de "Sinergia Humano-IA" de la revista es potente. ¿Qué pequeña tarea de marketing han logrado automatizar o acelerar con IA esta semana para liberar tiempo para la estrategia?</p>
+                    </article>
+                </div>
+
+                <!-- Contenido de #Producto y Tecnología -->
+                <div id="content-producto" class="content-pane hidden">
+                    <h2 class="font-serif text-3xl font-bold mb-6 border-b border-[var(--borde-sutil)] pb-4"># Producto y Tecnología</h2>
+                     <article class="bg-[var(--azul-noche)] rounded-xl p-6">
+                        <h4 class="font-serif text-xl font-bold mb-2">Feedback: ¿Qué herramienta les gustaría ver en la plataforma?</h4>
+                        <p class="text-gray-300">El equipo de desarrollo está escuchando. Si pudieran tener una nueva micro-herramienta en la plataforma "El Camino Dorado" mañana, ¿cuál sería y qué problema resolvería?</p>
+                    </article>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal para Nuevo Post -->
+    <div id="post-modal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center p-4 z-50">
+        <div class="bg-[var(--azul-noche)] rounded-xl shadow-2xl w-full max-w-2xl border border-[var(--borde-sutil)]">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-serif text-2xl font-bold">Crear Nuevo Post</h3>
+                    <button id="close-modal-btn" class="text-2xl text-[var(--texto-secundario)] hover:text-white">&times;</button>
+                </div>
+
+                <p class="text-[var(--texto-secundario)] mb-4">Usa una plantilla para estructurar tu aporte y obtener mejores respuestas:</p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <button data-template="feedback" class="template-btn bg-[var(--azul-oscuro)] hover:bg-[var(--dorado)] hover:text-[var(--azul-noche)] text-sm font-semibold py-2 px-4 rounded-full transition-colors">Pedir Feedback</button>
+                    <button data-template="victoria" class="template-btn bg-[var(--azul-oscuro)] hover:bg-[var(--dorado)] hover:text-[var(--azul-noche)] text-sm font-semibold py-2 px-4 rounded-full transition-colors">Compartir Victoria</button>
+                    <button data-template="pregunta" class="template-btn bg-[var(--azul-oscuro)] hover:bg-[var(--dorado)] hover:text-[var(--azul-noche)] text-sm font-semibold py-2 px-4 rounded-full transition-colors">Hacer Pregunta</button>
+                </div>
+
+                <textarea id="post-textarea" rows="10" class="w-full bg-[var(--azul-oscuro)] p-3 rounded-lg border border-[var(--borde-sutil)] focus:outline-none focus:ring-2 focus:ring-[var(--dorado)]" placeholder="Escribe tu contenido aquí..."></textarea>
+                
+                <div class="flex justify-end gap-4 mt-4">
+                    <button id="cancel-post-btn" class="text-[var(--texto-secundario)] font-semibold px-4 py-2 rounded-lg hover:bg-[rgba(255,255,255,0.1)]">Cancelar</button>
+                    <button class="bg-[var(--dorado)] text-[var(--azul-noche)] font-bold px-6 py-2 rounded-lg hover:bg-[var(--dorado-hover)]">Publicar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Lógica de Navegación de Canales ---
+            const channelLinks = document.querySelectorAll('.channel-link');
+            const contentPanes = document.querySelectorAll('.content-pane');
+
+            channelLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    const targetChannel = link.dataset.channel;
+
+                    // Actualizar estado activo en links
+                    channelLinks.forEach(l => {
+                        l.classList.remove('active', 'bg-[var(--azul-oscuro)]', 'font-semibold');
+                        l.classList.add('text-[var(--texto-secundario)]');
+                    });
+                    link.classList.add('active', 'bg-[var(--azul-oscuro)]', 'font-semibold');
+                    link.classList.remove('text-[var(--texto-secundario)]');
+
+                    // Mostrar el panel de contenido correcto
+                    contentPanes.forEach(pane => {
+                        if (pane.id === `content-${targetChannel}`) {
+                            pane.classList.remove('hidden');
+                        } else {
+                            pane.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            // --- Lógica del Modal ---
+            const openModalBtn = document.getElementById('open-modal-btn');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const cancelPostBtn = document.getElementById('cancel-post-btn');
+            const modal = document.getElementById('post-modal');
+            const postTextarea = document.getElementById('post-textarea');
+
+            const openModal = () => modal.classList.remove('hidden');
+            const closeModal = () => {
+                modal.classList.add('hidden');
+                postTextarea.value = ''; // Limpiar al cerrar
+            };
+
+            openModalBtn.addEventListener('click', openModal);
+            closeModalBtn.addEventListener('click', closeModal);
+            cancelPostBtn.addEventListener('click', closeModal);
+
+            // Clic fuera del modal para cerrar
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // --- Lógica de Plantillas ---
+            const templateButtons = document.querySelectorAll('.template-btn');
+            const templates = {
+                feedback: `**Busco Feedback sobre:** [Ej: Mi nueva landing page]\n\n**Contexto:** [Describe brevemente tu proyecto o situación. ¿Qué has intentado hasta ahora?]\n\n**Necesito ayuda con:** [Sé específico. ¿Qué tipo de feedback buscas? ¿Sobre el diseño, el copy, la oferta?]\n\n**Enlace (si aplica):** [Pega tu enlace aquí]`,
+                victoria: `**¡Quiero compartir una victoria!** 🎉\n\n**El Logro:** [Describe el hito que alcanzaste. Ej: ¡Conseguí mi primer cliente de pago!]\n\n**El Reto que Superé:** [¿Cuál fue el obstáculo principal que venciste para lograrlo?]\n\n**El Aprendizaje Clave:** [¿Qué lección importante te llevas de esta experiencia?]`,
+                pregunta: `**Tengo una pregunta estratégica:** [Escribe tu pregunta principal de forma clara y concisa]\n\n**Información Adicional:** [Añade cualquier dato o contexto que ayude a la comunidad a entender mejor tu duda. ¿Qué opciones estás considerando?]\n\n**Lo que ya he investigado/probado:** [Menciona brevemente qué has intentado para que no te sugieran lo mismo.]`
+            };
+
+            templateButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const templateKey = button.dataset.template;
+                    postTextarea.value = templates[templateKey];
+                    postTextarea.focus();
+                });
+            });
+            
+             // --- Lógica de Encuesta ---
+            const pollOptions = document.querySelectorAll('.poll-option');
+            pollOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    alert('¡Gracias por tu voto!');
+                    pollOptions.forEach(opt => {
+                        opt.disabled = true;
+                        opt.classList.add('opacity-50', 'cursor-not-allowed');
+                    });
+                    option.classList.remove('opacity-50');
+                    option.classList.add('border-[var(--dorado)]', 'ring-2', 'ring-[var(--dorado)]');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
