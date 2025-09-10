@@ -411,6 +411,36 @@
 }
 
 /* ========================================
+   OPTIMIZACIONES MÓVILES GLOBALES
+   Aplican a <= 640px para mejorar legibilidad y tap targets
+   ======================================== */
+@media (max-width: 640px) {
+    /* Secciones y contenedores más compactos */
+    .main-section { padding: var(--spacing-xl) 0; }
+    .section-container { padding: 0 var(--spacing-md); }
+
+    /* Tarjetas: menos padding y sin hover brusco */
+    .card-component { padding: var(--spacing-lg); }
+    .card-component:hover { transform: none; box-shadow: var(--shadow-sm); }
+
+    /* Botones: ancho completo y padding cómodo */
+    .btn-primary,
+    .cta-button,
+    .cta-button-large { width: 100%; padding-top: 0.9rem; padding-bottom: 0.9rem; }
+
+    /* Tablas extensas (ej. Academy - Cohortes) con scroll horizontal */
+    .section-container table { display: block; overflow-x: auto; white-space: nowrap; }
+    .section-container thead { display: table-header-group; }
+    .section-container tbody { display: table-row-group; }
+
+    /* Slider de Conecta: más compacto en alto y velocidad ligeramente menor */
+    .slider { height: 90px; }
+    .slider::before, .slider::after { height: 90px; width: 120px; }
+    .slider .slide { height: 90px; width: 180px; }
+    .slider .slide-track { animation-duration: 50s; }
+}
+
+/* ========================================
    ESTADOS DE CARGA Y ERROR (Loading & Error States)
    ======================================== */
 
