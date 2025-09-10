@@ -282,6 +282,8 @@ class HeaderComponent extends BaseComponent {
             <a href="${this.basePath}nosotros.html" class="header-link ${this.currentPage === 'nosotros' ? 'active' : ''}">Nosotros</a>
             <a href="${this.basePath}servicios.html" class="header-link ${this.currentPage === 'servicios' ? 'active' : ''}">Servicios</a>
             <a href="${this.basePath}metodologia.html" class="header-link ${this.currentPage === 'metodologia' ? 'active' : ''}">Metodología</a>
+            <a href="${this.basePath}blog.html" class="header-link ${this.currentPage === 'blog' ? 'active' : ''}">Blog</a>
+            <a href="${this.basePath}faq.html" class="header-link ${this.currentPage === 'faq' ? 'active' : ''}">FAQ</a>
             <a href="${this.basePath}contacto.html" class="header-link ${this.currentPage === 'contacto' ? 'active' : ''}">Contacto</a>
             <a href="${this.basePath}academy.html" class="header-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a>
                 </div>
@@ -340,9 +342,11 @@ class HeaderComponent extends BaseComponent {
     return `
             <div class="mobile-menu-content">
         <a href="${this.basePath}index.html" class="mobile-menu-link">Inicio</a>
-        <a href="${this.basePath}nosotros.html" class="mobile-menu-link">Nosotros</a>
+    <a href="${this.basePath}nosotros.html" class="mobile-menu-link">Nosotros</a>
         <a href="${this.basePath}servicios.html" class="mobile-menu-link">Servicios</a>
         <a href="${this.basePath}metodologia.html" class="mobile-menu-link">Metodología</a>
+    <a href="${this.basePath}blog.html" class="mobile-menu-link">Blog</a>
+    <a href="${this.basePath}faq.html" class="mobile-menu-link">FAQ</a>
         <a href="${this.basePath}contacto.html" class="mobile-menu-link">Contacto</a>
                 <div class="mobile-menu-auth">
                     <a href="#" class="mobile-auth-link">Ingresa</a>
@@ -510,6 +514,7 @@ class FooterComponent extends BaseComponent {
                 <li><a href="${this.basePath}servicios.html" class="footer-link ${this.currentPage === 'servicios' ? 'active' : ''}">Servicios</a></li>
                 <li><a href="${this.basePath}metodologia.html" class="footer-link ${this.currentPage === 'metodologia' ? 'active' : ''}">Metodología</a></li>
                 <li><a href="${this.basePath}blog.html" class="footer-link ${this.currentPage === 'blog' ? 'active' : ''}">Blog</a></li>
+                <li><a href="${this.basePath}faq.html" class="footer-link ${this.currentPage === 'faq' ? 'active' : ''}">FAQ</a></li>
             </ul>
                     </div>
                     

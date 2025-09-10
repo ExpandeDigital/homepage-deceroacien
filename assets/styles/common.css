@@ -477,6 +477,36 @@
 }
 
 /* ========================================
+   TIPOGRAFÍA PARA CONTENIDOS (Prose)
+   Estilos comunes para artículos de blog y textos largos
+   ======================================== */
+.prose {
+    color: #cbd5e1;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+    color: var(--color-text-light);
+}
+
+.prose a {
+    color: var(--color-accent-gold);
+    text-decoration: underline;
+}
+
+.prose blockquote {
+    border-left: 4px solid var(--color-accent-gold);
+    padding-left: var(--spacing-md);
+    color: #94a3b8;
+}
+
+.prose strong {
+    color: var(--color-text-light);
+}
+
+/* ========================================
    EFECTOS Y ANIMACIONES (Effects & Animations)
    ======================================== */
 
