@@ -57,8 +57,13 @@
             transition: width 1s linear;
         }
     </style>
+    <link rel="stylesheet" href="../assets/styles/common.css">
+    <link rel="stylesheet" href="../assets/styles/mobile.css">
 </head>
-<body class="bg-[var(--azul-noche)] flex items-center justify-center min-h-screen p-4">
+<body class="base-container antialiased bg-[var(--azul-noche)]">
+    <header class="header-component"></header>
+    <main class="main-content">
+        <div class="flex items-center justify-center min-h-screen p-4">
 
     <!-- Pantalla de Información Inicial -->
     <div id="info-screen" class="w-full max-w-2xl mx-auto">
@@ -102,7 +107,9 @@
                 ¡Entendido, Aceptar el Desafío!
             </button>
         </div>
-    </div>
+        </div>
+    </main>
+    <footer class="footer-component"></footer>
 
     <!-- Pantalla de Juego -->
     <div id="game-container" class="hidden w-full max-w-5xl mx-auto">
