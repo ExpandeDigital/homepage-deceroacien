@@ -109,7 +109,7 @@
     </div>
 
     <!-- Pantalla de Juego -->
-    <div id="game-container" class="hidden w-full max-w-7xl mx-auto">
+    <div id="game-container" class="w-full max-w-7xl mx-auto">
         <div class="text-center mb-6">
             <h1 class="font-serif text-4xl font-bold text-white">Dilema del PMV</h1>
             <p id="case-description" class="text-gray-300 mt-2 max-w-3xl mx-auto"></p>
@@ -201,10 +201,9 @@
             }];
 
             function showScreen(screen) {
-                infoScreen.classList.add('hidden');
-                gameContainer.classList.add('hidden');
-                if (screen === 'info') infoScreen.classList.remove('hidden');
-                if (screen === 'game') gameContainer.classList.remove('hidden');
+                // Mostrar instrucciones + juego siempre; los modales se controlan aparte
+                infoScreen.classList.remove('hidden');
+                gameContainer.classList.remove('hidden');
             }
             
             function initGame() {
@@ -306,13 +305,15 @@
             }
 
             // Eventos principales
+            if (startGameBtn) startGameBtn.textContent = 'Reiniciar';
             startGameBtn.addEventListener('click', initGame);
             launchBtn.addEventListener('click', calculateScore);
             playAgainBtn.addEventListener('click', initGame);
             infoBackBtn.addEventListener('click', () => {
                 resultModal.classList.add('hidden');
-                showScreen('info');
             });
+            // Autoiniciar
+            initGame();
         });
     </script>
         </div>

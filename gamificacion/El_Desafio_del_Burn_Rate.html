@@ -85,7 +85,7 @@
     </main>
     <footer class="footer-component"></footer>
 
-    <div id="game-container" class="hidden w-full max-w-4xl mx-auto">
+    <div id="game-container" class="w-full max-w-4xl mx-auto">
         <!-- Dashboard de Métricas -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <div class="stat-card p-4 rounded-lg text-center">
@@ -167,10 +167,11 @@
             ];
 
             function showScreen(screen) {
-                infoScreen.classList.add('hidden');
-                gameContainer.classList.add('hidden');
+                // Mantener visibles instrucciones + juego; alternar solo fin de juego
+                infoScreen.classList.remove('hidden');
+                gameContainer.classList.remove('hidden');
                 gameOverScreen.classList.add('hidden');
-                screen.classList.remove('hidden');
+                if (screen === gameOverScreen) gameOverScreen.classList.remove('hidden');
             }
 
             function initGame() {
@@ -253,10 +254,13 @@
                 }
             }
             
+            if (startGameBtn) startGameBtn.textContent = 'Reiniciar';
             startGameBtn.addEventListener('click', initGame);
             nextMonthBtn.addEventListener('click', advanceMonth);
             playAgainBtn.addEventListener('click', initGame);
             infoBackBtn.addEventListener('click', () => showScreen(infoScreen));
+            // Autoiniciar
+            initGame();
         });
     </script>
     <script src="../assets/js/components.js"></script>
