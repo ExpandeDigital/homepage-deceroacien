@@ -18,7 +18,7 @@
    ======================================== */
 :root {
     /* Paleta de colores principal - Define la identidad visual */
-    --color-primary-dark: #0a1f2f;        /* Azul oscuro principal - fondo base */
+    --color-primary-dark: #1a1f3a;        /* Azul oscuro principal - fondo base */
     --color-secondary-dark: #112240;       /* Azul secundario para tarjetas y contenedores */
     --color-accent-gold: #FBBF24;          /* Dorado para highlights y CTAs */
     --color-text-light: #e6f1ff;          /* Texto principal claro para buena legibilidad */
@@ -475,6 +475,45 @@
     margin: 0 auto;
     padding: 0 var(--spacing-lg);
 }
+
+/* ============================
+   Gamificación (scoped)
+   ============================ */
+.gamificacion-page {
+    --azul-noche: #1a1f3a;
+    --dorado: #d4af37;
+    --texto-claro: #e0e1e9;
+}
+
+body.gamificacion-page,
+.gamificacion-page .game-root {
+    background-color: var(--azul-noche);
+    color: var(--texto-claro);
+}
+
+.gamificacion-page .font-serif { font-family: 'Playfair Display', serif; }
+
+.gamificacion-page .game-layout { display:flex; min-height:100vh; gap:1.5rem; padding:1rem; max-width:100%; margin:0 auto; }
+.gamificacion-page .instructions-panel { width:20%; min-width:280px; background: rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); border-radius:0.5rem; padding:1.5rem; height:fit-content; position:sticky; top:1rem; }
+.gamificacion-page .game-content { width:80%; flex:1; }
+.gamificacion-page .instructions-title { font-size:1.125rem; font-weight:700; color: var(--dorado); text-align:center; margin-bottom:1.5rem; padding-bottom:0.75rem; border-bottom:1px solid rgba(212,175,55,0.3); }
+
+/* Tarjetas y componentes */
+.gamificacion-page .feature-card,
+.gamificacion-page .game-card,
+.gamificacion-page .option-card,
+.gamificacion-page .pitch-card { background: linear-gradient(145deg, #2a3154, #1a1f3a); border:1px solid rgba(212,175,55,0.3); }
+.gamificacion-page .game-card:hover,
+.gamificacion-page .option-card:hover,
+.gamificacion-page .pitch-card:hover { transform: translateY(-4px); border-color: var(--dorado); }
+.gamificacion-page .option-card.disabled { opacity:0.4; cursor:not-allowed; background:#1a1f3a; }
+.gamificacion-page .pitch-card.selected { background: var(--dorado); color: var(--azul-noche); cursor: not-allowed; opacity: 0.7; }
+.gamificacion-page .stat-card { background-color: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); }
+
+/* Drag & drop */
+.gamificacion-page .drop-zone { background-color: rgba(0,0,0,0.2); border: 2px dashed rgba(255,255,255,0.2); min-height: 100px; transition: background-color 0.3s ease; }
+.gamificacion-page .drop-zone.over { background-color: rgba(212, 175, 55, 0.2); }
+.gamificacion-page .pitch-slot { background-color: rgba(0,0,0,0.2); border: 2px dashed rgba(255,255,255,0.2); }
 
 /* ========================================
    TIPOGRAFÍA PARA CONTENIDOS (Prose)

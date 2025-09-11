@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego: [GAME_TITLE] - DE CERO A CIEN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="mobile.css">
+</head>
+<body>
+    <div class="game-layout">
+        <!-- Panel de Instrucciones (lado izquierdo) -->
+        <div class="instructions-panel">
+            <h2 class="instructions-title">[PHASE_TITLE]</h2>
+            
+            <div class="info-section space-y-3">
+                <div class="info-item">
+                    <span class="info-icon">🎯</span>
+                    <div>
+                        <h3>Objetivo</h3>
+                        <p>[OBJECTIVE_TEXT]</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">⭐</span>
+                    <div>
+                        <h3>Importancia</h3>
+                        <p>[IMPORTANCE_TEXT]</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">⚙️</span>
+                    <div>
+                        <h3>¿Qué es lo que hace?</h3>
+                        <p>[FUNCTION_TEXT]</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">💡</span>
+                    <div>
+                        <h3>¿Para qué me sirve?</h3>
+                        <p>[PURPOSE_TEXT]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenido del Juego (lado derecho) -->
+        <div class="game-content">
+            <div class="text-center mb-6">
+                <h1 class="font-serif text-4xl font-bold text-white">[GAME_TITLE]</h1>
+                [GAME_DESCRIPTION]
+            </div>
+
+            [GAME_CONTENT]
+        </div>
+    </div>
+
+    [MODAL_CONTENT]
+
+    [JAVASCRIPT_CONTENT]
+</body>
+</html>

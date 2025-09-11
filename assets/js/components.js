@@ -221,7 +221,6 @@ class HeaderComponent extends BaseComponent {
         this.mobileMenu = null;
         this.isMenuOpen = false; // Estado del menú móvil
         this.currentPage = this.getCurrentPage(); // Detección automática de página
-    this.isGamificacionSection = this.isGamificacionPath(); // ¿Estamos en gamificación o subpáginas?
         this.breakpoint = 768; // Punto de quiebre para diseño responsivo
         this.basePath = GlobalConfig.basePath || '';
     }
@@ -252,6 +251,9 @@ class HeaderComponent extends BaseComponent {
         );
         if (isBlogArticle) return 'blog';
 
+    // Detección: cualquier ruta dentro de /gamificacion/ activa 'gamificacion'
+    if (p.includes('/gamificacion/')) return 'gamificacion';
+
         // Remover extensión .html y manejar casos comunes
         let pageName = filename.replace('.html', '');
 
@@ -260,19 +262,6 @@ class HeaderComponent extends BaseComponent {
         }
 
         return pageName;
-    }
-
-    /**
-     * Determina si la URL actual corresponde a la sección Gamificación
-     * (el hub o cualquiera de sus páginas internas)
-     */
-    isGamificacionPath() {
-        try {
-            const p = (window.location.pathname || '').toLowerCase();
-            return p.includes('/gamificacion/');
-        } catch {
-            return false;
-        }
     }
 
     /**
@@ -308,7 +297,7 @@ class HeaderComponent extends BaseComponent {
             <a href="${this.basePath}metodologia.html" class="header-link ${this.currentPage === 'metodologia' ? 'active' : ''}">Metodología</a>
             <a href="${this.basePath}blog.html" class="header-link ${this.currentPage === 'blog' ? 'active' : ''}">Blog</a>
             <a href="${this.basePath}faq.html" class="header-link ${this.currentPage === 'faq' ? 'active' : ''}">FAQ</a>
-            <a href="${this.basePath}gamificacion/index.html" class="header-link ${(this.currentPage === 'gamificacion' || this.isGamificacionSection) ? 'active' : ''}">Gamificación</a>
+            <a href="${this.basePath}gamificacion/index.html" class="header-link ${this.currentPage === 'gamificacion' ? 'active' : ''}">Gamificación</a>
             <a href="${this.basePath}contacto.html" class="header-link ${this.currentPage === 'contacto' ? 'active' : ''}">Contacto</a>
             <a href="${this.basePath}academy.html" class="header-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a>
                 </div>
@@ -373,7 +362,7 @@ class HeaderComponent extends BaseComponent {
     <a href="${this.basePath}academy.html" class="mobile-menu-link">Academy</a>
     <a href="${this.basePath}blog.html" class="mobile-menu-link">Blog</a>
     <a href="${this.basePath}faq.html" class="mobile-menu-link">FAQ</a>
-    <a href="${this.basePath}gamificacion/index.html" class="mobile-menu-link ${(this.currentPage === 'gamificacion' || this.isGamificacionSection) ? 'active' : ''}">Gamificación</a>
+    <a href="${this.basePath}gamificacion/index.html" class="mobile-menu-link">Gamificación</a>
         <a href="${this.basePath}contacto.html" class="mobile-menu-link">Contacto</a>
                 <div class="mobile-menu-auth">
                     <a href="#" class="mobile-auth-link">Ingresa</a>
@@ -522,6 +511,9 @@ class FooterComponent extends BaseComponent {
             p.includes('ya_eres_grande_ahora_se_imborrable')
         );
         if (isBlogArticle) return 'blog';
+
+    // Detección: rutas dentro de /gamificacion/
+    if (p.includes('/gamificacion/')) return 'gamificacion';
 
         return filename.replace('.html', '') || 'index';
     }
@@ -892,3 +884,63 @@ function initializeApp() {
 
 // Inicializar la aplicación
 initializeApp();
+
+/* ============================
+     Gamificación: Utilidades comunes
+     (IIFE con GameComponents)
+     ============================ */
+(function (w) {
+    const App = {};
+
+    // Ejecuta un callback cuando el DOM está listo
+    App.domReady = function (cb) {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', cb);
+        } else {
+            cb();
+        }
+    };
+
+    // Helpers de selección
+    App.qs = (sel, root = document) => root.querySelector(sel);
+    App.qsa = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+    // Muestra solo un contenedor y oculta el resto (ignora nulos)
+    App.showOnly = function (elems, toShow) {
+        elems.forEach(el => { if (el) el.classList.add('hidden'); });
+        if (toShow) toShow.classList.remove('hidden');
+    };
+
+    // Formatea moneda CL
+    App.formatCurrencyCL = function (value) {
+        try {
+            return '$' + Math.round(value).toLocaleString('es-CL');
+        } catch (e) {
+            return '$' + Math.round(value);
+        }
+    };
+
+    // Anima un número dentro de un elemento
+    App.animateNumber = function (element, start, end, { duration = 1000, suffix = '', decimals = 0 } = {}) {
+        if (!element) return;
+        let startTs = null;
+        const step = (ts) => {
+            if (!startTs) startTs = ts;
+            const p = Math.min((ts - startTs) / duration, 1);
+            const cur = start + (end - start) * p;
+            element.textContent = cur.toFixed(decimals) + suffix;
+            if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+    };
+
+    // Pulso visual (útil para métricas)
+    App.pulse = function (el, className = 'value-change') {
+        if (!el) return;
+        el.classList.remove(className);
+        void el.offsetWidth; // reflow
+        el.classList.add(className);
+    };
+
+    w.GameComponents = App;
+})(window);

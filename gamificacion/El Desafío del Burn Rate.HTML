@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego: El Desafío del Burn Rate - DE CERO A CIEN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/styles/common.css">
+    <link rel="stylesheet" href="../assets/styles/mobile.css">
+</head>
+<body class="gamificacion-page">
+    <div class="game-layout">
+        <!-- Panel de Instrucciones (lado izquierdo) -->
+        <div class="instructions-panel">
+            <h2 class="instructions-title">Herramienta de la Fase 4: Crecimiento y Escalabilidad</h2>
+            
+            <div class="info-section space-y-3">
+                <div class="info-item">
+                    <span class="info-icon">🎯</span>
+                    <div>
+                        <h3>Objetivo</h3>
+                        <p>Experimentar la presión de tomar decisiones de inversión y gasto para aprender a proyectar el futuro financiero de tu negocio, viendo el impacto directo de cada acción en tu capital.</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">⭐</span>
+                    <div>
+                        <h3>Importancia</h3>
+                        <p>Un emprendedor que no domina su flujo de caja está navegando a ciegas. Esta habilidad es crucial para la supervivencia, para saber cuándo acelerar, cuándo ser cauto y cuándo buscar inversión.</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">⚙️</span>
+                    <div>
+                        <h3>¿Qué es lo que hace?</h3>
+                        <p>Este juego te pone al mando de una startup con capital limitado. Cada mes, eliges entre 3 decisiones estratégicas que afectan tus ingresos y gastos. El sistema calcula automáticamente tu nuevo estado financiero.</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">💡</span>
+                    <div>
+                        <h3>¿Para qué me sirve?</h3>
+                        <p>Sirve para transformar la ansiedad financiera en control estratégico. Te permite simular escenarios y entender las consecuencias de tus decisiones antes de que cuesten dinero real, preparándote para usar la herramienta real del Camino Dorado.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenido del Juego (lado derecho) -->
+        <div class="game-content">
+            <div class="text-center mb-6">
+                <h1 class="font-serif text-4xl font-bold text-white">El Desafío del Burn Rate</h1>
+            </div>
+
+            <div id="game-container" class="w-full max-w-4xl mx-auto">
+                <!-- Dashboard de Métricas -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    <div class="stat-card p-4 rounded-lg text-center">
+                        <p class="text-sm text-gray-400">Capital Restante</p>
+                        <p id="capital-display" class="text-2xl font-bold text-white transition-colors duration-500">$100,000</p>
+                    </div>
+                    <div class="stat-card p-4 rounded-lg text-center">
+                        <p class="text-sm text-gray-400">Ingresos / Mes</p>
+                        <p id="revenue-display" class="text-2xl font-bold text-[var(--verde-exito)]">$5,000</p>
+                    </div>
+                    <div class="stat-card p-4 rounded-lg text-center">
+                        <p class="text-sm text-gray-400">Gastos / Mes (Burn Rate)</p>
+                        <p id="expenses-display" class="text-2xl font-bold text-[var(--rojo-peligro)]">$15,000</p>
+                    </div>
+                    <div class="stat-card p-4 rounded-lg text-center">
+                        <p class="text-sm text-gray-400">Mes Actual</p>
+                        <p id="month-display" class="text-2xl font-bold text-white">1</p>
+                    </div>
+                </div>
+
+                <!-- Área de Decisiones y Log -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div id="decision-area" class="md:col-span-2 space-y-4">
+                        <!-- Las decisiones se cargarán aquí -->
+                    </div>
+                    <div id="log-area" class="bg-black/20 p-4 rounded-lg h-64 overflow-y-auto text-sm">
+                        <p class="font-semibold mb-2 text-[var(--dorado)]">Registro de Actividad:</p>
+                        <div id="log-messages"></div>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <button id="next-month-btn" class="bg-[var(--dorado)] text-[var(--azul-noche)] font-bold text-lg py-3 px-10 rounded-lg shadow-lg hover:bg-opacity-90 transition-colors w-full md:w-auto">
+                        Avanzar al Siguiente Mes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    
+    <!-- Pantalla de Fin de Juego -->
+    <div id="game-over-screen" class="hidden text-center">
+        <h2 id="game-over-title" class="font-serif text-5xl font-bold"></h2>
+        <p id="game-over-message" class="text-xl mt-4 max-w-lg mx-auto"></p>
+        <div class="mt-8 flex gap-4 justify-center">
+             <button id="info-back-btn" class="bg-gray-500 text-white font-bold text-lg py-3 px-10 rounded-lg">
+                Ver Explicación
+            </button>
+            <button id="play-again-btn" class="bg-[var(--dorado)] text-[var(--azul-noche)] font-bold text-lg py-3 px-10 rounded-lg">
+                Jugar de Nuevo
+            </button>
+        </div>
+    </div>
+
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/updateScripts.js"></script>
+</body>
+</html>
+
