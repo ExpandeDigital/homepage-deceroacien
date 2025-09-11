@@ -221,6 +221,7 @@ class HeaderComponent extends BaseComponent {
         this.mobileMenu = null;
         this.isMenuOpen = false; // Estado del menú móvil
         this.currentPage = this.getCurrentPage(); // Detección automática de página
+    this.isGamificacionSection = this.isGamificacionPath(); // ¿Estamos en gamificación o subpáginas?
         this.breakpoint = 768; // Punto de quiebre para diseño responsivo
         this.basePath = GlobalConfig.basePath || '';
     }
@@ -262,6 +263,19 @@ class HeaderComponent extends BaseComponent {
     }
 
     /**
+     * Determina si la URL actual corresponde a la sección Gamificación
+     * (el hub o cualquiera de sus páginas internas)
+     */
+    isGamificacionPath() {
+        try {
+            const p = (window.location.pathname || '').toLowerCase();
+            return p.includes('/gamificacion/');
+        } catch {
+            return false;
+        }
+    }
+
+    /**
      * Inicializa el header con todas sus funcionalidades
      * Sobrescribe el método de la clase padre para agregar lógica específica
      * 
@@ -294,7 +308,7 @@ class HeaderComponent extends BaseComponent {
             <a href="${this.basePath}metodologia.html" class="header-link ${this.currentPage === 'metodologia' ? 'active' : ''}">Metodología</a>
             <a href="${this.basePath}blog.html" class="header-link ${this.currentPage === 'blog' ? 'active' : ''}">Blog</a>
             <a href="${this.basePath}faq.html" class="header-link ${this.currentPage === 'faq' ? 'active' : ''}">FAQ</a>
-            <a href="${this.basePath}gamificacion/index.html" class="header-link ${this.currentPage === 'gamificacion' ? 'active' : ''}">Gamificación</a>
+            <a href="${this.basePath}gamificacion/index.html" class="header-link ${(this.currentPage === 'gamificacion' || this.isGamificacionSection) ? 'active' : ''}">Gamificación</a>
             <a href="${this.basePath}contacto.html" class="header-link ${this.currentPage === 'contacto' ? 'active' : ''}">Contacto</a>
             <a href="${this.basePath}academy.html" class="header-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a>
                 </div>
@@ -359,7 +373,7 @@ class HeaderComponent extends BaseComponent {
     <a href="${this.basePath}academy.html" class="mobile-menu-link">Academy</a>
     <a href="${this.basePath}blog.html" class="mobile-menu-link">Blog</a>
     <a href="${this.basePath}faq.html" class="mobile-menu-link">FAQ</a>
-    <a href="${this.basePath}gamificacion/index.html" class="mobile-menu-link">Gamificación</a>
+    <a href="${this.basePath}gamificacion/index.html" class="mobile-menu-link ${(this.currentPage === 'gamificacion' || this.isGamificacionSection) ? 'active' : ''}">Gamificación</a>
         <a href="${this.basePath}contacto.html" class="mobile-menu-link">Contacto</a>
                 <div class="mobile-menu-auth">
                     <a href="#" class="mobile-auth-link">Ingresa</a>
