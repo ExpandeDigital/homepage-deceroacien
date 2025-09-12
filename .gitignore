@@ -1,0 +1,47 @@
+# Archivos de configuración sensible
+.env
+.env.local
+.env.production
+.env.development
+
+# Credenciales de Google OAuth
+client_secret_*.json
+*client_secret*
+*oauth*
+*credentials*
+
+# Archivos de configuración de base de datos
+config/database.json
+config/secrets.json
+
+# Logs que pueden contener información sensible
+*.log
+logs/
+
+# Archivos temporales
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Dependencias
+node_modules/
+vendor/
+
+# Archivos de build
+dist/
+build/
+.cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos de respaldo
+*.bak
+*.backup
+
+# Variables de entorno locales
+.env.backup

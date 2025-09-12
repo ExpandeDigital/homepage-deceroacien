@@ -303,14 +303,49 @@ class HeaderComponent extends BaseComponent {
                 </div>
                 
                 <!-- Sección de autenticación -->
-                <div class="header-auth-section">
-                    <a href="#" class="header-login-link">Ingresa</a>
-                    <a href="#" class="header-register-btn">Regístrate</a>
+                <div class="header-auth-section" id="headerAuthSection">
+                    <a href="${this.basePath}auth/login.html" class="header-login-link">Ingresar</a>
+                    <a href="${this.basePath}auth/register.html" class="header-register-btn">Registrarse</a>
                 </div>
             </nav>
         `;
 
         this.element.innerHTML = headerHTML;
+        
+        // Verificar estado de autenticación después de generar el HTML
+        setTimeout(() => this.updateAuthSection(), 100);
+    }
+    
+    /**
+     * Actualiza la sección de autenticación según el estado del usuario
+     */
+    updateAuthSection() {
+        const authSection = document.getElementById('headerAuthSection');
+        if (!authSection) return;
+        
+        // Verificar si el usuario está autenticado
+        if (window.authManager && window.authManager.isUserAuthenticated()) {
+            const user = window.authManager.getCurrentUser();
+            const firstName = user.firstName || 'Usuario';
+            
+            authSection.innerHTML = `
+                <div class="header-user-menu">
+                    <span class="header-user-greeting">Hola, ${firstName}</span>
+                    <a href="${this.basePath}auth/dashboard.html" class="header-dashboard-link">Dashboard</a>
+                    <button class="header-logout-btn" data-logout>Salir</button>
+                </div>
+            `;
+            
+            // Agregar event listener al botón de logout
+            const logoutBtn = authSection.querySelector('[data-logout]');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    if (window.authManager) {
+                        window.authManager.logout();
+                    }
+                });
+            }
+        }
     }
 
     /**

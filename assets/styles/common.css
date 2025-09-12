@@ -917,3 +917,93 @@ body.gamificacion-page,
 .phase-card-camino-dorado li:last-child {
     border-bottom: none;
 }
+
+/* ========================================
+   ESTILOS DE AUTENTICACIÓN EN HEADER
+   Componentes para login/logout en la navegación
+   ======================================== */
+
+/* Sección de autenticación en el header */
+.header-auth-section {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+/* Enlace de login */
+.header-login-link {
+    color: var(--color-text-gray);
+    text-decoration: none;
+    font-size: var(--font-size-small);
+    font-weight: 500;
+    transition: color var(--transition-normal);
+}
+
+.header-login-link:hover {
+    color: var(--color-accent-gold);
+}
+
+/* Botón de registro */
+.header-register-btn {
+    background-color: var(--color-accent-gold);
+    color: var(--color-primary-dark);
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: var(--font-size-small);
+    font-weight: 600;
+    transition: background-color var(--transition-normal), transform var(--transition-fast);
+}
+
+.header-register-btn:hover {
+    background-color: #D4AF37;
+    transform: translateY(-1px);
+}
+
+/* Menú de usuario autenticado */
+.header-user-menu {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.header-user-greeting {
+    color: var(--color-text-light);
+    font-size: var(--font-size-small);
+    font-weight: 500;
+}
+
+.header-dashboard-link {
+    color: var(--color-accent-gold);
+    text-decoration: none;
+    font-size: var(--font-size-small);
+    font-weight: 500;
+    transition: color var(--transition-normal);
+}
+
+.header-dashboard-link:hover {
+    color: #D4AF37;
+}
+
+.header-logout-btn {
+    background-color: rgba(239, 68, 68, 0.8);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: var(--font-size-small);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color var(--transition-normal);
+}
+
+.header-logout-btn:hover {
+    background-color: rgba(239, 68, 68, 1);
+}
+
+/* Responsive para autenticación en móvil */
+@media (max-width: 768px) {
+    .header-auth-section {
+        display: none; /* Se mostrará en el menú móvil */
+    }
+}

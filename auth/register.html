@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Meta tags esenciales para SEO y responsividad -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Registrarse en DE CERO A CIEN - Únete a nuestra comunidad emprendedora.">
+    <meta name="keywords" content="registro, crear cuenta, DE CERO A CIEN, emprendimiento">
+    <meta name="author" content="DE CERO A CIEN">
+    
+    <!-- Título de la página -->
+    <title>Registrarse - DE CERO A CIEN</title>
+    
+    <!-- Meta tags para redes sociales -->
+    <meta property="og:title" content="Registrarse - DE CERO A CIEN">
+    <meta property="og:description" content="Únete a nuestra comunidad emprendedora y comienza tu camino hacia el éxito.">
+    <meta property="og:url" content="https://deceroacien.app/auth/register.html">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Preload de recursos críticos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
+    
+    <!-- Hojas de estilo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/styles/common.css">
+    <link rel="stylesheet" href="../assets/styles/mobile.css">
+    
+    <!-- Configuración de Tailwind personalizada -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#0a1f2f',
+                        'secondary-dark': '#112240',
+                        'accent-gold': '#FBBF24',
+                        'text-light': '#e6f1ff',
+                        'border-custom': '#1e2d4d'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Identity Services con configuración de idioma español según documentación oficial -->
+    <script src="https://accounts.google.com/gsi/client?hl=es" async defer></script>
+</head>
+<body class="base-container antialiased">
+
+    <!-- HEADER UNIFICADO -->
+    <header class="header-component"></header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+        <section class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-md w-full space-y-8">
+                <div class="text-center">
+                    <img class="mx-auto h-20 w-auto" src="../assets/logo_de_cero_a_cien_blanco_y_dorado.png" alt="DE CERO A CIEN">
+                    <h2 class="mt-6 text-3xl font-extrabold text-white">
+                        Crear Cuenta
+                    </h2>
+                    <p class="mt-2 text-sm text-gray-400">
+                        Únete a nuestra comunidad emprendedora
+                    </p>
+                </div>
+
+                <div class="bg-[var(--color-secondary-dark)] rounded-lg shadow-xl p-8 border border-[var(--color-border)]">
+                    <!-- Formulario de Registro -->
+                    <form class="space-y-6" id="registerForm">
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                            <div>
+                                <label for="firstName" class="block text-sm font-medium text-gray-300">
+                                    Nombre
+                                </label>
+                                <div class="mt-1">
+                                    <input id="firstName" name="firstName" type="text" autocomplete="given-name" required
+                                        class="form-input w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="lastName" class="block text-sm font-medium text-gray-300">
+                                    Apellido
+                                </label>
+                                <div class="mt-1">
+                                    <input id="lastName" name="lastName" type="text" autocomplete="family-name" required
+                                        class="form-input w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-300">
+                                Correo electrónico
+                            </label>
+                            <div class="mt-1">
+                                <input id="email" name="email" type="email" autocomplete="email" required
+                                    class="form-input w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-gray-300">
+                                Contraseña
+                            </label>
+                            <div class="mt-1">
+                                <input id="password" name="password" type="password" autocomplete="new-password" required
+                                    class="form-input w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400">
+                            </div>
+                            <p class="mt-1 text-xs text-gray-400">
+                                Mínimo 8 caracteres, debe incluir mayúsculas, minúsculas y números
+                            </p>
+                        </div>
+
+                        <div>
+                            <label for="confirmPassword" class="block text-sm font-medium text-gray-300">
+                                Confirmar Contraseña
+                            </label>
+                            <div class="mt-1">
+                                <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" required
+                                    class="form-input w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="company" class="block text-sm font-medium text-gray-300">
+                                Empresa/Startup (opcional)
+                            </label>
+                            <div class="mt-1">
+                                <input id="company" name="company" type="text" autocomplete="organization"
+                                    class="form-input w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400">
+                            </div>
+                        </div>
+
+                        <div class="flex items-center">
+                            <input id="terms" name="terms" type="checkbox" required
+                                class="h-4 w-4 text-yellow-400 focus:ring-yellow-400 border-gray-600 rounded bg-gray-800">
+                            <label for="terms" class="ml-2 block text-sm text-gray-300">
+                                Acepto los 
+                                <a href="../terminos.html" target="_blank" class="text-yellow-400 hover:text-yellow-300">Términos y Condiciones</a> 
+                                y la 
+                                <a href="../politica_privacidad.html" target="_blank" class="text-yellow-400 hover:text-yellow-300">Política de Privacidad</a>
+                            </label>
+                        </div>
+
+                        <div class="flex items-center">
+                            <input id="newsletter" name="newsletter" type="checkbox"
+                                class="h-4 w-4 text-yellow-400 focus:ring-yellow-400 border-gray-600 rounded bg-gray-800">
+                            <label for="newsletter" class="ml-2 block text-sm text-gray-300">
+                                Quiero recibir noticias y actualizaciones por correo electrónico
+                            </label>
+                        </div>
+
+                        <div>
+                            <button type="submit" id="registerButton"
+                                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-yellow-400 hover:bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400 transition-colors">
+                                Crear Cuenta
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Divider -->
+                    <div class="mt-6">
+                        <div class="relative">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-gray-600"></div>
+                            </div>
+                            <div class="relative flex justify-center text-sm">
+                                <span class="px-2 bg-[var(--color-secondary-dark)] text-gray-400">O regístrate con</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Google Sign Up - Implementación mejorada según documentación oficial -->
+                    <div class="mt-6">
+                        <!-- Google One Tap configuration - NO se muestra en páginas de auth según mejores prácticas -->
+                        <div id="g_id_onload"
+                             data-client_id="DYNAMIC_CLIENT_ID"
+                             data-callback="handleCredentialResponse"
+                             data-auto_prompt="false"
+                             data-cancel_on_tap_outside="true"
+                             data-context="signup"
+                             data-itp_support="true"
+                             style="display: none;">
+                        </div>
+                        
+                        <!-- Botón de Google - Configuración completa según documentación -->
+                        <div id="googleSignUpButton" 
+                             class="w-full">
+                        </div>
+                        
+                        <!-- Fallback HTML button si JavaScript falla -->
+                        <noscript>
+                            <div class="w-full text-center py-3 px-4 border border-gray-600 rounded-md bg-white text-gray-700">
+                                JavaScript es requerido para el registro con Google
+                            </div>
+                        </noscript>
+                    </div>
+
+                    <!-- Link to Login -->
+                    <div class="mt-6 text-center">
+                        <p class="text-sm text-gray-400">
+                            ¿Ya tienes una cuenta?
+                            <a href="login.html" class="font-medium text-yellow-400 hover:text-yellow-300">
+                                Inicia sesión aquí
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER UNIFICADO -->
+    <footer class="footer-component"></footer>
+
+    <!-- Scripts JavaScript -->
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/config-secure.js"></script>
+    <script src="../assets/js/auth-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    
+    <!-- Inicialización de Google Sign Up Button según documentación oficial -->
+    <script>
+        /**
+         * Inicializa el botón de Google Sign Up cuando la página esté cargada
+         * Implementación según documentación oficial de Google Identity Services
+         */
+        window.onload = function () {
+            // Verificar que Google Identity Services esté disponible
+            if (typeof google === 'undefined' || !google.accounts || !google.accounts.id) {
+                console.error('Google Identity Services no está disponible');
+                return;
+            }
+            
+            // Obtener configuración
+            const config = window.PublicAuthConfig || {};
+            const clientId = config.googleClientId || 'ERROR_CLIENT_ID_NOT_LOADED';
+            
+            try {
+                // Inicializar Google Identity Services
+                google.accounts.id.initialize({
+                    client_id: clientId,
+                    callback: handleCredentialResponse,
+                    auto_select: false,  // No auto-select en página de registro
+                    cancel_on_tap_outside: true,
+                    itp_support: true
+                });
+
+                // Renderizar el botón con configuración personalizada para registro
+                const buttonContainer = document.getElementById("googleSignUpButton");
+                if (buttonContainer) {
+                    google.accounts.id.renderButton(
+                        buttonContainer,
+                        {
+                            theme: "filled_black",
+                            size: "large",
+                            text: "signup_with",  // Texto específico para registro
+                            shape: "rectangular",
+                            logo_alignment: "left",
+                            width: "100%",
+                            locale: "es"  // Idioma español
+                        }
+                    );
+                    
+                    console.log('Botón de Google Sign Up renderizado correctamente');
+                } else {
+                    console.error('Contenedor del botón de Google no encontrado');
+                }
+                
+            } catch (error) {
+                console.error('Error inicializando Google Sign Up:', error);
+            }
+        };
+    </script>
+</body>
+</html>
