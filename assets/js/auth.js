@@ -510,8 +510,19 @@ function handleCredentialResponse(response) {
         if (window.authManager) {
             window.authManager.handleGoogleAuth(googleUser);
         } else {
-            console.error('AuthManager no está disponible');
-            alert('Error en el sistema de autenticación. Por favor, recarga la página.');
+            // Fallback si authManager no está disponible aún
+            console.warn('AuthManager no disponible, inicializando...');
+            
+            // Esperar un poco e intentar de nuevo
+            setTimeout(() => {
+                if (window.authManager) {
+                    window.authManager.handleGoogleAuth(googleUser);
+                } else {
+                    // Crear authManager si no existe
+                    window.authManager = new AuthManager();
+                    window.authManager.handleGoogleAuth(googleUser);
+                }
+            }, 100);
         }
         
     } catch (error) {
@@ -633,10 +644,30 @@ AuthManager.prototype.processGoogleAuth = async function(googleUser) {
  */
 let authManager;
 
+// Función de inicialización robusta
+function initializeAuthManager() {
+    if (!authManager) {
+        authManager = new AuthManager();
+        window.authManager = authManager;
+        console.log('Sistema de autenticación inicializado');
+    }
+    return authManager;
+}
+
+// Inicialización múltiple para asegurar disponibilidad
 document.addEventListener('DOMContentLoaded', function() {
-    authManager = new AuthManager();
-    console.log('Sistema de autenticación inicializado');
+    initializeAuthManager();
 });
+
+// Inicialización inmediata si el DOM ya está listo
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeAuthManager);
+} else {
+    initializeAuthManager();
+}
+
+// Asegurar que esté disponible globalmente
+window.initializeAuthManager = initializeAuthManager;
 
 /**
  * FUNCIONES UTILITY PARA PROTEGER PÁGINAS

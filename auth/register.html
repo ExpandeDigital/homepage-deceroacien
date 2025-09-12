@@ -233,6 +233,11 @@
          * Implementación según documentación oficial de Google Identity Services
          */
         window.onload = function () {
+            // Asegurar que AuthManager esté inicializado
+            if (!window.authManager) {
+                window.initializeAuthManager();
+            }
+            
             // Verificar que Google Identity Services esté disponible
             if (typeof google === 'undefined' || !google.accounts || !google.accounts.id) {
                 console.error('Google Identity Services no está disponible');
@@ -264,7 +269,7 @@
                             text: "signup_with",  // Texto específico para registro
                             shape: "rectangular",
                             logo_alignment: "left",
-                            width: "100%",
+                            width: 300,  // Ancho fijo en píxeles
                             locale: "es"  // Idioma español
                         }
                     );

@@ -4,7 +4,15 @@
     <!-- Meta tags esenciales para SEO y responsividad -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Iniciar sesión en DE CERO A CIEN - Accede a tu cuenta y continúa tu camino emprendedor.">
+    <                        {
+                            theme: "filled_black",
+                            size: "large",
+                            text: "signin_with",
+                            shape: "rectangular",
+                            logo_alignment: "left",
+                            width: 300,  // Ancho fijo en píxeles
+                            locale: "es"
+                        }="description" content="Iniciar sesión en DE CERO A CIEN - Accede a tu cuenta y continúa tu camino emprendedor.">
     <meta name="keywords" content="login, iniciar sesión, DE CERO A CIEN, emprendimiento">
     <meta name="author" content="DE CERO A CIEN">
     
@@ -185,6 +193,11 @@
          * Implementación según documentación oficial de Google Identity Services
          */
         window.onload = function () {
+            // Asegurar que AuthManager esté inicializado
+            if (!window.authManager) {
+                window.initializeAuthManager();
+            }
+            
             // Verificar que Google Identity Services esté disponible
             if (typeof google === 'undefined' || !google.accounts || !google.accounts.id) {
                 console.error('Google Identity Services no está disponible');

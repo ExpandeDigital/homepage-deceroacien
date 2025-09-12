@@ -41,7 +41,7 @@ const SecureAuthConfig = {
         text: 'signin_with',
         shape: 'rectangular',
         logo_alignment: 'left',
-        width: 250,
+        width: 300,  // Ancho fijo en píxeles (no porcentaje)
         locale: 'es',
         context: 'signin'
     },
