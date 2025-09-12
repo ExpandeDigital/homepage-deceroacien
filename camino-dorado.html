@@ -1,163 +1,80 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Meta tags esenciales para SEO y responsividad -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="El Camino Dorado - Arsenal definitivo de 31 micro-herramientas estratégicas para escalar tu negocio, liderar tu equipo y dominar tu mercado.">
+    <meta name="keywords" content="escalabilidad, herramientas empresariales, liderazgo, estrategia, El Camino Dorado, DE CERO A CIEN">
+    <meta name="author" content="DE CERO A CIEN">
+    
+    <!-- Título de la página -->
     <title>Programa "El Camino Dorado" - Herramientas para Escalar tu Negocio</title>
-    <style>
-        :root {
-            --color-night-blue: #0D223F;
-            --color-gold: #D4AF37;
-            --color-gold-dark: #B89B2E;
-            --color-card-bg: #FFFFFF;
-            --color-text-on-dark: #F0F0F0;
-            --color-text-on-light: #0D223F;
-            --color-border: #E0D6B3;
-            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+    <!-- Meta tags para redes sociales -->
+    <meta property="og:title" content="Programa El Camino Dorado - DE CERO A CIEN">
+    <meta property="og:description" content="Arsenal definitivo de 31 micro-herramientas estratégicas para escalar tu negocio, liderar tu equipo y dominar tu mercado.">
+    <meta property="og:url" content="https://deceroacien.app/camino-dorado.html">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Preload de recursos críticos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
+    
+    <!-- Hojas de estilo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles/common.css">
+    <link rel="stylesheet" href="assets/styles/mobile.css">
+    
+    <!-- Configuración de Tailwind personalizada -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#0a1f2f',
+                        'secondary-dark': '#112240',
+                        'accent-gold': '#FBBF24',
+                        'text-light': '#e6f1ff',
+                        'border-custom': '#1e2d4d'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif']
+                    }
+                }
+            }
         }
-        body {
-            font-family: var(--font-family);
-            background-color: var(--color-night-blue);
-            color: var(--color-text-on-dark);
-            margin: 0;
-            line-height: 1.6;
-        }
-        .hero {
-            text-align: center;
-            padding: 80px 20px;
-            background: radial-gradient(circle, #1a3a63 0%, var(--color-night-blue) 100%);
-        }
-        .hero h1 {
-            font-size: 3.5em;
-            color: var(--color-card-bg);
-            margin: 0;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-        .hero .highlight {
-            color: var(--color-gold);
-        }
-        .hero p {
-            font-size: 1.2em;
-            max-width: 700px;
-            margin: 15px auto 30px auto;
-            color: var(--color-text-on-dark);
-        }
-        .cta-button {
-            background-color: var(--color-gold);
-            color: var(--color-night-blue);
-            border: none;
-            padding: 15px 30px;
-            border-radius: 5px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.3s, transform 0.1s;
-        }
-        .cta-button:hover {
-            background-color: var(--color-gold-dark);
-            transform: translateY(-2px);
-        }
-        .section {
-            padding: 60px 20px;
-            max-width: 1200px;
-            margin: auto;
-        }
-        .section-title {
-            text-align: center;
-            font-size: 2.5em;
-            color: var(--color-gold);
-            margin-bottom: 40px;
-        }
-        .target-audience {
-            background-color: rgba(255,255,255, 0.05);
-            padding: 40px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        .target-audience h3 {
-            font-size: 1.8em;
-            margin-top: 0;
-            color: var(--color-card-bg);
-        }
-        .target-audience p {
-            max-width: 800px;
-            margin: 10px auto;
-            color: var(--color-text-on-dark);
-        }
-        .phases-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-        }
-        .phase-card {
-            background-color: var(--color-card-bg);
-            color: var(--color-text-on-light);
-            border-radius: 8px;
-            padding: 25px;
-            border-top: 5px solid var(--color-gold);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .phase-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        .phase-card h4 {
-            font-size: 1.3em;
-            color: var(--color-night-blue);
-            margin: 0 0 15px 0;
-        }
-        .phase-card ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .phase-card li {
-            font-size: 0.95em;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--color-border);
-        }
-        .phase-card li:last-child {
-            border-bottom: none;
-        }
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            border-top: 1px solid var(--color-gold);
-            color: var(--color-text-on-dark);
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5em; }
-            .hero p { font-size: 1.1em; }
-            .section-title { font-size: 2em; }
-        }
-    </style>
+    </script>
 </head>
-<body>
+<body class="base-container antialiased">
 
-    <header class="hero">
-        <h1>De Cero a Cien fue el inicio.</h1>
-        <h1 class="highlight">El Camino Dorado es la consolidación.</h1>
-        <p>El arsenal definitivo de 31 micro-herramientas estratégicas diseñadas para el desafío real: escalar tu negocio, liderar tu equipo y dominar tu mercado.</p>
-        <a href="#fases" class="cta-button">Descubre las Herramientas</a>
-    </header>
+    <!-- HEADER UNIFICADO -->
+    <header class="header-component"></header>
 
-    <main>
-        <section class="section" id="para-quienes">
-            <div class="target-audience">
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+        <section class="hero-camino-dorado">
+            <h1>De Cero a Cien fue el inicio.</h1>
+            <h1 class="highlight">El Camino Dorado es la consolidación.</h1>
+            <p>El arsenal definitivo de 31 micro-herramientas estratégicas diseñadas para el desafío real: escalar tu negocio, liderar tu equipo y dominar tu mercado.</p>
+            <a href="#fases" class="cta-button-camino-dorado">Descubre las Herramientas</a>
+        </section>
+
+        <section class="section-camino-dorado" id="para-quienes">
+            <div class="target-audience-camino-dorado">
                 <h3>¿Para quién es el programa "El Camino Dorado"?</h3>
                 <p>Este arsenal no es para principiantes. Es para los emprendedores y líderes que ya construyeron algo que funciona y ahora enfrentan los verdaderos retos del crecimiento.</p>
                 <p><strong>Es para ti si...</strong> ya superaste la barrera inicial, lideras un equipo, luchas por un lugar en el mercado y entiendes que el siguiente nivel de crecimiento exige un nuevo nivel de estrategia.</p>
             </div>
         </section>
 
-        <section class="section" id="fases">
-            <h2 class="section-title">Las 5 Fases de la Escalabilidad</h2>
-            <div class="phases-container">
+        <section class="section-camino-dorado" id="fases">
+            <h2 class="section-title-camino-dorado">Las 5 Fases de la Escalabilidad</h2>
+            <div class="phases-container-camino-dorado">
                 <!-- Fase 1 -->
-                <div class="phase-card">
+                <div class="phase-card-camino-dorado">
                     <h4>FASE 1: Solidificación y Optimización Operativa</h4>
                     <ul>
                         <li>1. Optimizador de Procesos Clave</li>
@@ -169,7 +86,7 @@
                     </ul>
                 </div>
                 <!-- Fase 2 -->
-                <div class="phase-card">
+                <div class="phase-card-camino-dorado">
                     <h4>FASE 2: Liderazgo y Cultura de Equipo</h4>
                     <ul>
                         <li>7. Matriz de Delegación Efectiva</li>
@@ -181,7 +98,7 @@
                     </ul>
                 </div>
                 <!-- Fase 3 -->
-                <div class="phase-card">
+                <div class="phase-card-camino-dorado">
                     <h4>FASE 3: Estrategia de Mercado y Competencia</h4>
                     <ul>
                         <li>13. Analizador de Ventaja Competitiva Sostenible</li>
@@ -193,7 +110,7 @@
                     </ul>
                 </div>
                 <!-- Fase 4 -->
-                <div class="phase-card">
+                <div class="phase-card-camino-dorado">
                     <h4>FASE 4: Escalabilidad Financiera y Tecnológica</h4>
                     <ul>
                         <li>19. Proyector de Flujo de Caja para Escalabilidad</li>
@@ -205,7 +122,7 @@
                     </ul>
                 </div>
                 <!-- Fase 5 -->
-                <div class="phase-card">
+                <div class="phase-card-camino-dorado">
                     <h4>FASE 5: Expansión y Sostenibilidad a Largo Plazo</h4>
                     <ul>
                         <li>25. Matriz de Diversificación de Ingresos</li>
@@ -220,10 +137,13 @@
             </div>
         </section>
     </main>
-
-    <footer>
-        <p>&copy; 2025 - Programa "El Camino Dorado". Todos los derechos reservados.</p>
+    
+    <!-- FOOTER UNIFICADO -->
+    <footer class="footer-component">
+        <!-- El contenido del footer se genera dinamicamente por JavaScript -->
     </footer>
 
+    <!-- Scripts JavaScript -->
+    <script src="assets/js/components.js"></script>
 </body>
 </html>

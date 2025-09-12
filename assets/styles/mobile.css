@@ -563,3 +563,66 @@
         max-width: 1400px;
     }
 }
+
+/* ========================================
+   RESPONSIVE STYLES - EL CAMINO DORADO
+   Estilos responsivos específicos para El Camino Dorado
+   ======================================== */
+
+@media (max-width: 768px) {
+    .hero-camino-dorado h1 { 
+        font-size: 2.5em; 
+    }
+    
+    .hero-camino-dorado p { 
+        font-size: 1.1em; 
+    }
+    
+    .section-title-camino-dorado { 
+        font-size: 2em; 
+    }
+    
+    .section-camino-dorado {
+        padding: 40px 15px;
+    }
+    
+    .target-audience-camino-dorado {
+        padding: 25px;
+    }
+    
+    .phases-container-camino-dorado {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .phase-card-camino-dorado {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-camino-dorado {
+        padding: 60px 15px;
+    }
+    
+    .hero-camino-dorado h1 { 
+        font-size: 2em; 
+    }
+    
+    .hero-camino-dorado p { 
+        font-size: 1em; 
+    }
+    
+    .section-title-camino-dorado { 
+        font-size: 1.7em; 
+    }
+    
+    .target-audience-camino-dorado h3 {
+        font-size: 1.5em;
+    }
+    
+    .cta-button-camino-dorado {
+        padding: 12px 24px;
+        font-size: 1em;
+    }
+}

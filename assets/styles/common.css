@@ -789,3 +789,131 @@ body.gamificacion-page,
     border: 1px solid var(--color-border);
     box-shadow: var(--shadow-sm);
 }
+
+/* ========================================
+   ESTILOS ESPECÍFICOS - EL CAMINO DORADO
+   Componentes especializados para la página del programa El Camino Dorado
+   ======================================== */
+
+/* Hero section específico para El Camino Dorado */
+.hero-camino-dorado {
+    text-align: center;
+    padding: 80px 20px;
+    background: radial-gradient(circle, #1a3a63 0%, var(--color-primary-dark) 100%);
+}
+
+.hero-camino-dorado h1 {
+    font-size: 3.5em;
+    color: var(--color-text-light);
+    margin: 0;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.hero-camino-dorado .highlight {
+    color: var(--color-accent-gold);
+}
+
+.hero-camino-dorado p {
+    font-size: 1.2em;
+    max-width: 700px;
+    margin: 15px auto 30px auto;
+    color: var(--color-text-light);
+}
+
+/* Botón CTA específico para El Camino Dorado */
+.cta-button-camino-dorado {
+    background-color: var(--color-accent-gold);
+    color: var(--color-primary-dark);
+    border: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.cta-button-camino-dorado:hover {
+    background-color: #D4AF37;
+    transform: translateY(-2px);
+}
+
+/* Secciones de contenido para El Camino Dorado */
+.section-camino-dorado {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.section-title-camino-dorado {
+    text-align: center;
+    font-size: 2.5em;
+    color: var(--color-accent-gold);
+    margin-bottom: 40px;
+}
+
+/* Sección de audiencia objetivo */
+.target-audience-camino-dorado {
+    background-color: rgba(255,255,255, 0.05);
+    padding: 40px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.target-audience-camino-dorado h3 {
+    font-size: 1.8em;
+    margin-top: 0;
+    color: var(--color-text-light);
+}
+
+.target-audience-camino-dorado p {
+    max-width: 800px;
+    margin: 10px auto;
+    color: var(--color-text-light);
+}
+
+/* Contenedor de fases */
+.phases-container-camino-dorado {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+}
+
+/* Tarjetas de fases */
+.phase-card-camino-dorado {
+    background-color: #FFFFFF;
+    color: var(--color-primary-dark);
+    border-radius: 8px;
+    padding: 25px;
+    border-top: 5px solid var(--color-accent-gold);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.phase-card-camino-dorado:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.phase-card-camino-dorado h4 {
+    font-size: 1.3em;
+    color: var(--color-primary-dark);
+    margin: 0 0 15px 0;
+}
+
+.phase-card-camino-dorado ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.phase-card-camino-dorado li {
+    font-size: 0.95em;
+    padding: 8px 0;
+    border-bottom: 1px solid #E0D6B3;
+}
+
+.phase-card-camino-dorado li:last-child {
+    border-bottom: none;
+}
