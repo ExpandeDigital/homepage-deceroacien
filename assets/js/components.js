@@ -592,9 +592,10 @@ class FooterComponent extends BaseComponent {
                 <li><a href="${this.basePath}servicios.html" class="footer-link">Servicios Premium</a></li>
                 <li><a href="${this.basePath}academy.html" class="footer-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a></li>
                 <li><a href="${this.basePath}gamificacion/index.html" class="footer-link ${this.currentPage === 'gamificacion' ? 'active' : ''}">Gamificación</a></li>
-                <li><a href="javascript:void(0)" class="footer-link disabled" aria-disabled="true" tabindex="-1">Diagnósticos con IA <span class="ml-1 inline-block px-2 py-0.5 text-[10px] rounded bg-yellow-500/20 text-yellow-300">En construcción</span></a></li>
+                <li><a href="${this.basePath}diagnosticos_ai.html" class="footer-link ${this.currentPage === 'diagnosticos_ai' ? 'active' : ''}">Diagnósticos con IA</a></li>
                 <li><a href="${this.basePath}conecta/conecta.html" class="footer-link ${this.currentPage === 'conecta' ? 'active' : ''}">Conecta</a></li>
-                <li><a href="${this.basePath}conferencias_catalogo.html" class="footer-link">Conferencias</a></li>
+                <li><a href="${this.basePath}conferencias.html" class="footer-link ${this.currentPage === 'conferencias' ? 'active' : ''}">Conferencias</a></li>
+                <li><a href="${this.basePath}soluciones_a_medida.html" class="footer-link ${this.currentPage === 'soluciones_a_medida' ? 'active' : ''}">Soluciones a Medida</a></li>
             </ul>
         </div>
 

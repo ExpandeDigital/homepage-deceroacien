@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soluciones a Medida para Emprendedores | De Cero a Cien</title>
+    <style>
+        /* --- Estilos Generales (Consistentes con la marca) --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0A192F;
+            color: #E6F1FF;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        h1, h2, h3 {
+            color: #FFFFFF;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 0.5em;
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-top: 3em;
+            margin-bottom: 1.5em;
+            border-bottom: 2px solid #FFD700;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.1em;
+            color: #CCD6F6;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* --- Botones --- */
+        .cta-button {
+            display: inline-block;
+            background-color: #FFD700;
+            color: #0A192F;
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 20px;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            background-color: #FFFACD;
+        }
+        
+        /* --- Secciones --- */
+        .hero {
+            padding: 80px 20px;
+        }
+        
+        /* --- Formulario de Soluciones --- */
+        .solution-form-section {
+            background-color: #112240;
+            padding: 50px 20px;
+            border-radius: 10px;
+            margin-top: 2em;
+            border: 1px solid #1E3A5F;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #CCD6F6;
+            font-size: 1.2em;
+        }
+
+        .form-group textarea, .form-group input {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border-radius: 5px;
+            border: 1px solid #304D6D;
+            background-color: #0A192F;
+            color: #E6F1FF;
+            font-size: 1em;
+        }
+        
+        .service-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .service-categories label {
+            background-color: #0A192F;
+            border: 1px solid #304D6D;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            display: flex;
+            align-items: center;
+            font-size: 1em;
+            font-weight: normal;
+        }
+
+        .service-categories input[type="radio"] {
+            display: none;
+        }
+
+        .service-categories input[type="radio"]:checked + label {
+            background-color: #FFD700;
+            border-color: #FFD700;
+            color: #0A192F;
+            font-weight: bold;
+        }
+
+        .service-categories label:hover {
+            border-color: #FFD700;
+        }
+
+        /* --- Agradecimiento --- */
+        .thank-you-message {
+            display: none; /* Oculto por defecto */
+            background-color: #112240;
+            padding: 50px;
+            border-radius: 10px;
+            border: 1px solid #FFD700;
+        }
+        .thank-you-message h2{
+            border-bottom: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- =============================================== -->
+    <!-- SECCIÓN 1: HERO                                   -->
+    <!-- =============================================== -->
+    <header class="hero">
+        <div class="container">
+            <h1>Soluciones a Medida para tu Mayor Desafío</h1>
+            <p>Sabemos que emprender es un camino de obstáculos. Cuéntanos cuál es el tuyo y te enviaremos una propuesta de servicio personalizada, sin compromiso, para ayudarte a superarlo.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- =============================================== -->
+        <!-- SECCIÓN 2: FORMULARIO DE DOLOR + SOLUCIÓN       -->
+        <!-- =============================================== -->
+        <section id="form-solucion" class="solution-form-section">
+            <div id="form-container">
+                <h2>Diseña tu Solución en 2 Pasos</h2>
+                
+                <form id="solucionForm">
+                    <!-- PASO 1: DESCRIBIR EL DOLOR -->
+                    <div class="form-group">
+                        <label for="dolor">1. Describe tu principal obstáculo o "dolor"</label>
+                        <textarea id="dolor" name="dolor" rows="4" placeholder="Ej: 'Hemos lanzado nuestro producto pero no logramos conseguir ventas consistentes' o 'Necesito levantar capital y no sé por dónde empezar'..." required></textarea>
+                    </div>
+
+                    <!-- PASO 2: ELEGIR CATEGORÍA DE SERVICIO -->
+                    <div class="form-group">
+                        <label>2. Selecciona el área donde crees que necesitas más ayuda</label>
+                        <div class="service-categories">
+                            <input type="radio" id="cat-estrategia" name="categoria" value="Estrategia y Modelo de Negocio" required><label for="cat-estrategia">Estrategia y Modelo de Negocio</label>
+                            <input type="radio" id="cat-marketing" name="categoria" value="Marketing y Ventas"><label for="cat-marketing">Marketing y Ventas</label>
+                            <input type="radio" id="cat-producto" name="categoria" value="Tecnología y Producto"><label for="cat-producto">Tecnología y Producto</label>
+                            <input type="radio" id="cat-finanzas" name="categoria" value="Finanzas y Fundraising"><label for="cat-finanzas">Finanzas y Fundraising</label>
+                            <input type="radio" id="cat-operaciones" name="categoria" value="Equipo y Operaciones"><label for="cat-operaciones">Equipo y Operaciones</label>
+                        </div>
+                    </div>
+
+                    <!-- PASO 3: EMAIL PARA ENVIAR PROPUESTA -->
+                     <div class="form-group">
+                        <label for="email">3. ¿A qué email te enviamos la propuesta a medida?</label>
+                        <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+                    </div>
+
+                    <button type="submit" class="cta-button">Recibir mi Propuesta a Medida</button>
+                </form>
+            </div>
+
+            <!-- MENSAJE DE AGRADECIMIENTO (OCULTO) -->
+            <div id="thank-you" class="thank-you-message">
+                <h2>¡Recibido! Estamos en ello.</h2>
+                <p>Gracias por compartir tu desafío con nosotros. Uno de nuestros especialistas analizará tu caso personalmente.</p>
+                <p>Recibirás una propuesta de servicio a medida en tu correo <strong id="user-email"></strong> en las próximas 24 horas hábiles.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer style="text-align: center; padding: 40px 20px; color: #8892B0;">
+        <p>&copy; 2025 De Cero a Cien. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        document.getElementById('solucionForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            const userEmail = document.getElementById('email').value;
+            document.getElementById('user-email').textContent = userEmail;
+
+            document.getElementById('form-container').style.display = 'none';
+            document.getElementById('thank-you').style.display = 'block';
+        });
+    </script>
+
+</body>
+</html>
