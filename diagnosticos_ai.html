@@ -1,78 +1,62 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Meta tags esenciales para SEO y responsividad -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Descubre el potencial oculto de tu emprendimiento con nuestro diagnóstico gratuito de IA. Análisis personalizado y recomendaciones estratégicas.">
+    <meta name="keywords" content="diagnóstico IA, emprendimiento, análisis de negocio, startup, inteligencia artificial, DE CERO A CIEN">
+    <meta name="author" content="DE CERO A CIEN">
+    
+    <!-- Título de la página -->
     <title>Diagnóstico IA Gratuito para Emprendedores | De Cero a Cien</title>
+    
+    <!-- Favicons y meta tags para redes sociales -->
+    <meta property="og:title" content="Diagnóstico IA Gratuito para Emprendedores | De Cero a Cien">
+    <meta property="og:description" content="Descubre el potencial oculto de tu emprendimiento con nuestro diagnóstico gratuito de IA.">
+    <meta property="og:url" content="https://deceroacien.app/diagnosticos_ai.html">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Preload de recursos críticos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
+    
+    <!-- Hojas de estilo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles/common.css">
+    <link rel="stylesheet" href="assets/styles/mobile.css">
+    
+    <!-- Configuración de Tailwind personalizada -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#0a1f2f',
+                        'secondary-dark': '#112240',
+                        'accent-gold': '#FBBF24',
+                        'text-light': '#e6f1ff',
+                        'border-custom': '#1e2d4d'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Estilos específicos de la página -->
     <style>
-        /* --- Estilos Generales --- */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #0A192F; /* Azul oscuro de fondo */
-            color: #E6F1FF; /* Texto casi blanco */
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 960px;
-            margin: auto;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        h1, h2, h3 {
-            color: #FFFFFF;
-            font-weight: 700;
-        }
-
-        h1 {
-            font-size: 2.8em;
-            margin-bottom: 0.5em;
-        }
-
-        h2 {
-            font-size: 2em;
-            margin-top: 3em;
-            margin-bottom: 1.5em;
-            border-bottom: 2px solid #FFD700; /* Dorado/Amarillo */
-            display: inline-block;
-            padding-bottom: 10px;
-        }
-
-        p {
-            font-size: 1.1em;
-            color: #CCD6F6; /* Texto secundario más suave */
-        }
-        
-        /* --- Botones --- */
-        .cta-button {
-            display: inline-block;
-            background-color: #FFD700; /* Dorado/Amarillo */
-            color: #0A192F; /* Texto oscuro */
-            padding: 15px 30px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1em;
-            margin-top: 20px;
-            transition: transform 0.2s ease, background-color 0.2s ease;
-            cursor: pointer;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            background-color: #FFFACD; /* Dorado más claro */
-        }
-        
-        /* --- Secciones --- */
-        .hero {
+        /* Estilos específicos para la página de diagnósticos IA */
+        .diagnostics-hero {
             padding: 80px 20px;
             background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.95)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
         }
         
-        .value-prop {
+        .diagnostics-value-prop {
             display: flex;
             justify-content: space-around;
             gap: 20px;
@@ -80,182 +64,215 @@
             margin-top: 2em;
         }
 
-        .prop-item {
-            background-color: #112240; /* Azul un poco más claro */
+        .diagnostics-prop-item {
+            background-color: var(--color-secondary-dark);
             padding: 25px;
             border-radius: 8px;
             flex-basis: 250px;
             flex-grow: 1;
-            border: 1px solid #1E3A5F;
+            border: 1px solid var(--color-border);
         }
         
-        .prop-item .icon {
+        .diagnostics-prop-item .icon {
             font-size: 2.5em;
             margin-bottom: 15px;
         }
 
-        /* --- Formulario --- */
-        .form-section {
-            background-color: #112240;
+        /* Formulario específico de diagnósticos */
+        .diagnostics-form-section {
+            background-color: var(--color-secondary-dark);
             padding: 50px 20px;
             border-radius: 10px;
-            margin-top: 4em;
-            border: 1px solid #1E3A5F;
+            margin-top: 2em;
+            border: 1px solid var(--color-border);
         }
         
-        .form-group {
-            margin-bottom: 20px;
+        .diagnostics-form-group {
+            margin-bottom: 25px;
             text-align: left;
         }
         
-        .form-group label {
+        .diagnostics-form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: bold;
-            color: #CCD6F6;
+            color: var(--color-text-white);
+            font-size: 1.2em;
         }
 
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .diagnostics-form-group input, .diagnostics-form-group textarea, .diagnostics-form-group select {
             width: 100%;
             padding: 12px;
             box-sizing: border-box;
             border-radius: 5px;
-            border: 1px solid #304D6D;
-            background-color: #0A192F;
-            color: #E6F1FF;
+            border: 1px solid var(--color-border-light);
+            background-color: var(--color-primary-dark);
+            color: var(--color-text-light);
             font-size: 1em;
         }
-        
-        .checkbox-group {
-            text-align: left;
-            margin-top: 20px;
+
+        .diagnostics-checkbox-group {
             display: flex;
             align-items: center;
-        }
-        
-        .checkbox-group input {
-           margin-right: 10px;
+            margin-bottom: 25px;
         }
 
-        /* --- Agradecimiento --- */
-        .thank-you-message {
-            display: none; /* Oculto por defecto */
-            background-color: #112240;
+        .diagnostics-checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .diagnostics-checkbox-group label {
+            font-size: 1em;
+            color: var(--color-text-gray);
+            margin-bottom: 0;
+        }
+
+        /* Mensaje de agradecimiento */
+        .diagnostics-thank-you-message {
+            display: none;
+            background-color: var(--color-secondary-dark);
             padding: 50px;
             border-radius: 10px;
-            border: 1px solid #FFD700;
+            border: 1px solid var(--color-accent-gold);
         }
-        .thank-you-message h2{
+        
+        .diagnostics-thank-you-message h2 {
             border-bottom: none;
         }
-
     </style>
 </head>
-<body>
+<body class="base-container">
 
-    <!-- =============================================== -->
-    <!-- SECCIÓN 1: HERO (EL GANCHO PRINCIPAL)             -->
-    <!-- =============================================== -->
-    <header class="hero">
+    <!-- Header dinámico -->
+    <header class="header-component"></header>
+
+    <!-- Contenido principal -->
+    <main>
+        <!-- =============================================== -->
+        <!-- SECCIÓN 1: HERO (EL GANCHO PRINCIPAL)             -->
+        <!-- =============================================== -->
+        <section class="diagnostics-hero">
+            <div class="container">
+                <h1 class="heading-xl text-center mb-6">Descubre el Potencial Oculto de tu Emprendimiento con IA</h1>
+                <p class="text-lg text-center max-w-4xl mx-auto mb-8">¿No estás seguro de los próximos pasos? ¿Sientes que podrías crecer más rápido? Nuestra herramienta de Inteligencia Artificial analiza los pilares de tu negocio y te envía un diagnóstico completo y gratuito a tu correo.</p>
+                <div class="text-center">
+                    <a href="#form-diagnostico" class="btn-primary">Iniciar Diagnóstico Gratuito</a>
+                </div>
+            </div>
+        </section>
+
         <div class="container">
-            <h1>Descubre el Potencial Oculto de tu Emprendimiento con IA</h1>
-            <p>¿No estás seguro de los próximos pasos? ¿Sientes que podrías crecer más rápido? Nuestra herramienta de Inteligencia Artificial analiza los pilares de tu negocio y te envía un diagnóstico completo y gratuito a tu correo.</p>
-            <a href="#form-diagnostico" class="cta-button">Iniciar Diagnóstico Gratuito</a>
+            <!-- =============================================== -->
+            <!-- SECCIÓN 2: ¿QUÉ OBTENDRÁS? (VALOR)               -->
+            <!-- =============================================== -->
+            <section id="valor" class="section-padding">
+                <h2 class="heading-lg text-center mb-12">Un Reporte Claro y Accionable en tu Bandeja de Entrada</h2>
+                <div class="diagnostics-value-prop">
+                    <div class="diagnostics-prop-item">
+                        <div class="icon text-center">🎯</div>
+                        <h3 class="heading-md text-center mb-4">Análisis de Etapa Actual</h3>
+                        <p class="text-base text-center">Identificaremos las fortalezas y debilidades más comunes de la fase en la que se encuentra tu proyecto.</p>
+                    </div>
+                    <div class="diagnostics-prop-item">
+                        <div class="icon text-center">💡</div>
+                        <h3 class="heading-md text-center mb-4">Oportunidades Clave</h3>
+                        <p class="text-base text-center">Nuestro sistema detectará las áreas de mayor potencial de crecimiento para tu negocio.</p>
+                    </div>
+                    <div class="diagnostics-prop-item">
+                        <div class="icon text-center">🚀</div>
+                        <h3 class="heading-md text-center mb-4">Recomendaciones Estratégicas</h3>
+                        <p class="text-base text-center">Te daremos los 3 próximos pasos recomendados que puedes implementar desde mañana.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =============================================== -->
+            <!-- SECCIÓN 3: FORMULARIO                           -->
+            <!-- =============================================== -->
+            <section id="form-diagnostico" class="diagnostics-form-section">
+                <div id="form-container">
+                    <h2 class="heading-lg text-center mb-6">Comienza tu Diagnóstico en Menos de 3 Minutos</h2>
+                    <p class="text-lg text-center mb-8">Responde estas breves preguntas. Nuestra IA se encargará del resto.</p>
+                    <form id="diagnosticoForm">
+                        <div class="diagnostics-form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" id="nombre" name="nombre" required>
+                        </div>
+                        <div class="diagnostics-form-group">
+                            <label for="email">Email Profesional</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="diagnostics-form-group">
+                            <label for="emprendimiento">Nombre de tu Emprendimiento</label>
+                            <input type="text" id="emprendimiento" name="emprendimiento" required>
+                        </div>
+                        <div class="diagnostics-form-group">
+                            <label for="etapa">¿En qué etapa se encuentra tu proyecto?</label>
+                            <select id="etapa" name="etapa" required>
+                                <option value="">Selecciona una etapa...</option>
+                                <option value="Idea">Idea / Concepto</option>
+                                <option value="PMV">Producto Mínimo Viable (PMV)</option>
+                                <option value="Traccion">Tracción (Primeros Clientes)</option>
+                                <option value="Crecimiento">Crecimiento / Escalabilidad</option>
+                                <option value="Madurez">Madurez</option>
+                            </select>
+                        </div>
+                        <div class="diagnostics-form-group">
+                            <label for="descripcion">Describe tu negocio o idea en una frase</label>
+                            <textarea id="descripcion" name="descripcion" rows="3" placeholder="Ej: Somos un marketplace que conecta a artesanos locales..."></textarea>
+                        </div>
+                        <div class="diagnostics-form-group">
+                            <label for="desafio">¿Cuál es tu mayor desafío en este momento?</label>
+                            <textarea id="desafio" name="desafio" rows="3" placeholder="Ej: Nos cuesta conseguir nuestros primeros 100 clientes..."></textarea>
+                        </div>
+                        <div class="diagnostics-checkbox-group">
+                            <input type="checkbox" id="consentimiento" name="consentimiento" required>
+                            <label for="consentimiento">Acepto recibir mi diagnóstico por email y otras comunicaciones de valor de "De Cero a Cien".</label>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn-primary">Generar y Enviar mi Diagnóstico</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- =============================================== -->
+                <!-- MENSAJE DE AGRADECIMIENTO (OCULTO)              -->
+                <!-- =============================================== -->
+                <div id="thank-you" class="diagnostics-thank-you-message">
+                    <h2 class="heading-lg text-center mb-6">¡Excelente! Tu diagnóstico está en camino.</h2>
+                    <p class="text-lg text-center mb-4">Hemos recibido tu información. Nuestra IA ya está trabajando en tu análisis personalizado.</p>
+                    <p class="text-lg text-center mb-4">Recibirás el reporte en tu correo <strong id="user-email"></strong> en los próximos 10-15 minutos.</p>
+                    <p class="text-lg text-center">Mientras esperas, puedes explorar otros recursos.</p>
+                </div>
+            </section>
         </div>
-    </header>
-
-    <main class="container">
-        <!-- =============================================== -->
-        <!-- SECCIÓN 2: ¿QUÉ OBTENDRÁS? (VALOR)               -->
-        <!-- =============================================== -->
-        <section id="valor">
-            <h2>Un Reporte Claro y Accionable en tu Bandeja de Entrada</h2>
-            <div class="value-prop">
-                <div class="prop-item">
-                    <div class="icon">🎯</div>
-                    <h3>Análisis de Etapa Actual</h3>
-                    <p>Identificaremos las fortalezas y debilidades más comunes de la fase en la que se encuentra tu proyecto.</p>
-                </div>
-                <div class="prop-item">
-                    <div class="icon">💡</div>
-                    <h3>Oportunidades Clave</h3>
-                    <p>Nuestro sistema detectará las áreas de mayor potencial de crecimiento para tu negocio.</p>
-                </div>
-                <div class="prop-item">
-                    <div class="icon">🚀</div>
-                    <h3>Recomendaciones Estratégicas</h3>
-                    <p>Te daremos los 3 próximos pasos recomendados que puedes implementar desde mañana.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- =============================================== -->
-        <!-- SECCIÓN 3: FORMULARIO                           -->
-        <!-- =============================================== -->
-        <section id="form-diagnostico" class="form-section">
-            <div id="form-container">
-                <h2>Comienza tu Diagnóstico en Menos de 3 Minutos</h2>
-                <p>Responde estas breves preguntas. Nuestra IA se encargará del resto.</p>
-                <form id="diagnosticoForm">
-                    <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Profesional</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="emprendimiento">Nombre de tu Emprendimiento</label>
-                        <input type="text" id="emprendimiento" name="emprendimiento" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="etapa">¿En qué etapa se encuentra tu proyecto?</label>
-                        <select id="etapa" name="etapa" required>
-                            <option value="">Selecciona una etapa...</option>
-                            <option value="Idea">Idea / Concepto</option>
-                            <option value="PMV">Producto Mínimo Viable (PMV)</option>
-                            <option value="Traccion">Tracción (Primeros Clientes)</option>
-                            <option value="Crecimiento">Crecimiento / Escalabilidad</option>
-                            <option value="Madurez">Madurez</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="descripcion">Describe tu negocio o idea en una frase</label>
-                        <textarea id="descripcion" name="descripcion" rows="3" placeholder="Ej: Somos un marketplace que conecta a artesanos locales..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="desafio">¿Cuál es tu mayor desafío en este momento?</label>
-                        <textarea id="desafio" name="desafio" rows="3" placeholder="Ej: Nos cuesta conseguir nuestros primeros 100 clientes..."></textarea>
-                    </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="consentimiento" name="consentimiento" required>
-                        <label for="consentimiento">Acepto recibir mi diagnóstico por email y otras comunicaciones de valor de "De Cero a Cien".</label>
-                    </div>
-                    <button type="submit" class="cta-button">Generar y Enviar mi Diagnóstico</button>
-                </form>
-            </div>
-
-            <!-- =============================================== -->
-            <!-- MENSAJE DE AGRADECIMIENTO (OCULTO)              -->
-            <!-- =============================================== -->
-            <div id="thank-you" class="thank-you-message">
-                <h2>¡Excelente! Tu diagnóstico está en camino.</h2>
-                <p>Hemos recibido tu información. Nuestra IA ya está trabajando en tu análisis personalizado.</p>
-                <p>Recibirás el reporte en tu correo <strong id="user-email"></strong> en los próximos 10-15 minutos.</p>
-                <p>Mientras esperas, puedes explorar otros recursos.</p>
-            </div>
-        </section>
-
     </main>
 
-    <footer style="text-align: center; padding: 40px 20px; color: #8892B0;">
-        <p>&copy; 2025 De Cero a Cien. Todos los derechos reservados.</p>
-    </footer>
+    <!-- Footer dinámico -->
+    <footer class="footer-component"></footer>
 
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/573107156160?text=Hola%20quiero%20más%20información%20sobre%20servicios%20de%20De%20Cero%20a%20Cien" 
+       class="floating-whatsapp-btn" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       aria-label="Contactar por WhatsApp">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.570-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.525 3.687"/>
+        </svg>
+    </a>
+
+    <!-- Scripts -->
+    <script src="assets/js/components.js"></script>
     <script>
+        // Inicializar aplicación cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof AppManager !== 'undefined') {
+                AppManager.init();
+            }
+        });
+
         // --- Lógica simple para simular el envío del formulario ---
         document.getElementById('diagnosticoForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Evita que la página se recargue
@@ -274,4 +291,3 @@
 
 </body>
 </html>
-
