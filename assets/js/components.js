@@ -317,7 +317,27 @@ class HeaderComponent extends BaseComponent {
         this.element.innerHTML = headerHTML;
         
         // Verificar estado de autenticación después de generar el HTML
-        setTimeout(() => this.updateAuthSection(), 100);
+        // Usar múltiples intentos para asegurar que authManager esté disponible
+        this.scheduleAuthCheck();
+    }
+    
+    /**
+     * Programa verificaciones del estado de autenticación
+     */
+    scheduleAuthCheck() {
+        // Verificaciones múltiples para asegurar que authManager esté disponible
+        const checkTimes = [100, 500, 1000, 2000];
+        
+        checkTimes.forEach(delay => {
+            setTimeout(() => this.updateAuthSection(), delay);
+        });
+        
+        // También verificar cuando se cargue completamente la página
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                setTimeout(() => this.updateAuthSection(), 100);
+            });
+        }
     }
     
     /**
@@ -336,7 +356,7 @@ class HeaderComponent extends BaseComponent {
                 <div class="header-user-menu">
                     <span class="header-user-greeting">Hola, ${firstName}</span>
                     <a href="${this.basePath}auth/dashboard.html" class="header-dashboard-link">Dashboard</a>
-                    <button class="header-logout-btn" data-logout>Salir</button>
+                    <button class="header-logout-btn" data-logout>Cerrar Sesión</button>
                 </div>
             `;
             
@@ -346,6 +366,8 @@ class HeaderComponent extends BaseComponent {
                 logoutBtn.addEventListener('click', () => {
                     if (window.authManager) {
                         window.authManager.logout();
+                        // Recargar la página para reflejar el cambio de estado
+                        window.location.reload();
                     }
                 });
             }
@@ -790,6 +812,10 @@ class AppManager {
             ensureHeaderFooterPlaceholders();
             this.initializeComponents();
             this.setupGlobalEvents();
+            
+            // Forzar verificación de autenticación después de un breve delay
+            this.scheduleAuthCheck();
+            
             this.isInitialized = true;
             console.log('Aplicación inicializada correctamente');
         } catch (error) {
@@ -829,6 +855,18 @@ class AppManager {
     const whatsappBtn = new WhatsAppButtonComponent();
     whatsappBtn.init();
     this.components.set('whatsapp', whatsappBtn);
+    }
+
+    /**
+     * Programa verificaciones del estado de autenticación para todos los headers
+     */
+    scheduleAuthCheck() {
+        const header = this.components.get('header');
+        if (header && typeof header.updateAuthSection === 'function') {
+            // Verificaciones múltiples para asegurar que authManager esté disponible
+            setTimeout(() => header.updateAuthSection(), 500);
+            setTimeout(() => header.updateAuthSection(), 1500);
+        }
     }
 
     /**
