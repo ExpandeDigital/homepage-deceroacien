@@ -192,7 +192,11 @@ class BaseComponent {
         
         this.eventListeners.clear();
         this.isInitialized = false;
-        console.log(`🗑️ ${this.constructor.name} destruido y limpiado`);
+        
+        // Solo log en debug mode para evitar spam en consola
+        if (window.DEBUG_MODE) {
+            console.log(`🗑️ ${this.constructor.name} destruido y limpiado`);
+        }
     }
 }
 
@@ -834,8 +838,8 @@ class AppManager {
         // Manejar cambios de tamaño de ventana
         window.addEventListener('resize', this.handleResize.bind(this));
 
-        // Manejar navegación
-        window.addEventListener('beforeunload', this.handleBeforeUnload.bind(this));
+        // Solo manejar cierre real de la aplicación, no navegación
+        window.addEventListener('unload', this.handleBeforeUnload.bind(this));
 
         // Configurar lazy loading para imágenes
         this.setupLazyLoading();
@@ -855,8 +859,17 @@ class AppManager {
     /**
      * Maneja eventos antes de cerrar/cambiar la página
      */
-    handleBeforeUnload() {
-        // Limpiar componentes antes de cerrar
+    handleBeforeUnload(event) {
+        // Solo limpiar si realmente se está cerrando la ventana/pestaña
+        // No durante navegación normal o recargas
+        if (event.type === 'beforeunload') {
+            // Solo logs de debug, no destruir componentes durante navegación
+            console.log('🔄 Página cambiando, manteniendo componentes...');
+            return;
+        }
+        
+        // Limpiar componentes solo en cierre real
+        console.log('🗑️ Limpiando componentes al cerrar aplicación...');
         this.components.forEach(component => {
             if (component.destroy) {
                 component.destroy();
