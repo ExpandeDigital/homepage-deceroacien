@@ -350,6 +350,7 @@ components.js
     
     <!-- Scripts JavaScript modulares -->
     <script src="assets/js/components.js"></script>
+    <script src="assets/js/auth.js"></script>
 </body>
 </html>
 ```

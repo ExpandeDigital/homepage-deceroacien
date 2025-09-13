@@ -143,6 +143,7 @@ const CONFIG = {
 
     <!-- Scripts JavaScript -->
     <script src="assets/js/components.js"></script>
+    <script src="assets/js/auth.js"></script>
 
 </body>
 </html>`,
