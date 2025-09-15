@@ -106,11 +106,11 @@
                         <h2 class="text-2xl font-bold text-white mb-4">El Taller: Tus Cursos y Herramientas</h2>
                         <p class="text-sm text-gray-400 mb-6">Accede a las micro-herramientas de cada curso que has adquirido. Cada una es un paso práctico en la construcción de tu negocio.</p>
                         
-                        <div class="space-y-4">
+                                <div class="space-y-4">
                             <!-- Curso 1 -->
-                            <details class="course-accordion bg-slate-800/50 p-4 rounded-lg cursor-pointer" open>
+                                     <details class="course-accordion bg-slate-800/50 p-4 rounded-lg cursor-pointer" open data-entitlement="course.pmv">
                                 <summary class="text-lg font-semibold flex justify-between items-center text-slate-200">Curso 1: De la Idea al PMV (Fases 1 y 2) <span class="text-2xl highlight-text">+</span></summary>
-                                <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                                          <div data-when="granted" class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
                                     <a href="fase_1_ecd/1_Generador_de_Modelo_de_Negocio.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Generador de Modelo de Negocio</a>
                                     <a href="fase_1_ecd/2_Generador_de_Buyer_Persona_con_IA.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Generador de Buyer Persona</a>
                                     <a href="fase_1_ecd/3_Calculadora_de_Viabilidad_Inicial.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Calculadora de Viabilidad</a>
@@ -124,46 +124,50 @@
                                     <a href="fase_2_ecd/4_Definidor_de_Métricas_de_Éxito.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Definidor de Métricas</a>
                                     <a href="fase_2_ecd/5_Planificador_de_Lanzamiento.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Planificador de Lanzamiento</a>
                                     <a href="fase_2_ecd/6Diseñador_de_Flujo_de_Usuario.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Diseñador de Flujo de Usuario</a>
-                                </div>
+                                          </div>
+                                          <div data-when="denied" class="hidden mt-4"></div>
                             </details>
 
                             <!-- Curso 2 -->
-                             <details class="course-accordion bg-slate-800/50 p-4 rounded-lg cursor-pointer">
+                                      <details class="course-accordion bg-slate-800/50 p-4 rounded-lg cursor-pointer" data-entitlement="course.pmf">
                                 <summary class="text-lg font-semibold flex justify-between items-center text-slate-200">Curso 2: Tracción y Product-Market Fit (Fase 3) <span class="text-2xl highlight-text">+</span></summary>
-                                <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                                          <div data-when="granted" class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
                                     <a href="fase_3_ecd/1Dashboard_de_Métricas_Clave.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Dashboard de Métricas Clave</a>
                                     <a href="fase_3_ecd/2Sistema_de_Recolección_de_Feedback.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Sistema de Recolección de Feedback</a>
                                     <a href="fase_3_ecd/3Calculadora_de_Product-Market_Fit.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Calculadora de Product-Market Fit</a>
                                     <a href="fase_3_ecd/4Calcula_la_Rentabilidad_por_Cliente.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Analizador de Unit Economics</a>
                                     <a href="fase_3_ecd/5Motor_de_Pruebas_AB.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Motor de Pruebas A/B</a>
                                     <a href="fase_3_ecd/6Generador_de_Estrategia_Go-To-Market.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Generador de Estrategia Go-To-Market</a>
-                                </div>
+                                          </div>
+                                          <div data-when="denied" class="hidden mt-4"></div>
                             </details>
 
                             <!-- Curso 3 -->
-                             <details class="course-accordion bg-slate-800/50 p-4 rounded-lg cursor-pointer">
+                                      <details class="course-accordion bg-slate-800/50 p-4 rounded-lg cursor-pointer" data-entitlement="course.growth">
                                 <summary class="text-lg font-semibold flex justify-between items-center text-slate-200">Curso 3: Crecimiento y Escalabilidad (Fase 4) <span class="text-2xl highlight-text">+</span></summary>
-                                <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                                          <div data-when="granted" class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
                                     <a href="fase_4_ecd/1Analiza_tu_Embudo_de_Conversión.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Optimizador de Embudos</a>
                                     <a href="fase_4_ecd/2Generador_de_Calendario_Editorial_con_IA.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Generador de Calendario Editorial</a>
                                     <a href="fase_4_ecd/3Generador_de_Proyecciones_Financieras.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Generador de Proyecciones Financieras</a>
                                     <a href="fase_4_ecd/5Constructor_de_Pitch_Deck.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Constructor de Pitch Deck</a>
                                     <a href="fase_4_ecd/4Planificador_de_Contratación.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Planificador de Contratación</a>
                                     <a href="fase_4_ecd/6Manual_de_Operaciones_(Playbook).html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Manual de Operaciones</a>
-                                </div>
+                                          </div>
+                                          <div data-when="denied" class="hidden mt-4"></div>
                             </details>
 
                             <!-- Curso 4 -->
-                             <details class="course-accordion bg-slate-800/50 p-4 rounded-lg cursor-pointer">
+                                      <details class="course-accordion bg-slate-800/50 p-4 rounded-lg cursor-pointer" data-entitlement="course.ceo">
                                 <summary class="text-lg font-semibold flex justify-between items-center text-slate-200">Curso 4: Consolidación y Madurez (Fase 5) <span class="text-2xl highlight-text">+</span></summary>
-                                <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                                          <div data-when="granted" class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
                                     <a href="fase_5_ecd/1Simulador_de_Estrategias_de_Crecimiento.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Simulador de Estrategias de Crecimiento</a>
                                     <a href="fase_5_ecd/2Dashboard_de_Salud_Financiera.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Dashboard de Salud Financiera</a>
                                     <a href="fase_5_ecd/3Optimizador_de_Procesos_Clave.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Optimizador de Procesos Clave</a>
                                     <a href="fase_5_ecd/4Constructor_de_Manual_de_Cultura.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Constructor de Manual de Cultura</a>
                                     <a href="fase_5_ecd/5Simulador_de_Gobierno_Corporativo.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Simulador de Gobierno Corporativo</a>
                                     <a href="fase_5_ecd/6Analizador_de_Escenarios_de_Salida.html" class="bg-slate-700 p-3 rounded-md hover:bg-slate-600 transition-colors">Analizador de Escenarios de Salida</a>
-                                </div>
+                                          </div>
+                                          <div data-when="denied" class="hidden mt-4"></div>
                             </details>
                         </div>
                     </div>
@@ -179,6 +183,29 @@
     <!-- Componentes globales -->
     <script src="assets/js/components.js"></script>
     <script src="assets/js/auth.js"></script>
+    <script src="assets/js/entitlements.js"></script>
+        <script>
+            // Abre automáticamente el accordion del curso según ?open=course.*
+            (function(){
+                try{
+                    const q=new URLSearchParams(location.search);
+                    const open=q.get('open');
+                    if(!open) return;
+                    const map={
+                        'course.pmv':'[data-entitlement="course.pmv"]',
+                        'course.pmf':'[data-entitlement="course.pmf"]',
+                        'course.growth':'[data-entitlement="course.growth"]',
+                        'course.ceo':'[data-entitlement="course.ceo"]'
+                    };
+                    const sel=map[open]; if(!sel) return;
+                    const el=document.querySelector(sel);
+                    if(el && el.tagName.toLowerCase()==='details'){
+                        el.open=true;
+                        el.scrollIntoView({behavior:'smooth', block:'start'});
+                    }
+                }catch(e){}
+            })();
+        </script>
 
 </body>
 </html>

@@ -73,8 +73,8 @@
                 <h2 class="text-3xl sm:text-4xl font-bold text-center section-title">Nuestro Itinerario Formativo</h2>
                 <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     
-                    <!-- Programa 1 -->
-                    <div class="program-card rounded-lg p-6 flex flex-col">
+                    <!-- Programa 1 (Gated: course.pmv) -->
+                    <div class="program-card rounded-lg p-6 flex flex-col" data-entitlement="course.pmv" data-cta-override="/bootcamp_pmv.html" data-cta-label="Comprar Bootcamp PMV">
                         <h3 class="font-bold text-white text-xl">Lanza tu PMV en 8 Semanas</h3>
                         <p class="text-sm highlight-text font-semibold mt-1">Bootcamp Fases 1 & 2</p>
                         <p class="text-gray-400 text-sm mt-3 flex-grow">De la idea al mercado. Transforma tu concepto en un Producto Mínimo Viable validado y lanzado.</p>
@@ -82,11 +82,16 @@
                              <p class="text-sm text-gray-300"><span class="font-bold text-white">Ideal para:</span> Fundadores en etapa de idea.</p>
                              <p class="text-sm text-gray-300 mt-2"><span class="font-bold text-white">Precio:</span> $499 USD</p>
                         </div>
-                        <a href="bootcamp_pmv.html" class="cta-button mt-6">Ver Programa</a>
+                        <div data-when="granted" class="hidden mt-6">
+                            <a href="/portal-alumno.html?open=course.pmv" class="cta-button">Entrar al Curso</a>
+                        </div>
+                        <div data-when="denied" class="mt-6">
+                            <a href="/bootcamp_pmv.html" class="cta-button">Ver Programa</a>
+                        </div>
                     </div>
 
-                    <!-- Programa 2 -->
-                    <div class="program-card rounded-lg p-6 flex flex-col">
+                    <!-- Programa 2 (Gated: course.pmf) -->
+                    <div class="program-card rounded-lg p-6 flex flex-col" data-entitlement="course.pmf" data-cta-override="/bootcamp_pmf.html" data-cta-label="Comprar Bootcamp PMF">
                         <h3 class="font-bold text-white text-xl">Encuentra tu Product-Market Fit</h3>
                         <p class="text-sm highlight-text font-semibold mt-1">Bootcamp Fase 3 (6 Semanas)</p>
                         <p class="text-gray-400 text-sm mt-3 flex-grow">Tu producto ya está en el mercado, pero la tracción es esquiva. Construye un negocio que tus clientes amen.</p>
@@ -94,11 +99,16 @@
                              <p class="text-sm text-gray-300"><span class="font-bold text-white">Ideal para:</span> Fundadores con PMV lanzado.</p>
                              <p class="text-sm text-gray-300 mt-2"><span class="font-bold text-white">Precio:</span> $499 USD</p>
                         </div>
-                        <a href="bootcamp_pmf.html" class="cta-button mt-6">Ver Programa</a>
+                        <div data-when="granted" class="hidden mt-6">
+                            <a href="/portal-alumno.html?open=course.pmf" class="cta-button">Entrar al Curso</a>
+                        </div>
+                        <div data-when="denied" class="mt-6">
+                            <a href="/bootcamp_pmf.html" class="cta-button">Ver Programa</a>
+                        </div>
                     </div>
 
-                    <!-- Programa 3 -->
-                    <div class="program-card rounded-lg p-6 flex flex-col">
+                    <!-- Programa 3 (Gated: course.growth) -->
+                    <div class="program-card rounded-lg p-6 flex flex-col" data-entitlement="course.growth" data-cta-override="/bootcamp_growth.html" data-cta-label="Comprar Bootcamp Growth">
                         <h3 class="font-bold text-white text-xl">Construye tu Máquina de Crecimiento</h3>
                         <p class="text-sm highlight-text font-semibold mt-1">Bootcamp Fase 4 (8 Semanas)</p>
                         <p class="text-gray-400 text-sm mt-3 flex-grow">Pasa de ser un fundador que 'hace de todo' a un CEO que construye sistemas para escalar las ventas y el equipo.</p>
@@ -106,11 +116,16 @@
                              <p class="text-sm text-gray-300"><span class="font-bold text-white">Ideal para:</span> Fundadores con Product-Market Fit.</p>
                              <p class="text-sm text-gray-300 mt-2"><span class="font-bold text-white">Precio:</span> $499 USD</p>
                         </div>
-                        <a href="bootcamp_growth.html" class="cta-button mt-6">Ver Programa</a>
+                        <div data-when="granted" class="hidden mt-6">
+                            <a href="/portal-alumno.html?open=course.growth" class="cta-button">Entrar al Curso</a>
+                        </div>
+                        <div data-when="denied" class="mt-6">
+                            <a href="/bootcamp_growth.html" class="cta-button">Ver Programa</a>
+                        </div>
                     </div>
                     
-                    <!-- Programa 4 -->
-                    <div class="program-card rounded-lg p-6 flex flex-col">
+                    <!-- Programa 4 (Gated: course.ceo) -->
+                    <div class="program-card rounded-lg p-6 flex flex-col" data-entitlement="course.ceo" data-cta-override="/masterclass_ceo.html" data-cta-label="Comprar Masterclass CEO">
                         <h3 class="font-bold text-white text-xl">El Taller del CEO Estratega</h3>
                         <p class="text-sm highlight-text font-semibold mt-1">Masterclass Fase 5 (6 Semanas)</p>
                         <p class="text-gray-400 text-sm mt-3 flex-grow">Un taller de alto nivel para CEOs que buscan definir el legado de su compañía a largo plazo.</p>
@@ -118,7 +133,12 @@
                              <p class="text-sm text-gray-300"><span class="font-bold text-white">Ideal para:</span> CEOs de empresas en madurez.</p>
                              <p class="text-sm text-gray-300 mt-2"><span class="font-bold text-white">Precio:</span> $499 USD</p>
                         </div>
-                        <a href="masterclass_ceo.html" class="cta-button mt-6">Ver Programa</a>
+                        <div data-when="granted" class="hidden mt-6">
+                            <a href="/portal-alumno.html?open=course.ceo" class="cta-button">Entrar al Curso</a>
+                        </div>
+                        <div data-when="denied" class="mt-6">
+                            <a href="/masterclass_ceo.html" class="cta-button">Ver Programa</a>
+                        </div>
                     </div>
 
                 </div>
@@ -263,6 +283,7 @@
     <!-- Scripts JavaScript -->
     <script src="assets/js/components.js"></script>
     <script src="assets/js/auth.js"></script>
+    <script src="assets/js/entitlements.js"></script>
 
 </body>
 </html>

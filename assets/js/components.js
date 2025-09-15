@@ -879,7 +879,8 @@ class AppManager {
         // Solo manejar cierre real de la aplicación, no navegación
         window.addEventListener('unload', this.handleBeforeUnload.bind(this));
 
-        // Configurar lazy loading para imágenes
+    // Cargar entitlements en rutas protegidas y configurar lazy loading para imágenes
+    this.ensureEntitlementsLoader();
         this.setupLazyLoading();
     }
 
@@ -935,6 +936,23 @@ class AppManager {
                 imageObserver.observe(img);
             });
         }
+    }
+
+    /**
+     * Inyecta entitlements.js automáticamente en rutas de portal o herramientas si no está presente.
+     */
+    ensureEntitlementsLoader() {
+        try {
+            const already = Array.from(document.scripts).some(s => (s.src || '').includes('assets/js/entitlements.js'));
+            const path = (location && location.pathname || '').toLowerCase();
+            const shouldLoad = /\/portal-alumno\.html$/.test(path) || /\/fase_\d+_ecd\//.test(path);
+            if (!already && shouldLoad) {
+                const s = document.createElement('script');
+                s.src = `${GlobalConfig.basePath}assets/js/entitlements.js`;
+                s.defer = true;
+                document.head.appendChild(s);
+            }
+        } catch {}
     }
 
     /**
