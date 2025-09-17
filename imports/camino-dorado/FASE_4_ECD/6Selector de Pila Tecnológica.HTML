@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Cien a Mil: 24. Selector de Pila Tecnológica para Escalar</title>
+    <style>
+        :root {
+            --color-night-blue: #0D223F;
+            --color-gold: #D4AF37;
+            --color-gold-dark: #B89B2E;
+            --color-card-bg: #FFFFFF;
+            --color-text-on-dark: #F0F0F0;
+            --color-text-on-light: #0D223F;
+            --color-border: #E0D6B3;
+            --color-score-high: #27ae60;
+            --color-score-mid: #f39c12;
+            --color-score-low: #c0392b;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            font-family: var(--font-family);
+            background-color: var(--color-night-blue);
+            color: var(--color-text-on-dark);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            background: var(--color-card-bg);
+            color: var(--color-text-on-light);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0, 0.2);
+            overflow: hidden;
+            border: 1px solid var(--color-gold);
+        }
+        .column {
+            padding: 35px;
+            flex-basis: 50%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        .pedagogical-column {
+            background-color: var(--color-night-blue);
+            color: var(--color-text-on-dark);
+            border-right: 1px solid var(--color-gold);
+        }
+        .tool-column {
+            background-color: var(--color-card-bg);
+        }
+        h1, h2 { margin-top: 0; }
+        .pedagogical-column h1 { color: var(--color-card-bg); }
+        .tool-column h2 { color: var(--color-night-blue); }
+        h1 {
+            font-size: 1.8em;
+            border-bottom: 2px solid var(--color-gold);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+        h2 { font-size: 1.6em; }
+        h3 {
+            font-size: 1.2em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            color: var(--color-gold);
+        }
+        h3 .icon { width: 24px; height: 24px; margin-right: 10px; fill: currentColor; }
+        p, li { font-size: 0.95em; }
+        ul { list-style: none; padding-left: 0; }
+        ul li {
+            padding-left: 1.5em;
+            text-indent: -1.5em;
+            margin-bottom: 5px;
+        }
+        ul li::before {
+            content: '•';
+            color: var(--color-gold);
+            margin-right: 0.5em;
+            font-size: 1.2em;
+        }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input[type="text"], input[type="number"] {
+            width: 100%; padding: 10px;
+            border: 1px solid var(--color-border); border-radius: 4px;
+            box-sizing: border-box; font-size: 1em; color: var(--color-text-on-light);
+        }
+        input[type="range"] {
+            -webkit-appearance: none; appearance: none;
+            width: 100%; height: 8px; background: var(--color-border);
+            outline: none; opacity: 0.7; transition: opacity .2s; border-radius: 5px;
+        }
+        input[type="range"]:hover { opacity: 1; }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none;
+            width: 20px; height: 20px; background: var(--color-gold);
+            cursor: pointer; border-radius: 50%;
+        }
+        .slider-container { display: flex; align-items: center; gap: 15px; }
+        .slider-container input[type="range"] { flex-grow: 1; }
+        .slider-container span {
+            font-weight: bold; color: var(--color-gold-dark);
+            min-width: 20px; text-align: center;
+        }
+        button {
+            background-color: var(--color-gold);
+            color: var(--color-night-blue); border: none; padding: 12px 20px;
+            border-radius: 5px; font-size: 1em; font-weight: bold;
+            cursor: pointer; transition: background-color 0.3s, transform 0.1s;
+            width: 100%; margin-top: 10px;
+        }
+        button:hover { background-color: var(--color-gold-dark); }
+        button:active { transform: scale(0.98); }
+
+        #results-container {
+            margin-top: 20px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        .option-card {
+            background-color: #f9f9f9;
+            border: 1px solid var(--color-border);
+            border-left-width: 5px;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        .option-header { display: flex; justify-content: space-between; align-items: center; }
+        .option-header h4 { margin: 0; color: var(--color-night-blue); }
+        .option-header .score { font-size: 1.5em; font-weight: bold; }
+        .option-details { font-size: 0.9em; margin-top: 5px; color: #555;}
+        
+        @media (max-width: 900px) {
+            body { padding: 0; }
+            .container { flex-direction: column; border-radius: 0; max-width: 100%; }
+            .pedagogical-column { border-right: none; border-bottom: 1px solid var(--color-gold); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="column pedagogical-column">
+            <h1>24. Selector de Pila Tecnológica</h1>
+            
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-2h2v2zm0-4h-2V7h2v5z"></path></svg>
+                Objetivo
+            </h3>
+            <p>Proporcionar un marco estructurado para evaluar y seleccionar tecnologías de software, asegurando que las decisiones técnicas estén alineadas con las prioridades estratégicas del negocio para la fase de escalada.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"></path></svg>
+                Importancia Estratégica
+            </h3>
+            <p>La tecnología es un habilitador o un ancla. Elegir un stack por moda en lugar de por estrategia puede llevar a costes de mantenimiento desorbitados, lentitud para lanzar nuevas funcionalidades y una incapacidad para soportar el crecimiento. Esta herramienta traduce las necesidades del negocio a criterios de evaluación técnica.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+                Para Quién Es
+            </h3>
+            <p>Para CTOs, Tech Leads y CEOs que deben tomar decisiones de alto impacto sobre la arquitectura tecnológica de la empresa.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
+                Instrucciones de Uso
+            </h3>
+            <ul>
+                <li><strong>Define los Criterios:</strong> Establece los 3 criterios de negocio más importantes para la decisión.</li>
+                <li><strong>Añade una Opción:</strong> Nombra una de las tecnologías que estás considerando.</li>
+                <li><strong>Puntúa la Opción:</strong> Evalúa qué tan bien se alinea la opción con cada uno de tus criterios.</li>
+                <li><strong>Compara y Decide:</strong> La herramienta calculará una puntuación de alineación para cada opción, facilitando una decisión basada en datos.</li>
+            </ul>
+        </div>
+        <div class="column tool-column">
+            <h2>Herramienta Interactiva</h2>
+            <div id="tech-form">
+                <h4>1. Define tus Criterios de Decisión</h4>
+                <div class="form-group">
+                    <input type="text" id="criteria-1" value="Velocidad de Desarrollo">
+                </div>
+                 <div class="form-group">
+                    <input type="text" id="criteria-2" value="Escalabilidad a Alto Tráfico">
+                </div>
+                 <div class="form-group">
+                    <input type="text" id="criteria-3" value="Coste y Ecosistema">
+                </div>
+                <hr>
+                <h4>2. Evalúa las Opciones Tecnológicas</h4>
+                <div class="form-group">
+                    <label for="option-name">Nombre de la Opción</label>
+                    <input type="text" id="option-name" placeholder="Ej: Adoptar Kubernetes">
+                </div>
+                <div class="form-group">
+                    <label id="label-score-1">Velocidad de Desarrollo (1-10)</label>
+                    <div class="slider-container">
+                        <span>1</span><input type="range" id="score-1" min="1" max="10" value="5"><span id="value-score-1">5</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label id="label-score-2">Escalabilidad a Alto Tráfico (1-10)</label>
+                    <div class="slider-container">
+                        <span>1</span><input type="range" id="score-2" min="1" max="10" value="5"><span id="value-score-2">5</span>
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label id="label-score-3">Coste y Ecosistema (1-10)</label>
+                    <div class="slider-container">
+                        <span>1</span><input type="range" id="score-3" min="1" max="10" value="5"><span id="value-score-3">5</span>
+                    </div>
+                </div>
+                <button id="add-option-btn">Añadir Opción al Análisis</button>
+            </div>
+            
+            <div id="results-container">
+                 <!-- Option cards will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const criteria1Input = document.getElementById('criteria-1');
+            const criteria2Input = document.getElementById('criteria-2');
+            const criteria3Input = document.getElementById('criteria-3');
+            
+            const optionNameInput = document.getElementById('option-name');
+            const score1Slider = document.getElementById('score-1');
+            const score2Slider = document.getElementById('score-2');
+            const score3Slider = document.getElementById('score-3');
+
+            const addBtn = document.getElementById('add-option-btn');
+            const resultsContainer = document.getElementById('results-container');
+            
+            let options = [];
+
+            // Link criteria inputs to slider labels
+            criteria1Input.addEventListener('input', () => document.getElementById('label-score-1').textContent = `${criteria1Input.value} (1-10)`);
+            criteria2Input.addEventListener('input', () => document.getElementById('label-score-2').textContent = `${criteria2Input.value} (1-10)`);
+            criteria3Input.addEventListener('input', () => document.getElementById('label-score-3').textContent = `${criteria3Input.value} (1-10)`);
+
+            // Link sliders to value displays
+            score1Slider.addEventListener('input', () => document.getElementById('value-score-1').textContent = score1Slider.value);
+            score2Slider.addEventListener('input', () => document.getElementById('value-score-2').textContent = score2Slider.value);
+            score3Slider.addEventListener('input', () => document.getElementById('value-score-3').textContent = score3Slider.value);
+            
+            addBtn.addEventListener('click', addOption);
+
+            function addOption() {
+                const name = optionNameInput.value.trim();
+                const score1 = parseInt(score1Slider.value);
+                const score2 = parseInt(score2Slider.value);
+                const score3 = parseInt(score3Slider.value);
+                
+                if (!name) {
+                    alert('Por favor, introduce el nombre de la opción tecnológica.');
+                    return;
+                }
+
+                const totalScore = (score1 + score2 + score3) / 3;
+
+                options.push({
+                    name,
+                    score1, score2, score3,
+                    totalScore,
+                    criteria: [criteria1Input.value, criteria2Input.value, criteria3Input.value]
+                });
+                
+                renderOptions();
+                clearForm();
+            }
+            
+            function renderOptions() {
+                resultsContainer.innerHTML = '';
+                options.sort((a, b) => b.totalScore - a.totalScore);
+
+                options.forEach(opt => {
+                    let color = 'var(--color-score-low)';
+                    if (opt.totalScore > 7) {
+                        color = 'var(--color-score-high)';
+                    } else if (opt.totalScore > 4) {
+                        color = 'var(--color-score-mid)';
+                    }
+
+                    const card = document.createElement('div');
+                    card.className = 'option-card';
+                    card.style.borderLeftColor = color;
+                    card.innerHTML = `
+                        <div class="option-header">
+                            <h4>${escapeHTML(opt.name)}</h4>
+                            <span class="score" style="color: ${color};">${opt.totalScore.toFixed(1)}</span>
+                        </div>
+                        <p class="option-details">
+                           ${escapeHTML(opt.criteria[0])}: ${opt.score1} | ${escapeHTML(opt.criteria[1])}: ${opt.score2} | ${escapeHTML(opt.criteria[2])}: ${opt.score3}
+                        </p>
+                    `;
+                    resultsContainer.appendChild(card);
+                });
+            }
+
+            function clearForm() {
+                optionNameInput.value = '';
+                score1Slider.value = 5;
+                score2Slider.value = 5;
+                score3Slider.value = 5;
+                document.getElementById('value-score-1').textContent = '5';
+                document.getElementById('value-score-2').textContent = '5';
+                document.getElementById('value-score-3').textContent = '5';
+                optionNameInput.focus();
+            }
+
+            function escapeHTML(str) {
+                const p = document.createElement('p');
+                p.textContent = str;
+                return p.innerHTML;
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Cien a Mil: 11. Encuesta de Pulso Cultural</title>
+    <style>
+        :root {
+            --color-night-blue: #0D223F;
+            --color-gold: #D4AF37;
+            --color-gold-dark: #B89B2E;
+            --color-card-bg: #FFFFFF;
+            --color-text-on-dark: #F0F0F0;
+            --color-text-on-light: #0D223F;
+            --color-border: #E0D6B3;
+            --color-positive: #27ae60;
+            --color-neutral: #f39c12;
+            --color-negative: #c0392b;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            font-family: var(--font-family);
+            background-color: var(--color-night-blue);
+            color: var(--color-text-on-dark);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            background: var(--color-card-bg);
+            color: var(--color-text-on-light);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0, 0.2);
+            overflow: hidden;
+            border: 1px solid var(--color-gold);
+        }
+        .column {
+            padding: 35px;
+            flex-basis: 50%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        .pedagogical-column {
+            background-color: var(--color-night-blue);
+            color: var(--color-text-on-dark);
+            border-right: 1px solid var(--color-gold);
+        }
+        .tool-column {
+            background-color: var(--color-card-bg);
+        }
+        h1, h2 { margin-top: 0; }
+        .pedagogical-column h1 { color: var(--color-card-bg); }
+        .tool-column h2 { color: var(--color-night-blue); }
+        h1 {
+            font-size: 1.8em;
+            border-bottom: 2px solid var(--color-gold);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+        h2 { font-size: 1.6em; }
+        h3 {
+            font-size: 1.2em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            color: var(--color-gold);
+        }
+        h3 .icon { width: 24px; height: 24px; margin-right: 10px; fill: currentColor; }
+        p, li { font-size: 0.95em; }
+        ul { list-style: none; padding-left: 0; }
+        ul li {
+            padding-left: 1.5em;
+            text-indent: -1.5em;
+            margin-bottom: 5px;
+        }
+        ul li::before {
+            content: '•';
+            color: var(--color-gold);
+            margin-right: 0.5em;
+            font-size: 1.2em;
+        }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        select, input[type="text"], input[type="number"] {
+            width: 100%; padding: 10px;
+            border: 1px solid var(--color-border); border-radius: 4px;
+            box-sizing: border-box; font-size: 1em; color: var(--color-text-on-light);
+        }
+        button {
+            background-color: var(--color-gold);
+            color: var(--color-night-blue); border: none; padding: 12px 20px;
+            border-radius: 5px; font-size: 1em; font-weight: bold;
+            cursor: pointer; transition: background-color 0.3s, transform 0.1s;
+            width: 100%; margin-top: 10px;
+        }
+        button:hover { background-color: var(--color-gold-dark); }
+        button:active { transform: scale(0.98); }
+        
+        #results-section { margin-top: 20px; }
+        .chart-container {
+            display: flex;
+            height: 40px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .chart-bar { transition: width 0.5s ease-in-out; }
+        .chart-legend { display: flex; justify-content: space-around; font-size: 0.9em; }
+        .legend-item { display: flex; align-items: center; }
+        .legend-color { width: 12px; height: 12px; border-radius: 50%; margin-right: 5px; }
+        .summary { text-align: center; margin-top: 15px; }
+        .summary .score { font-size: 2em; font-weight: bold; color: var(--color-positive); }
+
+        @media (max-width: 900px) {
+            body { padding: 0; }
+            .container { flex-direction: column; border-radius: 0; max-width: 100%; }
+            .pedagogical-column { border-right: none; border-bottom: 1px solid var(--color-gold); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="column pedagogical-column">
+            <h1>11. Encuesta de Pulso Cultural</h1>
+            
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-2h2v2zm0-4h-2V7h2v5z"></path></svg>
+                Objetivo
+            </h3>
+            <p>Medir de forma rápida, regular y anónima el clima laboral y la moral del equipo para detectar problemas, celebrar fortalezas y tomar decisiones informadas sobre la cultura de la empresa.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"></path></svg>
+                Importancia Estratégica
+            </h3>
+            <p>Una cultura saludable es un acelerador de crecimiento; una tóxica es un ancla. Las encuestas de pulso son el sistema de alerta temprana que permite a los líderes escuchar a escala, demostrando que la opinión del equipo importa y permitiendo corregir el rumbo antes de que la insatisfacción se convierta en rotación.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+                Para Quién Es
+            </h3>
+            <p>Para líderes de equipo, CEOs y RRHH que entienden que la cultura no es un "extra", sino el sistema operativo de la empresa.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
+                Instrucciones de Uso
+            </h3>
+            <ul>
+                <li><strong>Elige la Pregunta:</strong> Selecciona una de las preguntas clave o define la tuya.</li>
+                <li><strong>Recopila Respuestas:</strong> (Simulado) Comparte la encuesta y recoge los resultados.</li>
+                <li><strong>Introduce los Datos:</strong> Ingresa el número de respuestas positivas, neutras y negativas.</li>
+                <li><strong>Analiza el Pulso:</strong> La herramienta visualizará instantáneamente el sentimiento del equipo.</li>
+            </ul>
+        </div>
+        <div class="column tool-column">
+            <h2>Herramienta Interactiva</h2>
+            <div id="survey-setup">
+                <div class="form-group">
+                    <label for="question-select">Selecciona una Pregunta de Pulso</label>
+                    <select id="question-select">
+                        <option value="En una escala de 0-10, ¿qué tan probable es que recomiendes trabajar aquí a un amigo?">NPS de Empleado (eNPS)</option>
+                        <option value="En una escala de 0-10, ¿sientes que tu trabajo tiene un propósito claro?">Propósito y Misión</option>
+                        <option value="En una escala de 0-10, ¿sientes que recibes el reconocimiento que mereces?">Reconocimiento</option>
+                        <option value="En una escala de 0-10, ¿sientes que tienes oportunidades de crecer profesionalmente?">Desarrollo Profesional</option>
+                        <option value="custom">-- Escribir mi propia pregunta --</option>
+                    </select>
+                </div>
+                 <div class="form-group" id="custom-question-group" style="display:none;">
+                    <label for="custom-question-input">Tu Pregunta Personalizada (escala 0-10)</label>
+                    <input type="text" id="custom-question-input" placeholder="Ej: ¿Qué tan satisfecho estás con el balance vida-trabajo?">
+                </div>
+            </div>
+            <hr style="border-top: 1px solid var(--color-border); margin: 20px 0;">
+            <div id="data-entry">
+                 <div class="form-group">
+                    <label for="positive-responses">Respuestas Positivas (9-10)</label>
+                    <input type="number" id="positive-responses" placeholder="Nº de empleados">
+                </div>
+                <div class="form-group">
+                    <label for="neutral-responses">Respuestas Neutras (7-8)</label>
+                    <input type="number" id="neutral-responses" placeholder="Nº de empleados">
+                </div>
+                 <div class="form-group">
+                    <label for="negative-responses">Respuestas Negativas (0-6)</label>
+                    <input type="number" id="negative-responses" placeholder="Nº de empleados">
+                </div>
+                 <button id="analyze-btn">Analizar Pulso del Equipo</button>
+            </div>
+            
+            <div id="results-section" style="display:none;">
+                <h4 id="results-title">Resultados de la Encuesta</h4>
+                <div class="chart-container">
+                    <div class="chart-bar" id="positive-bar" style="background-color: var(--color-positive);"></div>
+                    <div class="chart-bar" id="neutral-bar" style="background-color: var(--color-neutral);"></div>
+                    <div class="chart-bar" id="negative-bar" style="background-color: var(--color-negative);"></div>
+                </div>
+                <div class="chart-legend">
+                    <div class="legend-item"><span class="legend-color" style="background:var(--color-positive);"></span><span id="positive-legend"></span></div>
+                    <div class="legend-item"><span class="legend-color" style="background:var(--color-neutral);"></span><span id="neutral-legend"></span></div>
+                    <div class="legend-item"><span class="legend-color" style="background:var(--color-negative);"></span><span id="negative-legend"></span></div>
+                </div>
+                <div class="summary">
+                    <span id="summary-label">eNPS Score</span>
+                    <div class="score" id="summary-score"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const questionSelect = document.getElementById('question-select');
+            const customQuestionGroup = document.getElementById('custom-question-group');
+            const customQuestionInput = document.getElementById('custom-question-input');
+            
+            const positiveInput = document.getElementById('positive-responses');
+            const neutralInput = document.getElementById('neutral-responses');
+            const negativeInput = document.getElementById('negative-responses');
+            const analyzeBtn = document.getElementById('analyze-btn');
+
+            const resultsSection = document.getElementById('results-section');
+            const resultsTitle = document.getElementById('results-title');
+            const positiveBar = document.getElementById('positive-bar');
+            const neutralBar = document.getElementById('neutral-bar');
+            const negativeBar = document.getElementById('negative-bar');
+            const positiveLegend = document.getElementById('positive-legend');
+            const neutralLegend = document.getElementById('neutral-legend');
+            const negativeLegend = document.getElementById('negative-legend');
+            const summaryLabel = document.getElementById('summary-label');
+            const summaryScore = document.getElementById('summary-score');
+
+            questionSelect.addEventListener('change', () => {
+                customQuestionGroup.style.display = questionSelect.value === 'custom' ? 'block' : 'none';
+            });
+
+            analyzeBtn.addEventListener('click', analyze);
+
+            function analyze() {
+                const positive = parseInt(positiveInput.value) || 0;
+                const neutral = parseInt(neutralInput.value) || 0;
+                const negative = parseInt(negativeInput.value) || 0;
+                const total = positive + neutral + negative;
+
+                if (total === 0) {
+                    alert('Por favor, introduce el número de respuestas.');
+                    return;
+                }
+
+                const positivePercent = (positive / total) * 100;
+                const neutralPercent = (neutral / total) * 100;
+                const negativePercent = (negative / total) * 100;
+
+                positiveBar.style.width = `${positivePercent}%`;
+                neutralBar.style.width = `${neutralPercent}%`;
+                negativeBar.style.width = `${negativePercent}%`;
+                
+                positiveLegend.textContent = `Positivas (${positivePercent.toFixed(0)}%)`;
+                neutralLegend.textContent = `Neutras (${neutralPercent.toFixed(0)}%)`;
+                negativeLegend.textContent = `Negativas (${negativePercent.toFixed(0)}%)`;
+
+                let score, label;
+                if (questionSelect.value.includes('NPS')) {
+                    score = Math.round(positivePercent - negativePercent);
+                    label = 'eNPS Score';
+                } else {
+                    score = `${positivePercent.toFixed(0)}%`;
+                    label = 'Sentimiento Positivo';
+                }
+                summaryScore.textContent = score;
+                summaryLabel.textContent = label;
+                
+                resultsSection.style.display = 'block';
+            }
+        });
+    </script>
+
+</body>
+</html>

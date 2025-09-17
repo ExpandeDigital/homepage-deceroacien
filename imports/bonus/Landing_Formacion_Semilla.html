@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido a Formación Semilla - De Cero a Cien Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dc-dark: #0F172A; /* Azul Noche */
+            --dc-gold: #FBBF24; /* Dorado Principal */
+            --dc-gold-dark: #F59E0B; /* Dorado para gradientes */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dc-dark);
+            color: #E2E8F0;
+            background-image: radial-gradient(circle at 10% 20%, rgba(251, 191, 36, 0.05), transparent 30%),
+                              radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.05), transparent 40%);
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .text-gradient-gold {
+            background: linear-gradient(120deg, var(--dc-gold), var(--dc-gold-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-gradient-gold {
+            background: linear-gradient(120deg, var(--dc-gold), var(--dc-gold-dark));
+        }
+        .glow-border {
+            position: relative;
+            overflow: hidden;
+        }
+        .glow-border:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 0.75rem; /* rounded-xl */
+            border: 1px solid transparent;
+            background: linear-gradient(120deg, var(--dc-gold), var(--dc-dark), var(--dc-dark)) border-box;
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) padding-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            opacity: 0.3;
+            transition: opacity 300ms ease-in-out;
+        }
+        .glow-border:hover:before {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header / Navbar -->
+    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="text-2xl font-bold font-serif text-gradient-gold">
+            De Cero a Cien
+        </div>
+        <div>
+            <a href="#" class="bg-gradient-gold text-slate-900 font-bold py-2 px-5 rounded-full transition-transform hover:scale-105 inline-block shadow-lg shadow-amber-500/20">
+                Comenzar Ahora
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="py-24 md:py-32 text-center px-6 relative overflow-hidden">
+        <div class="absolute inset-0 -z-10 bg-[radial-gradient(40%_100%_at_50%_0%,rgba(251,191,36,0.1),transparent)]"></div>
+        <h1 class="text-5xl md:text-7xl font-bold font-serif text-white leading-tight mb-4">
+            Tu Viaje de <span class="text-gradient-gold">Transformación</span> Comienza
+        </h1>
+        <p class="max-w-3xl mx-auto text-lg md:text-xl text-slate-400 mb-8">
+            Has recibido tu <span class="font-semibold text-white">Formación Semilla</span>. Este es el mapa con los cimientos esenciales que todo emprendedor necesita para construir su imperio.
+        </p>
+        <p class="max-w-3xl mx-auto text-lg md:text-xl font-medium text-white">
+            Y no te preocupes, no caminarás en solitario.
+        </p>
+    </header>
+
+    <main class="container mx-auto px-6 py-8 md:py-16">
+
+        <!-- Core Resources Section -->
+        <section class="mb-24">
+            <h2 class="text-3xl md:text-4xl font-bold font-serif text-white mb-12 text-center">Tus Pilares Fundamentales</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Card 1: Guía Esencial -->
+                <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl p-8 border border-slate-700 text-center flex flex-col items-center hover:bg-slate-800 transition-colors duration-300">
+                    <div class="p-4 bg-slate-900 rounded-full mb-4 border border-slate-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-400"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold font-serif mb-3 text-gradient-gold">Guía Esencial para Emprendedores</h3>
+                    <p class="text-slate-400 mb-6 flex-grow">
+                        El documento maestro que consolida los conceptos clave. Tu referencia rápida para la excelencia.
+                    </p>
+                    <a href="#" class="mt-auto inline-block bg-gradient-gold text-slate-900 font-bold py-2 px-8 rounded-full transition-all hover:shadow-lg hover:shadow-amber-500/30 hover:scale-105">
+                        Descargar Guía
+                    </a>
+                </div>
+                <!-- Card 2: Cuaderno de Estrategia -->
+                <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl p-8 border border-slate-700 text-center flex flex-col items-center hover:bg-slate-800 transition-colors duration-300">
+                    <div class="p-4 bg-slate-900 rounded-full mb-4 border border-slate-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-400"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold font-serif mb-3 text-gradient-gold">Cuaderno de Estrategia</h3>
+                    <p class="text-slate-400 mb-6 flex-grow">
+                        Tu espacio digital para tomar notas, reflexionar y convertir los conceptos en acciones concretas.
+                    </p>
+                    <a href="#" class="mt-auto inline-block bg-slate-700 text-white font-bold py-2 px-8 rounded-full transition-all hover:bg-slate-600 hover:scale-105">
+                        Acceder al Cuaderno
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Talleres Section -->
+        <section class="mb-24">
+            <div class="bg-slate-900 rounded-2xl p-8 md:p-12 border border-slate-800">
+                <h2 class="text-3xl md:text-4xl font-bold font-serif text-white mb-10 text-center">Los 5 Talleres de tu Formación</h2>
+                <div class="max-w-3xl mx-auto space-y-6">
+                    <div class="flex items-center space-x-4 p-4 rounded-lg bg-slate-800/50 border border-slate-700">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-gold flex items-center justify-center font-bold text-slate-900">1</div>
+                        <p class="text-lg text-slate-300">De la Idea a la Acción</p>
+                    </div>
+                    <div class="flex items-center space-x-4 p-4 rounded-lg bg-slate-800/50 border border-slate-700">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-gold flex items-center justify-center font-bold text-slate-900">2</div>
+                        <p class="text-lg text-slate-300">El Valor de tu Idea y el Arte de Comprar Bien</p>
+                    </div>
+                    <div class="flex items-center space-x-4 p-4 rounded-lg bg-slate-800/50 border border-slate-700">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-gold flex items-center justify-center font-bold text-slate-900">3</div>
+                        <p class="text-lg text-slate-300">Tu Primera Venta: El Momento de la Verdad</p>
+                    </div>
+                    <div class="flex items-center space-x-4 p-4 rounded-lg bg-slate-800/50 border border-slate-700">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-gold flex items-center justify-center font-bold text-slate-900">4</div>
+                        <p class="text-lg text-slate-300">De Bombero a Arquitecto de tu Negocio</p>
+                    </div>
+                    <div class="flex items-center space-x-4 p-4 rounded-lg bg-slate-800/50 border border-slate-700">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-gold flex items-center justify-center font-bold text-slate-900">5</div>
+                        <p class="text-lg text-slate-300">De la Rutina a la Revolución Continua</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Micro-Herramientas Section -->
+        <section>
+            <h2 class="text-3xl md:text-4xl font-bold font-serif text-white mb-12 text-center">Tus 5 Micro-Herramientas Interactivas</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <a href="#" class="glow-border bg-slate-900/80 rounded-xl p-6 group">
+                    <h4 class="font-bold text-lg mb-1 text-white group-hover:text-gradient-gold transition-colors">Calculadora de Punto de Equilibrio</h4>
+                    <p class="text-slate-400 text-sm">Entiende la viabilidad financiera de tu negocio.</p>
+                </a>
+                <a href="#" class="glow-border bg-slate-900/80 rounded-xl p-6 group">
+                    <h4 class="font-bold text-lg mb-1 text-white group-hover:text-gradient-gold transition-colors">Diseñador de Propuesta de Valor</h4>
+                    <p class="text-slate-400 text-sm">Define qué te hace único en el mercado.</p>
+                </a>
+                <a href="#" class="glow-border bg-slate-900/80 rounded-xl p-6 group">
+                    <h4 class="font-bold text-lg mb-1 text-white group-hover:text-gradient-gold transition-colors">Generador de Copy con IA</h4>
+                    <p class="text-slate-400 text-sm">Crea mensajes de venta persuasivos en minutos.</p>
+                </a>
+                <a href="#" class="glow-border bg-slate-900/80 rounded-xl p-6 group">
+                    <h4 class="font-bold text-lg mb-1 text-white group-hover:text-gradient-gold transition-colors">Priorizador de Tareas con IA</h4>
+                    <p class="text-slate-400 text-sm">Organiza tu día y enfócate en lo importante.</p>
+                </a>
+                <a href="#" class="glow-border bg-slate-900/80 rounded-xl p-6 group lg:col-start-2">
+                    <h4 class="font-bold text-lg mb-1 text-white group-hover:text-gradient-gold transition-colors">Generador de Ideas con IA (SCAMPER)</h4>
+                    <p class="text-slate-400 text-sm">Desbloquea tu creatividad para innovar sin límites.</p>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-20 px-6 mt-16 border-t border-slate-800">
+        <div class="max-w-2xl mx-auto">
+            <p class="text-2xl font-serif text-gradient-gold mb-6">
+                "Nunca dejes de aprender. Este es solo el primer paso de tu gran viaje."
+            </p>
+            <p class="text-sm text-slate-500 mb-2">Un afectuoso saludo,</p>
+            <p class="text-xl font-bold text-white">Cristian Jofré Donoso</p>
+            <p class="text-sm font-light text-slate-400">Founder & CEO</p>
+            <p class="text-lg font-medium text-gradient-gold tracking-widest mt-1">DE CERO A CIEN ACADEMY</p>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Cien a Mil: 9. Diseñador de Sistema de Feedback 360°</title>
+    <style>
+        :root {
+            --color-night-blue: #0D223F;
+            --color-gold: #D4AF37;
+            --color-gold-dark: #B89B2E;
+            --color-card-bg: #FFFFFF;
+            --color-text-on-dark: #F0F0F0;
+            --color-text-on-light: #0D223F;
+            --color-border: #E0D6B3;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            font-family: var(--font-family);
+            background-color: var(--color-night-blue);
+            color: var(--color-text-on-dark);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            background: var(--color-card-bg);
+            color: var(--color-text-on-light);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0, 0.2);
+            overflow: hidden;
+            border: 1px solid var(--color-gold);
+        }
+        .column {
+            padding: 35px;
+            flex-basis: 50%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        .pedagogical-column {
+            background-color: var(--color-night-blue);
+            color: var(--color-text-on-dark);
+            border-right: 1px solid var(--color-gold);
+        }
+        .tool-column {
+            background-color: var(--color-card-bg);
+            overflow-y: auto;
+        }
+        h1, h2 { margin-top: 0; }
+        .pedagogical-column h1 { color: var(--color-card-bg); }
+        .tool-column h2 { color: var(--color-night-blue); }
+        h1 {
+            font-size: 1.8em;
+            border-bottom: 2px solid var(--color-gold);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+        h2 { font-size: 1.6em; }
+        h3 {
+            font-size: 1.2em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            color: var(--color-gold);
+        }
+        h3 .icon { width: 24px; height: 24px; margin-right: 10px; fill: currentColor; }
+        p, li { font-size: 0.95em; }
+        ul { list-style: none; padding-left: 0; }
+        ul li {
+            padding-left: 1.5em;
+            text-indent: -1.5em;
+            margin-bottom: 5px;
+        }
+        ul li::before {
+            content: '•';
+            color: var(--color-gold);
+            margin-right: 0.5em;
+            font-size: 1.2em;
+        }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input[type="text"] {
+            width: 100%; padding: 10px;
+            border: 1px solid var(--color-border); border-radius: 4px;
+            box-sizing: border-box; font-size: 1em; color: var(--color-text-on-light);
+        }
+        button {
+            background-color: var(--color-gold);
+            color: var(--color-night-blue); border: none; padding: 12px 20px;
+            border-radius: 5px; font-size: 1em; font-weight: bold;
+            cursor: pointer; transition: background-color 0.3s, transform 0.1s;
+            width: 100%; margin-top: 10px;
+        }
+        button:hover { background-color: var(--color-gold-dark); }
+        button:active { transform: scale(0.98); }
+
+        #survey-builder {
+            border: 1px solid var(--color-border);
+            border-radius: 5px;
+            padding: 15px;
+        }
+        #competencies-list {
+            margin-top: 15px;
+        }
+        .competency-item {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--color-gold);
+        }
+        .competency-item h5 {
+            margin: 0 0 10px 0;
+            color: var(--color-night-blue);
+        }
+        .competency-item ul {
+            padding-left: 20px;
+        }
+        .competency-item ul li {
+            font-size: 0.9em;
+            list-style: disc;
+        }
+        #survey-output {
+            margin-top: 20px;
+            background-color: #fdfdfd;
+            border: 1px solid var(--color-border);
+            padding: 20px;
+            border-radius: 5px;
+            flex-grow: 1;
+        }
+        .output-section h4 {
+            color: var(--color-night-blue);
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 5px;
+        }
+         .output-section ul li {
+            list-style: decimal;
+            margin-left: 20px;
+        }
+
+        @media (max-width: 900px) {
+            body { padding: 0; }
+            .container { flex-direction: column; border-radius: 0; max-width: 100%; }
+            .pedagogical-column { border-right: none; border-bottom: 1px solid var(--color-gold); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="column pedagogical-column">
+            <h1>9. Diseñador de Sistema de Feedback 360°</h1>
+            
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-2h2v2zm0-4h-2V7h2v5z"></path></svg>
+                Objetivo
+            </h3>
+            <p>Crear un framework para implementar un sistema de feedback 360°, donde los empleados reciben feedback constructivo y anónimo de sus superiores, compañeros y subordinados para fomentar el desarrollo personal y profesional.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"></path></svg>
+                Importancia Estratégica
+            </h3>
+            <p>El feedback es el motor del crecimiento. Un sistema 360° bien implementado revela puntos ciegos, identifica oportunidades de liderazgo y mejora la comunicación en toda la organización. Es una herramienta clave para escalar una cultura de alto rendimiento y confianza.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+                Para Quién Es
+            </h3>
+            <p>Ideal para líderes y responsables de RRHH que buscan ir más allá de la evaluación de desempeño tradicional y construir un sistema de desarrollo continuo.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
+                Instrucciones de Uso
+            </h3>
+            <ul>
+                <li><strong>Define el Rol:</strong> Especifica el puesto que será evaluado.</li>
+                <li><strong>Añade Competencias:</strong> Agrega las áreas clave a evaluar (Ej: Liderazgo, Comunicación).</li>
+                <li><strong>Define Preguntas:</strong> Para cada competencia, añade preguntas específicas que inviten a una reflexión constructiva.</li>
+                <li><strong>Genera la Plantilla:</strong> La herramienta creará un borrador de la encuesta listo para ser utilizado.</li>
+            </ul>
+        </div>
+        <div class="column tool-column">
+            <h2>Herramienta Interactiva</h2>
+            <div id="survey-builder">
+                <div class="form-group">
+                    <label for="role-name">Rol a Evaluar</label>
+                    <input type="text" id="role-name" placeholder="Ej: Jefe de Proyecto">
+                </div>
+                <hr style="border-top: 1px solid var(--color-border); margin: 20px 0;">
+                <div class="form-group">
+                    <label for="competency-name">Añadir Competencia</label>
+                    <input type="text" id="competency-name" placeholder="Ej: Trabajo en Equipo">
+                </div>
+                 <div class="form-group">
+                    <label for="question-text">Pregunta para esta Competencia</label>
+                    <input type="text" id="question-text" placeholder="Ej: ¿Colabora activamente con otros departamentos?">
+                </div>
+                <button id="add-btn">Añadir Pregunta a Competencia</button>
+                <div id="competencies-list"></div>
+            </div>
+            <button id="generate-survey-btn">Generar Plantilla de Feedback</button>
+            <div id="survey-output" style="display:none;"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const roleNameInput = document.getElementById('role-name');
+            const competencyNameInput = document.getElementById('competency-name');
+            const questionTextInput = document.getElementById('question-text');
+            const addBtn = document.getElementById('add-btn');
+            const competenciesList = document.getElementById('competencies-list');
+            const generateBtn = document.getElementById('generate-survey-btn');
+            const surveyOutput = document.getElementById('survey-output');
+
+            let surveyData = {};
+
+            addBtn.addEventListener('click', addQuestion);
+            generateBtn.addEventListener('click', generateSurvey);
+
+            function addQuestion() {
+                const competency = competencyNameInput.value.trim();
+                const question = questionTextInput.value.trim();
+                
+                if (!competency || !question) {
+                    alert('Debes especificar una competencia y una pregunta.');
+                    return;
+                }
+
+                if (!surveyData[competency]) {
+                    surveyData[competency] = [];
+                }
+                
+                surveyData[competency].push(question);
+                
+                renderBuilder();
+                questionTextInput.value = '';
+                questionTextInput.focus();
+            }
+
+            function renderBuilder() {
+                competenciesList.innerHTML = '';
+                for (const competency in surveyData) {
+                    const item = document.createElement('div');
+                    item.className = 'competency-item';
+
+                    let questionsHTML = '<ul>';
+                    surveyData[competency].forEach(q => {
+                        questionsHTML += `<li>${escapeHTML(q)}</li>`;
+                    });
+                    questionsHTML += '</ul>';
+
+                    item.innerHTML = `<h5>${escapeHTML(competency)}</h5>${questionsHTML}`;
+                    competenciesList.appendChild(item);
+                }
+            }
+            
+            function generateSurvey() {
+                const roleName = roleNameInput.value.trim();
+                 if (!roleName) {
+                    alert('Por favor, define el rol a evaluar.');
+                    return;
+                }
+                if (Object.keys(surveyData).length === 0) {
+                    alert('Añade al menos una competencia y una pregunta para generar la plantilla.');
+                    return;
+                }
+
+                let outputHTML = `<h3>Plantilla de Feedback 360° para: ${escapeHTML(roleName)}</h3>`;
+                outputHTML += `<p>Por favor, evalúa las siguientes áreas de forma honesta y constructiva. Tu feedback es anónimo y confidencial.</p><hr>`;
+                
+                for (const competency in surveyData) {
+                    outputHTML += `<div class="output-section"><h4>${escapeHTML(competency)}</h4><ul>`;
+                    surveyData[competency].forEach(q => {
+                        outputHTML += `<li>${escapeHTML(q)}</li>`;
+                    });
+                    outputHTML += '</ul></div>';
+                }
+
+                outputHTML += `<hr><div class="output-section"><h4>Comentarios Adicionales</h4><ul><li>¿Qué debería empezar a hacer esta persona?</li><li>¿Qué debería dejar de hacer?</li><li>¿Qué debería continuar haciendo?</li></ul></div>`;
+
+                surveyOutput.innerHTML = outputHTML;
+                surveyOutput.style.display = 'block';
+            }
+
+            function escapeHTML(str) {
+                const p = document.createElement('p');
+p.textContent = str;
+return p.innerHTML;
+            }
+        });
+    </script>
+
+</body>
+</html>

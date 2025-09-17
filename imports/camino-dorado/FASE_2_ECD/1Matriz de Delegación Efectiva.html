@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Cien a Mil: 7. Matriz de Delegación Efectiva</title>
+    <style>
+        :root {
+            --color-night-blue: #0D223F;
+            --color-gold: #D4AF37;
+            --color-gold-dark: #B89B2E;
+            --color-card-bg: #FFFFFF;
+            --color-text-on-dark: #F0F0F0;
+            --color-text-on-light: #0D223F;
+            --color-border: #E0D6B3;
+            --q1-color: #27ae60; /* Verde - Delegar y Empoderar */
+            --q2-color: #2980b9; /* Azul - Entrenar y Supervisar */
+            --q3-color: #8e44ad; /* Morado - Delegación Rápida */
+            --q4-color: #7f8c8d; /* Gris - Automatizar/Eliminar */
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            font-family: var(--font-family);
+            background-color: var(--color-night-blue);
+            color: var(--color-text-on-dark);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            background: var(--color-card-bg);
+            color: var(--color-text-on-light);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0, 0.2);
+            overflow: hidden;
+            border: 1px solid var(--color-gold);
+        }
+        .column {
+            padding: 35px;
+            flex-basis: 50%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        .pedagogical-column {
+            background-color: var(--color-night-blue);
+            color: var(--color-text-on-dark);
+            border-right: 1px solid var(--color-gold);
+        }
+        .tool-column {
+            background-color: var(--color-card-bg);
+        }
+        h1, h2 { margin-top: 0; }
+        .pedagogical-column h1 { color: var(--color-card-bg); }
+        .tool-column h2 { color: var(--color-night-blue); }
+        h1 {
+            font-size: 1.8em;
+            border-bottom: 2px solid var(--color-gold);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+        h2 { font-size: 1.6em; }
+        h3 {
+            font-size: 1.2em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            color: var(--color-gold);
+        }
+        h3 .icon { width: 24px; height: 24px; margin-right: 10px; fill: currentColor; }
+        p, li { font-size: 0.95em; }
+        ul { list-style: none; padding-left: 0; }
+        ul li {
+            padding-left: 1.5em;
+            text-indent: -1.5em;
+            margin-bottom: 5px;
+        }
+        ul li::before {
+            content: '•';
+            color: var(--color-gold);
+            margin-right: 0.5em;
+            font-size: 1.2em;
+        }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input[type="text"] {
+            width: 100%; padding: 10px;
+            border: 1px solid var(--color-border); border-radius: 4px;
+            box-sizing: border-box; font-size: 1em; color: var(--color-text-on-light);
+        }
+        input[type="range"] {
+            -webkit-appearance: none; appearance: none;
+            width: 100%; height: 8px;
+            background: var(--color-border); outline: none;
+            opacity: 0.7; -webkit-transition: .2s; transition: opacity .2s;
+            border-radius: 5px;
+        }
+        input[type="range"]:hover { opacity: 1; }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none;
+            width: 20px; height: 20px; background: var(--color-gold);
+            cursor: pointer; border-radius: 50%;
+        }
+        .slider-container { display: flex; align-items: center; gap: 15px; }
+        .slider-container span {
+            font-weight: bold; color: var(--color-gold-dark);
+            min-width: 20px; text-align: center;
+        }
+        button {
+            background-color: var(--color-gold);
+            color: var(--color-night-blue); border: none; padding: 12px 20px;
+            border-radius: 5px; font-size: 1em; font-weight: bold;
+            cursor: pointer; transition: background-color 0.3s, transform 0.1s;
+            width: 100%; margin-top: 10px;
+        }
+        button:hover { background-color: var(--color-gold-dark); }
+        button:active { transform: scale(0.98); }
+
+        #delegation-matrix {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            flex-grow: 1;
+        }
+        .quadrant {
+            border: 1px solid var(--color-border);
+            border-radius: 5px;
+            padding: 10px;
+            min-height: 150px;
+        }
+        .quadrant h5 {
+            margin: 0 0 10px 0;
+            padding-bottom: 5px;
+            border-bottom: 2px solid;
+            font-size: 0.9em;
+            text-align: center;
+        }
+        .quadrant ul { padding-left: 5px; }
+        .quadrant ul li {
+            font-size: 0.85em;
+            margin-bottom: 5px;
+            padding: 4px;
+            background: #f9f9f9;
+            border-radius: 3px;
+        }
+        #q1 h5 { border-color: var(--q1-color); color: var(--q1-color); }
+        #q2 h5 { border-color: var(--q2-color); color: var(--q2-color); }
+        #q3 h5 { border-color: var(--q3-color); color: var(--q3-color); }
+        #q4 h5 { border-color: var(--q4-color); color: var(--q4-color); }
+
+        @media (max-width: 900px) {
+            body { padding: 0; }
+            .container { flex-direction: column; border-radius: 0; max-width: 100%; }
+            .pedagogical-column { border-right: none; border-bottom: 1px solid var(--color-gold); }
+            #delegation-matrix { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="column pedagogical-column">
+            <h1>7. Matriz de Delegación Efectiva</h1>
+            
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-2h2v2zm0-4h-2V7h2v5z"></path></svg>
+                Objetivo
+            </h3>
+            <p>Proporcionar un marco claro para decidir qué tareas delegar, a quién y con qué nivel de supervisión, permitiendo al líder escalar su impacto y desarrollar las capacidades de su equipo.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"></path></svg>
+                Importancia Estratégica
+            </h3>
+            <p>El "yo lo hago todo" es el techo de cristal de muchos negocios. La delegación efectiva no es abdicar, es multiplicar la fuerza. Libera al fundador para trabajar *en* el negocio (estrategia, visión) en lugar de *para* el negocio (operaciones diarias), previniendo el estancamiento y el burnout.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+                Para Quién Es
+            </h3>
+            <p>Para fundadores, CEOs y mánagers que se sienten un cuello de botella y necesitan aprender a confiar y empoderar a su equipo para poder escalar.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
+                Instrucciones de Uso
+            </h3>
+            <ul>
+                <li><strong>Tarea a Delegar:</strong> Describe la actividad específica.</li>
+                <li><strong>Importancia Estratégica:</strong> ¿Qué tan crítica es para los objetivos a largo plazo?</li>
+                <li><strong>Competencia del Equipo:</strong> ¿Qué tan preparado está el equipo/persona para hacerla sin ayuda?</li>
+                <li><strong>Clasificar:</strong> La herramienta situará la tarea en el cuadrante adecuado, sugiriendo la mejor acción a tomar.</li>
+            </ul>
+        </div>
+        <div class="column tool-column">
+            <h2>Herramienta Interactiva</h2>
+            <div id="task-form">
+                <div class="form-group">
+                    <label for="task-name">Tarea a Delegar</label>
+                    <input type="text" id="task-name" placeholder="Ej: Gestión de redes sociales">
+                </div>
+                <div class="form-group">
+                    <label>Importancia Estratégica (Baja → Alta)</label>
+                    <div class="slider-container">
+                        <span>1</span>
+                        <input type="range" id="importance" min="1" max="10" value="5">
+                        <span id="importance-value">5</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Competencia del Equipo (Baja → Alta)</label>
+                    <div class="slider-container">
+                        <span>1</span>
+                        <input type="range" id="competence" min="1" max="10" value="5">
+                        <span id="competence-value">5</span>
+                    </div>
+                </div>
+                <button id="add-task-btn">Clasificar Tarea</button>
+            </div>
+            
+            <div id="delegation-matrix">
+                <div class="quadrant" id="q2">
+                    <h5>ENTRENAR Y SUPERVISAR</h5>
+                    <ul id="q2-list"></ul>
+                </div>
+                <div class="quadrant" id="q1">
+                    <h5>DELEGAR Y EMPODERAR</h5>
+                    <ul id="q1-list"></ul>
+                </div>
+                <div class="quadrant" id="q4">
+                    <h5>AUTOMATIZAR / ELIMINAR</h5>
+                    <ul id="q4-list"></ul>
+                </div>
+                <div class="quadrant" id="q3">
+                    <h5>DELEGACIÓN RÁPIDA</h5>
+                    <ul id="q3-list"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const taskNameInput = document.getElementById('task-name');
+            const importanceSlider = document.getElementById('importance');
+            const competenceSlider = document.getElementById('competence');
+            const importanceValue = document.getElementById('importance-value');
+            const competenceValue = document.getElementById('competence-value');
+            const addTaskBtn = document.getElementById('add-task-btn');
+
+            importanceSlider.addEventListener('input', () => importanceValue.textContent = importanceSlider.value);
+            competenceSlider.addEventListener('input', () => competenceValue.textContent = competenceSlider.value);
+            addTaskBtn.addEventListener('click', addTask);
+
+            function addTask() {
+                const name = taskNameInput.value.trim();
+                if (!name) {
+                    alert('Por favor, describe la tarea.');
+                    return;
+                }
+
+                const importance = parseInt(importanceSlider.value);
+                const competence = parseInt(competenceSlider.value);
+
+                let quadrantList;
+                // High Importance / High Competence
+                if (importance > 5 && competence > 5) quadrantList = document.getElementById('q1-list');
+                // High Importance / Low Competence
+                else if (importance > 5 && competence <= 5) quadrantList = document.getElementById('q2-list');
+                // Low Importance / High Competence
+                else if (importance <= 5 && competence > 5) quadrantList = document.getElementById('q3-list');
+                // Low Importance / Low Competence
+                else quadrantList = document.getElementById('q4-list');
+                
+                const li = document.createElement('li');
+                li.textContent = escapeHTML(name);
+                quadrantList.appendChild(li);
+
+                clearForm();
+            }
+
+            function clearForm() {
+                taskNameInput.value = '';
+                importanceSlider.value = 5;
+                competenceSlider.value = 5;
+                importanceValue.textContent = '5';
+                competenceValue.textContent = '5';
+                taskNameInput.focus();
+            }
+
+            function escapeHTML(str) {
+                const p = document.createElement('p');
+                p.textContent = str;
+                return p.innerHTML;
+            }
+        });
+    </script>
+
+</body>
+</html>

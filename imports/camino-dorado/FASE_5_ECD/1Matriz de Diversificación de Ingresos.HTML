@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Cien a Mil: 25. Matriz de Diversificación de Ingresos</title>
+    <style>
+        :root {
+            --color-night-blue: #0D223F;
+            --color-gold: #D4AF37;
+            --color-gold-dark: #B89B2E;
+            --color-card-bg: #FFFFFF;
+            --color-text-on-dark: #F0F0F0;
+            --color-text-on-light: #0D223F;
+            --color-border: #E0D6B3;
+            --color-invest: #27ae60;
+            --color-selective: #f39c12;
+            --color-divest: #c0392b;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            font-family: var(--font-family);
+            background-color: var(--color-night-blue);
+            color: var(--color-text-on-dark);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            background: var(--color-card-bg);
+            color: var(--color-text-on-light);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0, 0.2);
+            overflow: hidden;
+            border: 1px solid var(--color-gold);
+        }
+        .column {
+            padding: 35px;
+            flex-basis: 50%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        .pedagogical-column {
+            background-color: var(--color-night-blue);
+            color: var(--color-text-on-dark);
+            border-right: 1px solid var(--color-gold);
+        }
+        .tool-column {
+            background-color: var(--color-card-bg);
+        }
+        h1, h2 { margin-top: 0; }
+        .pedagogical-column h1 { color: var(--color-card-bg); }
+        .tool-column h2 { color: var(--color-night-blue); }
+        h1 {
+            font-size: 1.8em;
+            border-bottom: 2px solid var(--color-gold);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+        h2 { font-size: 1.6em; }
+        h3 {
+            font-size: 1.2em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            color: var(--color-gold);
+        }
+        h3 .icon { width: 24px; height: 24px; margin-right: 10px; fill: currentColor; }
+        p, li { font-size: 0.95em; }
+        ul { list-style: none; padding-left: 0; }
+        ul li {
+            padding-left: 1.5em;
+            text-indent: -1.5em;
+            margin-bottom: 5px;
+        }
+        ul li::before {
+            content: '•';
+            color: var(--color-gold);
+            margin-right: 0.5em;
+            font-size: 1.2em;
+        }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input[type="text"] {
+            width: 100%; padding: 10px;
+            border: 1px solid var(--color-border); border-radius: 4px;
+            box-sizing: border-box; font-size: 1em; color: var(--color-text-on-light);
+        }
+        input[type="range"] {
+            -webkit-appearance: none; appearance: none;
+            width: 100%; height: 8px; background: var(--color-border);
+            outline: none; opacity: 0.7; transition: opacity .2s; border-radius: 5px;
+        }
+        input[type="range"]:hover { opacity: 1; }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none;
+            width: 20px; height: 20px; background: var(--color-gold);
+            cursor: pointer; border-radius: 50%;
+        }
+        .slider-container { display: flex; align-items: center; gap: 15px; }
+        .slider-container input[type="range"] { flex-grow: 1; }
+        .slider-container span {
+            font-weight: bold; color: var(--color-gold-dark);
+            min-width: 20px; text-align: center;
+        }
+        button {
+            background-color: var(--color-gold);
+            color: var(--color-night-blue); border: none; padding: 12px 20px;
+            border-radius: 5px; font-size: 1em; font-weight: bold;
+            cursor: pointer; transition: background-color 0.3s, transform 0.1s;
+            width: 100%; margin-top: 10px;
+        }
+        button:hover { background-color: var(--color-gold-dark); }
+        button:active { transform: scale(0.98); }
+
+        #matrix-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 5px;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            margin-top: 20px;
+            position: relative;
+        }
+        .matrix-cell {
+            border-radius: 4px;
+            padding: 5px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .cell-label {
+            position: absolute;
+            top: 5px;
+            font-size: 0.7em;
+            font-weight: bold;
+            opacity: 0.5;
+        }
+        .matrix-cell[data-x="1"][data-y="3"], .matrix-cell[data-x="1"][data-y="2"], .matrix-cell[data-x="2"][data-y="3"] { background-color: rgba(39, 174, 96, 0.2); } /* Invest */
+        .matrix-cell[data-x="1"][data-y="1"], .matrix-cell[data-x="2"][data-y="2"], .matrix-cell[data-x="3"][data-y="3"] { background-color: rgba(243, 156, 18, 0.2); } /* Selective */
+        .matrix-cell[data-x="2"][data-y="1"], .matrix-cell[data-x="3"][data-y="2"], .matrix-cell[data-x="3"][data-y="1"] { background-color: rgba(192, 57, 43, 0.2); } /* Divest */
+        
+        .initiative-dot {
+            background-color: var(--color-night-blue);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin: 2px;
+            z-index: 10;
+        }
+        
+        @media (max-width: 900px) {
+            body { padding: 0; }
+            .container { flex-direction: column; border-radius: 0; max-width: 100%; }
+            .pedagogical-column { border-right: none; border-bottom: 1px solid var(--color-gold); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="column pedagogical-column">
+            <h1>25. Matriz de Diversificación de Ingresos</h1>
+            
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-2h2v2zm0-4h-2V7h2v5z"></path></svg>
+                Objetivo
+            </h3>
+            <p>Evaluar y priorizar estratégicamente nuevas oportunidades de ingresos para reducir la dependencia de un solo producto o mercado, y asegurar la resiliencia y el crecimiento a largo plazo.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"></path></svg>
+                Importancia Estratégica
+            </h3>
+            <p>La sobredependencia de una única fuente de ingresos es un riesgo existencial. La diversificación inteligente es el seguro de vida de la empresa contra cambios en el mercado, la tecnología o el comportamiento del consumidor. Abre nuevas vías de crecimiento y aumenta la valoración de la compañía.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+                Para Quién Es
+            </h3>
+            <p>Para CEOs, directores de estrategia y responsables de desarrollo de negocio que están planificando la próxima etapa de evolución de la empresa.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
+                Instrucciones de Uso
+            </h3>
+            <ul>
+                <li><strong>Iniciativa de Diversificación:</strong> Describe la nueva idea (producto, mercado, etc.).</li>
+                <li><strong>Atractivo del Mercado:</strong> Valora el potencial del mercado (tamaño, crecimiento, rentabilidad).</li>
+                <li><strong>Fortaleza del Negocio:</strong> Valora tu capacidad para competir y ganar en ese mercado.</li>
+                <li><strong>Analiza en la Matriz:</strong> La herramienta posicionará la iniciativa, sugiriendo si debes invertir, ser selectivo o desinvertir.</li>
+            </ul>
+        </div>
+        <div class="column tool-column">
+            <h2>Herramienta Interactiva</h2>
+            <div id="initiative-form">
+                <div class="form-group">
+                    <label for="initiative-name">Iniciativa de Diversificación</label>
+                    <input type="text" id="initiative-name" placeholder="Ej: Lanzar línea de productos para PYMEs">
+                </div>
+                <div class="form-group">
+                    <label>Atractivo del Mercado (Bajo → Alto)</label>
+                    <div class="slider-container">
+                        <span>1</span><input type="range" id="market-attractiveness" min="1" max="10" value="5"><span id="market-value">5</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Fortaleza del Negocio (Baja → Alta)</label>
+                    <div class="slider-container">
+                        <span>1</span><input type="range" id="business-strength" min="1" max="10" value="5"><span id="strength-value">5</span>
+                    </div>
+                </div>
+                <button id="add-initiative-btn">Añadir Iniciativa a la Matriz</button>
+            </div>
+            
+            <div id="matrix-container">
+                <!-- Matrix cells will be generated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const initiativeNameInput = document.getElementById('initiative-name');
+            const marketSlider = document.getElementById('market-attractiveness');
+            const strengthSlider = document.getElementById('business-strength');
+            const marketValue = document.getElementById('market-value');
+            const strengthValue = document.getElementById('strength-value');
+            const addBtn = document.getElementById('add-initiative-btn');
+            const matrixContainer = document.getElementById('matrix-container');
+
+            let initiatives = [];
+
+            marketSlider.addEventListener('input', () => marketValue.textContent = marketSlider.value);
+            strengthSlider.addEventListener('input', () => strengthValue.textContent = strengthSlider.value);
+            addBtn.addEventListener('click', addInitiative);
+            
+            function initializeMatrix() {
+                matrixContainer.innerHTML = '';
+                // The grid is 3x3. Y-axis is market attractiveness, X-axis is business strength.
+                // Grid cell (1,1) is bottom-left. (3,3) is top-right.
+                // Y=3 (Alto Atractivo), Y=1 (Bajo Atractivo)
+                // X=3 (Alta Fortaleza), X=1 (Baja Fortaleza)
+                const labels = {
+                    "3-1": "INVERTIR", "3-2": "INVERTIR", "2-1": "INVERTIR",
+                    "3-3": "SELECTIVO", "2-2": "SELECTIVO", "1-1": "SELECTIVO",
+                    "2-3": "DESINVERTIR", "1-2": "DESINVERTIR", "1-3": "DESINVERTIR"
+                }
+
+                for (let y = 3; y >= 1; y--) {
+                    for (let x = 1; x <= 3; x++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'matrix-cell';
+                        cell.dataset.x = x;
+                        cell.dataset.y = y;
+                        // For this specific matrix, we'll use a different coloring logic
+                        // Invert X axis for mapping: High strength = 1, Low strength = 3
+                        const invertedX = 4-x;
+                         if ((y===3 && invertedX < 3) || (y===2 && invertedX === 1)) {
+                            cell.style.backgroundColor = 'rgba(39, 174, 96, 0.2)'; // Invest
+                        } else if ((y===3 && invertedX===3) || (y===2 && invertedX===2) || (y===1 && invertedX===1) ) {
+                             cell.style.backgroundColor = 'rgba(243, 156, 18, 0.2)'; // Selective
+                        } else {
+                            cell.style.backgroundColor = 'rgba(192, 57, 43, 0.2)'; // Divest
+                        }
+                        
+                        matrixContainer.appendChild(cell);
+                    }
+                }
+            }
+
+            function addInitiative() {
+                const name = initiativeNameInput.value.trim();
+                if (!name) {
+                    alert('Por favor, introduce un nombre para la iniciativa.');
+                    return;
+                }
+
+                const marketScore = parseInt(marketSlider.value);
+                const strengthScore = parseInt(strengthSlider.value);
+                
+                // Convert score 1-10 to grid coordinate 1-3
+                const getCoord = (score) => score > 6.6 ? 3 : (score > 3.3 ? 2 : 1);
+                const y = getCoord(marketScore);
+                const x = getCoord(strengthScore); // For strength, high score = strong = left side. We invert it.
+                const invertedX = 4-x;
+
+                const targetCell = document.querySelector(`.matrix-cell[data-x='${invertedX}'][data-y='${y}']`);
+                if(targetCell) {
+                    const dot = document.createElement('div');
+                    dot.className = 'initiative-dot';
+                    dot.textContent = escapeHTML(name);
+                    dot.title = `Atractivo: ${marketScore}/10, Fortaleza: ${strengthScore}/10`;
+                    targetCell.appendChild(dot);
+                }
+                
+                clearForm();
+            }
+            
+            function clearForm() {
+                initiativeNameInput.value = '';
+                marketSlider.value = 5;
+                strengthSlider.value = 5;
+                marketValue.textContent = '5';
+                strengthValue.textContent = '5';
+                initiativeNameInput.focus();
+            }
+
+            function escapeHTML(str) {
+                const p = document.createElement('p');
+                p.textContent = str;
+                return p.innerHTML;
+            }
+            
+            initializeMatrix();
+        });
+    </script>
+
+</body>
+</html>

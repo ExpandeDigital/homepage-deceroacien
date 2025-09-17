@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Cuaderno de Estrategia - De Cero a Cien</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <!-- Librería para generar el PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" xintegrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        :root {
+            --dc-dark: #0F172A; /* Azul oscuro casi negro */
+            --dc-text: #E2E8F0; /* Texto claro */
+            --dc-accent: #FBBF24; /* Amarillo/Dorado */
+            --dc-accent-dark: #D97706; /* Naranja/Dorado oscuro */
+            --dc-muted: #64748B; /* Gris para texto secundario */
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dc-dark);
+            color: var(--dc-text);
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .page {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            border-bottom: 1px dashed var(--dc-muted);
+            min-height: 100vh; /* Simula altura de página */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .page:first-child {
+             justify-content: center;
+             text-align: center;
+        }
+        .page:last-child {
+            border-bottom: none;
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        textarea, input {
+            background-color: #1E293B;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 12px;
+            width: 100%;
+            color: var(--dc-text);
+            resize: none;
+            transition: all 0.2s ease-in-out;
+        }
+        textarea:focus, input:focus {
+            outline: none;
+            border-color: var(--dc-accent);
+            box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.5);
+        }
+        .icon {
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        .chapter-badge {
+            display: inline-block;
+            background-color: rgba(251, 191, 36, 0.1);
+            color: var(--dc-accent);
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            align-self: flex-start;
+        }
+        /* Estilos para los botones de acción flotantes */
+        .fab-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+        }
+        .fab {
+            background-color: var(--dc-accent);
+            color: var(--dc-dark);
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: transform 0.2s ease-out;
+        }
+        .fab:hover {
+            transform: scale(1.05);
+            background-color: var(--dc-accent-dark);
+        }
+        /* Estilos para el modal de confirmación */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: #1E293B;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body id="workbook-content">
+
+    <div class="page flex flex-col items-center justify-center text-center">
+        <div class="border-4 border-yellow-400 p-2 w-24 h-24 mb-6 flex items-center justify-content-center">
+             <svg class="w-12 h-12 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0v-4m6 4v-4m6 4v-4m-9-4h5M3 7h18"></path></svg>
+        </div>
+        <h1 class="text-6xl font-extrabold text-white">Tu Cuaderno de Estrategia</h1>
+        <p class="text-2xl text-yellow-400 mt-2 font-serif">El Manual de Juego para Emprendedores</p>
+        <div class="mt-20 w-full max-w-md">
+            <label for="owner_name" class="text-gray-400">Este cuaderno pertenece a:</label>
+            <input type="text" id="owner_name" class="mt-2 text-center text-lg" placeholder="Escribe tu nombre aquí...">
+        </div>
+        <p class="mt-4 text-gray-500 text-sm">DE CERO A CIEN</p>
+    </div>
+
+    <div class="page">
+        <div class="chapter-badge">Capítulo 1</div>
+        <h2 class="text-4xl font-bold text-white mb-4">De la Idea a la Acción</h2>
+        <p class="text-gray-400 mb-8">El primer paso no es crear una empresa, es saber si tu idea tiene el potencial de ser un negocio rentable. Aquí construirás esa primera certeza.</p>
+        
+        <div class="border-l-4 border-yellow-400 pl-4 py-2 my-8">
+            <h3 class="text-xl font-bold text-white mb-2 flex items-center">
+                <svg class="icon text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.657 7.343A8 8 0 0117.657 18.657z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1014.12 11.88l-4.242 4.242z"></path></svg>
+                Inspiración: La Historia de Elena
+            </h3>
+            <p class="text-sm text-gray-300">Elena vendía pasteles de manera informal. Sus costos se mezclaban con los de su casa y no sabía si ganaba o perdía dinero. Al hacer este ejercicio, descubrió que necesitaba vender 50 pasteles al mes solo para cubrir gastos. Esa cifra le dio un objetivo claro. Se enfocó, se formalizó y hoy es proveedora de 3 cafeterías.</p>
+        </div>
+
+        <h3 class="text-2xl font-bold text-white mt-12 mb-4 flex items-center">
+            <svg class="icon text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+            Ejercicio: Tu Punto de Equilibrio
+        </h3>
+        <p class="text-gray-400 mb-6">Usa la fórmula para descubrir tu "número mágico": la cantidad de unidades que necesitas vender al mes para que tu negocio no pierda dinero.</p>
+        
+        <div class="space-y-6 bg-slate-800/50 p-6 rounded-lg">
+            <div>
+                <label for="costos_fijos" class="block font-medium text-gray-300 mb-2">A. Costos Fijos Mensuales ($)</label>
+                <input type="number" id="costos_fijos" placeholder="Suma de alquiler, sueldos, servicios, etc.">
+            </div>
+            <div>
+                <label for="precio_venta" class="block font-medium text-gray-300 mb-2">B. Precio de Venta por Unidad ($)</label>
+                <input type="number" id="precio_venta" placeholder="¿A cuánto vendes cada producto o servicio?">
+            </div>
+            <div>
+                <label for="costo_variable" class="block font-medium text-gray-300 mb-2">C. Costo Variable por Unidad ($)</label>
+                <input type="number" id="costo_variable" placeholder="¿Cuánto te cuesta producir cada unidad?">
+            </div>
+            <div class="border-t border-gray-600 pt-4">
+                <p class="text-gray-400">**Fórmula:** Punto de Equilibrio = A / (B - C)</p>
+                <label for="resultado_pe" class="block font-medium text-lg text-yellow-400 mt-4 mb-2">Mi Punto de Equilibrio es:</label>
+                <input type="text" id="resultado_pe" class="text-2xl font-bold !bg-yellow-500/10 !border-yellow-400" readonly placeholder="... unidades al mes">
+            </div>
+        </div>
+    </div>
+
+    <div class="page">
+        <div class="chapter-badge">Capítulo 2</div>
+        <h2 class="text-4xl font-bold text-white mb-4">El Valor de tu Idea</h2>
+        <p class="text-gray-400 mb-8">Dejar de competir por ser el más barato es el primer paso para construir una marca sólida. Aquí descubrirás tu "superpoder": esa promesa única que solo tú puedes ofrecer a tus clientes.</p>
+
+        <div class="border-l-4 border-yellow-400 pl-4 py-2 my-8">
+            <h3 class="text-xl font-bold text-white mb-2 flex items-center">
+                <svg class="icon text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path></svg>
+                Inspiración: El Caso de Carlos
+            </h3>
+            <p class="text-sm text-gray-300">Carlos vendía café genérico. Al hacer este ejercicio, descubrió que a sus clientes les frustraba no saber el origen del producto (dolor) y soñaban con apoyar a productores locales (alegría). Cambió a un proveedor local y empezó a vender "una experiencia de café local". Sus ventas y su margen se dispararon.</p>
+        </div>
+
+        <h3 class="text-2xl font-bold text-white mt-12 mb-4 flex items-center">
+            <svg class="icon text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            Ejercicio: Tu Propuesta de Valor
+        </h3>
+        <p class="text-gray-400 mb-6">Ponte en los zapatos de tu cliente ideal. Completa primero el perfil de la derecha y luego, basándote en él, diseña tu mapa de valor a la izquierda.</p>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-slate-800/50 p-6 rounded-lg space-y-4">
+                <h3 class="text-xl font-bold text-yellow-400 text-center">Mapa de Valor (Tu Negocio)</h3>
+                <div>
+                    <label class="block font-medium text-gray-300 mb-2">🎁 Creadores de Alegrías</label>
+                    <textarea rows="5" id="val-creadores" placeholder="¿Cómo generas las alegrías que tu cliente busca?"></textarea>
+                </div>
+                <div>
+                    <label class="block font-medium text-gray-300 mb-2">💊 Aliviadores de Frustraciones</label>
+                    <textarea rows="5" id="val-aliviadores" placeholder="¿Cómo alivias los dolores de tu cliente?"></textarea>
+                </div>
+                <div>
+                    <label class="block font-medium text-gray-300 mb-2">📦 Productos y Servicios</label>
+                    <textarea rows="5" id="val-productos" placeholder="¿Qué productos ofreces para crear valor?"></textarea>
+                </div>
+            </div>
+            <div class="bg-slate-800/50 p-6 rounded-lg space-y-4">
+                <h3 class="text-xl font-bold text-yellow-400 text-center">Perfil del Cliente</h3>
+                <div>
+                    <label class="block font-medium text-gray-300 mb-2">😊 Alegrías (Gains)</label>
+                    <textarea rows="5" id="cli-alegrias" placeholder="¿Qué beneficios y resultados sueña con obtener?"></textarea>
+                </div>
+                <div>
+                    <label class="block font-medium text-gray-300 mb-2">😞 Frustraciones (Pains)</label>
+                    <textarea rows="5" id="cli-frustraciones" placeholder="¿Qué le frustra, le molesta o le da miedo?"></textarea>
+                </div>
+                <div>
+                    <label class="block font-medium text-gray-300 mb-2">👨‍💻 Trabajos del Cliente (Jobs)</label>
+                    <textarea rows="5" id="cli-trabajos" placeholder="¿Qué tarea principal intenta resolver?"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="page">
+        <div class="chapter-badge">Capítulo 3</div>
+        <h2 class="text-4xl font-bold text-white mb-4">De Bombero a Arquitecto</h2>
+        <p class="text-gray-400 mb-8">"Estar ocupado" no significa "ser productivo". El éxito de tu negocio depende de tu habilidad para enfocarte en lo importante, no solo en lo urgente. Aquí aprenderás a dominar tu tiempo.</p>
+
+        <div class="border-l-4 border-yellow-400 pl-4 py-2 my-8">
+            <h3 class="text-xl font-bold text-white mb-2 flex items-center">
+                <svg class="icon text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Inspiración: El Caso de Javier
+            </h3>
+            <p class="text-sm text-gray-300">Javier sentía que pasaba el día respondiendo mensajes, pero su negocio no crecía. Al usar esta matriz, se dio cuenta que el 80% de su tiempo estaba en tareas 'urgentes pero no importantes'. Bloqueó las primeras 2 horas de su día para lo 'importante no urgente' y consiguió más clientes nuevos en un mes que en los tres anteriores.</p>
+        </div>
+
+        <h3 class="text-2xl font-bold text-white mt-12 mb-4 flex items-center">
+             <svg class="icon text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+            Ejercicio: Tu Matriz de Prioridades
+        </h3>
+        <p class="text-gray-400 mb-6">Escribe todas tus tareas pendientes en la columna de la izquierda. Luego, arrástralas mentalmente y re-escríbelas en el cuadrante que corresponda. Esto te dará un plan de acción inmediato.</p>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <div>
+                <h4 class="font-bold text-lg text-center mb-4 text-white">Lista de Tareas Pendientes</h4>
+                <textarea rows="22" id="pri-lista" placeholder="Escribe aquí todas tus tareas, una por línea..."></textarea>
+            </div>
+            <div class="grid grid-cols-1 gap-4">
+                <div class="bg-green-500/20 p-4 rounded-lg">
+                    <h4 class="font-bold text-green-300">Hacer Ahora (Urgente e Importante)</h4>
+                    <textarea rows="7" id="pri-hacer" placeholder="Crisis, problemas de clientes, fechas límite inminentes..."></textarea>
+                </div>
+                <div class="bg-blue-500/20 p-4 rounded-lg">
+                    <h4 class="font-bold text-blue-300">Planificar (Importante, no Urgente)</h4>
+                    <textarea rows="7" id="pri-planificar" placeholder="Planificación estratégica, crear nuevos productos, mejorar sistemas..."></textarea>
+                </div>
+                 <div class="bg-orange-500/20 p-4 rounded-lg">
+                    <h4 class="font-bold text-orange-300">Delegar (Urgente, no Importante)</h4>
+                    <textarea rows="7" id="pri-delegar" placeholder="Responder emails, agendar reuniones, tareas administrativas..."></textarea>
+                </div>
+                 <div class="bg-gray-500/20 p-4 rounded-lg">
+                    <h4 class="font-bold text-gray-300">Eliminar (Ni Urgente, ni Importante)</h4>
+                    <textarea rows="7" id="pri-eliminar" placeholder="Distracciones, tareas de bajo impacto, reuniones innecesarias..."></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="page">
+        <div class="chapter-badge">Capítulo 4</div>
+        <h2 class="text-4xl font-bold text-white mb-4">De la Rutina a la Revolución</h2>
+        <p class="text-gray-400 mb-8">Innovar no es para genios, es para estrategas. Es un músculo que se entrena. Aquí usarás un método probado para generar ideas que mantendrán tu negocio relevante y a la vanguardia.</p>
+
+        <div class="border-l-4 border-yellow-400 pl-4 py-2 my-8">
+            <h3 class="text-xl font-bold text-white mb-2 flex items-center">
+                 <svg class="icon text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                Inspiración: El Caso de Luisa
+            </h3>
+            <p class="text-sm text-gray-300">Luisa vendía jabones artesanales. Usando el método SCAMPER, en la letra 'C' de Combinar se preguntó: "¿Puedo combinar mi jabón con una suscripción?". Esa idea la llevó a crear una caja mensual de 'bienestar en casa'. Pasó de vender un producto de $5 a una suscripción de $25.</p>
+        </div>
+
+        <h3 class="text-2xl font-bold text-white mt-12 mb-4 flex items-center">
+            <svg class="icon text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V4a2 2 0 012-2h8a2 2 0 012 2v4z"></path></svg>
+            Ejercicio: Tu Sesión de Innovación SCAMPER
+        </h3>
+        <p class="text-gray-400 mb-6">Describe tu producto o servicio principal. Luego, responde las 7 preguntas para forzar tu mente a encontrar nuevas oportunidades.</p>
+        
+        <div class="space-y-6">
+            <div>
+                <label for="scamper_product" class="block font-medium text-gray-300 mb-2">Mi producto/servicio principal es:</label>
+                <input type="text" id="scamper_product" placeholder="Ej: Una cafetería de especialidad en mi barrio">
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-slate-800/50 p-4 rounded-lg"><h4 class="font-bold text-yellow-400 mb-2">S - Sustituir</h4><textarea id="scamper-s" rows="4" placeholder="¿Qué componente, material o persona puedo sustituir?"></textarea></div>
+                <div class="bg-slate-800/50 p-4 rounded-lg"><h4 class="font-bold text-yellow-400 mb-2">C - Combinar</h4><textarea id="scamper-c" rows="4" placeholder="¿Qué puedo combinar con mi producto? ¿Otro servicio? ¿Una experiencia?"></textarea></div>
+                <div class="bg-slate-800/50 p-4 rounded-lg"><h4 class="font-bold text-yellow-400 mb-2">A - Adaptar</h4><textarea id="scamper-a" rows="4" placeholder="¿Qué idea de otro sector (ej. tecnología, moda) puedo adaptar a mi negocio?"></textarea></div>
+                <div class="bg-slate-800/50 p-4 rounded-lg"><h4 class="font-bold text-yellow-400 mb-2">M - Modificar</h4><textarea id="scamper-m" rows="4" placeholder="¿Cómo puedo hacerlo más grande, más pequeño, más fuerte, más lujoso?"></textarea></div>
+                <div class="bg-slate-800/50 p-4 rounded-lg"><h4 class="font-bold text-yellow-400 mb-2">P - Poner en otro uso</h4><textarea id="scamper-p" rows="4" placeholder="¿Mi producto o mi habilidad sirve para otro propósito o para otro tipo de cliente?"></textarea></div>
+                <div class="bg-slate-800/50 p-4 rounded-lg"><h4 class="font-bold text-yellow-400 mb-2">E - Eliminar</h4><textarea id="scamper-e" rows="4" placeholder="¿Qué pasaría si quito una característica, un servicio o simplifico al máximo?"></textarea></div>
+                <div class="bg-slate-800/50 p-4 rounded-lg md:col-span-2"><h4 class="font-bold text-yellow-400 mb-2">R - Reorganizar / Revertir</h4><textarea id="scamper-r" rows="4" placeholder="¿Puedo cambiar el orden del proceso? ¿Hacer que el cliente participe en la creación?"></textarea></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Botones de Acción Flotantes -->
+    <div class="fab-container flex flex-col items-center gap-4">
+         <button id="clear-button" title="Limpiar Cuaderno" class="fab bg-red-500 text-white hover:bg-red-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+        </button>
+        <button id="pdf-button" title="Exportar a PDF" class="fab">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+        </button>
+    </div>
+
+    <!-- Modal de Confirmación para Limpiar -->
+    <div id="confirmation-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 class="text-xl font-bold text-white mb-4">¿Estás seguro?</h3>
+            <p class="text-gray-400 mb-6">Esta acción borrará todas tus respuestas de forma permanente. No podrás recuperarlas.</p>
+            <div class="flex justify-center gap-4">
+                <button id="cancel-clear" class="px-6 py-2 bg-gray-600 hover:bg-gray-700 rounded-md text-white font-semibold">Cancelar</button>
+                <button id="confirm-clear" class="px-6 py-2 bg-red-600 hover:bg-red-700 rounded-md text-white font-semibold">Sí, borrar todo</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- SECCIÓN 1: CÁLCULO DEL PUNTO DE EQUILIBRIO ---
+        const costosFijosEl = document.getElementById('costos_fijos');
+        const precioVentaEl = document.getElementById('precio_venta');
+        const costoVariableEl = document.getElementById('costo_variable');
+        const resultadoEl = document.getElementById('resultado_pe');
+
+        function calcularPuntoEquilibrio() {
+            const fijos = parseFloat(costosFijosEl.value) || 0;
+            const venta = parseFloat(precioVentaEl.value) || 0;
+            const variable = parseFloat(costoVariableEl.value) || 0;
+            
+            if (venta > variable) {
+                const resultado = fijos / (venta - variable);
+                if (resultado >= 0) {
+                   resultadoEl.value = `${Math.ceil(resultado).toLocaleString('es')} unidades al mes`;
+                } else {
+                   resultadoEl.value = `Revisa tus números`; 
+                }
+            } else if (fijos > 0 && venta <= variable) {
+                resultadoEl.value = 'El precio de venta debe ser mayor al costo variable.';
+            } else {
+                resultadoEl.value = '... unidades al mes';
+            }
+        }
+        [costosFijosEl, precioVentaEl, costoVariableEl].forEach(el => {
+            el.addEventListener('input', calcularPuntoEquilibrio);
+        });
+
+        // --- SECCIÓN 2: GUARDADO Y CARGA DE DATOS EN LOCALSTORAGE ---
+        const allInputs = document.querySelectorAll('input, textarea');
+        const storageKey = 'strategyNotebookData';
+
+        function saveState() {
+            const data = {};
+            allInputs.forEach(input => {
+                if (input.id && input.id !== 'resultado_pe') { // No guardamos el resultado calculado
+                    data[input.id] = input.value;
+                }
+            });
+            localStorage.setItem(storageKey, JSON.stringify(data));
+        }
+
+        function loadState() {
+            const data = JSON.parse(localStorage.getItem(storageKey));
+            if (data) {
+                Object.keys(data).forEach(key => {
+                    const input = document.getElementById(key);
+                    if (input) {
+                        input.value = data[key];
+                    }
+                });
+            }
+            // Recalcular el punto de equilibrio después de cargar los datos
+            calcularPuntoEquilibrio(); 
+        }
+
+        allInputs.forEach(input => {
+            input.addEventListener('input', saveState);
+        });
+
+        loadState(); // Cargar datos al iniciar la página
+
+        // --- SECCIÓN 3: EXPORTACIÓN A PDF ---
+        const pdfButton = document.getElementById('pdf-button');
+        pdfButton.addEventListener('click', () => {
+            const ownerName = document.getElementById('owner_name').value || 'Emprendedor';
+            const filename = `Cuaderno de Estrategia - ${ownerName}.pdf`;
+            const element = document.getElementById('workbook-content');
+            
+            // Ocultar botones antes de generar PDF
+            document.querySelector('.fab-container').style.display = 'none';
+
+            const opt = {
+              margin:       [0.5, 0.5, 0.5, 0.5],
+              filename:     filename,
+              image:        { type: 'jpeg', quality: 0.98 },
+              html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+              jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
+              pagebreak:    { mode: ['css'], before: '.page' }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Mostrar botones de nuevo después de generar PDF
+                document.querySelector('.fab-container').style.display = 'flex';
+            });
+        });
+        
+        // --- SECCIÓN 4: LIMPIAR CUADERNO CON MODAL DE CONFIRMACIÓN ---
+        const clearButton = document.getElementById('clear-button');
+        const modal = document.getElementById('confirmation-modal');
+        const confirmClearBtn = document.getElementById('confirm-clear');
+        const cancelClearBtn = document.getElementById('cancel-clear');
+
+        clearButton.addEventListener('click', () => {
+            modal.classList.add('visible');
+        });
+
+        cancelClearBtn.addEventListener('click', () => {
+            modal.classList.remove('visible');
+        });
+
+        confirmClearBtn.addEventListener('click', () => {
+            localStorage.removeItem(storageKey);
+            // Vaciar todos los campos visualmente
+            allInputs.forEach(input => {
+                if (input.id !== 'resultado_pe') {
+                    input.value = '';
+                }
+            });
+            calcularPuntoEquilibrio(); // Resetear el calculador
+            modal.classList.remove('visible');
+        });
+    });
+    </script>
+</body>
+</html>

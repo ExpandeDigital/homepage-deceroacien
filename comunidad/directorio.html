@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototipo del Directorio - DE CERO A CIEN CONECTA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-noche: #1a1f3a;
+            --azul-oscuro: #101326;
+            --dorado: #d4af37;
+            --dorado-hover: #b8941f;
+            --texto-claro: #f0f2f5;
+            --texto-secundario: #a7a9be;
+            --borde-sutil: rgba(212, 175, 55, 0.2);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--azul-oscuro);
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .company-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .company-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        .modal-backdrop {
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-[var(--azul-oscuro)] text-[var(--texto-claro)]">
+
+    <div class="container mx-auto p-4 sm:p-8">
+
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="font-serif text-4xl sm:text-5xl font-bold text-white">Directorio de la Tribu</h1>
+            <p class="text-lg text-[var(--texto-secundario)] mt-2 max-w-2xl mx-auto">Conecta, colabora y haz negocios con otros fundadores que, como tú, están construyendo su legado.</p>
+        </header>
+
+        <!-- Controles: Búsqueda y Botón de Inscripción -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-between items-center mb-8">
+            <div class="relative w-full sm:max-w-xs">
+                <input type="text" id="search-input" placeholder="Buscar por nombre o categoría..." class="w-full bg-[var(--azul-noche)] border border-[var(--borde-sutil)] rounded-lg py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-[var(--dorado)]">
+                <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--texto-secundario)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </div>
+            <button id="open-inscription-modal-btn" class="w-full sm:w-auto bg-[var(--dorado)] text-[var(--azul-noche)] font-bold py-2 px-6 rounded-lg hover:bg-[var(--dorado-hover)] transition-colors duration-300 flex-shrink-0">
+                Inscribe tu Empresa
+            </button>
+        </div>
+
+        <!-- Galería de Empresas -->
+        <main id="directory-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Las tarjetas de empresa se insertarán aquí con JS -->
+        </main>
+    </div>
+
+    <!-- Modal de Detalle de Empresa -->
+    <div id="company-detail-modal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center p-4 z-50 modal-backdrop">
+        <div class="modal-content bg-[var(--azul-noche)] rounded-xl shadow-2xl w-full max-w-2xl border border-[var(--borde-sutil)] transform scale-95 opacity-0">
+            <div id="modal-detail-content" class="p-8 relative">
+                <!-- El contenido se inyectará aquí -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Inscripción de Empresa -->
+    <div id="inscription-modal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center p-4 z-50 modal-backdrop">
+        <div class="modal-content bg-[var(--azul-noche)] rounded-xl shadow-2xl w-full max-w-2xl border border-[var(--borde-sutil)] transform scale-95 opacity-0">
+            <form id="inscription-form" class="p-8" novalidate>
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-serif text-2xl font-bold">Inscribe tu Empresa</h3>
+                    <button type="button" class="close-modal-btn text-2xl text-[var(--texto-secundario)] hover:text-white">&times;</button>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label for="company-name" class="block text-sm font-semibold mb-1">Nombre de la Empresa</label>
+                        <input type="text" id="company-name" class="w-full bg-[var(--azul-oscuro)] p-2 rounded-lg border border-[var(--borde-sutil)] focus:outline-none focus:ring-2 focus:ring-[var(--dorado)]" required>
+                    </div>
+                    <div>
+                        <label for="company-tagline" class="block text-sm font-semibold mb-1">Tagline (frase corta)</label>
+                        <input type="text" id="company-tagline" class="w-full bg-[var(--azul-oscuro)] p-2 rounded-lg border border-[var(--borde-sutil)] focus:outline-none focus:ring-2 focus:ring-[var(--dorado)]" required>
+                    </div>
+                     <div>
+                        <label for="company-description" class="block text-sm font-semibold mb-1">Descripción</label>
+                        <textarea id="company-description" rows="3" class="w-full bg-[var(--azul-oscuro)] p-2 rounded-lg border border-[var(--borde-sutil)] focus:outline-none focus:ring-2 focus:ring-[var(--dorado)]" required></textarea>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="company-email" class="block text-sm font-semibold mb-1">Email de Contacto</label>
+                            <input type="email" id="company-email" placeholder="contacto@empresa.com" class="w-full bg-[var(--azul-oscuro)] p-2 rounded-lg border border-[var(--borde-sutil)] focus:outline-none focus:ring-2 focus:ring-[var(--dorado)]" required>
+                        </div>
+                        <div>
+                            <label for="company-phone" class="block text-sm font-semibold mb-1">Teléfono</label>
+                            <input type="tel" id="company-phone" placeholder="+56 9..." class="w-full bg-[var(--azul-oscuro)] p-2 rounded-lg border border-[var(--borde-sutil)] focus:outline-none focus:ring-2 focus:ring-[var(--dorado)]">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="company-website" class="block text-sm font-semibold mb-1">Sitio Web</label>
+                        <input type="url" id="company-website" placeholder="https://..." class="w-full bg-[var(--azul-oscuro)] p-2 rounded-lg border border-[var(--borde-sutil)] focus:outline-none focus:ring-2 focus:ring-[var(--dorado)]" required>
+                    </div>
+                     <div>
+                        <label for="company-logo" class="block text-sm font-semibold mb-1">Logo</label>
+                        <input type="file" id="company-logo" class="w-full text-sm text-[var(--texto-secundario)] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[var(--dorado)] file:text-[var(--azul-noche)] hover:file:bg-[var(--dorado-hover)]">
+                    </div>
+                    <div class="pt-4">
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" id="featured-checkbox" class="h-5 w-5 rounded bg-[var(--azul-oscuro)] border-[var(--borde-sutil)] text-[var(--dorado)] focus:ring-[var(--dorado)]">
+                            <span class="font-semibold">Quiero destacar mi empresa por $10 USD/año</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="flex justify-end gap-4 mt-8">
+                    <button type="button" class="close-modal-btn text-[var(--texto-secundario)] font-semibold px-4 py-2 rounded-lg hover:bg-[rgba(255,255,255,0.1)]">Cancelar</button>
+                    <button type="submit" class="bg-[var(--dorado)] text-[var(--azul-noche)] font-bold px-6 py-2 rounded-lg hover:bg-[var(--dorado-hover)]">Enviar Inscripción</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal de Confirmación -->
+    <div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center p-4 z-50 modal-backdrop">
+        <div class="modal-content bg-[var(--azul-noche)] rounded-xl shadow-2xl w-full max-w-md border border-[var(--borde-sutil)] text-center p-8 transform scale-95 opacity-0">
+            <h3 id="confirmation-title" class="font-serif text-2xl font-bold text-[var(--dorado)] mb-4">¡Inscripción Enviada!</h3>
+            <p id="confirmation-message" class="text-[var(--texto-claro)] mb-6">Tu empresa ha sido enviada para revisión. Será visible en el directorio en las próximas 24 horas.</p>
+            <button id="close-confirmation-btn" class="bg-[var(--dorado)] text-[var(--azul-noche)] font-bold px-6 py-2 rounded-lg hover:bg-[var(--dorado-hover)]">Entendido</button>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const companyData = [
+                { id: 1, name: 'Expande Digital', tagline: 'Marketing estratégico para crecer.', description: 'Somos el brazo ejecutor del ecosistema, ofreciendo servicios de alto nivel en Marketing y Tecnología para llevar tu negocio al siguiente nivel.', website: 'https://expandedigital.com', logo: 'ED', category: 'Marketing', featured: true, founder: 'Cristian Jofré', email: 'contacto@expandedigital.com', phone: '+56985678296' },
+                { id: 2, name: 'Cuoco Pazzo', tagline: 'Inversiones con sabor y estrategia.', description: 'Fondo de inversión especializado en startups del sector gastronómico y foodtech. Buscamos fundadores apasionados con modelos de negocio escalables.', website: '#', logo: 'CP', category: 'Finanzas', featured: true, founder: 'Paola Murga', email: 'contacto@cuocopazzo.com', phone: '+56911223344' },
+                { id: 3, name: 'Dreamoms', tagline: 'Conectando madres, creando tribus.', description: 'Plataforma comunitaria que ofrece apoyo, recursos y conexiones para madres emprendedoras en Latinoamérica.', website: '#', logo: 'D', category: 'Comunidad', featured: false, founder: 'Claudia Guerra', email: 'hola@dreamoms.com', phone: '+56955667788' },
+                { id: 4, name: 'Befine Today', tagline: 'Bienestar corporativo inteligente.', description: 'Software SaaS que ayuda a las empresas a gestionar y mejorar el bienestar de sus equipos a través de data y programas personalizados.', website: '#', logo: 'BT', category: 'Software', featured: false, founder: 'Ana Rodriguez', email: 'ana@befinetoday.com', phone: '+56988990011' },
+                { id: 5, name: 'Extreme Clean', tagline: 'Limpieza profesional, resultados impecables.', description: 'Servicios de limpieza y sanitización de alta gama para oficinas y espacios comerciales, utilizando tecnología y productos eco-amigables.', website: '#', logo: 'EC', category: 'Servicios', featured: false, founder: 'Juan Carlos Inga', email: 'jc.inga@extremeclean.cl', phone: '+56922334455' },
+                { id: 6, name: 'Trident Group', tagline: 'Seguridad y confianza para tu negocio.', description: 'Consultoría y servicios integrales de seguridad corporativa, gestión de riesgos y ciberseguridad para empresas en crecimiento.', website: '#', logo: 'TG', category: 'Consultoría', featured: true, founder: 'Alex Rivas', email: 'alex.rivas@tridentgroup.cl', phone: '+56966778899' },
+            ];
+
+            const directoryGrid = document.getElementById('directory-grid');
+            const searchInput = document.getElementById('search-input');
+            
+            // --- Renderizar tarjetas ---
+            const renderDirectory = (filter = '') => {
+                directoryGrid.innerHTML = '';
+                const filteredData = companyData.filter(company => 
+                    company.name.toLowerCase().includes(filter.toLowerCase()) || 
+                    company.category.toLowerCase().includes(filter.toLowerCase())
+                );
+
+                if (filteredData.length === 0) {
+                    directoryGrid.innerHTML = `<p class="text-[var(--texto-secundario)] md:col-span-2 lg:col-span-3 text-center">No se encontraron empresas.</p>`;
+                    return;
+                }
+
+                filteredData.forEach(company => {
+                    const card = document.createElement('div');
+                    card.className = `company-card bg-[var(--azul-noche)] rounded-xl p-6 cursor-pointer flex flex-col border ${company.featured ? 'border-[var(--dorado)]' : 'border-[var(--borde-sutil)]'}`;
+                    card.dataset.companyId = company.id;
+                    card.innerHTML = `
+                        <div class="flex-grow relative">
+                            ${company.featured ? '<span class="absolute top-0 right-0 text-xs bg-[var(--dorado)] text-[var(--azul-noche)] font-bold py-1 px-2 rounded-full">DESTACADO</span>' : ''}
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-[var(--azul-oscuro)] rounded-lg flex items-center justify-center mr-4 font-bold text-[var(--dorado)] text-xl">${company.logo}</div>
+                                <div>
+                                    <h3 class="font-bold text-lg text-white">${company.name}</h3>
+                                    <p class="text-sm text-[var(--texto-secundario)]">${company.tagline}</p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-300 line-clamp-3">${company.description}</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-[var(--borde-sutil)] text-right">
+                           <span class="text-xs font-semibold text-[var(--texto-claro)] py-1 px-3 bg-[var(--azul-oscuro)] rounded-full">${company.category}</span>
+                        </div>
+                    `;
+                    directoryGrid.appendChild(card);
+                });
+            };
+
+            // --- Búsqueda ---
+            searchInput.addEventListener('input', () => renderDirectory(searchInput.value));
+
+            // --- Lógica de Modales ---
+            const detailModal = document.getElementById('company-detail-modal');
+            const inscriptionModal = document.getElementById('inscription-modal');
+            const confirmationModal = document.getElementById('confirmation-modal');
+
+            const openModal = (modal) => {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.add('opacity-100');
+                    modal.querySelector('.modal-content').classList.remove('scale-95', 'opacity-0');
+                    modal.querySelector('.modal-content').classList.add('scale-100', 'opacity-100');
+                }, 10);
+            };
+
+            const closeModal = (modal) => {
+                modal.querySelector('.modal-content').classList.add('scale-95', 'opacity-0');
+                modal.querySelector('.modal-content').classList.remove('scale-100', 'opacity-100');
+                modal.classList.remove('opacity-100');
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            };
+
+            // Abrir detalle
+            directoryGrid.addEventListener('click', (e) => {
+                const card = e.target.closest('.company-card');
+                if (card) {
+                    const companyId = parseInt(card.dataset.companyId);
+                    const company = companyData.find(c => c.id === companyId);
+                    if (company) {
+                        document.getElementById('modal-detail-content').innerHTML = `
+                            <button class="close-modal-btn absolute top-4 right-6 text-3xl text-[var(--texto-secundario)] hover:text-white">&times;</button>
+                            <div class="flex items-center mb-6">
+                                <div class="w-16 h-16 bg-[var(--azul-oscuro)] rounded-lg flex items-center justify-center mr-5 font-bold text-[var(--dorado)] text-3xl">${company.logo}</div>
+                                <div>
+                                    <h3 class="font-serif text-3xl font-bold text-white">${company.name}</h3>
+                                    <p class="text-md text-[var(--texto-secundario)]">${company.tagline}</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 mb-6">${company.description}</p>
+                            <div class="border-t border-[var(--borde-sutil)] pt-4 space-y-2">
+                                <p><strong class="text-[var(--texto-secundario)] w-24 inline-block">Fundador:</strong> ${company.founder}</p>
+                                <p><strong class="text-[var(--texto-secundario)] w-24 inline-block">Email:</strong> <a href="mailto:${company.email}" class="text-[var(--dorado)] hover:underline">${company.email}</a></p>
+                                <p><strong class="text-[var(--texto-secundario)] w-24 inline-block">Teléfono:</strong> <a href="tel:${company.phone}" class="text-[var(--dorado)] hover:underline">${company.phone}</a></p>
+                                <p><strong class="text-[var(--texto-secundario)] w-24 inline-block">Sitio Web:</strong> <a href="${company.website}" target="_blank" class="text-[var(--dorado)] hover:underline">${company.website}</a></p>
+                            </div>
+                        `;
+                        openModal(detailModal);
+                    }
+                }
+            });
+
+            // Abrir inscripción
+            document.getElementById('open-inscription-modal-btn').addEventListener('click', () => openModal(inscriptionModal));
+
+            // Cerrar modales
+            document.querySelectorAll('.close-modal-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    closeModal(btn.closest('.modal-backdrop'));
+                });
+            });
+            document.querySelectorAll('.modal-backdrop').forEach(modal => {
+                 modal.addEventListener('click', (e) => {
+                    if (e.target === modal) closeModal(modal);
+                });
+            });
+
+            // Lógica del formulario
+            const inscriptionForm = document.getElementById('inscription-form');
+            inscriptionForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const isFeatured = document.getElementById('featured-checkbox').checked;
+                const confTitle = document.getElementById('confirmation-title');
+                const confMessage = document.getElementById('confirmation-message');
+
+                if (isFeatured) {
+                    confTitle.innerText = "¡Casi listo!";
+                    confMessage.innerText = "Tu empresa ha sido enviada. En breve recibirás un enlace para completar el pago de $10 USD y destacar tu listado.";
+                } else {
+                    confTitle.innerText = "¡Inscripción Enviada!";
+                    confMessage.innerText = "Tu empresa ha sido enviada para revisión. Será visible en el directorio en las próximas 24 horas.";
+                }
+                closeModal(inscriptionModal);
+                openModal(confirmationModal);
+                inscriptionForm.reset();
+            });
+
+            document.getElementById('close-confirmation-btn').addEventListener('click', () => closeModal(confirmationModal));
+
+            // Render inicial
+            renderDirectory();
+        });
+    </script>
+    <script src="../assets/js/components.js"></script>
+</body>
+</html>
+
