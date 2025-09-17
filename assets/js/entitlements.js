@@ -196,6 +196,12 @@
     { test: /\/fase_3_ecd\//i, required: ['course.pmf'] },
     { test: /\/fase_4_ecd\//i, required: ['course.growth'] },
     { test: /\/fase_5_ecd\//i, required: ['course.ceo'] },
+    // Rutas equivalentes ya existentes en el repo (de0a100)
+    { test: /\/fase_1_de0a100\//i, required: ['course.pmv'] },
+    { test: /\/fase_2_de0a100\//i, required: ['course.pmv'] },
+    { test: /\/fase_3_de0a100\//i, required: ['course.pmf'] },
+    { test: /\/fase_4_de0a100\//i, required: ['course.growth'] },
+    { test: /\/fase_5_de0a100\//i, required: ['course.ceo'] },
   ];
 
   function parseQuery() {

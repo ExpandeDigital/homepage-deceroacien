@@ -257,6 +257,8 @@ class HeaderComponent extends BaseComponent {
 
     // Detección: cualquier ruta dentro de /gamificacion/ activa 'gamificacion'
     if (p.includes('/gamificacion/')) return 'gamificacion';
+    // Detección: rutas dentro de /talent/
+    if (p.includes('/talent/')) return 'talent';
 
         // Remover extensión .html y manejar casos comunes
         let pageName = filename.replace('.html', '');
@@ -302,6 +304,7 @@ class HeaderComponent extends BaseComponent {
             <a href="${this.basePath}blog.html" class="header-link ${this.currentPage === 'blog' ? 'active' : ''}">Blog</a>
             <a href="${this.basePath}faq.html" class="header-link ${this.currentPage === 'faq' ? 'active' : ''}">FAQ</a>
             <a href="${this.basePath}gamificacion/index.html" class="header-link ${this.currentPage === 'gamificacion' ? 'active' : ''}">Gamificación</a>
+            <a href="${this.basePath}talent/index.html" class="header-link ${this.currentPage === 'talent' ? 'active' : ''}">Talent</a>
             <a href="${this.basePath}contacto.html" class="header-link ${this.currentPage === 'contacto' ? 'active' : ''}">Contacto</a>
             <a href="${this.basePath}academy.html" class="header-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a>
                 </div>
@@ -424,6 +427,7 @@ class HeaderComponent extends BaseComponent {
     <a href="${this.basePath}blog.html" class="mobile-menu-link">Blog</a>
     <a href="${this.basePath}faq.html" class="mobile-menu-link">FAQ</a>
     <a href="${this.basePath}gamificacion/index.html" class="mobile-menu-link">Gamificación</a>
+        <a href="${this.basePath}talent/index.html" class="mobile-menu-link">Talent</a>
         <a href="${this.basePath}contacto.html" class="mobile-menu-link">Contacto</a>
                 <div class="mobile-menu-auth">
                     <a href="#" class="mobile-auth-link">Ingresa</a>
@@ -575,6 +579,8 @@ class FooterComponent extends BaseComponent {
 
     // Detección: rutas dentro de /gamificacion/
     if (p.includes('/gamificacion/')) return 'gamificacion';
+    // Detección: rutas dentro de /talent/
+    if (p.includes('/talent/')) return 'talent';
 
         return filename.replace('.html', '') || 'index';
     }
@@ -622,6 +628,8 @@ class FooterComponent extends BaseComponent {
                 <li><a href="${this.basePath}conecta/conecta.html" class="footer-link ${this.currentPage === 'conecta' ? 'active' : ''}">Conecta</a></li>
                 <li><a href="${this.basePath}conferencias.html" class="footer-link ${this.currentPage === 'conferencias' ? 'active' : ''}">Conferencias</a></li>
                 <li><a href="${this.basePath}soluciones_a_medida.html" class="footer-link ${this.currentPage === 'soluciones_a_medida' ? 'active' : ''}">Soluciones a Medida</a></li>
+                <li><a href="${this.basePath}servicios-empresariales/index.html" class="footer-link">Servicios Empresariales</a></li>
+                <li><a href="${this.basePath}talent/index.html" class="footer-link ${this.currentPage === 'talent' ? 'active' : ''}">Talent</a></li>
             </ul>
         </div>
 
@@ -945,7 +953,7 @@ class AppManager {
         try {
             const already = Array.from(document.scripts).some(s => (s.src || '').includes('assets/js/entitlements.js'));
             const path = (location && location.pathname || '').toLowerCase();
-            const shouldLoad = /\/portal-alumno\.html$/.test(path) || /\/fase_\d+_ecd\//.test(path);
+            const shouldLoad = /\/portal-alumno\.html$/.test(path) || /\/fase_\d+_ecd\//.test(path) || /\/fase_\d+_de0a100\//.test(path);
             if (!already && shouldLoad) {
                 const s = document.createElement('script');
                 s.src = `${GlobalConfig.basePath}assets/js/entitlements.js`;
