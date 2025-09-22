@@ -1,0 +1,355 @@
+/* ===== VARIABLES CSS ===== */
+:root {
+    --azul-noche: #1a1f3a;
+    --dorado: #d4af37;
+    --texto-claro: #e0e1e9;
+    --rojo-peligro: #ef4444;
+    --verde-exito: #22c55e;
+}
+
+/* ===== ESTILOS BASE ===== */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--azul-noche);
+    color: var(--texto-claro);
+}
+
+.font-serif { 
+    font-family: 'Playfair Display', serif; 
+}
+
+/* ===== LAYOUT PRINCIPAL ===== */
+.game-layout {
+    display: flex;
+    min-height: 100vh;
+    gap: 1.5rem;
+    padding: 1rem;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.instructions-panel {
+    width: 20%;
+    min-width: 280px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    height: fit-content;
+    position: sticky;
+    top: 1rem;
+}
+
+.game-content {
+    width: 80%;
+    flex: 1;
+}
+
+.instructions-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--dorado);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+/* ===== SECCIÓN DE INFORMACIÓN ===== */
+.info-section .info-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.25rem;
+}
+
+.info-section .info-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    margin-top: 2px;
+    font-size: 16px;
+}
+
+.info-section h3 {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.25rem;
+}
+
+.info-section p {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: #d1d5db;
+}
+
+/* ===== TARJETAS Y COMPONENTES ===== */
+.feature-card {
+    background: linear-gradient(145deg, #2a3154, #1a1f3a);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    cursor: grab;
+}
+
+.game-card {
+    background: linear-gradient(145deg, #2a3154, #1a1f3a);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--dorado);
+}
+
+.option-card {
+    background: linear-gradient(145deg, #2a3154, #1a1f3a);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.option-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--dorado);
+}
+
+.option-card.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: #1a1f3a;
+}
+
+.pitch-card {
+    background: linear-gradient(145deg, #2a3154, #1a1f3a);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.pitch-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--dorado);
+}
+
+.pitch-card.selected {
+    background: var(--dorado);
+    color: var(--azul-noche);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.stat-card {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ===== ZONAS DE ARRASTRE Y SOLTAR ===== */
+.drop-zone {
+    background-color: rgba(0,0,0,0.2);
+    border: 2px dashed rgba(255,255,255,0.2);
+    min-height: 100px;
+    transition: background-color 0.3s ease;
+}
+
+.drop-zone.over {
+    background-color: rgba(212, 175, 55, 0.2);
+}
+
+.pitch-slot {
+    background-color: rgba(0,0,0,0.2);
+    border: 2px dashed rgba(255,255,255,0.2);
+}
+
+.dragging {
+    opacity: 0.5;
+}
+
+/* ===== CHAT Y BOTONES ===== */
+.chat-bubble { 
+    max-width: 80%; 
+}
+
+.chat-bubble.user { 
+    background-color: var(--dorado); 
+    color: var(--azul-noche); 
+}
+
+.chat-bubble.partner { 
+    background-color: #2a3154; 
+}
+
+.option-button {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.2s ease-in-out;
+}
+
+.option-button:hover {
+    border-color: var(--dorado);
+    background-color: rgba(212, 175, 55, 0.1);
+}
+
+.option-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ===== ANIMACIONES ===== */
+.value-change {
+    animation: pulse-bg 0.7s ease-out;
+}
+
+.timer-bar {
+    transition: width 1s linear;
+}
+
+.stat-value { 
+    transition: color 0.5s ease; 
+}
+
+@keyframes pulse-bg {
+    0% { 
+        background-color: rgba(212, 175, 55, 0.5); 
+        transform: scale(1.05); 
+    }
+    100% { 
+        background-color: transparent; 
+        transform: scale(1); 
+    }
+}
+
+/* ===== TARJETAS Y COMPONENTES ===== */
+.feature-card {
+    background: linear-gradient(145deg, #2a3154, #1a1f3a);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    cursor: grab;
+}
+
+.game-card {
+    background: linear-gradient(145deg, #2a3154, #1a1f3a);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--dorado);
+}
+
+.option-card {
+    background: linear-gradient(145deg, #2a3154, #1a1f3a);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.option-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--dorado);
+}
+
+.option-card.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: #1a1f3a;
+}
+
+.pitch-card {
+    background: linear-gradient(145deg, #2a3154, #1a1f3a);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.pitch-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--dorado);
+}
+
+.pitch-card.selected {
+    background: var(--dorado);
+    color: var(--azul-noche);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.stat-card {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ===== ZONAS DE ARRASTRE Y SOLTAR ===== */
+.drop-zone {
+    background-color: rgba(0,0,0,0.2);
+    border: 2px dashed rgba(255,255,255,0.2);
+    min-height: 100px;
+    transition: background-color 0.3s ease;
+}
+
+.drop-zone.over {
+    background-color: rgba(212, 175, 55, 0.2);
+}
+
+.pitch-slot {
+    background-color: rgba(0,0,0,0.2);
+    border: 2px dashed rgba(255,255,255,0.2);
+}
+
+.dragging {
+    opacity: 0.5;
+}
+
+/* ===== CHAT Y BOTONES ===== */
+.chat-bubble { 
+    max-width: 80%; 
+}
+
+.chat-bubble.user { 
+    background-color: var(--dorado); 
+    color: var(--azul-noche); 
+}
+
+.chat-bubble.partner { 
+    background-color: #2a3154; 
+}
+
+.option-button {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.2s ease-in-out;
+}
+
+.option-button:hover {
+    border-color: var(--dorado);
+    background-color: rgba(212, 175, 55, 0.1);
+}
+
+.option-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ===== ANIMACIONES ===== */
+.value-change {
+    animation: pulse-bg 0.7s ease-out;
+}
+
+.timer-bar {
+    transition: width 1s linear;
+}
+
+.stat-value { 
+    transition: color 0.5s ease; 
+}
+
+@keyframes pulse-bg {
+    0% { 
+        background-color: rgba(212, 175, 55, 0.5); 
+        transform: scale(1.05); 
+    }
+    100% { 
+        background-color: transparent; 
+        transform: scale(1); 
+    }
+}

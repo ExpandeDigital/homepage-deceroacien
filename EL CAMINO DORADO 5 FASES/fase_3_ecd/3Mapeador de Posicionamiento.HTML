@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Cien a Mil: 15. Mapeador de Posicionamiento de Marca Avanzado</title>
+    <style>
+        :root {
+            --color-night-blue: #0D223F;
+            --color-gold: #D4AF37;
+            --color-gold-dark: #B89B2E;
+            --color-card-bg: #FFFFFF;
+            --color-text-on-dark: #F0F0F0;
+            --color-text-on-light: #0D223F;
+            --color-border: #E0D6B3;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            font-family: var(--font-family);
+            background-color: var(--color-night-blue);
+            color: var(--color-text-on-dark);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            background: var(--color-card-bg);
+            color: var(--color-text-on-light);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0, 0.2);
+            overflow: hidden;
+            border: 1px solid var(--color-gold);
+        }
+        .column {
+            padding: 35px;
+            flex-basis: 50%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        .pedagogical-column {
+            background-color: var(--color-night-blue);
+            color: var(--color-text-on-dark);
+            border-right: 1px solid var(--color-gold);
+        }
+        .tool-column {
+            background-color: var(--color-card-bg);
+        }
+        h1, h2 { margin-top: 0; }
+        .pedagogical-column h1 { color: var(--color-card-bg); }
+        .tool-column h2 { color: var(--color-night-blue); }
+        h1 {
+            font-size: 1.8em;
+            border-bottom: 2px solid var(--color-gold);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+        h2 { font-size: 1.6em; }
+        h3 {
+            font-size: 1.2em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            color: var(--color-gold);
+        }
+        h3 .icon { width: 24px; height: 24px; margin-right: 10px; fill: currentColor; }
+        p, li { font-size: 0.95em; }
+        ul { list-style: none; padding-left: 0; }
+        ul li {
+            padding-left: 1.5em;
+            text-indent: -1.5em;
+            margin-bottom: 5px;
+        }
+        ul li::before {
+            content: '•';
+            color: var(--color-gold);
+            margin-right: 0.5em;
+            font-size: 1.2em;
+        }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input[type="text"], input[type="number"] {
+            width: 100%; padding: 10px;
+            border: 1px solid var(--color-border); border-radius: 4px;
+            box-sizing: border-box; font-size: 1em; color: var(--color-text-on-light);
+        }
+        button {
+            background-color: var(--color-gold);
+            color: var(--color-night-blue); border: none; padding: 12px 20px;
+            border-radius: 5px; font-size: 1em; font-weight: bold;
+            cursor: pointer; transition: background-color 0.3s, transform 0.1s;
+            width: 100%; margin-top: 10px;
+        }
+        button:hover { background-color: var(--color-gold-dark); }
+        button:active { transform: scale(0.98); }
+
+        #map-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background-color: #f9f9f9;
+            border: 1px solid var(--color-border);
+            border-radius: 5px;
+        }
+        #map-container::before, #map-container::after {
+            content: '';
+            position: absolute;
+            background-color: #ccc;
+        }
+        #map-container::before {
+             left: 50%; top: 0; width: 1px; height: 100%; transform: translateX(-50%);
+        }
+        #map-container::after {
+            top: 50%; left: 0; height: 1px; width: 100%; transform: translateY(-50%);
+        }
+        .axis-label {
+            position: absolute;
+            font-size: 0.8em;
+            font-weight: bold;
+            color: #777;
+        }
+        #x-axis-label { bottom: -20px; left: 50%; transform: translateX(-50%); }
+        #y-axis-label { left: -5px; top: 50%; transform: translateY(-50%) rotate(-90deg); transform-origin: left top; }
+        .brand-dot {
+            position: absolute;
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background-color: #34495e;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s;
+        }
+        .brand-dot.my-brand {
+            background-color: var(--color-gold);
+            width: 16px; height: 16px;
+            border: 2px solid var(--color-night-blue);
+        }
+        .brand-dot-label {
+            position: absolute;
+            top: -18px; left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8em;
+            background-color: rgba(255,255,255,0.8);
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+
+        @media (max-width: 900px) {
+            body { padding: 0; }
+            .container { flex-direction: column; border-radius: 0; max-width: 100%; }
+            .pedagogical-column { border-right: none; border-bottom: 1px solid var(--color-gold); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="column pedagogical-column">
+            <h1>15. Mapeador de Posicionamiento</h1>
+            
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-2h2v2zm0-4h-2V7h2v5z"></path></svg>
+                Objetivo
+            </h3>
+            <p>Visualizar cómo es percibida tu marca en relación con tus competidores en las dimensiones clave que de verdad importan a los clientes, para identificar tu posición real en el mercado.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"></path></svg>
+                Importancia Estratégica
+            </h3>
+            <p>El posicionamiento es la batalla por la mente del consumidor. Este mapa revela si tu marca ocupa un lugar claro y deseable o si está en un espacio concurrido y confuso. Permite identificar oportunidades para reposicionarse, atacar debilidades de la competencia y comunicar tu valor de forma más efectiva.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+                Para Quién Es
+            </h3>
+            <p>Esencial para CMOs, Brand Managers y estrategas que necesitan tomar decisiones basadas en la percepción del mercado y no en suposiciones internas.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
+                Instrucciones de Uso
+            </h3>
+            <ul>
+                <li><strong>Define los Ejes:</strong> Nombra los dos atributos más importantes para tu cliente (Ej: Eje X: Precio Bajo-Alto, Eje Y: Calidad Baja-Alta).</li>
+                <li><strong>Añade las Marcas:</strong> Introduce tu marca y las de tus competidores.</li>
+                <li><strong>Puntúa y Mapea:</strong> Asigna a cada marca una puntuación de 1 (bajo) a 10 (alto) en cada eje. El mapa se generará automáticamente.</li>
+            </ul>
+        </div>
+        <div class="column tool-column">
+            <h2>Herramienta Interactiva</h2>
+            <div id="map-controls">
+                <div class="form-group">
+                    <label for="x-axis-input">Nombre Eje X (Horizontal)</label>
+                    <input type="text" id="x-axis-input" value="Precio (Bajo → Alto)">
+                </div>
+                <div class="form-group">
+                    <label for="y-axis-input">Nombre Eje Y (Vertical)</label>
+                    <input type="text" id="y-axis-input" value="Calidad (Baja → Alta)">
+                </div>
+                <hr style="border-top: 1px solid var(--color-border); margin: 20px 0;">
+                <div class="form-group">
+                    <label for="brand-name">Nombre de la Marca</label>
+                    <input type="text" id="brand-name" placeholder="Ej: Mi Marca">
+                </div>
+                <div class="form-group">
+                    <label for="x-value">Puntuación Eje X (1-10)</label>
+                    <input type="number" id="x-value" min="1" max="10" value="5">
+                </div>
+                <div class="form-group">
+                    <label for="y-value">Puntuación Eje Y (1-10)</label>
+                    <input type="number" id="y-value" min="1" max="10" value="5">
+                </div>
+                <button id="add-brand-btn">Añadir Marca al Mapa</button>
+            </div>
+            
+            <div id="map-container">
+                <div class="axis-label" id="x-axis-label"></div>
+                <div class="axis-label" id="y-axis-label"></div>
+                 <!-- Brand dots will be added here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const xAxisInput = document.getElementById('x-axis-input');
+            const yAxisInput = document.getElementById('y-axis-input');
+            const brandNameInput = document.getElementById('brand-name');
+            const xValueInput = document.getElementById('x-value');
+            const yValueInput = document.getElementById('y-value');
+            const addBtn = document.getElementById('add-brand-btn');
+            const mapContainer = document.getElementById('map-container');
+            const xAxisLabel = document.getElementById('x-axis-label');
+            const yAxisLabel = document.getElementById('y-axis-label');
+
+            let brands = [];
+
+            addBtn.addEventListener('click', addBrand);
+            xAxisInput.addEventListener('input', renderMap);
+            yAxisInput.addEventListener('input', renderMap);
+
+            function addBrand() {
+                const name = brandNameInput.value.trim();
+                let x = parseInt(xValueInput.value);
+                let y = parseInt(yValueInput.value);
+
+                if (!name) {
+                    alert('Por favor, introduce un nombre de marca.');
+                    return;
+                }
+                if (isNaN(x) || x < 1 || x > 10 || isNaN(y) || y < 1 || y > 10) {
+                    alert('Las puntuaciones deben estar entre 1 y 10.');
+                    return;
+                }
+
+                brands.push({ name, x, y });
+                renderMap();
+                clearForm();
+            }
+
+            function renderMap() {
+                // Clear previous dots
+                mapContainer.querySelectorAll('.brand-dot').forEach(dot => dot.remove());
+
+                // Update axis labels
+                xAxisLabel.textContent = xAxisInput.value;
+                yAxisLabel.textContent = yAxisInput.value;
+
+                brands.forEach(brand => {
+                    const dot = document.createElement('div');
+                    dot.className = 'brand-dot';
+                    
+                    // Use brand name to check for "Mi Marca" variants
+                    if (brand.name.toLowerCase().includes('mi marca')) {
+                        dot.classList.add('my-brand');
+                    }
+
+                    // Position from 0% to 100%
+                    dot.style.left = `${((brand.x - 1) / 9) * 100}%`;
+                    dot.style.bottom = `${((brand.y - 1) / 9) * 100}%`;
+                    
+                    const label = document.createElement('span');
+                    label.className = 'brand-dot-label';
+                    label.textContent = escapeHTML(brand.name);
+                    
+                    dot.appendChild(label);
+                    mapContainer.appendChild(dot);
+                });
+            }
+
+            function clearForm() {
+                brandNameInput.value = '';
+                xValueInput.value = 5;
+                yValueInput.value = 5;
+                brandNameInput.focus();
+            }
+
+            function escapeHTML(str) {
+                const p = document.createElement('p');
+                p.textContent = str;
+                return p.innerHTML;
+            }
+
+            // Initial render
+            renderMap();
+        });
+    </script>
+
+</body>
+</html>

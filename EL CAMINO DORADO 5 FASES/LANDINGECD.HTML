@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programa "De Cien a Mil" - Herramientas para Escalar tu Negocio</title>
+    <style>
+        :root {
+            --color-night-blue: #0D223F;
+            --color-gold: #D4AF37;
+            --color-gold-dark: #B89B2E;
+            --color-card-bg: #FFFFFF;
+            --color-text-on-dark: #F0F0F0;
+            --color-text-on-light: #0D223F;
+            --color-border: #E0D6B3;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            font-family: var(--font-family);
+            background-color: var(--color-night-blue);
+            color: var(--color-text-on-dark);
+            margin: 0;
+            line-height: 1.6;
+        }
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: radial-gradient(circle, #1a3a63 0%, var(--color-night-blue) 100%);
+        }
+        .hero h1 {
+            font-size: 3.5em;
+            color: var(--color-card-bg);
+            margin: 0;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .hero .highlight {
+            color: var(--color-gold);
+        }
+        .hero p {
+            font-size: 1.2em;
+            max-width: 700px;
+            margin: 15px auto 30px auto;
+            color: var(--color-text-on-dark);
+        }
+        .cta-button {
+            background-color: var(--color-gold);
+            color: var(--color-night-blue);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+        .cta-button:hover {
+            background-color: var(--color-gold-dark);
+            transform: translateY(-2px);
+        }
+        .section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            color: var(--color-gold);
+            margin-bottom: 40px;
+        }
+        .target-audience {
+            background-color: rgba(255,255,255, 0.05);
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .target-audience h3 {
+            font-size: 1.8em;
+            margin-top: 0;
+            color: var(--color-card-bg);
+        }
+        .target-audience p {
+            max-width: 800px;
+            margin: 10px auto;
+            color: var(--color-text-on-dark);
+        }
+        .phases-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        .phase-card {
+            background-color: var(--color-card-bg);
+            color: var(--color-text-on-light);
+            border-radius: 8px;
+            padding: 25px;
+            border-top: 5px solid var(--color-gold);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .phase-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .phase-card h4 {
+            font-size: 1.3em;
+            color: var(--color-night-blue);
+            margin: 0 0 15px 0;
+        }
+        .phase-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .phase-card li {
+            font-size: 0.95em;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+        .phase-card li:last-child {
+            border-bottom: none;
+        }
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--color-gold);
+            color: var(--color-text-on-dark);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5em; }
+            .hero p { font-size: 1.1em; }
+            .section-title { font-size: 2em; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <h1>De Cero a Cien fue el inicio.</h1>
+        <h1 class="highlight">De Cien a Mil es la consolidación.</h1>
+        <p>El arsenal definitivo de 31 micro-herramientas estratégicas diseñadas para el desafío real: escalar tu negocio, liderar tu equipo y dominar tu mercado.</p>
+        <a href="#fases" class="cta-button">Descubre las Herramientas</a>
+    </header>
+
+    <main>
+        <section class="section" id="para-quienes">
+            <div class="target-audience">
+                <h3>¿Para quién es el programa "De Cien a Mil"?</h3>
+                <p>Este arsenal no es para principiantes. Es para los emprendedores y líderes que ya construyeron algo que funciona y ahora enfrentan los verdaderos retos del crecimiento.</p>
+                <p><strong>Es para ti si...</strong> ya superaste la barrera inicial, lideras un equipo, luchas por un lugar en el mercado y entiendes que el siguiente nivel de crecimiento exige un nuevo nivel de estrategia.</p>
+            </div>
+        </section>
+
+        <section class="section" id="fases">
+            <h2 class="section-title">Las 5 Fases de la Escalabilidad</h2>
+            <div class="phases-container">
+                <!-- Fase 1 -->
+                <div class="phase-card">
+                    <h4>FASE 1: Solidificación y Optimización Operativa</h4>
+                    <ul>
+                        <li>1. Optimizador de Procesos Clave</li>
+                        <li>2. Calculadora de Coste de Ineficiencia</li>
+                        <li>3. Dashboard de Métricas de Salud del Negocio</li>
+                        <li>4. Simulador de Puntos de Falla</li>
+                        <li>5. Generador de Acuerdos de Nivel de Servicio (SLA/OLI)</li>
+                        <li>6. Mapeador de Dependencias Críticas</li>
+                    </ul>
+                </div>
+                <!-- Fase 2 -->
+                <div class="phase-card">
+                    <h4>FASE 2: Liderazgo y Cultura de Equipo</h4>
+                    <ul>
+                        <li>7. Matriz de Delegación Efectiva</li>
+                        <li>8. Generador de Planes de Carrera y Desarrollo</li>
+                        <li>9. Diseñador de Sistema de Feedback 360°</li>
+                        <li>10. Calculadora de Rotación de Personal y su Coste</li>
+                        <li>11. Encuesta de Pulso Cultural</li>
+                        <li>12. Simulador de Conversaciones de Alto Impacto</li>
+                    </ul>
+                </div>
+                <!-- Fase 3 -->
+                <div class="phase-card">
+                    <h4>FASE 3: Estrategia de Mercado y Competencia</h4>
+                    <ul>
+                        <li>13. Analizador de Ventaja Competitiva Sostenible</li>
+                        <li>14. Generador de Estrategias de "Océano Azul"</li>
+                        <li>15. Mapeador de Posicionamiento de Marca Avanzado</li>
+                        <li>16. Simulador de Guerra de Precios</li>
+                        <li>17. Herramienta de Análisis de "Voz del Cliente"</li>
+                        <li>18. Constructor de Fosos Defensivos (Moats)</li>
+                    </ul>
+                </div>
+                <!-- Fase 4 -->
+                <div class="phase-card">
+                    <h4>FASE 4: Escalabilidad Financiera y Tecnológica</h4>
+                    <ul>
+                        <li>19. Proyector de Flujo de Caja para Escalabilidad</li>
+                        <li>20. Calculadora de Deuda Técnica</li>
+                        <li>21. Simulador de Rondas de Inversión</li>
+                        <li>22. Optimizador de Ingresos Recurrentes (MRR/ARR)</li>
+                        <li>23. Evaluador de KPIs para Inversores</li>
+                        <li>24. Selector de Pila Tecnológica para Escalar</li>
+                    </ul>
+                </div>
+                <!-- Fase 5 -->
+                <div class="phase-card">
+                    <h4>FASE 5: Expansión y Sostenibilidad a Largo Plazo</h4>
+                    <ul>
+                        <li>25. Matriz de Diversificación de Ingresos</li>
+                        <li>26. Simulador de Expansión a Nuevos Mercados</li>
+                        <li>27. Generador de Planes de Sucesión</li>
+                        <li>28. Evaluador de Riesgos Estratégicos (PESTEL)</li>
+                        <li>29. Diseñador de Programas de Lealtad y Retención</li>
+                        <li>30. Calculadora de Valor de Marca</li>
+                        <li>31. Generador de Informes de Impacto (ESG)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 - Programa "De Cien a Mil". Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>

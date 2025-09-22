@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microherramienta: Generador de Ideas con IA - De Cero a Cien</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        textarea {
+            resize: none;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #FBBF24;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-900">
+
+    <div class="text-gray-200 p-8">
+        <div class="transition-opacity duration-500 max-w-5xl mx-auto">
+            <h2 class="text-4xl font-bold text-white mb-2 font-serif">Generador de Ideas con IA (Método SCAMPER)</h2>
+            <p class="text-gray-400 mb-8">Supera el bloqueo creativo y genera nuevas ideas para innovar en tu negocio usando un framework probado.</p>
+
+            <!-- =============================================== -->
+            <!-- SECCIÓN DE DESCRIPCIONES                      -->
+            <!-- =============================================== -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                <!-- Objetivo -->
+                <div class="bg-gray-800 p-4 rounded-lg">
+                    <h3 class="font-bold text-lg text-yellow-400 mb-2">🎯 Objetivo</h3>
+                    <p class="text-sm text-gray-300">Entrenar tu "músculo" creativo para encontrar oportunidades de mejora y nuevas líneas de negocio.</p>
+                </div>
+                <!-- Importancia -->
+                <div class="bg-gray-800 p-4 rounded-lg">
+                    <h3 class="font-bold text-lg text-yellow-400 mb-2">⭐ Importancia</h3>
+                    <p class="text-sm text-gray-300">La innovación constante es lo que diferencia a los negocios que sobreviven de los que lideran el mercado.</p>
+                </div>
+                <!-- Qué es lo que hace -->
+                <div class="bg-gray-800 p-4 rounded-lg">
+                    <h3 class="font-bold text-lg text-yellow-400 mb-2">⚙️ ¿Qué es lo que hace?</h3>
+                    <p class="text-sm text-gray-300">Aplica 7 "lentes" de innovación (el método SCAMPER) a tu idea para forzarte a pensar fuera de la caja.</p>
+                </div>
+                <!-- Para qué me sirve -->
+                <div class="bg-gray-800 p-4 rounded-lg">
+                    <h3 class="font-bold text-lg text-yellow-400 mb-2">💡 ¿Para qué me sirve?</h3>
+                    <p class="text-sm text-gray-300">Para generar decenas de ideas accionables en minutos y convertir la innovación en un hábito.</p>
+                </div>
+            </div>
+            <!-- =============================================== -->
+            <!-- FIN DE LA SECCIÓN DE DESCRIPCIONES              -->
+            <!-- =============================================== -->
+            
+             <div class="bg-gray-800/50 border border-yellow-500/30 rounded-lg p-4 mb-8 text-left text-sm max-w-3xl mx-auto">
+                <h4 class="font-bold text-yellow-400 mb-2">Aclaraciones para el uso de esta herramienta:</h4>
+                <ul class="list-disc list-inside text-gray-400 space-y-1">
+                    <li>Describe tu producto o negocio de la forma más simple y clara posible.</li>
+                    <li>No todas las ideas generadas serán perfectas. El objetivo es estimular tu pensamiento.</li>
+                    <li>Anota las ideas que más te resuenen y explóralas más a fondo.</li>
+                    <li>Usa esta herramienta una vez al mes para mantener tu negocio fresco y relevante.</li>
+                </ul>
+            </div>
+
+            <div class="bg-gray-800 p-6 rounded-lg">
+                <div class="space-y-6">
+                    <div>
+                        <label for="ideaInput" class="block text-sm font-medium text-gray-400 mb-2">Describe tu idea, producto o servicio actual:</label>
+                        <textarea id="ideaInput" rows="3" class="w-full bg-gray-700 border-gray-600 rounded-md p-2 text-white" placeholder="Ej: Una app de delivery de comida casera para oficinistas"></textarea>
+                    </div>
+                    <button id="generateIdeasBtn" class="w-full md:w-auto bg-yellow-500 text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-yellow-400 transition-colors">
+                        Desbloquear Innovación con IA
+                    </button>
+                </div>
+                <div id="ideas-results" class="mt-8">
+                    <div id="ideas-placeholder" class="text-center text-gray-500 py-12">
+                        <p>Las sugerencias de innovación de nuestra IA aparecerán aquí.</p>
+                    </div>
+                    <div id="ideas-loading" class="hidden text-center text-gray-400 flex flex-col items-center justify-center py-12">
+                        <div class="loader mb-4"></div>
+                        <p>Aplicando SCAMPER para generar ideas disruptivas...</p>
+                    </div>
+                    <div id="ideas-generated" class="hidden grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Las tarjetas SCAMPER se generarán aquí -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<script>
+    const generateBtn = document.getElementById('generateIdeasBtn');
+    const placeholder = document.getElementById('ideas-placeholder');
+    const loading = document.getElementById('ideas-loading');
+    const generatedContainer = document.getElementById('ideas-generated');
+    const ideaInput = document.getElementById('ideaInput');
+
+    generateBtn.addEventListener('click', () => {
+        const idea = ideaInput.value;
+        if (!idea.trim()) {
+            alert('Por favor, describe tu idea de negocio.');
+            return;
+        }
+
+        placeholder.classList.add('hidden');
+        generatedContainer.classList.add('hidden');
+        generatedContainer.innerHTML = '';
+        loading.classList.remove('hidden');
+
+        // Simulación de llamada a IA
+        setTimeout(() => {
+            const scamperSuggestions = {
+                'Sustituir': `¿Qué pasaría si sustituyes los envases tradicionales por opciones comestibles o 100% compostables para tu '${idea}'?`,
+                'Combinar': `¿Puedes combinar tu '${idea}' con un servicio de suscripción de kits de ingredientes para que los clientes cocinen en casa el fin de semana?`,
+                'Adaptar': `¿Cómo adaptarías el modelo de Netflix (una tarifa plana mensual por 'comidas ilimitadas' hasta cierto valor) a tu '${idea}'?`,
+                'Modificar': `¿Puedes magnificar tu '${idea}' para ofrecer un servicio de catering corporativo para empresas, o minimizarla a un servicio de snacks saludables a media tarde?`,
+                'Poner en otro uso': `¿Podrías usar tu red de cocineros y logística para ofrecer talleres de cocina online o vender los insumos que usas directamente a los clientes?`,
+                'Eliminar': `¿Qué pasaría si eliminas el menú variable y ofreces un único 'plato del día' increíblemente bueno y a un precio competitivo para tu '${idea}'?`,
+                'Reorganizar': `¿Puedes invertir el proceso? Que las empresas publiquen sus necesidades de almuerzo semanal y los cocineros de tu red oferten para adjudicarse el servicio.`
+            };
+
+            for (const [key, value] of Object.entries(scamperSuggestions)) {
+                const card = `
+                    <div class="bg-gray-700 p-4 rounded-lg border border-gray-600">
+                        <h4 class="font-bold text-yellow-400 mb-2">${key.toUpperCase()}</h4>
+                        <p class="text-sm text-gray-300">${value}</p>
+                    </div>
+                `;
+                generatedContainer.innerHTML += card;
+            }
+
+            loading.classList.add('hidden');
+            generatedContainer.classList.remove('hidden');
+
+        }, 2000);
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Cien a Mil: 20. Calculadora de Deuda Técnica</title>
+    <style>
+        :root {
+            --color-night-blue: #0D223F;
+            --color-gold: #D4AF37;
+            --color-gold-dark: #B89B2E;
+            --color-card-bg: #FFFFFF;
+            --color-text-on-dark: #F0F0F0;
+            --color-text-on-light: #0D223F;
+            --color-border: #E0D6B3;
+            --color-info: #2980b9;
+            --color-warning: #c0392b;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            font-family: var(--font-family);
+            background-color: var(--color-night-blue);
+            color: var(--color-text-on-dark);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            background: var(--color-card-bg);
+            color: var(--color-text-on-light);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0, 0.2);
+            overflow: hidden;
+            border: 1px solid var(--color-gold);
+        }
+        .column {
+            padding: 35px;
+            flex-basis: 50%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        .pedagogical-column {
+            background-color: var(--color-night-blue);
+            color: var(--color-text-on-dark);
+            border-right: 1px solid var(--color-gold);
+        }
+        .tool-column {
+            background-color: var(--color-card-bg);
+        }
+        h1, h2 { margin-top: 0; }
+        .pedagogical-column h1 { color: var(--color-card-bg); }
+        .tool-column h2 { color: var(--color-night-blue); }
+        h1 {
+            font-size: 1.8em;
+            border-bottom: 2px solid var(--color-gold);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+        h2 { font-size: 1.6em; }
+        h3 {
+            font-size: 1.2em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            color: var(--color-gold);
+        }
+        h3 .icon { width: 24px; height: 24px; margin-right: 10px; fill: currentColor; }
+        p, li { font-size: 0.95em; }
+        ul { list-style: none; padding-left: 0; }
+        ul li {
+            padding-left: 1.5em;
+            text-indent: -1.5em;
+            margin-bottom: 5px;
+        }
+        ul li::before {
+            content: '•';
+            color: var(--color-gold);
+            margin-right: 0.5em;
+            font-size: 1.2em;
+        }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input[type="text"], input[type="number"] {
+            width: 100%; padding: 10px;
+            border: 1px solid var(--color-border); border-radius: 4px;
+            box-sizing: border-box; font-size: 1em; color: var(--color-text-on-light);
+        }
+        button {
+            background-color: var(--color-gold);
+            color: var(--color-night-blue); border: none; padding: 12px 20px;
+            border-radius: 5px; font-size: 1em; font-weight: bold;
+            cursor: pointer; transition: background-color 0.3s, transform 0.1s;
+            width: 100%; margin-top: 10px;
+        }
+        button:hover { background-color: var(--color-gold-dark); }
+        button:active { transform: scale(0.98); }
+        
+        #results-container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            border: 1px solid var(--color-border);
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed var(--color-border);
+        }
+        .result-item:last-child { border-bottom: none; }
+        .result-label { font-size: 1em; color: #555; }
+        .result-value { font-size: 1.4em; font-weight: bold; }
+        .result-value.warning { color: var(--color-warning); }
+        .result-value.info { color: var(--color-info); }
+
+        @media (max-width: 900px) {
+            body { padding: 0; }
+            .container { flex-direction: column; border-radius: 0; max-width: 100%; }
+            .pedagogical-column { border-right: none; border-bottom: 1px solid var(--color-gold); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="column pedagogical-column">
+            <h1>20. Calculadora de Deuda Técnica</h1>
+            
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-2h2v2zm0-4h-2V7h2v5z"></path></svg>
+                Objetivo
+            </h3>
+            <p>Cuantificar el coste oculto de los atajos tecnológicos ("deuda técnica"), traduciendo la lentitud en el desarrollo y los bugs recurrentes en un impacto financiero tangible.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"></path></svg>
+                Importancia Estratégica
+            </h3>
+            <p>La deuda técnica es el interés que pagas por malas decisiones de software. Al principio es bajo, pero con el tiempo se capitaliza y puede ahogar la capacidad de innovar. Esta herramienta permite justificar con datos la necesidad de refactorizar y dedicar tiempo a la calidad, demostrando que es una inversión y no un gasto.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+                Para Quién Es
+            </h3>
+            <p>Esencial para CTOs, Tech Leads y CEOs, para facilitar la conversación sobre la asignación de recursos entre nuevas funcionalidades y el mantenimiento de la calidad del código.</p>
+
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
+                Instrucciones de Uso
+            </h3>
+            <ul>
+                <li><strong>"Drag Factor":</strong> Estima qué porcentaje de tiempo pierde el equipo debido a esta deuda.</li>
+                <li><strong>Equipo Afectado:</strong> Introduce el número de desarrolladores y su coste mensual promedio.</li>
+                <li><strong>Coste de la Solución:</strong> Estima cuántos meses-desarrollador se necesitarían para arreglar la deuda.</li>
+                <li><strong>Calcular:</strong> La herramienta revelará el coste mensual de no hacer nada y en cuánto tiempo se amortizaría la inversión de arreglarlo.</li>
+            </ul>
+        </div>
+        <div class="column tool-column">
+            <h2>Herramienta Interactiva</h2>
+            <div id="debt-form">
+                <div class="form-group">
+                    <label>"Drag Factor" - Ralentización del Desarrollo (%)</label>
+                    <input type="number" id="drag-factor" value="20" min="0" max="100">
+                </div>
+                <div class="form-group">
+                    <label>Nº de Desarrolladores Afectados</label>
+                    <input type="number" id="dev-count" value="5">
+                </div>
+                <div class="form-group">
+                    <label>Coste Mensual Promedio por Desarrollador (€)</label>
+                    <input type="number" id="dev-cost" value="4000">
+                </div>
+                 <div class="form-group">
+                    <label>Meses-Desarrollador para Solucionarlo</label>
+                    <input type="number" id="fix-effort" value="3">
+                </div>
+                <button id="calculate-btn">Calcular Coste de la Deuda</button>
+            </div>
+            
+            <div id="results-container" style="display:none;">
+                 <div class="result-item">
+                    <span class="result-label">Coste Mensual de Inacción:</span>
+                    <span class="result-value warning" id="monthly-cost"></span>
+                </div>
+                 <div class="result-item">
+                    <span class="result-label">Coste Total para Solucionarlo:</span>
+                    <span class="result-value info" id="fix-cost"></span>
+                </div>
+                 <div class="result-item">
+                    <span class="result-label">Punto de Equilibrio (ROI):</span>
+                    <span class="result-value" id="breakeven"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const calculateBtn = document.getElementById('calculate-btn');
+            
+            calculateBtn.addEventListener('click', calculateDebt);
+
+            function calculateDebt() {
+                const dragFactor = parseFloat(document.getElementById('drag-factor').value) / 100;
+                const devCount = parseFloat(document.getElementById('dev-count').value);
+                const devCost = parseFloat(document.getElementById('dev-cost').value);
+                const fixEffort = parseFloat(document.getElementById('fix-effort').value);
+                
+                if (isNaN(dragFactor) || isNaN(devCount) || isNaN(devCost) || isNaN(fixEffort)) {
+                    alert('Por favor, introduce valores numéricos válidos en todos los campos.');
+                    return;
+                }
+
+                const totalTeamCost = devCount * devCost;
+                const monthlyCostOfInaction = totalTeamCost * dragFactor;
+                const totalFixCost = devCost * fixEffort;
+                
+                let breakevenMonths = Infinity;
+                if (monthlyCostOfInaction > 0) {
+                    breakevenMonths = totalFixCost / monthlyCostOfInaction;
+                }
+
+                const currencyFormatter = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' });
+
+                document.getElementById('monthly-cost').textContent = currencyFormatter.format(monthlyCostOfInaction);
+                document.getElementById('fix-cost').textContent = currencyFormatter.format(totalFixCost);
+                
+                if (breakevenMonths === Infinity) {
+                    document.getElementById('breakeven').textContent = "N/A";
+                } else {
+                    document.getElementById('breakeven').textContent = `${breakevenMonths.toFixed(1)} meses`;
+                }
+                
+                document.getElementById('results-container').style.display = 'block';
+            }
+        });
+    </script>
+
+</body>
+</html>
