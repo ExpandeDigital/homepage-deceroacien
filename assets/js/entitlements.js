@@ -196,6 +196,13 @@
     { test: /\/fase_3_ecd\//i, required: ['course.pmf'] },
     { test: /\/fase_4_ecd\//i, required: ['course.growth'] },
     { test: /\/fase_5_ecd\//i, required: ['course.ceo'] },
+  // Rutas del programa Camino Dorado (carpetas con guiones)
+  // Importante: no bloquear el index de cada carpeta (solo archivos internos)
+  { test: /\/camino-dorado-fases\/fase-1-ecd\/(?!index\.html)([^/?#]+)/i, required: ['course.pmv'] },
+  { test: /\/camino-dorado-fases\/fase-2-ecd\/(?!index\.html)([^/?#]+)/i, required: ['course.pmv'] },
+  { test: /\/camino-dorado-fases\/fase-3-ecd\/(?!index\.html)([^/?#]+)/i, required: ['course.pmf'] },
+  { test: /\/camino-dorado-fases\/fase-4-ecd\/(?!index\.html)([^/?#]+)/i, required: ['course.growth'] },
+  { test: /\/camino-dorado-fases\/fase-5-ecd\/(?!index\.html)([^/?#]+)/i, required: ['course.ceo'] },
     // Rutas equivalentes ya existentes en el repo (de0a100)
     { test: /\/fase_1_de0a100\//i, required: ['course.pmv'] },
     { test: /\/fase_2_de0a100\//i, required: ['course.pmv'] },
