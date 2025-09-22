@@ -1,11 +1,37 @@
 // Inicializadores por página: detectan el DOM y montan la lógica específica
 (function () {
-  const { domReady, qs, qsa, formatCurrencyCL, animateNumber, pulse } = window.GameComponents || {};
-
-  if (!domReady) {
-    console.error('GameComponents no está cargado. Asegúrate de incluir components.js antes de updateScripts.js');
-    return;
-  }
+  const GC = window.GameComponents || {};
+  const domReady = GC.domReady || (cb => {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', cb);
+    } else {
+      cb();
+    }
+  });
+  const qs = GC.qs || ((sel, root = document) => root.querySelector(sel));
+  const qsa = GC.qsa || ((sel, root = document) => Array.from(root.querySelectorAll(sel)));
+  const formatCurrencyCL = GC.formatCurrencyCL || (value => {
+    try { return '$' + Math.round(value).toLocaleString('es-CL'); }
+    catch (e) { return '$' + Math.round(value || 0); }
+  });
+  const animateNumber = GC.animateNumber || ((element, start, end, { duration = 1000, suffix = '', decimals = 0 } = {}) => {
+    if (!element) return;
+    let startTs = null;
+    const step = (ts) => {
+      if (!startTs) startTs = ts;
+      const p = Math.min((ts - startTs) / duration, 1);
+      const cur = start + (end - start) * p;
+      element.textContent = cur.toFixed(decimals) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  });
+  const pulse = GC.pulse || ((el, className = 'value-change') => {
+    if (!el) return;
+    el.classList.remove(className);
+    void el.offsetWidth;
+    el.classList.add(className);
+  });
 
   domReady(() => {
     // 1) Dilema del PMV (layout con panel lateral y juego embebido)

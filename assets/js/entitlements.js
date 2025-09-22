@@ -22,11 +22,11 @@
 
   // Mapa de productos → CTA por defecto (ajustable)
   const PRODUCT_CTAS = {
-    'course.pmv': { href: '/bootcamp_pmv.html', label: 'Comprar Bootcamp PMV' },
-    'course.pmf': { href: '/bootcamp_pmf.html', label: 'Comprar Bootcamp PMF' },
-    'course.growth': { href: '/bootcamp_growth.html', label: 'Comprar Bootcamp Growth' },
-    'course.ceo': { href: '/masterclass_ceo.html', label: 'Comprar Masterclass CEO' },
-    'membership.pro': { href: '/academy.html', label: 'Unirme a la Membresía' }
+  'course.pmv': { href: '/academy-fases/bootcamp-pmv.html', label: 'Comprar Bootcamp PMV' },
+  'course.pmf': { href: '/academy-fases/bootcamp-pmf.html', label: 'Comprar Bootcamp PMF' },
+  'course.growth': { href: '/academy-fases/bootcamp-growth.html', label: 'Comprar Bootcamp Growth' },
+  'course.ceo': { href: '/masterclass-ceo.html', label: 'Comprar Masterclass CEO' },
+  'membership.pro': { href: '/academy-fases/index.html', label: 'Unirme a la Membresía' }
   };
 
   function readEntitlements() {
@@ -117,7 +117,7 @@
     const first = ids[0];
     const overrideHref = block.getAttribute('data-cta-override');
     const overrideLabel = block.getAttribute('data-cta-label');
-    const map = PRODUCT_CTAS[first] || { href: '/academy.html', label: 'Ver programas disponibles' };
+  const map = PRODUCT_CTAS[first] || { href: '/academy-fases/index.html', label: 'Ver programas disponibles' };
     const href = overrideHref || map.href;
     const label = overrideLabel || map.label;
 

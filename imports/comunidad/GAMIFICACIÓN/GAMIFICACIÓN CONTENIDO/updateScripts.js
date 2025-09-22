@@ -1,3 +1,20 @@
+// Delegation stub: load central updateScripts.js from assets
+(function(){
+  try {
+    var exists = Array.from(document.scripts || []).some(function(el){
+      var src = el.getAttribute && el.getAttribute('src');
+      return src && src.indexOf('assets/js/updateScripts.js') !== -1;
+    });
+    if (exists) return;
+    var s = document.createElement('script');
+    s.src = '../../../../assets/js/updateScripts.js';
+    s.async = false;
+    s.setAttribute('data-central-updateScripts','1');
+    (document.head || document.documentElement).appendChild(s);
+  } catch (e) {
+    if (window.console && console.warn) console.warn('Delegation to central updateScripts.js failed', e);
+  }
+})();
 // Inicializadores por página: detectan el DOM y montan la lógica específica
 (function () {
   const { domReady, qs, qsa, formatCurrencyCL, animateNumber, pulse } = window.GameComponents || {};

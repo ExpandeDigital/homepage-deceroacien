@@ -177,6 +177,17 @@
     <script src="../assets/js/config-secure.js"></script>
     <script src="../assets/js/auth-config.js"></script>
     <script src="../assets/js/auth.js"></script>
+    <script>
+        // Redirigir si ya hay sesión activa
+        document.addEventListener('DOMContentLoaded', function () {
+            try { if (window.initializeAuthManager) window.initializeAuthManager(); } catch (e) {}
+            setTimeout(function(){
+                if (window.redirectIfAuthenticated) {
+                    window.redirectIfAuthenticated();
+                }
+            }, 0);
+        });
+    </script>
     
     <!-- Inicialización de Google Sign In Button según documentación oficial -->
     <script>

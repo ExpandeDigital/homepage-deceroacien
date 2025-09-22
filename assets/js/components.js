@@ -306,7 +306,7 @@ class HeaderComponent extends BaseComponent {
             <a href="${this.basePath}gamificacion/index.html" class="header-link ${this.currentPage === 'gamificacion' ? 'active' : ''}">Gamificación</a>
             <a href="${this.basePath}talent/index.html" class="header-link ${this.currentPage === 'talent' ? 'active' : ''}">Talent</a>
             <a href="${this.basePath}contacto.html" class="header-link ${this.currentPage === 'contacto' ? 'active' : ''}">Contacto</a>
-            <a href="${this.basePath}academy.html" class="header-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a>
+            <a href="${this.basePath}academy-fases/index.html" class="header-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a>
                 </div>
                 
                 <!-- Sección de autenticación -->
@@ -423,7 +423,7 @@ class HeaderComponent extends BaseComponent {
     <a href="${this.basePath}nosotros.html" class="mobile-menu-link">Nosotros</a>
         <a href="${this.basePath}servicios.html" class="mobile-menu-link">Servicios</a>
         <a href="${this.basePath}metodologia.html" class="mobile-menu-link">Metodología</a>
-    <a href="${this.basePath}academy.html" class="mobile-menu-link">Academy</a>
+    <a href="${this.basePath}academy-fases/index.html" class="mobile-menu-link">Academy</a>
     <a href="${this.basePath}blog.html" class="mobile-menu-link">Blog</a>
     <a href="${this.basePath}faq.html" class="mobile-menu-link">FAQ</a>
     <a href="${this.basePath}gamificacion/index.html" class="mobile-menu-link">Gamificación</a>
@@ -622,7 +622,7 @@ class FooterComponent extends BaseComponent {
                         <ul>
                 <li><a href="${this.basePath}camino-dorado.html" class="footer-link ${this.currentPage === 'camino-dorado' ? 'active' : ''}">El Camino Dorado</a></li>
                 <li><a href="${this.basePath}servicios.html" class="footer-link">Servicios Premium</a></li>
-                <li><a href="${this.basePath}academy.html" class="footer-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a></li>
+                <li><a href="${this.basePath}academy-fases/index.html" class="footer-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a></li>
                 <li><a href="${this.basePath}gamificacion/index.html" class="footer-link ${this.currentPage === 'gamificacion' ? 'active' : ''}">Gamificación</a></li>
                 <li><a href="${this.basePath}diagnosticos_ai.html" class="footer-link ${this.currentPage === 'diagnosticos_ai' ? 'active' : ''}">Diagnósticos con IA</a></li>
                 <li><a href="${this.basePath}conecta/conecta.html" class="footer-link ${this.currentPage === 'conecta' ? 'active' : ''}">Conecta</a></li>
@@ -887,8 +887,9 @@ class AppManager {
         // Solo manejar cierre real de la aplicación, no navegación
         window.addEventListener('unload', this.handleBeforeUnload.bind(this));
 
-    // Cargar entitlements en rutas protegidas y configurar lazy loading para imágenes
+    // Cargar entitlements y auth en rutas protegidas, y configurar lazy loading para imágenes
     this.ensureEntitlementsLoader();
+    this.ensureAuthLoaderAndGuard && this.ensureAuthLoaderAndGuard();
         this.setupLazyLoading();
     }
 
@@ -944,6 +945,47 @@ class AppManager {
                 imageObserver.observe(img);
             });
         }
+    }
+
+    /**
+     * Inyecta auth.js automáticamente en rutas protegidas si no está presente
+     * y asegura una llamada a requireAuth() cuando esté disponible.
+     */
+    ensureAuthLoaderAndGuard() {
+        try {
+            const path = (location && location.pathname || '').toLowerCase();
+            const isProtected = /\/portal-alumno\.html$/.test(path)
+                || /\/fase_\d+_ecd\//.test(path)
+                || /\/fase_\d+_de0a100\//.test(path)
+                || /\/camino-dorado-fases\/fase_\d+_ecd\//.test(path);
+
+            if (!isProtected) return;
+
+            const hasAuth = Array.from(document.scripts).some(s => (s.src || '').includes('assets/js/auth.js'));
+            if (!hasAuth) {
+                const s = document.createElement('script');
+                s.src = `${GlobalConfig.basePath}assets/js/auth.js`;
+                s.defer = true;
+                document.head.appendChild(s);
+            }
+
+            // Intentar proteger la página cuando requireAuth esté disponible
+            const tryGuard = () => {
+                try {
+                    if (typeof window.requireAuth === 'function') {
+                        window.requireAuth();
+                        return true;
+                    }
+                } catch (e) {}
+                return false;
+            };
+
+            if (!tryGuard()) {
+                setTimeout(tryGuard, 200);
+                setTimeout(tryGuard, 800);
+                setTimeout(tryGuard, 1600);
+            }
+        } catch {}
     }
 
     /**
