@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Valuación y Dilución | El Camino Dorado</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a1f2f;
+            color: #e6f1ff;
+        }
+        .tool-container {
+            background-color: #112240;
+            border: 1px solid #1c3253;
+        }
+        .result-value {
+            background: linear-gradient(135deg, #FBBF24, #F59E0B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        .action-button {
+            @apply px-4 py-2 rounded-md font-semibold transition-all duration-300;
+        }
+        .chart-container {
+            max-width: 400px;
+            margin: 2rem auto;
+        }
+    </style>
+</head>
+<body class="p-6">
+    <div class="max-w-6xl mx-auto py-8">
+        <div class="tool-container rounded-lg shadow-lg p-8 space-y-8 md:flex md:space-x-8 md:space-y-0">
+            <!-- Sección de Información -->
+            <div class="md:w-1/3 bg-[#0a1f2f] rounded-lg p-6 space-y-6">
+                <h2 class="text-2xl font-semibold mb-4 text-white">Guía de la Herramienta</h2>
+                <div class="space-y-4 text-gray-300">
+                    <div>
+                        <p class="font-bold text-[#FBBF24]">
+                            <span class="text-xl mr-2">🎯</span> Objetivo
+                        </p>
+                        <p class="text-sm mt-1">
+                            Ayudarte a comprender de manera visual y práctica cómo una ronda de inversión afecta la valoración de tu empresa y la dilución de tu capital como fundador.
+                        </p>
+                    </div>
+                    <div>
+                        <p class="font-bold text-[#FBBF24]">
+                            <span class="text-xl mr-2">⭐</span> Importancia
+                        </p>
+                        <p class="text-sm mt-1">
+                            Es fundamental que domines estos conceptos antes de negociar con inversionistas. Comprender la dilución te empodera para tomar decisiones estratégicas y proteger tu participación a largo plazo.
+                        </p>
+                    </div>
+                    <div>
+                        <p class="font-bold text-[#FBBF24]">
+                            <span class="text-xl mr-2">⚙</span> ¿Qué es lo que hace?
+                        </p>
+                        <p class="text-sm mt-1">
+                            Calcula la **valoración post-money**, la **participación del inversionista**, la **dilución total de los fundadores** y la **dilución individual** por cada fundador.
+                        </p>
+                    </div>
+                    <div>
+                        <p class="font-bold text-[#FBBF24]">
+                            <span class="text-xl mr-2">💡</span> ¿Para qué me sirve?
+                        </p>
+                        <p class="text-sm mt-1">
+                            Para simular diferentes escenarios de inversión y visualizar instantáneamente el impacto en la equidad de tu empresa. Es tu copiloto financiero antes de sentarte en la mesa de negociación.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de Calculadora -->
+            <div class="md:w-2/3">
+                <header class="text-center mb-8">
+                    <h1 class="text-3xl font-bold text-white mb-2">Calculadora de Valuación y Dilución</h1>
+                    <p class="text-gray-400">Entiende el impacto financiero de tu primera ronda de inversión.</p>
+                </header>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-[#0a1f2f] rounded-lg p-6 space-y-6">
+                        <h2 class="text-2xl font-semibold mb-4 text-white">Ingresa los Datos de tu Ronda</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="monto" class="block text-sm font-medium text-gray-300">Monto que Deseas Levantar (USD)</label>
+                                <input type="number" id="monto" placeholder="Ej: 150000" class="mt-1 block w-full px-4 py-2 bg-[#1c3253] border border-[#2d4265] rounded-md shadow-sm placeholder-gray-500 focus:outline-none focus:ring-[#FBBF24] focus:border-[#FBBF24] sm:text-sm">
+                            </div>
+                            <div>
+                                <label for="valoracion" class="block text-sm font-medium text-gray-300">Valoración Pre-Money (USD)</label>
+                                <input type="number" id="valoracion" placeholder="Ej: 1000000" class="mt-1 block w-full px-4 py-2 bg-[#1c3253] border border-[#2d4265] rounded-md shadow-sm placeholder-gray-500 focus:outline-none focus:ring-[#FBBF24] focus:border-[#FBBF24] sm:text-sm">
+                            </div>
+                            <div>
+                                <label for="numFundadores" class="block text-sm font-medium text-gray-300">Número de Fundadores</label>
+                                <input type="number" id="numFundadores" placeholder="Ej: 3" class="mt-1 block w-full px-4 py-2 bg-[#1c3253] border border-[#2d4265] rounded-md shadow-sm placeholder-gray-500 focus:outline-none focus:ring-[#FBBF24] focus:border-[#FBBF24] sm:text-sm" value="1">
+                            </div>
+                        </div>
+                        <button id="calcularBtn" class="w-full py-3 mt-4 text-center text-gray-900 font-semibold rounded-md transition-all duration-300 transform hover:scale-105" style="background-color: #FBBF24;">
+                            Calcular Impacto
+                        </button>
+                    </div>
+
+                    <div class="bg-[#0a1f2f] rounded-lg p-6 space-y-6">
+                        <h2 class="text-2xl font-semibold mb-4 text-white">Resultados de tu Ronda</h2>
+                        <div id="resultados" class="space-y-4 text-gray-300">
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium">Valoración Post-Money:</span>
+                                <span id="postMoney" class="text-xl result-value">$0</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium">Participación del Inversor:</span>
+                                <span id="participacionInversor" class="text-xl result-value">0%</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium">Dilución de los Fundadores (Total):</span>
+                                <span id="dilucionFundadorTotal" class="text-xl result-value">0%</span>
+                            </div>
+                            <div class="flex justify-between items-center" id="dilucionIndividualRow" style="display:none;">
+                                <span class="font-medium">Dilución por Fundador:</span>
+                                <span id="dilucionFundadorIndividual" class="text-xl result-value">0%</span>
+                            </div>
+                        </div>
+
+                        <!-- Gráficos de Dilución -->
+                        <div id="chartContainer" style="display:none;">
+                            <h3 class="text-xl font-semibold text-white mt-8 mb-4">Análisis de Dilución</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-[#1c3253] rounded-lg p-4">
+                                    <h4 class="text-lg font-medium text-gray-300 mb-2">Participación de la Ronda</h4>
+                                    <div class="chart-container">
+                                        <canvas id="roundChart"></canvas>
+                                    </div>
+                                </div>
+                                <div class="bg-[#1c3253] rounded-lg p-4">
+                                    <h4 class="text-lg font-medium text-gray-300 mb-2">Participación por Fundador</h4>
+                                    <div class="chart-container">
+                                        <canvas id="foundersChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="actionButtons" class="flex flex-wrap gap-2 mt-6">
+                            <button id="guardarBtn" class="action-button bg-[#2d4265] text-white hover:bg-[#1c3253]">Guardar</button>
+                            <button id="descargarBtn" class="action-button bg-[#2d4265] text-white hover:bg-[#1c3253]">Descargar</button>
+                            <button id="compartirBtn" class="action-button bg-[#2d4265] text-white hover:bg-[#1c3253]">Compartir</button>
+                            <button id="limpiarBtn" class="action-button bg-red-800 text-white hover:bg-red-900">Limpiar</button>
+                        </div>
+
+                        <div id="mensaje" class="mt-6 p-4 rounded-md text-sm text-gray-400 border border-[#2d4265]">
+                            <p>Los resultados aparecerán aquí una vez que ingreses tus datos. Recuerda que esta es una herramienta de simulación para ayudarte a entender los conceptos básicos de la valuación y la dilución.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Firebase setup
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+            const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+            const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : '';
+            
+            let app, db, auth, userId;
+
+            // Initialize Firebase and Auth
+            try {
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        await loadData(userId);
+                    } else {
+                        if (initialAuthToken) {
+                            await signInWithCustomToken(auth, initialAuthToken);
+                        } else {
+                            await signInAnonymously(auth);
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error("Firebase initialization failed:", error);
+                document.getElementById('mensaje').innerHTML = `<p class="text-red-400">Error al inicializar la base de datos. Por favor, recarga la página.</p>`;
+            }
+
+            // UI elements
+            const calcularBtn = document.getElementById('calcularBtn');
+            const guardarBtn = document.getElementById('guardarBtn');
+            const descargarBtn = document.getElementById('descargarBtn');
+            const compartirBtn = document.getElementById('compartirBtn');
+            const limpiarBtn = document.getElementById('limpiarBtn');
+            const montoInput = document.getElementById('monto');
+            const valoracionInput = document.getElementById('valoracion');
+            const numFundadoresInput = document.getElementById('numFundadores');
+            const postMoneySpan = document.getElementById('postMoney');
+            const participacionInversorSpan = document.getElementById('participacionInversor');
+            const dilucionFundadorTotalSpan = document.getElementById('dilucionFundadorTotal');
+            const dilucionFundadorIndividualSpan = document.getElementById('dilucionFundadorIndividual');
+            const dilucionIndividualRow = document.getElementById('dilucionIndividualRow');
+            const mensajeDiv = document.getElementById('mensaje');
+            const chartContainer = document.getElementById('chartContainer');
+
+            let roundChart, foundersChart;
+
+            function formatCurrency(value) {
+                return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(value);
+            }
+
+            function getResults() {
+                const monto = parseFloat(montoInput.value) || 0;
+                const valoracion = parseFloat(valoracionInput.value) || 0;
+                const numFundadores = parseInt(numFundadoresInput.value) || 1;
+                
+                let postMoney = 0, participacionInversor = 0, dilucionFundadorTotal = 0, dilucionFundadorIndividual = 0;
+
+                if (monto > 0 && valoracion > 0 && numFundadores > 0) {
+                    postMoney = valoracion + monto;
+                    participacionInversor = (monto / postMoney) * 100;
+                    dilucionFundadorTotal = participacionInversor;
+                    dilucionFundadorIndividual = (100 - dilucionFundadorTotal) / numFundadores;
+                }
+
+                return { monto, valoracion, numFundadores, postMoney, participacionInversor, dilucionFundadorTotal, dilucionFundadorIndividual };
+            }
+
+            function updateUI(results, message, isError = false) {
+                const { postMoney, participacionInversor, dilucionFundadorTotal, dilucionFundadorIndividual, numFundadores } = results;
+
+                postMoneySpan.textContent = formatCurrency(postMoney);
+                participacionInversorSpan.textContent = `${participacionInversor.toFixed(2)}%`;
+                dilucionFundadorTotalSpan.textContent = `${dilucionFundadorTotal.toFixed(2)}%`;
+                dilucionFundadorIndividualSpan.textContent = `${dilucionFundadorIndividual.toFixed(2)}%`;
+                
+                if (numFundadores > 1) {
+                    dilucionIndividualRow.style.display = 'flex';
+                } else {
+                    dilucionIndividualRow.style.display = 'none';
+                }
+
+                mensajeDiv.innerHTML = message;
+                if (isError) {
+                    mensajeDiv.classList.remove('border-[#2d4265]');
+                    mensajeDiv.classList.add('text-red-400', 'border-red-400');
+                    chartContainer.style.display = 'none';
+                } else {
+                    mensajeDiv.classList.remove('text-red-400', 'border-red-400');
+                    mensajeDiv.classList.add('border-[#2d4265]');
+                    chartContainer.style.display = 'block';
+                    renderCharts(results);
+                }
+            }
+
+            function renderCharts(results) {
+                const founderRetention = 100 - results.dilucionFundadorTotal;
+                const founderLabels = Array.from({ length: results.numFundadores }, (_, i) => `Fundador ${i + 1}`);
+                const founderData = Array(results.numFundadores).fill(results.dilucionFundadorIndividual);
+
+                // Chart 1: Round Dilution
+                const roundCtx = document.getElementById('roundChart').getContext('2d');
+                if (roundChart) {
+                    roundChart.destroy();
+                }
+                roundChart = new Chart(roundCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Inversor', 'Fundadores'],
+                        datasets: [{
+                            data: [results.participacionInversor, founderRetention],
+                            backgroundColor: ['#FBBF24', '#1c3253'],
+                            borderColor: '#112240',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                labels: { color: '#e6f1ff' }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        label += context.parsed.toFixed(2) + '%';
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Chart 2: Founders' Participation
+                const foundersCtx = document.getElementById('foundersChart').getContext('2d');
+                if (foundersChart) {
+                    foundersChart.destroy();
+                }
+                foundersChart = new Chart(foundersCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: founderLabels,
+                        datasets: [{
+                            data: founderData,
+                            backgroundColor: ['#FBBF24', '#F59E0B', '#1c3253', '#2d4265', '#4f6c8d'],
+                            borderColor: '#112240',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                labels: { color: '#e6f1ff' }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        label += context.parsed.toFixed(2) + '%';
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function calcular() {
+                const results = getResults();
+                const { monto, valoracion, numFundadores } = results;
+
+                if (isNaN(monto) || isNaN(valoracion) || monto <= 0 || valoracion <= 0) {
+                    updateUI(getResults(), '<p>Por favor, ingresa valores numéricos positivos y válidos en los campos de Monto y Valoración.</p>', true);
+                    return;
+                }
+
+                if (isNaN(numFundadores) || numFundadores <= 0) {
+                    updateUI(getResults(), '<p>Por favor, ingresa un número válido de fundadores (mayor que 0).</p>', true);
+                    return;
+                }
+                
+                const message = `<p>La **Valoración Post-Money** de tu empresa será de **${formatCurrency(results.postMoney)}**. Al levantar **${formatCurrency(results.monto)}**, la participación de los nuevos inversionistas será del **${results.participacionInversor.toFixed(2)}%**, lo que representa una dilución total para los fundadores del **${results.dilucionFundadorTotal.toFixed(2)}%**.</p><p>Esto significa que la dilución por fundador (asumiendo partes iguales) es del **${results.dilucionFundadorIndividual.toFixed(2)}%**. ¡Ahora estás mejor preparado para negociar!</p>`;
+                updateUI(results, message, false);
+            }
+
+            async function loadData(uid) {
+                if (!db || !uid) return;
+                try {
+                    const docRef = doc(db, `artifacts/${appId}/users/${uid}/valuation-data/main-data`);
+                    const docSnap = await getDoc(docRef);
+
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        montoInput.value = data.monto;
+                        valoracionInput.value = data.valoracion;
+                        numFundadoresInput.value = data.numFundadores;
+                        calcular();
+                        mensajeDiv.innerHTML += '<p class="text-green-400 mt-2">Datos cargados exitosamente.</p>';
+                    }
+                } catch (e) {
+                    console.error("Error loading document: ", e);
+                    mensajeDiv.innerHTML = `<p class="text-red-400">Error al cargar datos. ${e.message}</p>`;
+                }
+            }
+
+            async function saveData() {
+                if (!db || !userId) {
+                    mensajeDiv.innerHTML = `<p class="text-red-400">No se pudo guardar. Autenticación fallida.</p>`;
+                    return;
+                }
+
+                const data = getResults();
+                if (data.monto === 0 || data.valoracion === 0) {
+                    mensajeDiv.innerHTML = `<p class="text-red-400">No se puede guardar un cálculo vacío.</p>`;
+                    return;
+                }
+
+                try {
+                    const docRef = doc(db, `artifacts/${appId}/users/${userId}/valuation-data/main-data`);
+                    await setDoc(docRef, data);
+                    mensajeDiv.innerHTML = `<p class="text-green-400">Datos guardados exitosamente.</p>`;
+                } catch (e) {
+                    console.error("Error adding document: ", e);
+                    mensajeDiv.innerHTML = `<p class="text-red-400">Error al guardar datos. ${e.message}</p>`;
+                }
+            }
+
+            function downloadData() {
+                const results = getResults();
+                const data = `Resultados de la Calculadora de Valuación y Dilución\n\n` +
+                             `Monto a Levantar: $${results.monto}\n` +
+                             `Valoración Pre-Money: $${results.valoracion}\n` +
+                             `Número de Fundadores: ${results.numFundadores}\n\n` +
+                             `--- Resultados ---\n` +
+                             `Valoración Post-Money: ${formatCurrency(results.postMoney)}\n` +
+                             `Participación del Inversor: ${results.participacionInversor.toFixed(2)}%\n` +
+                             `Dilución de los Fundadores (Total): ${results.dilucionFundadorTotal.toFixed(2)}%\n` +
+                             `Dilución por Fundador: ${results.dilucionFundadorIndividual.toFixed(2)}%\n`;
+
+                const blob = new Blob([data], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'resultados_valuacion.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                mensajeDiv.innerHTML = `<p class="text-green-400">Archivo descargado.</p>`;
+            }
+
+            function shareData() {
+                const results = getResults();
+                const shareText = `¡He simulado mi ronda de inversión!\n\n` +
+                                 `Monto: ${formatCurrency(results.monto)}\n` +
+                                 `Valoración Pre-Money: ${formatCurrency(results.valoracion)}\n` +
+                                 `Valoración Post-Money: ${formatCurrency(results.postMoney)}\n` +
+                                 `Dilución por fundador: ${results.dilucionFundadorIndividual.toFixed(2)}%`;
+
+                const tempInput = document.createElement('textarea');
+                tempInput.value = shareText;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+
+                mensajeDiv.innerHTML = `<p class="text-green-400">Resultados copiados al portapapeles. ¡Listo para compartir!</p>`;
+            }
+
+            function clearForm() {
+                montoInput.value = '';
+                valoracionInput.value = '';
+                numFundadoresInput.value = '1';
+                postMoneySpan.textContent = '$0';
+                participacionInversorSpan.textContent = '0%';
+                dilucionFundadorTotalSpan.textContent = '0%';
+                dilucionFundadorIndividualSpan.textContent = '0%';
+                dilucionIndividualRow.style.display = 'none';
+                mensajeDiv.innerHTML = `<p>Los resultados aparecerán aquí una vez que ingreses tus datos. Recuerda que esta es una herramienta de simulación para ayudarte a entender los conceptos básicos de la valuación y la dilución.</p>`;
+                mensajeDiv.classList.remove('text-red-400', 'border-red-400');
+                mensajeDiv.classList.add('border-[#2d4265]');
+                chartContainer.style.display = 'none';
+
+                if (roundChart) roundChart.destroy();
+                if (foundersChart) foundersChart.destroy();
+            }
+
+            // Event Listeners
+            calcularBtn.addEventListener('click', calcular);
+            guardarBtn.addEventListener('click', saveData);
+            descargarBtn.addEventListener('click', downloadData);
+            compartirBtn.addEventListener('click', shareData);
+            limpiarBtn.addEventListener('click', clearForm);
+
+            montoInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') calcular();
+            });
+            valoracionInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') calcular();
+            });
+            numFundadoresInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') calcular();
+            });
+        });
+    </script>
+</body>
+</html>

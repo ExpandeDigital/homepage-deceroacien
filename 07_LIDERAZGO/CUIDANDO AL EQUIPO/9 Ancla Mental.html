@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Cero a Cien - Ancla Mental</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0d1a2e; /* Azul Noche */
+            color: #f0f0f0;
+        }
+        .panel-dorado {
+            border-color: #D4AF37; /* Dorado */
+        }
+        .texto-dorado {
+            color: #D4AF37;
+        }
+        .bg-dorado {
+            background-color: #D4AF37;
+        }
+        .bg-dorado-hover:hover {
+            background-color: #b89b31;
+        }
+        .panel-explicativo {
+            background-color: #102a43;
+        }
+        .herramienta-panel {
+            background-color: #0d1a2e;
+        }
+        #circulo-respiracion {
+            width: 150px;
+            height: 150px;
+            background-color: #D4AF37;
+            border-radius: 50%;
+            transition: transform 4s ease-in-out;
+        }
+        .animar-inhalar {
+            transform: scale(1.5);
+        }
+        .animar-exhalar {
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 shadow-2xl rounded-lg overflow-hidden">
+        
+        <!-- Panel Izquierdo: Explicaciones -->
+        <div class="panel-explicativo p-8 lg:p-12 flex flex-col justify-center rounded-lg">
+            <h1 class="text-3xl lg:text-4xl font-bold texto-dorado mb-6">Ancla Mental</h1>
+            
+            <div class="space-y-6 text-gray-300">
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">Objetivo</h2>
+                    <p>Proporcionar una herramienta de descompresión inmediata para ayudar a los miembros del equipo a gestionar momentos de estrés, recuperar el enfoque y calmar la mente a través de un ejercicio de respiración guiada.</p>
+                </div>
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">Importancia</h2>
+                    <p>El estrés y el burnout son riesgos reales en entornos de alta exigencia. Ofrecer recursos accesibles para la salud mental demuestra un compromiso genuino con el bienestar del equipo, mejorando la resiliencia y la sostenibilidad a largo plazo.</p>
+                </div>
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">¿Qué es?</h2>
+                    <p>Una herramienta interactiva de un solo clic que inicia un ejercicio de respiración guiada de 3 minutos. Utiliza una animación visual y textos simples para guiar al usuario a través del ciclo de inhalación, sostenimiento y exhalación.</p>
+                </div>
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">¿Para qué sirve?</h2>
+                    <p>Sirve como un "botón de reinicio" mental. Es ideal para usar antes de una reunión importante, después de una tarea estresante o en cualquier momento en que se necesite una pausa para reducir la ansiedad y recuperar la claridad mental.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel Derecho: Herramienta Interactiva -->
+        <div class="herramienta-panel p-8 lg:p-12 flex flex-col items-center justify-center text-center">
+            
+            <h2 class="text-2xl font-bold mb-4">Tu Pausa para Respirar</h2>
+            <p id="guia-texto" class="text-gray-400 mb-8 h-12 text-xl transition-opacity duration-500">Haz clic en "Iniciar Sesión" para comenzar.</p>
+
+            <div class="w-full h-48 flex items-center justify-center mb-8">
+                <div id="circulo-respiracion"></div>
+            </div>
+             
+            <button id="iniciar-sesion" class="w-full max-w-sm bg-dorado text-gray-900 font-bold py-3 px-6 rounded-lg bg-dorado-hover transition-colors duration-300 mb-12">Iniciar Sesión de 3 Minutos</button>
+            
+            <div id="mensaje-accion" class="text-green-400 h-8 mb-4 transition-opacity duration-300 opacity-0">
+                <!-- Mensajes de confirmación -->
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-lg">
+                <button id="guardar" class="w-full bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded-lg transition-colors duration-300">Guardar</button>
+                <button id="descargar" class="w-full bg-gray-800 text-gray-500 font-bold py-3 px-6 rounded-lg opacity-50 cursor-not-allowed">Descargar</button>
+                <button id="compartir" class="w-full bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded-lg transition-colors duration-300">Compartir</button>
+                <button id="limpiar" class="w-full bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded-lg transition-colors duration-300">Reiniciar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const iniciarBtn = document.getElementById('iniciar-sesion');
+            const guiaTexto = document.getElementById('guia-texto');
+            const circulo = document.getElementById('circulo-respiracion');
+            const mensajeAccion = document.getElementById('mensaje-accion');
+            
+            const guardarBtn = document.getElementById('guardar');
+            const compartirBtn = document.getElementById('compartir');
+            const limpiarBtn = document.getElementById('limpiar');
+            
+            let cicloActivo = false;
+            let timeouts = [];
+
+            const cicloRespiracion = [
+                { texto: "Inhala profundamente...", duracion: 4000, clase: 'animar-inhalar' },
+                { texto: "Sostén la respiración...", duracion: 7000, clase: '' },
+                { texto: "Exhala lentamente...", duracion: 8000, clase: 'animar-exhalar' }
+            ];
+
+            function ejecutarCiclo(iteraciones = 10) { // Aprox 3 minutos (19s por ciclo)
+                if (iteraciones === 0 || !cicloActivo) {
+                    finalizarSesion();
+                    return;
+                }
+
+                // Inhalar
+                guiaTexto.textContent = cicloRespiracion[0].texto;
+                circulo.classList.add(cicloRespiracion[0].clase);
+                timeouts.push(setTimeout(() => {
+                    // Sostener
+                    guiaTexto.textContent = cicloRespiracion[1].texto;
+                    timeouts.push(setTimeout(() => {
+                        // Exhalar
+                        guiaTexto.textContent = cicloRespiracion[2].texto;
+                        circulo.classList.remove(cicloRespiracion[0].clase);
+                        circulo.classList.add(cicloRespiracion[2].clase);
+                        timeouts.push(setTimeout(() => {
+                             circulo.classList.remove(cicloRespiracion[2].clase);
+                            ejecutarCiclo(iteraciones - 1);
+                        }, cicloRespiracion[2].duracion));
+                    }, cicloRespiracion[1].duracion));
+                }, cicloRespiracion[0].duracion));
+            }
+            
+            function iniciarSesion() {
+                if (cicloActivo) return; // Evitar multiples inicios
+                cicloActivo = true;
+                iniciarBtn.disabled = true;
+                iniciarBtn.textContent = "Sesión en curso...";
+                iniciarBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                ejecutarCiclo();
+            }
+
+            function finalizarSesion() {
+                timeouts.forEach(clearTimeout);
+                timeouts = [];
+                cicloActivo = false;
+                guiaTexto.textContent = "Sesión completada. Vuelve cuando quieras.";
+                circulo.className = "";
+                circulo.id = "circulo-respiracion"; // Reset
+                iniciarBtn.disabled = false;
+                iniciarBtn.textContent = "Iniciar Sesión de 3 Minutos";
+                iniciarBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+
+            iniciarBtn.addEventListener('click', iniciarSesion);
+            
+            limpiarBtn.addEventListener('click', () => {
+                 finalizarSesion();
+                 guiaTexto.textContent = "Haz clic en 'Iniciar Sesión' para comenzar.";
+            });
+
+            guardarBtn.addEventListener('click', () => {
+                // Simulación de guardar
+                mensajeAccion.textContent = "¡Sesión registrada en tu historial!";
+                mensajeAccion.classList.remove('opacity-0');
+                setTimeout(() => mensajeAccion.classList.add('opacity-0'), 2500);
+            });
+            
+            compartirBtn.addEventListener('click', () => {
+                const urlHerramienta = "https://deceroacien.tools/ancla-mental";
+                const textoCompartir = "Estoy usando la herramienta 'Ancla Mental' de De Cero a Cien para una pausa de bienestar. ¡Te la recomiendo!";
+                 navigator.clipboard.writeText(textoCompartir).then(() => {
+                    mensajeAccion.textContent = "¡Mensaje para compartir copiado!";
+                    mensajeAccion.classList.remove('opacity-0');
+                    setTimeout(() => mensajeAccion.classList.add('opacity-0'), 2500);
+                }).catch(err => {
+                    console.error('Error al copiar: ', err);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

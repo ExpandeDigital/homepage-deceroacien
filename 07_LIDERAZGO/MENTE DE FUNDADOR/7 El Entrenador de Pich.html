@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Entrenador de Pitch - MENTE DE FUNDADOR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --azul-oscuro: #0A192F;
+            --azul-noche: #112240;
+            --dorado: #FBBF24;
+            --dorado-hover: #F59E0B;
+            --texto-claro: #E2E8F0;
+            --texto-secundario: #a7a9be;
+            --borde-sutil: #334155;
+            --rojo-alerta: #F87171;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--azul-oscuro);
+            color: var(--texto-claro);
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .btn {
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: var(--dorado-hover);
+            transform: scale(1.05);
+        }
+        .btn-secondary {
+            background-color: var(--azul-noche);
+            color: var(--texto-secundario);
+            border: 1px solid var(--borde-sutil);
+        }
+        .btn-secondary:hover {
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            border-color: var(--dorado);
+        }
+        .status-message {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-weight: 600;
+            z-index: 100;
+            display: none;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Panel Izquierdo: Explicaciones -->
+        <aside class="bg-[var(--azul-noche)] p-8 rounded-xl shadow-lg sticky top-8 self-start">
+            <span class="text-sm font-bold text-[var(--dorado)] tracking-widest">MENTE DE FUNDADOR</span>
+            <h1 class="font-serif text-3xl font-bold text-white mt-2">El Entrenador de Pitch</h1>
+            <div class="mt-6 space-y-6">
+                 <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-microphone-alt"></i>Objetivo</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Preparar al fundador para comunicar su visión de negocio de forma clara, concisa y convincente bajo la presión de un tiempo limitado, simulando una reunión con inversores.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-star"></i>Importancia</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Un gran negocio con un mal pitch no consigue inversión. Esta herramienta ayuda a construir la "memoria muscular" para responder preguntas difíciles con confianza, transformando la ansiedad en seguridad.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-info-circle"></i>¿Qué es?</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Una herramienta de simulación con un temporizador de 60 segundos (para un "elevator pitch") que presenta preguntas aleatorias y desafiantes que un inversor real podría hacer. El objetivo es practicar la respuesta en voz alta contra reloj.</p>
+                </div>
+                 <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-cogs"></i>¿Para qué sirve?</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Para refinar tu mensaje, identificar puntos débiles en tu narrativa y acostumbrarte a pensar con rapidez. Úsalo antes de cualquier reunión importante para llegar preparado, no improvisando.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Panel Derecho: Herramienta -->
+        <main class="bg-[var(--azul-noche)] p-8 rounded-xl shadow-lg">
+            <h2 class="font-serif text-2xl font-bold text-white mb-6 text-center">Simulador de Pitch para Inversores</h2>
+            
+            <div class="text-center mb-8">
+                <div id="timer-display" class="text-6xl font-bold text-[var(--dorado)]">01:00</div>
+            </div>
+
+            <div class="bg-[var(--azul-oscuro)] p-6 rounded-lg mb-6 border border-[var(--borde-sutil)] min-h-[120px] flex items-center justify-center">
+                <p id="question-display" class="text-xl text-center text-[var(--texto-claro)]">Presiona "Iniciar Práctica" para recibir tu primera pregunta.</p>
+            </div>
+            
+            <div class="text-center">
+                <button id="start-btn" class="btn">Iniciar Práctica</button>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-4 mt-10 border-t-2 border-[var(--borde-sutil)] pt-6">
+                <button id="save-btn" class="btn btn-secondary"><i class="fas fa-save mr-2"></i> Guardar</button>
+                <button id="share-btn" class="btn btn-secondary"><i class="fas fa-share-alt mr-2"></i> Compartir</button>
+                <button id="clear-btn" class="btn btn-secondary"><i class="fas fa-redo mr-2"></i> Nueva Práctica</button>
+            </div>
+        </main>
+    </div>
+
+    <div id="status-message" class="status-message"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const startBtn = document.getElementById('start-btn');
+            const timerDisplay = document.getElementById('timer-display');
+            const questionDisplay = document.getElementById('question-display');
+            
+            const saveBtn = document.getElementById('save-btn');
+            const shareBtn = document.getElementById('share-btn');
+            const clearBtn = document.getElementById('clear-btn');
+            const statusMessage = document.getElementById('status-message');
+
+            const questions = [
+                "¿Cuál es tu 'ventaja injusta' sobre la competencia?",
+                "¿Qué te impide crecer 10 veces más rápido ahora mismo?",
+                "¿Por qué es este el momento perfecto para tu negocio?",
+                "¿Quiénes son tus primeros 10 clientes y cómo los conseguiste?",
+                "¿Cuál es el mayor riesgo para tu negocio que no has mencionado?",
+                "Si te diera 1 millón de dólares, ¿en qué lo gastarías en los próximos 6 meses?",
+                "¿Qué harías si tu principal competidor lanzara tu misma funcionalidad mañana?",
+                "¿Cómo sabes que los clientes realmente pagarán por esto?",
+                "¿Por qué eres tú la persona adecuada para resolver este problema?",
+                "¿Cuál es tu costo de adquisición de cliente y cómo planeas reducirlo?",
+                "Describe la cultura de empresa que estás construyendo en una frase."
+            ];
+
+            let timerInterval;
+            let tiempoRestante = 60;
+            let enSesion = false;
+            let preguntaActual = "";
+
+            const showStatusMessage = (message) => {
+                statusMessage.textContent = message;
+                statusMessage.style.display = 'block';
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 3000);
+            };
+            
+            function actualizarTimer() {
+                const minutos = Math.floor(tiempoRestante / 60).toString().padStart(2, '0');
+                const segundos = (tiempoRestante % 60).toString().padStart(2, '0');
+                timerDisplay.textContent = `${minutos}:${segundos}`;
+                if (tiempoRestante < 10) {
+                    timerDisplay.style.color = 'var(--rojo-alerta)';
+                } else {
+                    timerDisplay.style.color = 'var(--dorado)';
+                }
+            }
+
+            function resetearPractica() {
+                clearInterval(timerInterval);
+                enSesion = false;
+                tiempoRestante = 60;
+                actualizarTimer();
+                startBtn.textContent = "Iniciar Práctica";
+                startBtn.disabled = false;
+                startBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                questionDisplay.textContent = "Presiona 'Iniciar Práctica' para recibir tu primera pregunta.";
+                preguntaActual = "";
+            }
+
+            function iniciarPractica() {
+                if (enSesion) return;
+                enSesion = true;
+                startBtn.textContent = "¡Tiempo Corriendo!";
+                startBtn.disabled = true;
+                startBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+                const randomIndex = Math.floor(Math.random() * questions.length);
+                preguntaActual = questions[randomIndex];
+                questionDisplay.textContent = preguntaActual;
+
+                timerInterval = setInterval(() => {
+                    tiempoRestante--;
+                    actualizarTimer();
+                    if (tiempoRestante <= 0) {
+                        clearInterval(timerInterval);
+                        enSesion = false;
+                        alert("¡Tiempo! La práctica ha terminado.");
+                        startBtn.textContent = "Iniciar de Nuevo";
+                        startBtn.disabled = false;
+                        startBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    }
+                }, 1000);
+            }
+
+            startBtn.addEventListener('click', () => {
+                if (!enSesion && tiempoRestante > 0) {
+                    resetearPractica(); // Asegura que el timer esté en 60
+                    iniciarPractica();
+                } else if (!enSesion && tiempoRestante <= 0) {
+                    resetearPractica();
+                }
+            });
+
+            clearBtn.addEventListener('click', () => {
+                resetearPractica();
+                showStatusMessage("Práctica reiniciada.");
+            });
+
+            shareBtn.addEventListener('click', () => {
+                if (preguntaActual) {
+                    const textToShare = `Practicando mi pitch con esta pregunta de #MenteDeFundador: "${preguntaActual}"`;
+                    navigator.clipboard.writeText(textToShare)
+                        .then(() => showStatusMessage("¡Pregunta copiada para compartir!"))
+                        .catch(err => console.error('Error al copiar:', err));
+                } else {
+                    showStatusMessage("Inicia una práctica para obtener una pregunta.");
+                }
+            });
+
+            saveBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Guardar': ¡Próximamente!"));
+            
+            actualizarTimer();
+        });
+    </script>
+</body>
+</html>

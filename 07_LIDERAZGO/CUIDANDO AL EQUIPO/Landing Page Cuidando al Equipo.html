@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Cero a Cien - Suite CUIDADO DEL EQUIPO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0d1a2e; /* Azul Noche */
+            color: #f0f0f0;
+        }
+        .texto-dorado {
+            color: #D4AF37; /* Dorado */
+        }
+        .bg-dorado {
+            background-color: #D4AF37;
+        }
+        .bg-dorado-hover:hover {
+            background-color: #b89b31;
+        }
+        .border-dorado {
+            border-color: #D4AF37;
+        }
+        .hero-section {
+            background: linear-gradient(rgba(13, 26, 46, 0.85), rgba(13, 26, 46, 0.85)), url('https://placehold.co/1920x1080/0d1a2e/D4AF37?text=Equipo+Colaborando');
+            background-size: cover;
+            background-position: center;
+        }
+        .tool-card {
+            background-color: #102a43;
+            border: 1px solid #1e3a5f;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(212, 175, 55, 0.1), 0 10px 10px -5px rgba(212, 175, 55, 0.04);
+            border-color: #D4AF37;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Hero Section -->
+    <header class="hero-section text-white text-center py-20 lg:py-32">
+        <div class="container mx-auto px-6">
+            <h1 class="text-4xl md:text-6xl font-black uppercase tracking-wider texto-dorado">Suite Cuidado del Equipo</h1>
+            <p class="text-lg md:text-2xl mt-4 max-w-3xl mx-auto text-gray-300">Transforma el clima laboral de tu startup. 11 microherramientas interactivas para potenciar el bienestar, la conexión y la productividad.</p>
+            <a href="#precios" class="mt-8 inline-block bg-dorado text-gray-900 font-bold text-lg py-4 px-10 rounded-lg bg-dorado-hover transition-transform transform hover:scale-105">
+                Obtener la Suite Ahora
+            </a>
+        </div>
+    </header>
+
+    <!-- Herramientas Section -->
+    <main class="py-20 bg-gray-900/20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold">Un Arsenal para un Equipo Imparable</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-gray-400">Cada herramienta está diseñada para ser simple, rápida y de alto impacto. Sin instalaciones complejas, listas para usar en 5 minutos.</p>
+            </div>
+            
+            <!-- Grid de Herramientas -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Card 1: Termómetro Emocional -->
+                <div class="tool-card rounded-lg p-8">
+                    <div class="text-4xl texto-dorado mb-4">🌡️</div>
+                    <h3 class="text-xl font-bold mb-2">Termómetro Emocional</h3>
+                    <p class="text-gray-400">Mide el pulso anónimo de tu equipo para anticipar el burnout y mejorar el clima.</p>
+                </div>
+                
+                <!-- Card 2: Rueda del Reconocimiento -->
+                <div class="tool-card rounded-lg p-8">
+                    <div class="text-4xl texto-dorado mb-4">🏆</div>
+                    <h3 class="text-xl font-bold mb-2">Rueda del Reconocimiento</h3>
+                    <p class="text-gray-400">Fomenta una cultura de gratitud con reconocimientos públicos entre compañeros.</p>
+                </div>
+                
+                <!-- Card 3: Generador de Conexiones -->
+                <div class="tool-card rounded-lg p-8">
+                    <div class="text-4xl texto-dorado mb-4">💬</div>
+                    <h3 class="text-xl font-bold mb-2">Generador de Conexiones</h3>
+                    <p class="text-gray-400">Rompe el hielo en reuniones con preguntas inteligentes que humanizan al equipo.</p>
+                </div>
+                
+                <!-- Card 4: Reto de 5 Minutos -->
+                <div class="tool-card rounded-lg p-8">
+                    <div class="text-4xl texto-dorado mb-4">🏃‍♂️</div>
+                    <h3 class="text-xl font-bold mb-2">Reto de 5 Minutos</h3>
+                    <p class="text-gray-400">Reactiva la energía con pausas activas diarias para combatir el sedentarismo.</p>
+                </div>
+                
+                <!-- Card 5: Sprint de Enfoque -->
+                <div class="tool-card rounded-lg p-8">
+                    <div class="text-4xl texto-dorado mb-4">🎯</div>
+                    <h3 class="text-xl font-bold mb-2">Sprint de Enfoque</h3>
+                    <p class="text-gray-400">Sincroniza bloques de trabajo profundo para maximizar la concentración.</p>
+                </div>
+                
+                <!-- Card 6: Píldora del Saber -->
+                <div class="tool-card rounded-lg p-8">
+                    <div class="text-4xl texto-dorado mb-4">💡</div>
+                    <h3 class="text-xl font-bold mb-2">Píldora del Saber</h3>
+                    <p class="text-gray-400">Cultiva el aprendizaje continuo compartiendo un descubrimiento clave cada semana.</p>
+                </div>
+                
+                <!-- Card 7: Muro de Ideas Remoto -->
+                <div class="tool-card rounded-lg p-8">
+                    <div class="text-4xl texto-dorado mb-4">🧠</div>
+                    <h3 class="text-xl font-bold mb-2">Muro de Ideas Remoto</h3>
+                    <p class="text-gray-400">Democratiza la innovación con brainstormings asíncronos y anónimos.</p>
+                </div>
+                
+                <!-- Card 8: Mural de Hitos -->
+                <div class="tool-card rounded-lg p-8">
+                    <div class="text-4xl texto-dorado mb-4">🎉</div>
+                    <h3 class="text-xl font-bold mb-2">Mural de Hitos</h3>
+                    <p class="text-gray-400">Aumenta la moral celebrando las pequeñas victorias y visibilizando el progreso.</p>
+                </div>
+                
+                <!-- Card 9: Ancla Mental -->
+                <div class="tool-card rounded-lg p-8">
+                    <div class="text-4xl texto-dorado mb-4">🧘</div>
+                    <h3 class="text-xl font-bold mb-2">Ancla Mental</h3>
+                    <p class="text-gray-400">Ofrece una herramienta de 3 minutos para gestionar el estrés con respiración guiada.</p>
+                </div>
+                
+                <!-- Card 10: Brújula de Equipo -->
+                <div class="tool-card rounded-lg p-8">
+                    <div class="text-4xl texto-dorado mb-4">🧭</div>
+                    <h3 class="text-xl font-bold mb-2">Brújula de Equipo</h3>
+                    <p class="text-gray-400">Obtén feedback anónimo y seguro sobre las dinámicas de trabajo para mejorar.</p>
+                </div>
+                
+                <!-- Card 11: DJ de la Semana -->
+                <div class="tool-card rounded-lg p-8">
+                    <div class="text-4xl texto-dorado mb-4">🎶</div>
+                    <h3 class="text-xl font-bold mb-2">DJ de la Semana</h3>
+                    <p class="text-gray-400">Conecta al equipo a un nivel personal a través del poder universal de la música.</p>
+                </div>
+                
+                <!-- Card 12: Dashboard Central -->
+                <div class="tool-card rounded-lg p-8 border-2 border-dorado">
+                    <div class="text-4xl texto-dorado mb-4">🖥️</div>
+                    <h3 class="text-xl font-bold mb-2">Dashboard Central</h3>
+                    <p class="text-gray-400">Gestiona a tu equipo e invitaciones desde un único panel de control.</p>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Pricing Section -->
+    <section id="precios" class="py-20">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold">Elige el Plan que tu Equipo Merece</h2>
+            <p class="mt-4 max-w-2xl mx-auto text-gray-400">Acceso instantáneo a todas las herramientas. Sin complicaciones.</p>
+
+            <div class="flex flex-col lg:flex-row justify-center items-center gap-8 mt-12">
+                <!-- Plan 1: Pago Único -->
+                <div class="w-full max-w-sm border-2 border-dorado rounded-lg p-8 transform scale-105 shadow-2xl">
+                    <h3 class="text-2xl font-bold texto-dorado">ACCESO VITALICIO</h3>
+                    <p class="mt-2 text-gray-400">Recomendado</p>
+                    <div class="my-6">
+                        <span class="text-5xl font-black">$49.99</span>
+                        <span class="text-gray-400">/ pago único</span>
+                    </div>
+                    <ul class="text-left space-y-2 text-gray-300">
+                        <li>✅ Acceso de por vida a las 12 herramientas.</li>
+                        <li>✅ Todas las futuras actualizaciones incluidas.</li>
+                        <li>✅ Comparte el acceso con todo tu equipo.</li>
+                    </ul>
+                    <button class="mt-8 w-full bg-dorado text-gray-900 font-bold text-lg py-3 px-8 rounded-lg bg-dorado-hover transition-transform transform hover:scale-105">Comprar Ahora</button>
+                </div>
+
+                <!-- Plan 2: Suscripción -->
+                <div class="w-full max-w-sm border border-gray-700 rounded-lg p-8">
+                    <h3 class="text-2xl font-bold">SUSCRIPCIÓN</h3>
+                    <p class="mt-2 text-gray-400">Equipos en crecimiento</p>
+                    <div class="my-6">
+                        <span class="text-5xl font-black">$7.99</span>
+                        <span class="text-gray-400">/ mes</span>
+                    </div>
+                    <ul class="text-left space-y-2 text-gray-300">
+                        <li>✅ Acceso a las 11 herramientas.</li>
+                        <li>✅ Nuevas herramientas cada trimestre.</li>
+                        <li>✅ Soporte prioritario.</li>
+                    </ul>
+                    <button class="mt-8 w-full border-2 border-dorado text-dorado font-bold text-lg py-3 px-8 rounded-lg hover:bg-dorado hover:text-gray-900 transition-colors">Suscribirse</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900/50 py-8">
+        <div class="container mx-auto px-6 text-center text-gray-500">
+            <p>&copy; 2025 De Cero a Cien. Todos los derechos reservados.</p>
+            <p class="mt-2 text-sm">Construyendo startups que cuidan a sus equipos.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+
+

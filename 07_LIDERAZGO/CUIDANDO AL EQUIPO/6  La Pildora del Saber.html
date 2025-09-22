@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Cero a Cien - La Píldora del Saber</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0d1a2e; /* Azul Noche */
+            color: #f0f0f0;
+        }
+        .panel-dorado {
+            border-color: #D4AF37; /* Dorado */
+        }
+        .texto-dorado {
+            color: #D4AF37;
+        }
+        .bg-dorado {
+            background-color: #D4AF37;
+        }
+        .bg-dorado-hover:hover {
+            background-color: #b89b31;
+        }
+        .panel-explicativo {
+            background-color: #102a43;
+        }
+        .herramienta-panel {
+            background-color: #0d1a2e;
+        }
+        .pildora-card {
+            background-color: rgba(212, 175, 55, 0.05);
+            border-left: 4px solid #D4AF37;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 shadow-2xl rounded-lg overflow-hidden">
+        
+        <!-- Panel Izquierdo: Explicaciones -->
+        <div class="panel-explicativo p-8 lg:p-12 flex flex-col justify-center rounded-lg">
+            <h1 class="text-3xl lg:text-4xl font-bold texto-dorado mb-6">La Píldora del Saber</h1>
+            
+            <div class="space-y-6 text-gray-300">
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">Objetivo</h2>
+                    <p>Fomentar una cultura de aprendizaje continuo y colaborativo, creando un espacio simple para que los miembros del equipo compartan conocimientos y descubrimientos valiosos de forma regular.</p>
+                </div>
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">Importancia</h2>
+                    <p>El conocimiento a menudo se queda en silos. Visibilizar lo que cada uno aprende enriquece a todo el equipo, acelera el desarrollo de habilidades, inspira curiosidad y genera conversaciones que de otro modo no ocurrirían.</p>
+                </div>
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">¿Qué es?</h2>
+                    <p>Una microherramienta donde, de forma rotativa o voluntaria, un miembro del equipo comparte una "píldora" de conocimiento: un tip, una herramienta útil, un concepto de un libro o un atajo de teclado que descubrió esa semana.</p>
+                </div>
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">¿Para qué sirve?</h2>
+                    <p>Sirve para crear un repositorio vivo del conocimiento del equipo. Es una forma de desarrollo profesional asíncrono y de bajo esfuerzo que mantiene al equipo actualizado, conectado y en constante crecimiento.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel Derecho: Herramienta Interactiva -->
+        <div class="herramienta-panel p-8 lg:p-12 flex flex-col items-center justify-center text-center">
+            
+            <h2 class="text-2xl font-bold mb-2">Comparte tu Píldora del Saber</h2>
+            <p class="text-gray-400 mb-6">¿Qué aprendiste esta semana? (Máx. 280 caracteres)</p>
+
+            <div class="w-full max-w-lg mb-4">
+                <textarea id="pildora-input" class="w-full p-3 rounded-lg bg-gray-800 border-2 border-gray-700 focus:border-dorado focus:outline-none" rows="3" maxlength="280" placeholder="Ej: Descubrí que con Ctrl+Shift+V se pega texto sin formato. ¡Me ahorra horas!"></textarea>
+                <p id="char-counter" class="text-xs text-gray-500 text-right mt-1">280</p>
+            </div>
+             
+            <button id="compartir-pildora" class="w-full max-w-sm bg-dorado text-gray-900 font-bold py-3 px-6 rounded-lg bg-dorado-hover transition-colors duration-300 mb-6">Compartir Píldora</button>
+            
+            <h3 class="text-xl font-bold texto-dorado mt-4 mb-4">Píldoras Recientes del Equipo</h3>
+            <div id="pildoras-recientes" class="w-full max-w-lg h-40 bg-gray-800/50 rounded-lg p-4 overflow-y-auto border-2 panel-dorado mb-8">
+                <p class="text-gray-500">Aún no se han compartido píldoras esta semana.</p>
+            </div>
+
+            <div id="mensaje-accion" class="text-green-400 h-8 mb-4 transition-opacity duration-300 opacity-0">
+                <!-- Mensajes de confirmación -->
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-lg">
+                <button id="guardar" class="w-full bg-gray-800 text-gray-500 font-bold py-3 px-6 rounded-lg cursor-not-allowed opacity-50">Guardar</button>
+                <button id="descargar" class="w-full bg-gray-800 text-gray-500 font-bold py-3 px-6 rounded-lg cursor-not-allowed opacity-50">Descargar</button>
+                <button id="compartir" class="w-full bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded-lg transition-colors duration-300">Compartir</button>
+                <button id="limpiar" class="w-full bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded-lg transition-colors duration-300">Limpiar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pildoraInput = document.getElementById('pildora-input');
+            const charCounter = document.getElementById('char-counter');
+            const compartirPildoraBtn = document.getElementById('compartir-pildora');
+            const pildorasRecientesDiv = document.getElementById('pildoras-recientes');
+            const mensajeAccion = document.getElementById('mensaje-accion');
+            const compartirBtn = document.getElementById('compartir');
+            const limpiarBtn = document.getElementById('limpiar');
+            
+            let pildoraCounter = 0;
+            const miembros = ["Ana", "Carlos", "Elena", "David", "Sofia"];
+
+            pildoraInput.addEventListener('input', () => {
+                const remaining = 280 - pildoraInput.value.length;
+                charCounter.textContent = remaining;
+            });
+
+            compartirPildoraBtn.addEventListener('click', () => {
+                const textoPildora = pildoraInput.value.trim();
+                if (textoPildora) {
+                    if (pildoraCounter === 0) pildorasRecientesDiv.innerHTML = ''; // Limpiar mensaje inicial
+                    
+                    pildoraCounter++;
+                    const miembro = miembros[Math.floor(Math.random() * miembros.length)];
+
+                    const pildoraCard = document.createElement('div');
+                    pildoraCard.className = 'pildora-card p-3 rounded-lg mb-2 text-left';
+                    pildoraCard.innerHTML = `<p class="font-bold text-gray-200">${miembro} compartió:</p><p class="text-sm text-gray-300 italic">"${textoPildora}"</p>`;
+                    
+                    pildorasRecientesDiv.prepend(pildoraCard); // Añadir al principio
+                    pildorasRecientesDiv.scrollTop = 0;
+                    
+                    pildoraInput.value = "";
+                    charCounter.textContent = "280";
+
+                    mensajeAccion.textContent = "¡Píldora compartida con el equipo!";
+                    mensajeAccion.classList.remove('opacity-0');
+                    setTimeout(() => mensajeAccion.classList.add('opacity-0'), 2500);
+
+                } else {
+                    alert("Por favor, escribe tu píldora de saber antes de compartir.");
+                }
+            });
+
+            limpiarBtn.addEventListener('click', () => {
+                pildoraInput.value = "";
+                charCounter.textContent = "280";
+            });
+
+            compartirBtn.addEventListener('click', () => {
+                const textoPildora = pildoraInput.value.trim();
+                if(textoPildora){
+                    const textoCompartir = `Mi píldora de saber de la semana: "${textoPildora}" #PildoraDelSaber #DeCeroACien`;
+                     navigator.clipboard.writeText(textoCompartir).then(() => {
+                        mensajeAccion.textContent = "¡Mensaje para compartir copiado!";
+                        mensajeAccion.classList.remove('opacity-0');
+                        setTimeout(() => mensajeAccion.classList.add('opacity-0'), 2500);
+                    }).catch(err => {
+                        console.error('Error al copiar: ', err);
+                        alert('No se pudo copiar el mensaje.');
+                    });
+                } else {
+                    alert('Escribe una píldora para poder compartirla.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

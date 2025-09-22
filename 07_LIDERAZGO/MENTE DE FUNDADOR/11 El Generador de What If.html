@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Generador de 'What If' - MENTE DE FUNDADOR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --azul-oscuro: #0A192F;
+            --azul-noche: #112240;
+            --dorado: #FBBF24;
+            --dorado-hover: #F59E0B;
+            --texto-claro: #E2E8F0;
+            --texto-secundario: #a7a9be;
+            --borde-sutil: #334155;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--azul-oscuro);
+            color: var(--texto-claro);
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .btn {
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: var(--dorado-hover);
+            transform: scale(1.05);
+        }
+        .btn-secondary {
+            background-color: var(--azul-noche);
+            color: var(--texto-secundario);
+            border: 1px solid var(--borde-sutil);
+        }
+        .btn-secondary:hover {
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            border-color: var(--dorado);
+        }
+        textarea {
+            background-color: var(--azul-noche);
+            border: 1px solid var(--borde-sutil);
+            color: var(--texto-claro);
+        }
+        textarea:focus {
+            border-color: var(--dorado);
+            outline: none;
+        }
+        .status-message {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-weight: 600;
+            z-index: 100;
+            display: none;
+        }
+        .question-card {
+            border-left: 4px solid var(--dorado);
+            background: linear-gradient(145deg, #112240, #0d1a2e);
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Panel Izquierdo: Explicaciones -->
+        <aside class="bg-[var(--azul-noche)] p-8 rounded-xl shadow-lg sticky top-8 self-start">
+            <span class="text-sm font-bold text-[var(--dorado)] tracking-widest">MENTE DE FUNDADOR</span>
+            <h1 class="font-serif text-3xl font-bold text-white mt-2">El Generador de "What If"</h1>
+            <div class="mt-6 space-y-6">
+                 <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-question-circle"></i>Objetivo</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Fomentar el pensamiento lateral y la planificación de contingencias, ayudando al fundador a salir de su visión de túnel y a preparar la empresa para futuros disruptivos.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-star"></i>Importancia</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">El futuro no es predecible, pero sí podemos prepararnos para él. Pensar en escenarios "imposibles" fortalece la estrategia, revela debilidades ocultas y puede inspirar innovaciones que de otro modo no se considerarían.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-info-circle"></i>¿Qué es?</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Una herramienta que genera preguntas disruptivas y contraintuitivas sobre tu modelo de negocio, mercado y estrategia. Cada clic presenta un nuevo desafío para tu pensamiento estratégico.</p>
+                </div>
+                 <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-cogs"></i>¿Para qué sirve?</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Para realizar "pruebas de estrés" a tu estrategia. Úsalo trimestralmente en tus sesiones de planificación o cuando sientas que tu visión se ha estancado, para forzar nuevas perspectivas y fortalecer tu plan de negocio.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Panel Derecho: Herramienta -->
+        <main class="bg-[var(--azul-noche)] p-8 rounded-xl shadow-lg">
+            <h2 class="font-serif text-2xl font-bold text-white mb-6 text-center">Desafía tu Estrategia</h2>
+            
+            <div class="question-card p-6 rounded-lg mb-6 shadow-lg">
+                <h3 class="font-bold text-lg text-white mb-2">Pregunta "What If...":</h3>
+                <p id="question-display" class="text-2xl text-center font-serif text-[var(--dorado)] min-h-[60px] flex items-center justify-center"></p>
+            </div>
+
+            <div class="text-center mb-6">
+                <button id="generate-btn" class="btn">Generar Nuevo Desafío</button>
+            </div>
+            
+            <div>
+                 <label for="response-input" class="block text-sm font-medium mb-2 text-[var(--texto-secundario)]">Escribe tus reflexiones y plan de acción:</label>
+                 <textarea id="response-input" rows="8" class="w-full p-4 rounded-lg text-base" placeholder="¿Cómo responderías a este escenario? ¿Qué cambiaría en tu estrategia actual?"></textarea>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-4 mt-8 border-t-2 border-[var(--borde-sutil)] pt-6">
+                <button id="save-btn" class="btn btn-secondary"><i class="fas fa-save mr-2"></i> Guardar</button>
+                <button id="download-btn" class="btn btn-secondary"><i class="fas fa-download mr-2"></i> Descargar</button>
+                <button id="share-btn" class="btn btn-secondary"><i class="fas fa-share-alt mr-2"></i> Compartir</button>
+                <button id="clear-btn" class="btn btn-secondary"><i class="fas fa-trash mr-2"></i> Limpiar</button>
+            </div>
+        </main>
+    </div>
+
+    <div id="status-message" class="status-message"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const generateBtn = document.getElementById('generate-btn');
+            const questionDisplay = document.getElementById('question-display');
+            const responseInput = document.getElementById('response-input');
+            
+            const saveBtn = document.getElementById('save-btn');
+            const downloadBtn = document.getElementById('download-btn');
+            const shareBtn = document.getElementById('share-btn');
+            const clearBtn = document.getElementById('clear-btn');
+            const statusMessage = document.getElementById('status-message');
+
+            const questions = [
+                "¿Qué pasaría si tu principal competidor te ofreciera comprarte mañana?",
+                "¿Qué pasaría si tu principal fuente de ingresos desapareciera de la noche a la mañana?",
+                "¿Qué pasaría si tu producto se volviera 100% gratuito?",
+                "¿Qué pasaría si tuvieras que reducir tu equipo a la mitad, a quién te quedarías?",
+                "¿Qué pasaría si tuvieras que lanzar en un mercado completamente diferente en 30 días?",
+                "¿Qué pasaría si tu cliente más grande se fuera?",
+                "¿Qué pasaría si una nueva tecnología hiciera obsoleto tu producto principal?",
+                "¿Qué pasaría si duplicaras tus precios ahora mismo?",
+                "¿Qué pasaría si tu co-fundador decidiera irse?",
+                "¿Qué pasaría si tuvieras un presupuesto ilimitado por un año?",
+                "¿Qué pasaría si solo pudieras enfocarte en una única métrica durante los próximos 6 meses?"
+            ];
+
+            let currentQuestion = "";
+
+            const showStatusMessage = (message) => {
+                statusMessage.textContent = message;
+                statusMessage.style.display = 'block';
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 3000);
+            };
+
+            function generateQuestion() {
+                const randomIndex = Math.floor(Math.random() * questions.length);
+                currentQuestion = questions[randomIndex];
+                questionDisplay.textContent = currentQuestion;
+            }
+            
+            generateBtn.addEventListener('click', generateQuestion);
+
+            clearBtn.addEventListener('click', () => {
+                responseInput.value = '';
+                generateQuestion();
+                showStatusMessage("Panel reiniciado con un nuevo desafío.");
+            });
+            
+            downloadBtn.addEventListener('click', () => {
+                const responseText = responseInput.value.trim();
+                if (!currentQuestion || !responseText) {
+                    showStatusMessage("Genera un desafío y escribe tus reflexiones para poder descargar.");
+                    return;
+                }
+                
+                const contentToDownload = `Desafío Estratégico "What If"\n\nPregunta:\n${currentQuestion}\n\nMis Reflexiones y Plan de Acción:\n${responseText}`;
+                const blob = new Blob([contentToDownload], { type: 'text/plain' });
+                const link = document.createElement('a');
+                link.download = `what_if_analysis.txt`;
+                link.href = window.URL.createObjectURL(blob);
+                link.click();
+                showStatusMessage("Análisis descargado como .txt");
+            });
+
+            saveBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Guardar': ¡Próximamente!"));
+            shareBtn.addEventListener('click', () => {
+                 if (currentQuestion) {
+                    const textToShare = `Reflexionando sobre este desafío de #MenteDeFundador: "${currentQuestion}"`;
+                    navigator.clipboard.writeText(textToShare)
+                        .then(() => showStatusMessage("¡Desafío copiado para compartir!"))
+                        .catch(err => console.error('Error al copiar:', err));
+                } else {
+                    showStatusMessage("Genera un desafío primero.");
+                }
+            });
+            
+            // Carga inicial
+            generateQuestion();
+        });
+    </script>
+</body>
+</html>

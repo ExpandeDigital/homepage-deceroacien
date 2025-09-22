@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Descripciones de Puestos y Roles</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A192F;
+            color: #E2E8F0;
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .tool-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #FBBF24;
+        }
+        input, textarea {
+            background-color: #112240;
+            border: 1px solid #334155;
+            color: #E2E8F0;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            width: 100%;
+        }
+        input:focus, textarea:focus {
+            border-color: #FBBF24;
+            outline: none;
+        }
+        .result-box {
+            background-color: #112240;
+            border-top: 4px solid #FBBF24;
+        }
+        .btn {
+            background-color: #FBBF24;
+            color: #111827;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            background-color: #F59E0B;
+            transform: scale(1.05);
+        }
+        .status-message {
+            background-color: #0A192F;
+            border: 1px solid #334155;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            color: #FBBF24;
+            display: none;
+        }
+        .action-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        @media (min-width: 640px) {
+            .action-container {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="bg-[#112240] p-6 sm:p-12 rounded-xl shadow-lg min-h-screen">
+        <div class="tool-content">
+            <h2 class="text-3xl font-serif mb-6 text-center text-white">Generador de Descripciones de Puestos y Roles</h2>
+            <p class="text-center mb-8 text-gray-400">Atrae al talento correcto, no solo a las habilidades. Define el propósito, las responsabilidades y el encaje cultural de cada puesto.</p>
+
+            <!-- Sección de Explicaciones -->
+            <div class="space-y-6 mb-12">
+                <div class="bg-[#0A192F] p-6 rounded-lg shadow-inner border-t-4 border-yellow-500">
+                    <h3 class="text-2xl font-bold mb-4 flex items-center text-white"><span class="text-3xl mr-2">🎯</span> Objetivo y Funcionamiento</h3>
+                    <p>Una descripción de puesto es la primera impresión que un candidato tiene de tu empresa. Esta herramienta te ayuda a ir más allá de una simple lista de tareas, centrándote en el **impacto** que tendrá la persona, las **responsabilidades clave** que definen su éxito y, más importante, los **valores** que debe compartir. Esto te permite atraer candidatos que no solo pueden hacer el trabajo, sino que se alinean perfectamente con tu visión.</p>
+                </div>
+            </div>
+
+            <hr class="border-t-2 border-gray-700 my-12" />
+
+            <!-- Formulario de Entrada de Datos -->
+            <div class="space-y-6 mb-8 bg-[#0A192F] p-6 rounded-lg shadow-inner">
+                <h3 class="text-xl font-bold text-white mb-4">Detalles del Puesto</h3>
+                <div>
+                    <label for="role-title" class="block text-sm font-medium mb-1">Título del Puesto</label>
+                    <input type="text" id="role-title" placeholder="Ej: Analista de Marketing Digital">
+                </div>
+                <div>
+                    <label for="role-mission" class="block text-sm font-medium mb-1">Misión del Rol (¿Por qué existe este puesto?)</label>
+                    <textarea id="role-mission" rows="3" placeholder="Ej: Acelerar el crecimiento del negocio atrayendo y convirtiendo leads cualificados a través de campañas de marketing digital innovadoras."></textarea>
+                </div>
+                <div>
+                    <label for="role-responsibilities" class="block text-sm font-medium mb-1">Responsabilidades Clave (¿Qué hará esta persona?)</label>
+                    <textarea id="role-responsibilities" rows="4" placeholder="Ej:
+- Gestionar campañas de publicidad pagada (Google Ads, Meta Ads).
+- Crear y optimizar el contenido para la estrategia SEO.
+- Analizar métricas de rendimiento y generar reportes."></textarea>
+                </div>
+                <div>
+                    <label for="role-skills" class="block text-sm font-medium mb-1">Habilidades y Experiencia Requerida</label>
+                    <textarea id="role-skills" rows="3" placeholder="Ej:
+- Experiencia demostrable en gestión de campañas de PPC.
+- Conocimiento de herramientas de análisis web (Google Analytics).
+- Habilidad para trabajar de forma autónoma."></textarea>
+                </div>
+                <div>
+                    <label for="role-culture" class="block text-sm font-medium mb-1">Fit Cultural y Valores (¿Qué tipo de persona encajará en el equipo?)</label>
+                    <textarea id="role-culture" rows="3" placeholder="Ej:
+- Curiosidad y mentalidad de crecimiento.
+- Fuerte sentido de propiedad y responsabilidad.
+- Excelente comunicación y habilidades de colaboración."></textarea>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <button id="generate-btn" class="btn">Generar Descripción</button>
+            </div>
+
+            <!-- Sección de Resultados -->
+            <div id="results-section" class="space-y-4 result-box p-6 rounded-lg shadow-lg mt-8 hidden">
+                <h3 class="text-xl font-bold text-white mb-4">Descripción del Puesto Generada</h3>
+                <div id="description-result" class="text-lg text-white leading-relaxed"></div>
+            </div>
+
+            <div class="action-container mt-8">
+                <button id="save-btn" class="btn">Guardar</button>
+                <button id="download-btn" class="btn">Descargar</button>
+                <button id="share-btn" class="btn">Compartir</button>
+            </div>
+            
+            <div id="status-message" class="status-message mt-8"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const roleTitleInput = document.getElementById('role-title');
+            const roleMissionInput = document.getElementById('role-mission');
+            const roleResponsibilitiesInput = document.getElementById('role-responsibilities');
+            const roleSkillsInput = document.getElementById('role-skills');
+            const roleCultureInput = document.getElementById('role-culture');
+            const generateBtn = document.getElementById('generate-btn');
+            const descriptionResult = document.getElementById('description-result');
+            const resultsSection = document.getElementById('results-section');
+            const saveBtn = document.getElementById('save-btn');
+            const downloadBtn = document.getElementById('download-btn');
+            const shareBtn = document.getElementById('share-btn');
+            const statusMessage = document.getElementById('status-message');
+
+            const showStatusMessage = (message) => {
+                statusMessage.textContent = message;
+                statusMessage.style.display = 'block';
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 3000);
+            };
+
+            const generateDescription = () => {
+                const title = roleTitleInput.value.trim();
+                const mission = roleMissionInput.value.trim();
+                const responsibilities = roleResponsibilitiesInput.value.trim();
+                const skills = roleSkillsInput.value.trim();
+                const culture = roleCultureInput.value.trim();
+
+                if (title && mission && responsibilities && skills && culture) {
+                    descriptionResult.innerHTML = `
+                        <h4 class="font-bold text-lg text-yellow-400">${title}</h4>
+                        <hr class="border-t-2 border-gray-700 my-4" />
+                        
+                        <h5 class="font-bold text-base text-white mt-4">Misión del Rol:</h5>
+                        <p>${mission.replace(/\n/g, '<br>')}</p>
+
+                        <h5 class="font-bold text-base text-white mt-4">Responsabilidades Clave:</h5>
+                        <ul class="list-disc ml-6 space-y-1">
+                            ${responsibilities.split('\n').map(item => `<li>${item.trim()}</li>`).join('')}
+                        </ul>
+
+                        <h5 class="font-bold text-base text-white mt-4">Habilidades y Experiencia Requerida:</h5>
+                        <ul class="list-disc ml-6 space-y-1">
+                            ${skills.split('\n').map(item => `<li>${item.trim()}</li>`).join('')}
+                        </ul>
+
+                        <h5 class="font-bold text-base text-white mt-4">Fit Cultural y Valores:</h5>
+                        <ul class="list-disc ml-6 space-y-1">
+                            ${culture.split('\n').map(item => `<li>${item.trim()}</li>`).join('')}
+                        </ul>
+                    `;
+                    resultsSection.classList.remove('hidden');
+                } else {
+                    showStatusMessage("Por favor, completa todos los campos para generar la descripción.");
+                }
+            };
+
+            generateBtn.addEventListener('click', generateDescription);
+            saveBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Guardar': ¡Próximamente!"));
+            downloadBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Descargar': ¡Próximamente!"));
+            shareBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Compartir': ¡Próximamente!"));
+        });
+    </script>
+</body>
+</html>

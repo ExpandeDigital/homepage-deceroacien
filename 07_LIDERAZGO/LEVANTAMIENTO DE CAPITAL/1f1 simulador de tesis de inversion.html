@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Inversión | El Camino Dorado</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a1f2f;
+            color: #e6f1ff;
+            min-height: 100vh;
+        }
+        .highlight-text { color: #FBBF24; }
+        .tool-container { background-color: #112240; }
+        .doc-container { background-color: #0a1f2f; }
+        .form-input {
+            background-color: #0a1f2f;
+            border: 1px solid #334155;
+            color: #e6f1ff;
+            padding: 8px;
+            border-radius: 6px;
+        }
+        .action-button, .list-action-button {
+            background-color: #1E293B;
+            color: #cbd5e1;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+        .action-button:hover, .list-action-button:hover {
+            background-color: #334155;
+        }
+        .result-card {
+            background-color: #112240;
+            border: 1px solid #1e293b;
+        }
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+        }
+        .custom-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .custom-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: #112240;
+            padding: 24px;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
+        <!-- Panel de control y formulario -->
+        <div class="tool-container p-6 rounded-xl shadow-2xl flex-shrink-0 lg:w-1/3">
+            <h2 class="text-3xl font-black mb-4">
+                Simulador de <span class="highlight-text">Inversión</span>
+            </h2>
+            <p class="text-sm text-gray-400 mb-6">
+                Proyecta la dilución en tu ronda de inversión para tener conversaciones transparentes con tus futuros socios.
+            </p>
+
+            <!-- Sección de Metadatos -->
+            <div class="space-y-4 mb-8 text-sm text-gray-300">
+                <div>
+                    <h4 class="font-bold text-lg text-yellow-500 flex items-center gap-2"><i class="fa-solid fa-crosshairs"></i> Objetivo</h4>
+                    <p>Calcular la dilución y participación accionaria en una ronda de inversión, analizando diferentes escenarios.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg text-yellow-500 flex items-center gap-2"><i class="fa-solid fa-star"></i> Importancia</h4>
+                    <p>Dominar estos números es crucial. Demuestra profesionalismo, protege la equidad de tu empresa y te prepara para negociar con confianza con los inversores.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg text-yellow-500 flex items-center gap-2"><i class="fa-solid fa-gear"></i> ¿Qué es lo que hace?</h4>
+                    <p>Toma los datos clave de tu ronda (valoración, monto a levantar) y te muestra, de forma instantánea, el impacto en la dilución total y la participación de cada inversor.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg text-yellow-500 flex items-center gap-2"><i class="fa-solid fa-lightbulb"></i> ¿Para qué me sirve?</h4>
+                    <p>Para visualizar rápidamente el impacto de cada decisión de capital, preparar escenarios de negociación con diferentes inversores y presentar un plan claro en tu tesis de inversión.</p>
+                </div>
+            </div>
+
+            <form id="investment-form" class="space-y-4">
+                <div>
+                    <label for="pre-money" class="block text-sm font-medium text-gray-300">Valoración Pre-Money ($USD)</label>
+                    <input type="number" id="pre-money" class="mt-1 block w-full form-input" required value="850000">
+                </div>
+                <div>
+                    <label for="ask" class="block text-sm font-medium text-gray-300">Monto a Levantar (USD)</label>
+                    <input type="number" id="ask" class="mt-1 block w-full form-input" required value="150000">
+                </div>
+                <div>
+                    <label for="investors" class="block text-sm font-medium text-gray-300">Número de Inversores</label>
+                    <input type="number" id="investors" class="mt-1 block w-full form-input" required value="1">
+                </div>
+                <div>
+                    <button type="submit" class="action-button w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold">
+                        Simular Escenario
+                    </button>
+                </div>
+            </form>
+
+            <!-- Botones de Acción -->
+            <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mt-4">
+                <button id="save-button" class="action-button w-full flex-1 flex items-center justify-center gap-2"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                <button id="download-button" class="action-button w-full flex-1 flex items-center justify-center gap-2"><i class="fa-solid fa-download"></i> Descargar</button>
+                <button id="share-button" class="action-button w-full flex-1 flex items-center justify-center gap-2"><i class="fa-solid fa-share-nodes"></i> Compartir</button>
+                <button id="clear-button" class="action-button w-full flex-1 flex items-center justify-center gap-2"><i class="fa-solid fa-eraser"></i> Limpiar</button>
+            </div>
+        </div>
+        
+        <!-- Vista de resultados y análisis -->
+        <div class="doc-container p-6 rounded-xl shadow-2xl flex-1">
+            <h3 class="text-2xl font-black mb-6">Resultados del Análisis de Dilución</h3>
+            <p id="user-id-display" class="text-sm text-gray-400 mb-4"></p>
+            <div id="results-container" class="space-y-6">
+                
+                <!-- Tarjeta Valoración Post-Money -->
+                <div class="result-card p-4 rounded-lg">
+                    <h4 class="font-bold text-lg mb-2">Valoración Post-Money</h4>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span id="post-money-value" class="result-value text-white">--</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        La valoración de la compañía después de recibir la inversión.
+                    </p>
+                </div>
+                
+                <!-- Tarjeta Dilución Total -->
+                <div class="result-card p-4 rounded-lg">
+                    <h4 class="font-bold text-lg mb-2">Dilución Total (Ronda)</h4>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span id="dilution-value" class="result-value text-white">--</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        El porcentaje total de la compañía que se cede a los inversores en esta ronda.
+                    </p>
+                </div>
+
+                <!-- Tarjeta Participación por Inversor -->
+                <div class="result-card p-4 rounded-lg">
+                    <h4 class="font-bold text-lg mb-2">Participación por Inversor</h4>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span id="investor-share-value" class="result-value text-white">--</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        La participación individual de cada inversor en este escenario.
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Modal -->
+    <div id="custom-modal" class="custom-modal">
+        <div class="modal-content">
+            <h3 id="modal-title" class="text-2xl font-bold mb-4"></h3>
+            <p id="modal-message" class="text-gray-300 mb-6"></p>
+            <div id="modal-buttons" class="modal-buttons flex justify-center space-x-4"></div>
+        </div>
+    </div>
+    
+    <script type="module">
+        // --- Variables de Entorno y Configuración de Firebase (No Modificar) ---
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // --- Firebase Imports ---
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Establece el nivel de registro de Firebase para la depuración
+        setLogLevel('debug');
+
+        // Inicializa Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        
+        // --- Elementos del DOM ---
+        const investmentForm = document.getElementById('investment-form');
+        const preMoneyInput = document.getElementById('pre-money');
+        const askInput = document.getElementById('ask');
+        const investorsInput = document.getElementById('investors');
+        
+        const postMoneyValue = document.getElementById('post-money-value');
+        const dilutionValue = document.getElementById('dilution-value');
+        const investorShareValue = document.getElementById('investor-share-value');
+        const userIdDisplay = document.getElementById('user-id-display');
+        
+        const saveButton = document.getElementById('save-button');
+        const downloadButton = document.getElementById('download-button');
+        const shareButton = document.getElementById('share-button');
+        const clearButton = document.getElementById('clear-button');
+
+        const customModal = document.getElementById('custom-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalMessage = document.getElementById('modal-message');
+        const modalButtons = document.getElementById('modal-buttons');
+
+        let userId = null;
+        let unsubscribe = null;
+
+        // --- Funcionalidad del Modal Personalizado ---
+        function showModal(title, message, buttons) {
+            modalTitle.textContent = title;
+            modalMessage.innerHTML = message;
+            modalButtons.innerHTML = '';
+            buttons.forEach(btn => {
+                const buttonElement = document.createElement('button');
+                buttonElement.textContent = btn.text;
+                buttonElement.className = `action-button ${btn.class}`;
+                buttonElement.onclick = () => {
+                    btn.action();
+                    hideModal();
+                };
+                modalButtons.appendChild(buttonElement);
+            });
+            customModal.classList.add('show');
+        }
+
+        function hideModal() {
+            customModal.classList.remove('show');
+        }
+
+        // --- Funciones de la Aplicación ---
+        function updateUI(data) {
+            const preMoney = data.preMoney;
+            const ask = data.ask;
+            const investors = data.investors;
+            
+            // Cálculos
+            const postMoney = preMoney + ask;
+            const totalDilution = (ask / postMoney) * 100;
+            const investorShare = investors > 0 ? (totalDilution / investors) : 0;
+            
+            // Actualizar la interfaz
+            postMoneyValue.textContent = `$${postMoney.toLocaleString()}`;
+            dilutionValue.textContent = `${totalDilution.toFixed(2)}%`;
+            investorShareValue.textContent = `${investorShare.toFixed(2)}%`;
+        }
+
+        async function saveDataToFirestore() {
+            if (!userId) {
+                console.error("No se puede guardar, el usuario no está autenticado.");
+                return;
+            }
+            try {
+                const data = {
+                    preMoney: parseFloat(preMoneyInput.value),
+                    ask: parseFloat(askInput.value),
+                    investors: parseInt(investorsInput.value),
+                };
+                const docRef = doc(db, `artifacts/${appId}/users/${userId}/investment-simulator/my-data`);
+                await setDoc(docRef, data);
+                showModal("¡Guardado!", "Tus datos han sido guardados exitosamente.", [{ text: "OK", action: () => {} }]);
+            } catch (e) {
+                console.error("Error al guardar en Firestore: ", e);
+                showModal("Error", "Ocurrió un error al guardar los datos.", [{ text: "OK", action: () => {} }]);
+            }
+        }
+
+        function downloadData() {
+            const data = {
+                preMoney: parseFloat(preMoneyInput.value),
+                ask: parseFloat(askInput.value),
+                investors: parseInt(investorsInput.value),
+            };
+            const jsonData = JSON.stringify(data, null, 2);
+            const blob = new Blob([jsonData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'simulacion_inversion.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showModal("¡Descarga Completa!", "Tus datos han sido descargados como un archivo JSON.", [{ text: "OK", action: () => {} }]);
+        }
+
+        function shareData() {
+            if (!userId) {
+                showModal("No se puede compartir", "Debes estar autenticado para compartir. Por favor, intenta de nuevo.", [{ text: "OK", action: () => {} }]);
+                return;
+            }
+            const shareUrl = `${window.location.origin}${window.location.pathname}?appId=${appId}&userId=${userId}`;
+            const shareMessage = `¡Mira mi simulación de inversión! Puedes verla y colaborar en este enlace: ${shareUrl}`;
+            
+            try {
+                navigator.clipboard.writeText(shareUrl);
+                showModal("¡Enlace Copiado!", "El enlace para compartir tu simulación ha sido copiado al portapapeles. ¡Compártelo con tu equipo!", [{ text: "OK", action: () => {} }]);
+            } catch (err) {
+                showModal("Error al Copiar", "El enlace no se pudo copiar automáticamente. Por favor, cópialo manualmente: <br/>" + shareUrl, [{ text: "Cerrar", action: () => {} }]);
+            }
+        }
+
+        function clearInputs() {
+            showModal("Limpiar Formulario", "¿Estás seguro de que quieres limpiar todos los campos?", [
+                { text: "Sí, limpiar", action: () => {
+                    investmentForm.reset();
+                    updateUI({
+                        preMoney: 0,
+                        ask: 0,
+                        investors: 0
+                    });
+                    showModal("¡Campos Limpiados!", "Todos los campos del formulario han sido restablecidos a cero.", [{ text: "OK", action: () => {} }]);
+                }},
+                { text: "Cancelar", class: "bg-gray-500", action: () => {} }
+            ]);
+        }
+
+
+        // --- Event Listeners ---
+        investmentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const data = {
+                preMoney: parseFloat(preMoneyInput.value),
+                ask: parseFloat(askInput.value),
+                investors: parseInt(investorsInput.value),
+            };
+            updateUI(data);
+        });
+
+        saveButton.addEventListener('click', saveDataToFirestore);
+        downloadButton.addEventListener('click', downloadData);
+        shareButton.addEventListener('click', shareData);
+        clearButton.addEventListener('click', clearInputs);
+
+        // Inicialización de Firebase Auth y Firestore
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                userId = user.uid;
+                userIdDisplay.textContent = `Tu ID de usuario para colaboración: ${userId}`;
+                
+                if (unsubscribe) {
+                    unsubscribe();
+                }
+
+                const docRef = doc(db, `artifacts/${appId}/users/${userId}/investment-simulator/my-data`);
+                unsubscribe = onSnapshot(docRef, (doc) => {
+                    if (doc.exists()) {
+                        const data = doc.data();
+                        preMoneyInput.value = data.preMoney;
+                        askInput.value = data.ask;
+                        investorsInput.value = data.investors;
+                        updateUI(data);
+                    } else {
+                        console.log("No existen datos guardados. Usando valores por defecto.");
+                        updateUI({
+                            preMoney: 850000,
+                            ask: 150000,
+                            investors: 1
+                        });
+                    }
+                }, (error) => {
+                    console.error("Error al obtener los datos de Firestore:", error);
+                });
+            } else {
+                userId = null;
+                userIdDisplay.textContent = 'Iniciando sesión anónima...';
+                try {
+                    if (initialAuthToken) {
+                        await signInWithCustomToken(auth, initialAuthToken);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch (error) {
+                    console.error("Error de autenticación:", error);
+                    userIdDisplay.textContent = `Error de autenticación: ${error.message}`;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priorizador de OKRs Personales - MENTE DE FUNDADOR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --azul-oscuro: #0A192F;
+            --azul-noche: #112240;
+            --dorado: #FBBF24;
+            --dorado-hover: #F59E0B;
+            --texto-claro: #E2E8F0;
+            --texto-secundario: #a7a9be;
+            --borde-sutil: #334155;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--azul-oscuro);
+            color: var(--texto-claro);
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .btn {
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: var(--dorado-hover);
+            transform: scale(1.05);
+        }
+        .btn-secondary {
+            background-color: var(--azul-noche);
+            color: var(--texto-secundario);
+            border: 1px solid var(--borde-sutil);
+        }
+        .btn-secondary:hover {
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            border-color: var(--dorado);
+        }
+        textarea, input {
+            background-color: var(--azul-noche);
+            border: 1px solid var(--borde-sutil);
+            color: var(--texto-claro);
+        }
+        textarea:focus, input:focus {
+            border-color: var(--dorado);
+            outline: none;
+        }
+        .status-message {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-weight: 600;
+            z-index: 100;
+            display: none;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Panel Izquierdo: Explicaciones -->
+        <aside class="bg-[var(--azul-noche)] p-8 rounded-xl shadow-lg sticky top-8 self-start">
+            <span class="text-sm font-bold text-[var(--dorado)] tracking-widest">MENTE DE FUNDADOR</span>
+            <h1 class="font-serif text-3xl font-bold text-white mt-2">Priorizador de OKRs Personales</h1>
+            <div class="mt-6 space-y-6">
+                 <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-bullseye"></i>Objetivo</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Alinear los esfuerzos personales del fundador con la visión estratégica de la empresa, asegurando que su trabajo diario contribuya directamente a los objetivos más importantes del trimestre.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-star"></i>Importancia</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">El tiempo del fundador es el recurso más escaso de la startup. Sin una alineación clara, es fácil desviarse. Los OKRs personales actúan como una brújula, garantizando que el líder esté enfocado en mover las palancas de mayor impacto.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-info-circle"></i>¿Qué es?</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Una herramienta simple para definir un Objetivo ambicioso (O) y hasta 3 Resultados Clave (KRs) medibles para el trimestre. El Objetivo es la meta inspiradora; los Resultados Clave son la prueba de que se ha alcanzado.</p>
+                </div>
+                 <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-cogs"></i>¿Para qué sirve?</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Para traer claridad y responsabilidad al rol del fundador. Sirve como un plan de acción personal para el trimestre y como una herramienta de autoevaluación para medir el progreso real, no solo la actividad.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Panel Derecho: Herramienta -->
+        <main class="bg-[var(--azul-noche)] p-8 rounded-xl shadow-lg">
+            <h2 class="font-serif text-2xl font-bold text-white mb-6">Define tus OKRs para este Trimestre</h2>
+            
+            <div class="space-y-6">
+                <div>
+                    <label for="objective-input" class="block font-medium mb-2 text-[var(--dorado)]">🎯 (O) OBJETIVO PRINCIPAL:</label>
+                    <input type="text" id="objective-input" class="w-full p-3 rounded-lg text-lg" placeholder="Ej: Posicionar a la empresa como líder de pensamiento en nuestro nicho.">
+                </div>
+
+                <div class="space-y-4">
+                    <label class="block font-medium mb-2 text-[var(--dorado)]">📈 (KRs) RESULTADOS CLAVE:</label>
+                    <div>
+                        <input type="text" id="kr1-input" class="w-full p-3 rounded-lg" placeholder="KR 1 (medible): Ej: Publicar 2 artículos de alta calidad por semana.">
+                    </div>
+                     <div>
+                        <input type="text" id="kr2-input" class="w-full p-3 rounded-lg" placeholder="KR 2 (medible): Ej: Aumentar los seguidores de LinkedIn en un 50%.">
+                    </div>
+                     <div>
+                        <input type="text" id="kr3-input" class="w-full p-3 rounded-lg" placeholder="KR 3 (medible): Ej: Ser invitado como ponente a 1 evento de la industria.">
+                    </div>
+                </div>
+                
+                <div class="text-center pt-4">
+                     <button id="generate-btn" class="btn">Fijar OKRs del Trimestre</button>
+                </div>
+            </div>
+
+            <!-- Sección de Resultados -->
+            <div id="results-section" class="mt-10 border-t-2 border-[var(--borde-sutil)] pt-6 hidden">
+                <h2 class="font-serif text-2xl font-bold text-white mb-6">Tus OKRs del Trimestre</h2>
+                 <div id="summary-container" class="bg-[var(--azul-oscuro)] p-6 rounded-lg">
+                    <div class="mb-4">
+                        <p class="text-sm font-bold text-[var(--texto-secundario)]">OBJETIVO</p>
+                        <h3 id="summary-objective" class="text-2xl font-bold text-[var(--dorado)]"></h3>
+                    </div>
+                    <div>
+                         <p class="text-sm font-bold text-[var(--texto-secundario)]">RESULTADOS CLAVE</p>
+                         <ul id="summary-krs" class="list-disc list-inside mt-2 space-y-1 text-lg"></ul>
+                    </div>
+                 </div>
+
+                 <div class="flex flex-wrap justify-center gap-4 mt-8">
+                    <button id="save-btn" class="btn btn-secondary"><i class="fas fa-save mr-2"></i> Guardar</button>
+                    <button id="download-btn" class="btn btn-secondary"><i class="fas fa-download mr-2"></i> Descargar</button>
+                    <button id="share-btn" class="btn btn-secondary"><i class="fas fa-share-alt mr-2"></i> Compartir</button>
+                    <button id="clear-btn" class="btn btn-secondary"><i class="fas fa-trash mr-2"></i> Reiniciar</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="status-message" class="status-message"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const generateBtn = document.getElementById('generate-btn');
+            const resultsSection = document.getElementById('results-section');
+            const summaryContainer = document.getElementById('summary-container');
+            const summaryObjective = document.getElementById('summary-objective');
+            const summaryKrs = document.getElementById('summary-krs');
+            
+            const objectiveInput = document.getElementById('objective-input');
+            const krInputs = [
+                document.getElementById('kr1-input'),
+                document.getElementById('kr2-input'),
+                document.getElementById('kr3-input')
+            ];
+            
+            const saveBtn = document.getElementById('save-btn');
+            const downloadBtn = document.getElementById('download-btn');
+            const shareBtn = document.getElementById('share-btn');
+            const clearBtn = document.getElementById('clear-btn');
+            const statusMessage = document.getElementById('status-message');
+
+            const showStatusMessage = (message) => {
+                statusMessage.textContent = message;
+                statusMessage.style.display = 'block';
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 3000);
+            };
+
+            generateBtn.addEventListener('click', () => {
+                const objective = objectiveInput.value.trim();
+                const krs = krInputs.map(input => input.value.trim()).filter(kr => kr !== '');
+
+                if (!objective || krs.length === 0) {
+                    showStatusMessage("Debes definir un Objetivo y al menos un Resultado Clave.");
+                    return;
+                }
+
+                summaryObjective.textContent = objective;
+                summaryKrs.innerHTML = '';
+                krs.forEach(kr => {
+                    const li = document.createElement('li');
+                    li.textContent = kr;
+                    summaryKrs.appendChild(li);
+                });
+
+                resultsSection.classList.remove('hidden');
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            clearBtn.addEventListener('click', () => {
+                objectiveInput.value = '';
+                krInputs.forEach(input => input.value = '');
+                resultsSection.classList.add('hidden');
+                showStatusMessage("Formulario de OKRs limpiado.");
+            });
+            
+            downloadBtn.addEventListener('click', () => {
+                showStatusMessage("Generando descarga...");
+                html2canvas(summaryContainer, { backgroundColor: '#0A192F', scale: 2 }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `OKRs_trimestre.png`;
+                    link.href = canvas.toDataURL();
+                    link.click();
+                });
+            });
+
+            saveBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Guardar': ¡Próximamente!"));
+            shareBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Compartir': ¡Próximamente!"));
+        });
+    </script>
+</body>
+</html>

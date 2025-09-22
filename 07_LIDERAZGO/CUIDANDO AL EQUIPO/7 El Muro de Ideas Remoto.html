@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Cero a Cien - Muro de Ideas Remoto</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0d1a2e; /* Azul Noche */
+            color: #f0f0f0;
+        }
+        .panel-dorado {
+            border-color: #D4AF37; /* Dorado */
+        }
+        .texto-dorado {
+            color: #D4AF37;
+        }
+        .bg-dorado {
+            background-color: #D4AF37;
+        }
+        .bg-dorado-hover:hover {
+            background-color: #b89b31;
+        }
+        .panel-explicativo {
+            background-color: #102a43;
+        }
+        .herramienta-panel {
+            background-color: #0d1a2e;
+        }
+        .post-it {
+            transform: rotate(-2deg);
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
+            transition: transform 0.15s ease-in-out;
+        }
+        .post-it:nth-child(2n) {
+            transform: rotate(2deg);
+        }
+         .post-it:nth-child(3n) {
+            transform: rotate(-1deg);
+        }
+        .post-it:hover {
+            transform: scale(1.05) rotate(0deg);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 shadow-2xl rounded-lg overflow-hidden">
+        
+        <!-- Panel Izquierdo: Explicaciones -->
+        <div class="panel-explicativo p-8 lg:p-12 flex flex-col justify-center rounded-lg">
+            <h1 class="text-3xl lg:text-4xl font-bold texto-dorado mb-6">El Muro de Ideas Remoto</h1>
+            
+            <div class="space-y-6 text-gray-300">
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">Objetivo</h2>
+                    <p>Facilitar sesiones de brainstorming (lluvia de ideas) de forma asíncrona e inclusiva, permitiendo que todos los miembros del equipo contribuyan a la resolución de problemas y a la innovación.</p>
+                </div>
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">Importancia</h2>
+                    <p>Las mejores ideas pueden venir de cualquier persona, no solo de los más extrovertidos. Un muro de ideas remoto y anónimo crea un espacio seguro para que todos compartan sus pensamientos sin filtros ni miedo al juicio, democratizando la creatividad.</p>
+                </div>
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">¿Qué es?</h2>
+                    <p>Un tablero virtual minimalista donde se plantea un desafío o pregunta. Los miembros del equipo pueden añadir "post-its" virtuales con sus ideas. La opción de anonimato reduce la presión y fomenta la honestidad.</p>
+                </div>
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">¿Para qué sirve?</h2>
+                    <p>Sirve para recoger una gran diversidad de perspectivas sobre un tema específico sin necesidad de coordinar una reunión. Es perfecto para la ideación de nuevos productos, la mejora de procesos o la planificación estratégica.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel Derecho: Herramienta Interactiva -->
+        <div class="herramienta-panel p-8 lg:p-12 flex flex-col items-center justify-center text-center">
+            
+            <div class="w-full max-w-lg mb-4 text-left">
+                 <label for="desafio-input" class="font-bold texto-dorado mb-2 block">Desafío o Pregunta Central:</label>
+                <input id="desafio-input" class="w-full p-3 rounded-lg bg-gray-800 border-2 border-gray-700 focus:border-dorado focus:outline-none" value="¿Cómo podemos mejorar nuestro proceso de onboarding?">
+            </div>
+
+            <div class="w-full max-w-lg mb-4 text-left">
+                <label for="idea-input" class="font-bold texto-dorado mb-2 block">Aporta tu idea:</label>
+                <textarea id="idea-input" class="w-full p-3 rounded-lg bg-gray-800 border-2 border-gray-700 focus:border-dorado focus:outline-none" rows="2" placeholder="Escribe tu idea aquí..."></textarea>
+            </div>
+            
+            <div class="w-full max-w-lg flex justify-between items-center mb-4">
+                 <div class="flex items-center">
+                    <input type="checkbox" id="anonimo-check" class="h-4 w-4 rounded bg-gray-700 border-gray-600 text-dorado focus:ring-dorado">
+                    <label for="anonimo-check" class="ml-2 text-sm text-gray-400">Publicar como anónimo</label>
+                </div>
+                <button id="agregar-idea" class="bg-dorado text-gray-900 font-bold py-2 px-6 rounded-lg bg-dorado-hover transition-colors duration-300">Añadir Idea</button>
+            </div>
+
+            <div id="muro-container" class="w-full max-w-lg h-56 bg-gray-900/50 rounded-lg p-4 overflow-y-auto border-2 panel-dorado mb-6">
+                <div id="muro-de-ideas" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    <!-- Las ideas aparecerán aquí como post-its -->
+                </div>
+            </div>
+
+            <div id="mensaje-accion" class="text-green-400 h-8 mb-4 transition-opacity duration-300 opacity-0">
+                <!-- Mensajes de confirmación -->
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-lg">
+                <button id="guardar" class="w-full bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded-lg transition-colors duration-300">Guardar</button>
+                <button id="descargar" class="w-full bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded-lg transition-colors duration-300">Descargar</button>
+                <button id="compartir" class="w-full bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded-lg transition-colors duration-300">Compartir</button>
+                <button id="limpiar" class="w-full bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded-lg transition-colors duration-300">Limpiar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const agregarIdeaBtn = document.getElementById('agregar-idea');
+            const ideaInput = document.getElementById('idea-input');
+            const desafioInput = document.getElementById('desafio-input');
+            const anonimoCheck = document.getElementById('anonimo-check');
+            const muroDeIdeas = document.getElementById('muro-de-ideas');
+            const mensajeAccion = document.getElementById('mensaje-accion');
+            
+            const guardarBtn = document.getElementById('guardar');
+            const descargarBtn = document.getElementById('descargar');
+            const compartirBtn = document.getElementById('compartir');
+            const limpiarBtn = document.getElementById('limpiar');
+            
+            const miembros = ["Carlos", "Elena", "David", "Sofia", "Ana"];
+            const postItColors = ['bg-yellow-200', 'bg-green-200', 'bg-blue-200', 'bg-pink-200', 'bg-purple-200'];
+
+            agregarIdeaBtn.addEventListener('click', () => {
+                const ideaTexto = ideaInput.value.trim();
+                if (ideaTexto) {
+                    const autor = anonimoCheck.checked ? "Anónimo" : miembros[Math.floor(Math.random() * miembros.length)];
+                    const color = postItColors[Math.floor(Math.random() * postItColors.length)];
+
+                    const postIt = document.createElement('div');
+                    postIt.className = `post-it p-3 rounded-md text-gray-800 text-sm ${color} flex flex-col justify-between h-24`;
+                    postIt.innerHTML = `
+                        <p class="flex-grow">${ideaTexto}</p>
+                        <p class="text-xs font-bold text-right text-gray-600 mt-2">- ${autor}</p>
+                    `;
+                    muroDeIdeas.appendChild(postIt);
+                    ideaInput.value = "";
+                } else {
+                    alert("Por favor, escribe una idea.");
+                }
+            });
+
+            limpiarBtn.addEventListener('click', () => {
+                muroDeIdeas.innerHTML = '';
+                ideaInput.value = '';
+                desafioInput.value = '¿Cómo podemos mejorar nuestro proceso de onboarding?';
+            });
+
+            descargarBtn.addEventListener('click', () => {
+                const muroContainer = document.getElementById('muro-container');
+                 mensajeAccion.textContent = "Generando imagen...";
+                 mensajeAccion.classList.remove('opacity-0');
+
+                html2canvas(muroContainer, {
+                    backgroundColor: "#102a43", // Color de fondo del panel
+                    scale: 2 // Mayor resolución
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = 'muro-de-ideas.png';
+                    link.href = canvas.toDataURL();
+                    link.click();
+                    mensajeAccion.textContent = "¡Muro descargado como imagen!";
+                    setTimeout(() => mensajeAccion.classList.add('opacity-0'), 2500);
+                });
+            });
+
+             compartirBtn.addEventListener('click', () => {
+                const urlSimulada = "https://deceroacien.tools/muro/xyz123";
+                navigator.clipboard.writeText(urlSimulada).then(() => {
+                    mensajeAccion.textContent = "¡Enlace del muro copiado!";
+                    mensajeAccion.classList.remove('opacity-0');
+                    setTimeout(() => mensajeAccion.classList.add('opacity-0'), 2500);
+                }).catch(err => {
+                    console.error('Error al copiar: ', err);
+                });
+            });
+
+            guardarBtn.addEventListener('click', () => {
+                mensajeAccion.textContent = "¡Sesión guardada!";
+                mensajeAccion.classList.remove('opacity-0');
+                setTimeout(() => mensajeAccion.classList.add('opacity-0'), 2500);
+            });
+        });
+    </script>
+</body>
+</html>

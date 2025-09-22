@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Costo de la Inversión en Cultura</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A192F;
+            color: #E2E8F0;
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .tool-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #FBBF24;
+        }
+        input, textarea, select {
+            background-color: #112240;
+            border: 1px solid #334155;
+            color: #E2E8F0;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            width: 100%;
+        }
+        input:focus, textarea:focus, select:focus {
+            border-color: #FBBF24;
+            outline: none;
+        }
+        .btn {
+            background-color: #FBBF24;
+            color: #111827;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            background-color: #F59E0B;
+            transform: scale(1.05);
+        }
+        .status-message {
+            background-color: #0A192F;
+            border: 1px solid #334155;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            color: #FBBF24;
+            display: none;
+        }
+        .action-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        @media (min-width: 640px) {
+            .action-container {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="bg-[#112240] p-6 sm:p-12 rounded-xl shadow-lg min-h-screen">
+        <div class="tool-content">
+            <h2 class="text-3xl font-serif mb-6 text-center text-white">Simulador de Costo de la Inversión en Cultura</h2>
+            <p class="text-center mb-8 text-gray-400">Demuestra el valor estratégico de invertir en tu gente. Calcula el retorno de la inversión (ROI) de un mejor ambiente de trabajo.</p>
+
+            <!-- Sección de Explicaciones -->
+            <div class="space-y-6 mb-12">
+                <div class="bg-[#0A192F] p-6 rounded-lg shadow-inner border-t-4 border-yellow-500">
+                    <h3 class="text-2xl font-bold mb-4 flex items-center text-white"><span class="text-3xl mr-2">💰</span> Objetivo y Funcionamiento</h3>
+                    <p>Esta herramienta simula el impacto financiero de una cultura empresarial sólida. Combina el ahorro en costos de rotación con las ganancias por aumento de productividad para calcular el ROI de tus iniciativas de bienestar y desarrollo.</p>
+                </div>
+                <div class="bg-[#0A192F] p-6 rounded-lg shadow-inner border-t-4 border-blue-500">
+                    <h3 class="text-2xl font-bold mb-4 flex items-center text-white"><span class="text-3xl mr-2">📈</span> Cálculo e Impacto</h3>
+                    <p>El ROI se calcula con la fórmula: $ROI = \frac{Beneficio Total - Inversión}{Inversión} \times 100$. Aquí, el **Beneficio Total** es la suma de los siguientes dos componentes:</p>
+                    <ul class="list-disc ml-6 space-y-2 mt-4 text-gray-300">
+                        <li><strong>Ahorro en Costos de Rotación:</strong> Basado en el número de empleados y el costo promedio de una baja voluntaria. Una mejor cultura puede reducir significativamente esta métrica.</li>
+                        <li><strong>Ganancia por Productividad:</strong> El aumento esperado en la productividad de cada empleado, valorizado en términos económicos. Un equipo feliz y comprometido es un equipo más eficiente.</li>
+                    </ul>
+                </div>
+                <div class="bg-[#0A192F] p-6 rounded-lg shadow-inner border-t-4 border-green-500">
+                    <h3 class="text-2xl font-bold mb-4 flex items-center text-white"><span class="text-3xl mr-2">🎯</span> Factores Clave a Considerar</h3>
+                    <p>La simulación se basa en tus datos, pero el impacto real depende de la calidad de la inversión. Considera los siguientes aspectos para maximizar el ROI:</p>
+                    <ul class="list-disc ml-6 space-y-2 mt-4 text-gray-300">
+                        <li><strong>Claridad en la Estrategia:</strong> Define qué aspectos de la cultura quieres mejorar (ej. bienestar, desarrollo profesional, reconocimiento) y asigna un presupuesto claro a cada uno.</li>
+                        <li><strong>Participación del Equipo:</strong> Involucra a tus empleados en la creación de las iniciativas. Las soluciones co-creadas tienen un mayor impacto y son más sostenibles.</li>
+                        <li><strong>Medición Continua:</strong> Utiliza encuestas de pulso, reuniones 1:1 y grupos focales para medir el impacto de tus acciones y ajustarlas en el camino.</li>
+                        <li><strong>Liderazgo Ejemplar:</strong> Los líderes deben ser los primeros en adoptar y promover la cultura. Su compromiso es el factor de éxito más importante.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="border-t-2 border-gray-700 my-12" />
+
+            <!-- Formulario de Entrada de Datos -->
+            <div class="space-y-6 mb-8 bg-[#0A192F] p-6 rounded-lg shadow-inner">
+                <h3 class="text-xl font-bold text-white mb-4">Ingresa tus datos</h3>
+                <div>
+                    <label for="input-employee-count" class="block text-sm font-medium mb-1">Número de Empleados</label>
+                    <input type="number" id="input-employee-count" placeholder="Ej: 50" min="0">
+                </div>
+                <div>
+                    <label for="input-turnover-cost" class="block text-sm font-medium mb-1">Costo Promedio de Rotación por Empleado (USD)</label>
+                    <input type="number" id="input-turnover-cost" placeholder="Ej: 15000" min="0">
+                </div>
+                <div>
+                    <label for="input-productivity-increase" class="block text-sm font-medium mb-1">Aumento de Productividad Esperado (%)</label>
+                    <input type="number" id="input-productivity-increase" placeholder="Ej: 5" min="0" max="100">
+                </div>
+                <div>
+                    <label for="input-culture-investment" class="block text-sm font-medium mb-1">Inversión Total en Cultura (USD)</label>
+                    <input type="number" id="input-culture-investment" placeholder="Ej: 20000" min="0">
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <button id="simulate-btn" class="btn">Simular ROI</button>
+            </div>
+
+            <!-- Sección de Resultados -->
+            <div id="results-section" class="space-y-4 result-box p-6 rounded-lg shadow-lg mt-8 hidden">
+                <h3 class="text-xl font-bold text-white mb-4">Resultados de la Simulación</h3>
+                <div id="roi-result" class="text-lg text-white leading-relaxed"></div>
+                <div id="breakdown-result" class="mt-4">
+                    <h4 class="text-lg font-bold text-yellow-500">Desglose de Beneficios Proyectados:</h4>
+                    <ul class="list-disc ml-6 space-y-2 text-gray-300 mt-2">
+                        <li id="turnover-savings"></li>
+                        <li id="productivity-gains"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="action-container mt-8">
+                <button id="save-btn" class="btn">Guardar</button>
+                <button id="download-btn" class="btn">Descargar</button>
+                <button id="share-btn" class="btn">Compartir</button>
+            </div>
+            
+            <div id="status-message" class="status-message mt-8"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const employeeCountInput = document.getElementById('input-employee-count');
+            const turnoverCostInput = document.getElementById('input-turnover-cost');
+            const productivityIncreaseInput = document.getElementById('input-productivity-increase');
+            const cultureInvestmentInput = document.getElementById('input-culture-investment');
+            const simulateBtn = document.getElementById('simulate-btn');
+            const resultsSection = document.getElementById('results-section');
+            const roiResultDiv = document.getElementById('roi-result');
+            const turnoverSavingsLi = document.getElementById('turnover-savings');
+            const productivityGainsLi = document.getElementById('productivity-gains');
+            const saveBtn = document.getElementById('save-btn');
+            const downloadBtn = document.getElementById('download-btn');
+            const shareBtn = document.getElementById('share-btn');
+            const statusMessage = document.getElementById('status-message');
+
+            const showStatusMessage = (message) => {
+                statusMessage.textContent = message;
+                statusMessage.style.display = 'block';
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 3000);
+            };
+
+            simulateBtn.addEventListener('click', () => {
+                const employeeCount = parseFloat(employeeCountInput.value);
+                const turnoverCost = parseFloat(turnoverCostInput.value);
+                const productivityIncrease = parseFloat(productivityIncreaseInput.value);
+                const cultureInvestment = parseFloat(cultureInvestmentInput.value);
+
+                // Validation
+                if (isNaN(employeeCount) || isNaN(turnoverCost) || isNaN(productivityIncrease) || isNaN(cultureInvestment) || employeeCount < 0 || turnoverCost < 0 || productivityIncrease < 0 || cultureInvestment < 0) {
+                    showStatusMessage("Por favor, ingresa números válidos y positivos en todos los campos.");
+                    return;
+                }
+
+                // Assumptions for the simulation:
+                // 1. A successful culture investment can reduce turnover by 5%.
+                // 2. The economic value of an employee's annual output is approx. $50,000 USD (for simulation purposes).
+                const expectedTurnoverReductionRate = 0.05;
+                const economicValuePerEmployee = 50000;
+
+                // Calculations
+                const turnoverSavings = (employeeCount * expectedTurnoverReductionRate) * turnoverCost;
+                const productivityGains = (employeeCount * (productivityIncrease / 100)) * economicValuePerEmployee;
+                const totalBenefit = turnoverSavings + productivityGains;
+
+                let roi = 0;
+                if (cultureInvestment > 0) {
+                    roi = ((totalBenefit - cultureInvestment) / cultureInvestment) * 100;
+                }
+
+                // Format numbers to currency and percentages
+                const formatter = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                });
+
+                let roiCommentary = "";
+                if (roi > 100) {
+                    roiCommentary = "¡Excelente! La inversión genera más del doble de su valor.";
+                } else if (roi >= 0) {
+                    roiCommentary = "Positivo. La inversión es rentable, con un retorno sobre el capital invertido.";
+                } else {
+                    roiCommentary = "Negativo. Se necesitan más datos o una inversión más eficiente.";
+                }
+
+                // Update UI
+                roiResultDiv.innerHTML = `
+                    <p class="text-3xl font-bold text-yellow-500 mb-2">${roi.toFixed(2)}% ROI</p>
+                    <p>${roiCommentary}</p>
+                `;
+
+                turnoverSavingsLi.textContent = `Ahorro por retención: ${formatter.format(turnoverSavings)}`;
+                productivityGainsLi.textContent = `Ganancia por productividad: ${formatter.format(productivityGains)}`;
+
+                resultsSection.classList.remove('hidden');
+            });
+
+            saveBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Guardar': ¡Próximamente!"));
+            downloadBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Descargar': ¡Próximamente!"));
+            shareBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Compartir': ¡Próximamente!"));
+        });
+    </script>
+</body>
+</html>

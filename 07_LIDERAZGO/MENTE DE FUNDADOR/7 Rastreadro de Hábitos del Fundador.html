@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastreador de Hábitos del Fundador - MENTE DE FUNDADOR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --azul-oscuro: #0A192F;
+            --azul-noche: #112240;
+            --dorado: #FBBF24;
+            --dorado-hover: #F59E0B;
+            --texto-claro: #E2E8F0;
+            --texto-secundario: #a7a9be;
+            --borde-sutil: #334155;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--azul-oscuro);
+            color: var(--texto-claro);
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .btn {
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: var(--dorado-hover);
+            transform: scale(1.05);
+        }
+        .btn-secondary {
+            background-color: var(--azul-noche);
+            color: var(--texto-secundario);
+            border: 1px solid var(--borde-sutil);
+        }
+        .btn-secondary:hover {
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            border-color: var(--dorado);
+        }
+        input, select {
+            background-color: var(--azul-noche);
+            border: 1px solid var(--borde-sutil);
+            color: var(--texto-claro);
+        }
+        input:focus, select:focus {
+            border-color: var(--dorado);
+            outline: none;
+        }
+        .status-message {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-weight: 600;
+            z-index: 100;
+            display: none;
+        }
+        .progress-bar-bg {
+            background-color: var(--borde-sutil);
+        }
+        .progress-bar-fill {
+            background-color: var(--dorado);
+            transition: width 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Panel Izquierdo: Explicaciones -->
+        <aside class="bg-[var(--azul-noche)] p-8 rounded-xl shadow-lg sticky top-8 self-start">
+            <span class="text-sm font-bold text-[var(--dorado)] tracking-widest">MENTE DE FUNDADOR</span>
+            <h1 class="font-serif text-3xl font-bold text-white mt-2">Rastreador de Hábitos del Fundador</h1>
+            <div class="mt-6 space-y-6">
+                 <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-chart-pie"></i>Objetivo</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Crear un sistema simple y visual para monitorear 3-4 hábitos clave no laborales que impactan directamente en el rendimiento, la energía y la resiliencia del fundador.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-star"></i>Importancia</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">El burnout no es un evento, es un proceso causado por el desgaste sostenido. Rastrear hábitos de bienestar (sueño, ejercicio, desconexión) hace visible lo invisible y permite tomar acciones correctivas antes de que el agotamiento se vuelva crítico.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-info-circle"></i>¿Qué es?</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Un dashboard personal para registrar diariamente el cumplimiento de hábitos fundamentales. Permite definir metas y visualizar el progreso semanal, convirtiendo el autocuidado en un proyecto medible.</p>
+                </div>
+                 <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-cogs"></i>¿Para qué sirve?</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Para tomar el control proactivo sobre tu bienestar. Sirve para identificar patrones (ej. "cuando duermo menos de 6 horas, mi toma de decisiones empeora") y para construir la disciplina del autocuidado, que es la base del liderazgo sostenible.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Panel Derecho: Herramienta -->
+        <main class="bg-[var(--azul-noche)] p-8 rounded-xl shadow-lg">
+            <h2 class="font-serif text-2xl font-bold text-white mb-6">Registro de Hábitos Semanal</h2>
+            
+            <!-- Formulario de Registro -->
+            <div class="bg-[var(--azul-oscuro)] p-6 rounded-lg mb-8 border border-[var(--borde-sutil)]">
+                <h3 class="font-bold text-lg text-white mb-4">Añadir Registro del Día</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="date-input" class="block text-sm font-medium mb-1 text-[var(--texto-secundario)]">Fecha</label>
+                        <input type="date" id="date-input" class="w-full p-2 rounded-lg">
+                    </div>
+                     <div>
+                        <label for="sleep-input" class="block text-sm font-medium mb-1 text-[var(--texto-secundario)]">Horas de Sueño</label>
+                        <input type="number" id="sleep-input" class="w-full p-2 rounded-lg" placeholder="Ej: 7.5">
+                    </div>
+                     <div>
+                        <label for="exercise-input" class="block text-sm font-medium mb-1 text-[var(--texto-secundario)]">Minutos de Ejercicio</label>
+                        <input type="number" id="exercise-input" class="w-full p-2 rounded-lg" placeholder="Ej: 30">
+                    </div>
+                     <div>
+                        <label for="reading-input" class="block text-sm font-medium mb-1 text-[var(--texto-secundario)]">Minutos de Lectura</label>
+                        <input type="number" id="reading-input" class="w-full p-2 rounded-lg" placeholder="Ej: 20">
+                    </div>
+                </div>
+                <div class="text-center mt-6">
+                    <button id="add-log-btn" class="btn">Añadir Registro</button>
+                </div>
+            </div>
+
+            <!-- Visualización de Hábitos -->
+            <div id="habits-container">
+                <h3 class="font-serif text-xl font-bold text-white mb-4">Progreso de tus Hábitos Clave</h3>
+                <div id="habits-visualization" class="space-y-6">
+                    <!-- Las barras de progreso se generarán aquí -->
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-4 mt-10 border-t-2 border-[var(--borde-sutil)] pt-6">
+                <button id="save-btn" class="btn btn-secondary"><i class="fas fa-save mr-2"></i> Guardar</button>
+                <button id="download-btn" class="btn btn-secondary"><i class="fas fa-download mr-2"></i> Descargar</button>
+                <button id="share-btn" class="btn btn-secondary"><i class="fas fa-share-alt mr-2"></i> Compartir</button>
+                <button id="clear-btn" class="btn btn-secondary"><i class="fas fa-trash mr-2"></i> Limpiar</button>
+            </div>
+        </main>
+    </div>
+
+    <div id="status-message" class="status-message"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dateInput = document.getElementById('date-input');
+            const sleepInput = document.getElementById('sleep-input');
+            const exerciseInput = document.getElementById('exercise-input');
+            const readingInput = document.getElementById('reading-input');
+            const addLogBtn = document.getElementById('add-log-btn');
+            const habitsVisualization = document.getElementById('habits-visualization');
+
+            const saveBtn = document.getElementById('save-btn');
+            const downloadBtn = document.getElementById('download-btn');
+            const shareBtn = document.getElementById('share-btn');
+            const clearBtn = document.getElementById('clear-btn');
+            const statusMessage = document.getElementById('status-message');
+
+            const habits = {
+                sleep: { name: "Sueño", goal: 7, unit: "hrs", records: [] },
+                exercise: { name: "Ejercicio", goal: 30, unit: "min", records: [] },
+                reading: { name: "Lectura", goal: 20, unit: "min", records: [] }
+            };
+
+            const showStatusMessage = (message) => {
+                statusMessage.textContent = message;
+                statusMessage.style.display = 'block';
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 3000);
+            };
+
+            const renderHabits = () => {
+                habitsVisualization.innerHTML = '';
+                for (const key in habits) {
+                    const habit = habits[key];
+                    const totalAchieved = habit.records.reduce((sum, record) => sum + record.value, 0);
+                    const weeklyGoal = habit.goal * 7;
+                    const percentage = weeklyGoal > 0 ? Math.min((totalAchieved / weeklyGoal) * 100, 100) : 0;
+
+                    const habitEl = document.createElement('div');
+                    habitEl.innerHTML = `
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold">${habit.name}</span>
+                            <span class="text-sm text-[var(--texto-secundario)]">${totalAchieved.toFixed(1)} / ${weeklyGoal.toFixed(1)} ${habit.unit} (Semanal)</span>
+                        </div>
+                        <div class="w-full progress-bar-bg rounded-full h-4">
+                            <div class="progress-bar-fill h-4 rounded-full" style="width: ${percentage}%"></div>
+                        </div>
+                    `;
+                    habitsVisualization.appendChild(habitEl);
+                }
+            };
+
+            addLogBtn.addEventListener('click', () => {
+                const date = dateInput.value;
+                const sleep = parseFloat(sleepInput.value) || 0;
+                const exercise = parseFloat(exerciseInput.value) || 0;
+                const reading = parseFloat(readingInput.value) || 0;
+
+                if (!date) {
+                    showStatusMessage("Por favor, selecciona una fecha.");
+                    return;
+                }
+
+                // Add or update records
+                const addOrUpdateRecord = (habitKey, value) => {
+                    const index = habits[habitKey].records.findIndex(r => r.date === date);
+                    if (index > -1) {
+                        habits[habitKey].records[index].value = value;
+                    } else {
+                        habits[habitKey].records.push({ date, value });
+                    }
+                };
+
+                addOrUpdateRecord('sleep', sleep);
+                addOrUpdateRecord('exercise', exercise);
+                addOrUpdateRecord('reading', reading);
+
+                renderHabits();
+                showStatusMessage("Registro añadido con éxito.");
+                sleepInput.value = '';
+                exerciseInput.value = '';
+                readingInput.value = '';
+                dateInput.value = '';
+
+            });
+
+            clearBtn.addEventListener('click', () => {
+                if (confirm("¿Seguro que quieres borrar todos los registros de hábitos?")) {
+                    for (const key in habits) {
+                        habits[key].records = [];
+                    }
+                    renderHabits();
+                    showStatusMessage("Registros limpiados.");
+                }
+            });
+
+            downloadBtn.addEventListener('click', () => {
+                 showStatusMessage("Generando descarga...");
+                html2canvas(document.getElementById('habits-container'), { backgroundColor: '#0A192F', scale: 2 }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = 'rastreador-de-habitos.png';
+                    link.href = canvas.toDataURL();
+                    link.click();
+                });
+            });
+
+            saveBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Guardar': ¡Próximamente!"));
+            shareBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Compartir': ¡Próximamente!"));
+            
+            // Set default date to today
+            dateInput.value = new Date().toISOString().slice(0, 10);
+            renderHabits();
+        });
+    </script>
+</body>
+</html>

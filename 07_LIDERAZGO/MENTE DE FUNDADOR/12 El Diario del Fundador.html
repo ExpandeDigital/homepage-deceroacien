@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Diario del Fundador - MENTE DE FUNDADOR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --azul-oscuro: #0A192F;
+            --azul-noche: #112240;
+            --dorado: #FBBF24;
+            --dorado-hover: #F59E0B;
+            --texto-claro: #E2E8F0;
+            --texto-secundario: #a7a9be;
+            --borde-sutil: #334155;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--azul-oscuro);
+            color: var(--texto-claro);
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .btn {
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: var(--dorado-hover);
+            transform: scale(1.05);
+        }
+        .btn-secondary {
+            background-color: var(--azul-noche);
+            color: var(--texto-secundario);
+            border: 1px solid var(--borde-sutil);
+        }
+        .btn-secondary:hover {
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            border-color: var(--dorado);
+        }
+        textarea {
+            background-color: var(--azul-noche);
+            border: 1px solid var(--borde-sutil);
+            color: var(--texto-claro);
+        }
+        textarea:focus {
+            border-color: var(--dorado);
+            outline: none;
+        }
+        .status-message {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-weight: 600;
+            z-index: 100;
+            display: none;
+        }
+        .entry-card {
+            border-left: 4px solid var(--dorado);
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Panel Izquierdo: Explicaciones -->
+        <aside class="bg-[var(--azul-noche)] p-8 rounded-xl shadow-lg sticky top-8 self-start">
+            <span class="text-sm font-bold text-[var(--dorado)] tracking-widest">MENTE DE FUNDADOR</span>
+            <h1 class="font-serif text-3xl font-bold text-white mt-2">El Diario del Fundador</h1>
+            <div class="mt-6 space-y-6">
+                 <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-book-open"></i>Objetivo</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Fomentar la práctica de la reflexión estratégica diaria a través de un diario guiado, acelerando el autoconocimiento y el crecimiento del fundador.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-star"></i>Importancia</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">El aprendizaje más profundo no viene de la acción, sino de la reflexión sobre la acción. Un diario guiado transforma la experiencia diaria en sabiduría acumulada, revelando patrones y lecciones clave.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-info-circle"></i>¿Qué es?</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Una herramienta de journaling que presenta cada día una única pregunta estratégica para la reflexión. Las entradas se guardan en un registro privado y cronológico para su futura consulta.</p>
+                </div>
+                 <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-cogs"></i>¿Para qué sirve?</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Para convertir la reflexión en un hábito. Úsalo al final del día para procesar tus experiencias, desafiar tus suposiciones y documentar tu evolución como líder y estratega.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Panel Derecho: Herramienta -->
+        <main class="bg-[var(--azul-noche)] p-8 rounded-xl shadow-lg">
+            <h2 class="font-serif text-2xl font-bold text-white mb-2">Entrada de Diario para Hoy</h2>
+            <p class="text-sm text-[var(--texto-secundario)] mb-6" id="current-date"></p>
+            
+            <div class="bg-[var(--azul-oscuro)] p-6 rounded-lg mb-6 border border-[var(--borde-sutil)]">
+                <h3 class="font-bold text-lg text-[var(--dorado)] mb-2">Pregunta Guía del Día:</h3>
+                <p id="prompt-display" class="text-[var(--texto-claro)] italic"></p>
+            </div>
+
+            <div class="space-y-4 mb-8">
+                <textarea id="entry-input" rows="10" class="w-full p-4 rounded-lg text-base" placeholder="Escribe tu reflexión aquí..."></textarea>
+                <div class="text-center">
+                    <button id="add-entry-btn" class="btn">Guardar Entrada</button>
+                </div>
+            </div>
+
+            <!-- Entradas Anteriores -->
+            <div id="entries-section" class="border-t-2 border-[var(--borde-sutil)] pt-6">
+                <h2 class="font-serif text-2xl font-bold text-white mb-6">Tus Entradas Anteriores</h2>
+                 <div id="entries-container" class="space-y-4 max-h-80 overflow-y-auto pr-2">
+                     <p id="placeholder" class="text-center text-[var(--texto-secundario)] py-10">Aquí aparecerán tus reflexiones guardadas.</p>
+                 </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="status-message" class="status-message"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const addEntryBtn = document.getElementById('add-entry-btn');
+            const entryInput = document.getElementById('entry-input');
+            const entriesContainer = document.getElementById('entries-container');
+            const placeholder = document.getElementById('placeholder');
+            const promptDisplay = document.getElementById('prompt-display');
+            const currentDateEl = document.getElementById('current-date');
+            const statusMessage = document.getElementById('status-message');
+            
+            const prompts = [
+                "¿Cuál fue mi mayor aprendizaje hoy y cómo lo aplicaré mañana?",
+                "¿Qué suposición que tenía hoy fue desafiada o demostró ser incorrecta?",
+                "¿En qué momento del día creé el mayor valor para la empresa?",
+                "Si pudiera rehacer una decisión de hoy, ¿cuál sería y qué haría diferente?",
+                "¿Qué tarea estuve evitando hoy y por qué?",
+                "¿Qué conversación de hoy tuvo el mayor impacto en mi perspectiva?",
+                "¿Cómo ayudé a mi equipo a crecer o a desbloquearse hoy?",
+                "¿Qué es algo que me energizó hoy y cómo puedo tener más de eso?",
+                "¿Qué es algo que me drenó la energía y cómo puedo minimizarlo?"
+            ];
+
+            let entries = [];
+            let currentPrompt = "";
+
+            const showStatusMessage = (message) => {
+                statusMessage.textContent = message;
+                statusMessage.style.display = 'block';
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 3000);
+            };
+
+            const renderEntries = () => {
+                entriesContainer.innerHTML = '';
+                if (entries.length === 0) {
+                    entriesContainer.appendChild(placeholder);
+                    placeholder.classList.remove('hidden');
+                } else {
+                    placeholder.classList.add('hidden');
+                    entries.forEach(entry => {
+                        const card = document.createElement('div');
+                        card.className = 'entry-card bg-[var(--azul-oscuro)] p-4 rounded-lg shadow-md';
+                        card.innerHTML = `
+                            <p class="text-xs font-bold text-[var(--texto-secundario)]">${entry.date}</p>
+                            <p class="font-bold text-[var(--dorado)] mt-1">Pregunta: ${entry.prompt}</p>
+                            <p class="text-[var(--texto-claro)] mt-2 whitespace-pre-wrap">${entry.text}</p>
+                        `;
+                        entriesContainer.appendChild(card);
+                    });
+                }
+            };
+            
+            function loadDailyPrompt() {
+                const today = new Date();
+                currentDateEl.textContent = today.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                // Generar un prompt "único" por día
+                const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+                currentPrompt = prompts[dayOfYear % prompts.length];
+                promptDisplay.textContent = currentPrompt;
+            }
+
+            addEntryBtn.addEventListener('click', () => {
+                const text = entryInput.value.trim();
+                if (text) {
+                    const date = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
+                    entries.unshift({ text, date, prompt: currentPrompt });
+                    entryInput.value = '';
+                    renderEntries();
+                    showStatusMessage("¡Entrada guardada en tu diario!");
+                } else {
+                    showStatusMessage("Escribe tu reflexión antes de guardarla.");
+                }
+            });
+
+            // Cargar datos de ejemplo
+            entries = [
+                { date: "18 de septiembre de 2025", prompt: "¿Qué tarea estuve evitando hoy y por qué?", text: "Evité la llamada con el proveedor XYZ. Creo que es porque no tengo buenas noticias sobre el retraso del pago. Mañana la haré a primera hora, preparando bien los datos." },
+                { date: "17 de septiembre de 2025", prompt: "¿Cuál fue mi mayor aprendizaje hoy?", text: "Aprendí que delegar la tarea de redes sociales fue una gran decisión. El equipo lo hizo mejor y más rápido de lo que yo podría, y me liberó para enfocarme en la estrategia de producto." }
+            ];
+
+            loadDailyPrompt();
+            renderEntries();
+        });
+    </script>
+</body>
+</html>

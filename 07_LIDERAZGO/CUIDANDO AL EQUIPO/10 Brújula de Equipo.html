@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Cero a Cien - Brújula de Equipo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0d1a2e; /* Azul Noche */
+            color: #f0f0f0;
+        }
+        .panel-dorado {
+            border-color: #D4AF37; /* Dorado */
+        }
+        .texto-dorado {
+            color: #D4AF37;
+        }
+        .bg-dorado {
+            background-color: #D4AF37;
+        }
+        .bg-dorado-hover:hover {
+            background-color: #b89b31;
+        }
+        .panel-explicativo {
+            background-color: #102a43;
+        }
+        .herramienta-panel {
+            background-color: #0d1a2e;
+        }
+        .estrella-rating svg {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .estrella-rating:hover svg, .estrella-rating.selected svg {
+            color: #D4AF37;
+        }
+        .barra-resultado {
+            background-color: rgba(212, 175, 55, 0.3);
+            border-radius: 4px;
+        }
+        .progreso-barra {
+            background-color: #D4AF37;
+            transition: width 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 shadow-2xl rounded-lg overflow-hidden">
+        
+        <!-- Panel Izquierdo: Explicaciones -->
+        <div class="panel-explicativo p-8 lg:p-12 flex flex-col justify-center rounded-lg">
+            <h1 class="text-3xl lg:text-4xl font-bold texto-dorado mb-6">Brújula de Equipo</h1>
+            
+            <div class="space-y-6 text-gray-300">
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">Objetivo</h2>
+                    <p>Crear un canal de feedback anónimo y seguro para medir la percepción del equipo sobre dinámicas de trabajo clave, permitiendo identificar problemas de proceso y colaboración de forma proactiva.</p>
+                </div>
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">Importancia</h2>
+                    <p>Muchos problemas de equipo no se verbalizan por miedo al conflicto. Esta herramienta da voz a todos de forma segura, proporcionando al líder datos reales para tomar decisiones informadas y mejorar continuamente la forma de trabajar.</p>
+                </div>
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">¿Qué es?</h2>
+                    <p>Una microherramienta que plantea una única pregunta semanal sobre un aspecto del trabajo en equipo (ej. claridad de objetivos, comunicación). Los miembros responden anónimamente en una escala y ven los resultados agregados.</p>
+                </div>
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">¿Para qué sirve?</h2>
+                    <p>Sirve para tomar el pulso a la "salud" de los procesos del equipo. Es una brújula que ayuda a detectar desviaciones y a recalibrar el rumbo antes de que los pequeños problemas se conviertan en grandes crisis.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel Derecho: Herramienta Interactiva -->
+        <div class="herramienta-panel p-8 lg:p-12 flex flex-col items-center justify-center text-center">
+            
+            <div id="panel-votacion">
+                <h2 class="text-2xl font-bold mb-4">Pulso de la Semana</h2>
+                <p class="text-gray-400 mb-6">"En una escala del 1 al 5, ¿qué tan clara fue la comunicación sobre las prioridades de esta semana?"</p>
+
+                <div class="flex justify-center items-center space-x-4 mb-8" id="rating-container">
+                    <span class="estrella-rating" data-value="1"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.817 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg></span>
+                    <span class="estrella-rating" data-value="2"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.817 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg></span>
+                    <span class="estrella-rating" data-value="3"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.817 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg></span>
+                    <span class="estrella-rating" data-value="4"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.817 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg></span>
+                    <span class="estrella-rating" data-value="5"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.817 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg></span>
+                </div>
+                <button id="votar-btn" class="w-full max-w-sm bg-dorado text-gray-900 font-bold py-3 px-6 rounded-lg bg-dorado-hover transition-colors duration-300 mb-12 opacity-50 cursor-not-allowed" disabled>Votar Anónimamente</button>
+            </div>
+            
+            <div id="panel-resultados" class="w-full max-w-lg hidden">
+                <h2 class="text-2xl font-bold mb-4">Resultados Agregados</h2>
+                <div id="resultados-container" class="space-y-2 text-left border-2 panel-dorado p-4 rounded-lg">
+                    <!-- Resultados simulados -->
+                </div>
+                <p class="text-sm text-gray-400 mt-4">Gracias por tu participación. Este es el pulso actual del equipo.</p>
+            </div>
+
+
+            <div class="mt-12 w-full max-w-lg">
+                <div id="mensaje-accion" class="text-green-400 h-8 mb-4 transition-opacity duration-300 opacity-0"></div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <button id="guardar" class="w-full bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded-lg transition-colors duration-300">Guardar</button>
+                    <button id="descargar" class="w-full bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded-lg transition-colors duration-300">Descargar</button>
+                    <button id="compartir" class="w-full bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded-lg transition-colors duration-300">Compartir</button>
+                    <button id="limpiar" class="w-full bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded-lg transition-colors duration-300">Reiniciar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const estrellas = document.querySelectorAll('.estrella-rating');
+            const votarBtn = document.getElementById('votar-btn');
+            const panelVotacion = document.getElementById('panel-votacion');
+            const panelResultados = document.getElementById('panel-resultados');
+            const resultadosContainer = document.getElementById('resultados-container');
+            const mensajeAccion = document.getElementById('mensaje-accion');
+            
+            const guardarBtn = document.getElementById('guardar');
+            const descargarBtn = document.getElementById('descargar');
+            const compartirBtn = document.getElementById('compartir');
+            const limpiarBtn = document.getElementById('limpiar');
+
+            let seleccion = 0;
+            // Simulamos algunos votos iniciales para que haya datos
+            let votos = [2, 5, 8, 12, 6]; // Votos para 1, 2, 3, 4, 5 estrellas
+
+            function actualizarEstrellas(rating) {
+                estrellas.forEach(estrella => {
+                    estrella.classList.remove('selected');
+                    if (parseInt(estrella.dataset.value) <= rating) {
+                        estrella.classList.add('selected');
+                    }
+                });
+            }
+
+            estrellas.forEach(estrella => {
+                estrella.addEventListener('mouseover', () => actualizarEstrellas(parseInt(estrella.dataset.value)));
+                estrella.addEventListener('mouseout', () => actualizarEstrellas(seleccion));
+                estrella.addEventListener('click', () => {
+                    seleccion = parseInt(estrella.dataset.value);
+                    actualizarEstrellas(seleccion);
+                    votarBtn.disabled = false;
+                    votarBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                });
+            });
+
+            function mostrarResultados() {
+                panelVotacion.classList.add('hidden');
+                panelResultados.classList.remove('hidden');
+                
+                resultadosContainer.innerHTML = '';
+                const totalVotos = votos.reduce((a, b) => a + b, 0);
+
+                votos.forEach((numVotos, index) => {
+                    const porcentaje = totalVotos > 0 ? (numVotos / totalVotos) * 100 : 0;
+                    const resultadoHTML = `
+                        <div class="flex items-center gap-2">
+                            <span class="w-12 text-right">${index + 1} ★</span>
+                            <div class="barra-resultado flex-grow h-6">
+                                <div class="progreso-barra h-6" style="width: ${porcentaje}%"></div>
+                            </div>
+                            <span class="w-16 text-left font-bold">${porcentaje.toFixed(1)}%</span>
+                        </div>
+                    `;
+                    resultadosContainer.innerHTML += resultadoHTML;
+                });
+            }
+            
+            votarBtn.addEventListener('click', () => {
+                if (seleccion > 0) {
+                    votos[seleccion - 1]++; // Añadir el nuevo voto
+                    mostrarResultados();
+                }
+            });
+
+            limpiarBtn.addEventListener('click', () => {
+                panelResultados.classList.add('hidden');
+                panelVotacion.classList.remove('hidden');
+                seleccion = 0;
+                actualizarEstrellas(0);
+                votarBtn.disabled = true;
+                votarBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                // Para la demo, reseteamos los votos
+                votos = [2, 5, 8, 12, 6]; 
+            });
+
+            descargarBtn.addEventListener('click', () => {
+                if (!panelResultados.classList.contains('hidden')) {
+                     mensajeAccion.textContent = "Generando imagen...";
+                     mensajeAccion.classList.remove('opacity-0');
+                    html2canvas(resultadosContainer, { backgroundColor: "#0d1a2e", scale: 2 }).then(canvas => {
+                        const link = document.createElement('a');
+                        link.download = 'resultados-brujula-equipo.png';
+                        link.href = canvas.toDataURL();
+                        link.click();
+                        mensajeAccion.textContent = "¡Resultados descargados!";
+                        setTimeout(() => mensajeAccion.classList.add('opacity-0'), 2500);
+                    });
+                } else {
+                    alert("Debes votar primero para ver y descargar los resultados.");
+                }
+            });
+
+            compartirBtn.addEventListener('click', () => {
+                const urlResultados = "https://deceroacien.tools/brujula/xyz123";
+                navigator.clipboard.writeText(urlResultados).then(() => {
+                    mensajeAccion.textContent = "¡Enlace de resultados copiado!";
+                    mensajeAccion.classList.remove('opacity-0');
+                    setTimeout(() => mensajeAccion.classList.add('opacity-0'), 2500);
+                }).catch(err => console.error('Error al copiar: ', err));
+            });
+            
+            guardarBtn.addEventListener('click', () => {
+                mensajeAccion.textContent = "¡Resultados guardados!";
+                mensajeAccion.classList.remove('opacity-0');
+                setTimeout(() => mensajeAccion.classList.add('opacity-0'), 2500);
+            });
+        });
+    </script>
+</body>
+</html>

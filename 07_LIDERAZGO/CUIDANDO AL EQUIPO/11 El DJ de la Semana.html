@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Cero a Cien - El DJ de la Semana</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0d1a2e; /* Azul Noche */
+            color: #f0f0f0;
+        }
+        .panel-dorado {
+            border-color: #D4AF37; /* Dorado */
+        }
+        .texto-dorado {
+            color: #D4AF37;
+        }
+        .bg-dorado {
+            background-color: #D4AF37;
+        }
+        .bg-dorado-hover:hover {
+            background-color: #b89b31;
+        }
+        .panel-explicativo {
+            background-color: #102a43;
+        }
+        .herramienta-panel {
+            background-color: #0d1a2e;
+        }
+        .dj-card {
+            background: linear-gradient(145deg, #102a43, #0d1a2e);
+            border: 2px solid #D4AF37;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 shadow-2xl rounded-lg overflow-hidden">
+        
+        <!-- Panel Izquierdo: Explicaciones -->
+        <div class="panel-explicativo p-8 lg:p-12 flex flex-col justify-center rounded-lg">
+            <h1 class="text-3xl lg:text-4xl font-bold texto-dorado mb-6">El DJ de la Semana</h1>
+            
+            <div class="space-y-6 text-gray-300">
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">Objetivo</h2>
+                    <p>Fomentar la conexión personal y el descubrimiento cultural dentro del equipo a través de la música, creando un ritual semanal divertido y de baja presión.</p>
+                </div>
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">Importancia</h2>
+                    <p>Conocer a los compañeros más allá de su rol laboral fortalece los lazos y la confianza. La música es un conector universal que revela personalidades y genera conversaciones, humanizando el entorno de trabajo, especialmente en equipos remotos.</p>
+                </div>
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">¿Qué es?</h2>
+                    <p>Una microherramienta que asigna aleatoriamente a un miembro del equipo como el "DJ de la Semana". La persona seleccionada tiene el honor de compartir una pequeña playlist que se convierte en la banda sonora no oficial del equipo.</p>
+                </div>
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">¿Para qué sirve?</h2>
+                    <p>Sirve para añadir un elemento lúdico y cultural a la rutina de trabajo. Es una forma excelente de empezar la semana, descubrir nueva música y conocer mejor los gustos y personalidades de los compañeros.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel Derecho: Herramienta Interactiva -->
+        <div class="herramienta-panel p-8 lg:p-12 flex flex-col items-center justify-center text-center">
+            
+            <h2 class="text-2xl font-bold mb-4">La Banda Sonora de la Semana</h2>
+            <button id="asignar-dj" class="bg-dorado text-gray-900 font-bold py-3 px-6 rounded-lg bg-dorado-hover transition-colors duration-300 mb-6">Asignar DJ de la Semana</button>
+            
+            <div id="dj-card" class="w-full max-w-lg dj-card rounded-lg p-6 mb-8 hidden">
+                <h3 class="text-lg">El DJ de esta semana es:</h3>
+                <p id="dj-nombre" class="text-3xl font-bold texto-dorado my-2"></p>
+                <div class="mt-4">
+                    <label for="playlist-input" class="block text-sm font-bold mb-2 text-gray-400">DJ, comparte el enlace a tu playlist (Spotify, YouTube, etc.):</label>
+                    <input type="url" id="playlist-input" class="w-full p-2 rounded-lg bg-gray-800 border-2 border-gray-700 focus:border-dorado focus:outline-none text-center" placeholder="https://open.spotify.com/playlist/...">
+                    <button id="publicar-playlist" class="mt-3 w-full bg-gray-700 hover:bg-gray-600 font-bold py-2 px-4 rounded-lg transition-colors">Publicar</button>
+                </div>
+            </div>
+
+            <div id="playlist-display" class="w-full max-w-lg text-left">
+                <h3 class="text-xl font-bold texto-dorado mb-4">Playlist de la Semana:</h3>
+                <div id="playlist-container" class="w-full h-24 bg-gray-800/50 rounded-lg p-4 border-2 panel-dorado flex items-center justify-center">
+                    <p id="playlist-placeholder" class="text-gray-500">Esperando la playlist del DJ...</p>
+                    <a id="playlist-link" href="#" target="_blank" class="text-lg text-dorado hover:underline hidden truncate"></a>
+                </div>
+            </div>
+
+            <div class="mt-12 w-full max-w-lg">
+                <div id="mensaje-accion" class="text-green-400 h-8 mb-4 transition-opacity duration-300 opacity-0"></div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <button id="guardar" class="w-full bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded-lg transition-colors duration-300">Guardar</button>
+                    <button id="descargar" class="w-full bg-gray-800 text-gray-500 font-bold py-3 px-6 rounded-lg opacity-50 cursor-not-allowed">Descargar</button>
+                    <button id="compartir" class="w-full bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded-lg transition-colors duration-300">Compartir</button>
+                    <button id="limpiar" class="w-full bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded-lg transition-colors duration-300">Reiniciar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const asignarDjBtn = document.getElementById('asignar-dj');
+            const djCard = document.getElementById('dj-card');
+            const djNombre = document.getElementById('dj-nombre');
+            const playlistInput = document.getElementById('playlist-input');
+            const publicarPlaylistBtn = document.getElementById('publicar-playlist');
+            const playlistPlaceholder = document.getElementById('playlist-placeholder');
+            const playlistLink = document.getElementById('playlist-link');
+            const mensajeAccion = document.getElementById('mensaje-accion');
+            
+            const guardarBtn = document.getElementById('guardar');
+            const compartirBtn = document.getElementById('compartir');
+            const limpiarBtn = document.getElementById('limpiar');
+            
+            const miembros = ["Ana", "Carlos", "Elena", "David", "Sofia", "Luis", "Maria"];
+            let djActual = "";
+            let playlistActual = "";
+            let miembrosDisponibles = [...miembros];
+
+            function asignarDJ() {
+                if (miembrosDisponibles.length === 0) {
+                    miembrosDisponibles = [...miembros]; // Reiniciar si ya todos han sido DJ
+                }
+                const indice = Math.floor(Math.random() * miembrosDisponibles.length);
+                djActual = miembrosDisponibles.splice(indice, 1)[0];
+                
+                djNombre.textContent = djActual;
+                djCard.classList.remove('hidden');
+                asignarDjBtn.textContent = "Asignar Nuevo DJ";
+            }
+
+            asignarDjBtn.addEventListener('click', asignarDJ);
+
+            publicarPlaylistBtn.addEventListener('click', () => {
+                const url = playlistInput.value.trim();
+                if (url && djActual) {
+                    try {
+                        new URL(url); // Validar si es una URL válida
+                        playlistActual = url;
+                        playlistLink.href = playlistActual;
+                        playlistLink.textContent = playlistActual;
+                        playlistLink.classList.remove('hidden');
+                        playlistPlaceholder.classList.add('hidden');
+
+                        mensajeAccion.textContent = `¡Playlist de ${djActual} publicada!`;
+                        mensajeAccion.classList.remove('opacity-0');
+                        setTimeout(() => mensajeAccion.classList.add('opacity-0'), 2500);
+
+                    } catch (_) {
+                        alert("Por favor, introduce un enlace válido.");
+                    }
+                } else {
+                    alert("Primero asigna un DJ y luego introduce el enlace de la playlist.");
+                }
+            });
+
+            limpiarBtn.addEventListener('click', () => {
+                djActual = "";
+                playlistActual = "";
+                miembrosDisponibles = [...miembros];
+                djCard.classList.add('hidden');
+                djNombre.textContent = "";
+                playlistInput.value = "";
+                playlistLink.classList.add('hidden');
+                playlistPlaceholder.classList.remove('hidden');
+                asignarDjBtn.textContent = "Asignar DJ de la Semana";
+            });
+            
+            compartirBtn.addEventListener('click', () => {
+                if (djActual && playlistActual) {
+                    const textoCompartir = `¡Escucha la banda sonora de la semana en De Cero a Cien, seleccionada por nuestro DJ ${djActual}! Playlist: ${playlistActual}`;
+                    navigator.clipboard.writeText(textoCompartir).then(() => {
+                        mensajeAccion.textContent = "¡Mensaje para compartir copiado!";
+                        mensajeAccion.classList.remove('opacity-0');
+                        setTimeout(() => mensajeAccion.classList.add('opacity-0'), 2500);
+                    }).catch(err => console.error('Error al copiar: ', err));
+                } else {
+                    alert("Primero asigna un DJ y publica una playlist para poder compartir.");
+                }
+            });
+            
+            guardarBtn.addEventListener('click', () => {
+                if (djActual && playlistActual) {
+                    mensajeAccion.textContent = "¡Playlist de la semana guardada!";
+                    mensajeAccion.classList.remove('opacity-0');
+                    setTimeout(() => mensajeAccion.classList.add('opacity-0'), 2500);
+                } else {
+                    alert("No hay nada que guardar todavía.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

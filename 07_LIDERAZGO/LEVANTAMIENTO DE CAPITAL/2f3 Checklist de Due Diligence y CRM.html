@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist de Due Diligence y CRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A192F;
+            color: #E2E8F0;
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .tool-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #FBBF24;
+        }
+        input, textarea, select {
+            background-color: #112240;
+            border: 1px solid #334155;
+            color: #E2E8F0;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            width: 100%;
+        }
+        input:focus, textarea:focus, select:focus {
+            border-color: #FBBF24;
+            outline: none;
+        }
+        .btn {
+            background-color: #FBBF24;
+            color: #111827;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            background-color: #F59E0B;
+            transform: scale(1.05);
+        }
+        .btn-secondary {
+            background-color: #112240;
+            color: #FBBF24;
+            border: 1px solid #FBBF24;
+        }
+        .btn-secondary:hover {
+            background-color: #1E293B;
+            transform: scale(1.05);
+        }
+        .card {
+            background-color: #0A192F;
+            border-top: 4px solid #FBBF24;
+        }
+        .card-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #FBBF24;
+            transition: color 0.2s;
+        }
+        .card-actions button:hover {
+            color: #E2E8F0;
+        }
+        .document-item {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        .document-item input[type="checkbox"] {
+            margin-right: 0.5rem;
+            width: auto;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="bg-[#112240] p-6 sm:p-12 rounded-xl shadow-lg min-h-screen">
+        <div class="tool-content">
+            <h2 class="text-3xl font-serif mb-6 text-center text-white">Checklist de Due Diligence y CRM</h2>
+            <p class="text-sm text-center mb-8 text-gray-400">Tu panel de control para un proceso de levantamiento de capital profesional y organizado.</p>
+
+            <!-- Sección de Explicaciones -->
+            <div class="space-y-8 mb-12">
+                <div class="bg-[#0A192F] p-6 rounded-lg shadow-inner border-t-4 border-yellow-500">
+                    <h3 class="text-2xl font-bold mb-4 flex items-center text-white"><span class="text-3xl mr-2">🎯</span> Objetivo</h3>
+                    <p>Manejar de forma profesional la relación con cada inversor, asegurando que el proceso de "due diligence" (la revisión exhaustiva de tu negocio) sea fluido y eficiente. Este sistema evita errores, previene retrasos y genera confianza.</p>
+                </div>
+                <div class="bg-[#0A192F] p-6 rounded-lg shadow-inner border-t-4 border-yellow-500">
+                    <h3 class="text-2xl font-bold mb-4 flex items-center text-white"><span class="text-3xl mr-2">⭐</span> Importancia</h3>
+                    <p>La due diligence es la etapa final antes de recibir la inversión. Una gestión desordenada puede arruinar un trato. Un CRM y un checklist te permiten mostrar que tu equipo es metódico y confiable, transformando un proceso tedioso en una prueba de tu profesionalismo.</p>
+                </div>
+                <div class="bg-[#0A192F] p-6 rounded-lg shadow-inner border-t-4 border-yellow-500">
+                    <h3 class="text-2xl font-bold mb-4 flex items-center text-white"><span class="text-3xl mr-2">⚙</span> ¿Qué es lo que hace?</h3>
+                    <p>Permite rastrear el **estado actual** de cada inversor en tu embudo de ventas de capital (CRM). Además, gestiona un **checklist de documentos** para cada uno, desde el pitch deck inicial hasta los informes financieros detallados, asegurándote de que siempre sabes qué has enviado y qué falta.</p>
+                </div>
+                <div class="bg-[#0A192F] p-6 rounded-lg shadow-inner border-t-4 border-yellow-500">
+                    <h3 class="text-2xl font-bold mb-4 flex items-center text-white"><span class="text-3xl mr-2">💡</span> ¿Para qué me sirve?</h3>
+                    <p>Te sirve para tener una visión clara y en tiempo real de tu ronda de capital. No más dudas sobre si un inversor recibió un documento o en qué etapa de la negociación se encuentra. Te da el control y la tranquilidad para enfocarte en el cierre de la inversión.</p>
+                </div>
+            </div>
+
+            <hr class="border-t-2 border-gray-700 my-12" />
+
+            <!-- Sección de Botones de Control -->
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <button onclick="saveInvestors()" class="btn btn-secondary">Guardar</button>
+                <button onclick="shareInvestors()" class="btn btn-secondary">Compartir</button>
+                <button onclick="downloadInvestors()" class="btn btn-secondary">Descargar</button>
+                <button onclick="clearInvestors()" class="btn btn-secondary">Limpiar</button>
+            </div>
+
+            <!-- Sección de la Herramienta Interactiva -->
+            <form id="investor-form" class="space-y-4 mb-8 p-6 rounded-lg bg-[#0A192F] shadow-inner">
+                <h3 class="text-xl font-bold text-white" id="form-title">Agregar Nuevo Inversor</h3>
+                <div>
+                    <label for="investor-name" class="block text-sm font-medium mb-1">Nombre del Inversor / Fondo</label>
+                    <input type="text" id="investor-name" placeholder="ej. Manutara Ventures" required>
+                </div>
+                <div>
+                    <label for="contact-person" class="block text-sm font-medium mb-1">Persona de Contacto</label>
+                    <input type="text" id="contact-person" placeholder="ej. Cristian Jofré" required>
+                </div>
+                <div>
+                    <label for="investor-status" class="block text-sm font-medium mb-1">Estado Actual</label>
+                    <select id="investor-status" required>
+                        <option value="1. Contacto Inicial">1. Contacto Inicial</option>
+                        <option value="2. Pitch Deck Enviado">2. Pitch Deck Enviado</option>
+                        <option value="3. Reunión 1">3. Reunión 1</option>
+                        <option value="4. Due Diligence">4. Due Diligence</option>
+                        <option value="5. Hoja de Términos (Term Sheet)">5. Hoja de Términos (Term Sheet)</option>
+                        <option value="6. Rechazado">6. Rechazado</option>
+                        <option value="7. Inversión Cerrada">7. Inversión Cerrada</option>
+                    </select>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn">Agregar Nuevo Inversor</button>
+                </div>
+            </form>
+
+            <div id="message-box" class="hidden p-4 rounded-lg text-center mb-6" role="alert"></div>
+
+            <div id="investor-list" class="space-y-6">
+                <!-- Las tarjetas de los inversores se inyectarán aquí -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('investor-form');
+            const formTitle = document.getElementById('form-title');
+            const nameInput = document.getElementById('investor-name');
+            const contactInput = document.getElementById('contact-person');
+            const statusInput = document.getElementById('investor-status');
+            const listContainer = document.getElementById('investor-list');
+            const messageBox = document.getElementById('message-box');
+            let investors = JSON.parse(localStorage.getItem('due_diligence_crm')) || [];
+            let editingIndex = -1;
+
+            const dueDiligenceChecklist = [
+                { id: 'pitchDeck', label: 'Pitch Deck' },
+                { id: 'onePager', label: 'One-Pager' },
+                { id: 'financials', label: 'Reportes Financieros (3 años)' },
+                { id: 'businessPlan', label: 'Plan de Negocio Detallado' },
+                { id: 'legalDocs', label: 'Documentos Legales de la Compañía' },
+                { id: 'IP', label: 'Propiedad Intelectual (Patentes, Marcas)' },
+                { id: 'capTable', label: 'Tabla de Capitalización' },
+                { id: 'teamCVs', label: 'CVs del Equipo Fundador' },
+                { id: 'marketAnalysis', label: 'Análisis de Mercado y Competencia' },
+            ];
+
+            const showMessage = (message, type = 'success') => {
+                messageBox.textContent = message;
+                messageBox.classList.remove('hidden', 'bg-red-500', 'bg-green-500');
+                if (type === 'success') {
+                    messageBox.classList.add('bg-green-500', 'text-white');
+                } else if (type === 'error') {
+                    messageBox.classList.add('bg-red-500', 'text-white');
+                }
+                setTimeout(() => {
+                    messageBox.classList.add('hidden');
+                }, 3000);
+            };
+
+            const renderInvestors = () => {
+                listContainer.innerHTML = '';
+                if (investors.length === 0) {
+                    listContainer.innerHTML = '<p class="text-center text-gray-500">Aún no has agregado inversores. Usa el formulario de arriba para empezar.</p>';
+                }
+                investors.forEach((investor, index) => {
+                    const card = document.createElement('div');
+                    card.classList.add('p-6', 'rounded-lg', 'shadow-inner', 'card', 'space-y-4');
+                    card.innerHTML = `
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="text-xl font-bold text-white">${investor.name}</h3>
+                                <p class="text-sm text-gray-400">Contacto: ${investor.contact}</p>
+                            </div>
+                            <div class="card-actions space-x-2">
+                                <button onclick="editInvestor(${index})">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                                        <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 012 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                                <button onclick="deleteInvestor(${index})">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm6 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-yellow-400">Estado:</h4>
+                            <p>${investor.status}</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-yellow-400 mb-2">Checklist de Documentos:</h4>
+                            <ul class="space-y-1 text-sm text-gray-300">
+                                ${dueDiligenceChecklist.map(doc => `
+                                    <li class="document-item">
+                                        <input type="checkbox" id="doc-${index}-${doc.id}" data-investor-index="${index}" data-doc-id="${doc.id}" ${investor.checklist[doc.id] ? 'checked' : ''}>
+                                        <label for="doc-${index}-${doc.id}">${doc.label}</label>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    `;
+                    listContainer.appendChild(card);
+                });
+            };
+
+            const resetForm = () => {
+                form.reset();
+                editingIndex = -1;
+                formTitle.textContent = 'Agregar Nuevo Inversor';
+                document.querySelector('#investor-form button[type="submit"]').textContent = 'Agregar Nuevo Inversor';
+            };
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const newInvestor = {
+                    name: nameInput.value,
+                    contact: contactInput.value,
+                    status: statusInput.value,
+                    checklist: investors[editingIndex] ? investors[editingIndex].checklist : {}
+                };
+
+                if (editingIndex > -1) {
+                    investors[editingIndex] = newInvestor;
+                    showMessage('Inversor actualizado con éxito.');
+                } else {
+                    investors.push(newInvestor);
+                    showMessage('Nuevo inversor agregado con éxito.');
+                }
+
+                localStorage.setItem('due_diligence_crm', JSON.stringify(investors));
+                resetForm();
+                renderInvestors();
+            });
+
+            listContainer.addEventListener('change', (e) => {
+                if (e.target.type === 'checkbox') {
+                    const index = e.target.getAttribute('data-investor-index');
+                    const docId = e.target.getAttribute('data-doc-id');
+                    investors[index].checklist[docId] = e.target.checked;
+                    localStorage.setItem('due_diligence_crm', JSON.stringify(investors));
+                }
+            });
+
+            window.editInvestor = (index) => {
+                const investor = investors[index];
+                nameInput.value = investor.name;
+                contactInput.value = investor.contact;
+                statusInput.value = investor.status;
+                editingIndex = index;
+                formTitle.textContent = 'Editar Inversor';
+                document.querySelector('#investor-form button[type="submit"]').textContent = 'Guardar Cambios';
+                nameInput.focus();
+            };
+
+            window.deleteInvestor = (index) => {
+                if (true) { // Reemplazado por un true para permitir la eliminación sin un modal
+                    investors.splice(index, 1);
+                    localStorage.setItem('due_diligence_crm', JSON.stringify(investors));
+                    resetForm();
+                    renderInvestors();
+                    showMessage('Inversor eliminado con éxito.');
+                }
+            };
+
+            // Funcionalidades de los botones
+            window.saveInvestors = () => {
+                localStorage.setItem('due_diligence_crm', JSON.stringify(investors));
+                showMessage('Datos guardados localmente.');
+            };
+
+            window.shareInvestors = () => {
+                const data = JSON.stringify(investors, null, 2);
+                const tempInput = document.createElement('textarea');
+                tempInput.value = data;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                try {
+                    document.execCommand('copy');
+                    showMessage('Datos copiados al portapapeles. ¡Ya puedes compartirlos!');
+                } catch (err) {
+                    showMessage('No se pudo copiar el texto. Inténtalo manualmente.', 'error');
+                }
+                document.body.removeChild(tempInput);
+            };
+
+            window.downloadInvestors = () => {
+                const data = JSON.stringify(investors, null, 2);
+                const blob = new Blob([data], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'due_diligence_crm.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showMessage('Directorio descargado como due_diligence_crm.json.');
+            };
+
+            window.clearInvestors = () => {
+                if (true) {
+                    localStorage.removeItem('due_diligence_crm');
+                    investors = [];
+                    resetForm();
+                    renderInvestors();
+                    showMessage('Directorio limpiado completamente.');
+                }
+            };
+
+            renderInvestors();
+        });
+    </script>
+</body>
+</html>

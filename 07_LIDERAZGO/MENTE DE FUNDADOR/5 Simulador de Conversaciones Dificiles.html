@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Conversaciones Difíciles - MENTE DE FUNDADOR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --azul-oscuro: #0A192F;
+            --azul-noche: #112240;
+            --dorado: #FBBF24;
+            --dorado-hover: #F59E0B;
+            --texto-claro: #E2E8F0;
+            --texto-secundario: #a7a9be;
+            --borde-sutil: #334155;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--azul-oscuro);
+            color: var(--texto-claro);
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .btn {
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: var(--dorado-hover);
+            transform: scale(1.05);
+        }
+        .btn-secondary {
+            background-color: var(--azul-noche);
+            color: var(--texto-secundario);
+            border: 1px solid var(--borde-sutil);
+        }
+        .btn-secondary:hover {
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            border-color: var(--dorado);
+        }
+        .status-message {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-weight: 600;
+            z-index: 100;
+            display: none;
+        }
+        .option-card {
+            background-color: var(--azul-noche);
+            border: 1px solid var(--borde-sutil);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .option-card:hover {
+            border-color: var(--dorado);
+            transform: translateY(-4px);
+        }
+        .feedback-card {
+            border-left-width: 4px;
+        }
+        .feedback-green { border-color: #34D399; }
+        .feedback-yellow { border-color: #FBBF24; }
+        .feedback-red { border-color: #F87171; }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Panel Izquierdo: Explicaciones -->
+        <aside class="bg-[var(--azul-noche)] p-8 rounded-xl shadow-lg sticky top-8 self-start">
+            <span class="text-sm font-bold text-[var(--dorado)] tracking-widest">MENTE DE FUNDADOR</span>
+            <h1 class="font-serif text-3xl font-bold text-white mt-2">Simulador de Conversaciones Difíciles</h1>
+            <div class="mt-6 space-y-6">
+                 <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-comments"></i>Objetivo</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Entrenar y mejorar las habilidades de comunicación y liderazgo del fundador en escenarios de alta presión, en un entorno seguro y sin consecuencias reales.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-star"></i>Importancia</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">El éxito de un líder a menudo depende de su capacidad para manejar conversaciones cruciales. Practicar estas interacciones reduce la ansiedad, mejora la claridad del mensaje y aumenta la probabilidad de lograr un resultado positivo para todas las partes.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-info-circle"></i>¿Qué es?</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Una herramienta interactiva que presenta al fundador un escenario de liderazgo común (dar feedback, negociar, etc.). El usuario elige una de las tres posibles respuestas y recibe feedback inmediato sobre el impacto potencial de su elección.</p>
+                </div>
+                 <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-cogs"></i>¿Para qué sirve?</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Para construir "memoria muscular" en comunicación. Sirve para identificar patrones de respuesta propios, aprender frameworks de comunicación efectiva y desarrollar la confianza para enfrentar conversaciones difíciles en la vida real.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Panel Derecho: Herramienta -->
+        <main class="bg-[var(--azul-noche)] p-8 rounded-xl shadow-lg">
+            <h2 class="font-serif text-2xl font-bold text-white mb-6 text-center">Entrena tus Habilidades de Liderazgo</h2>
+            
+            <div id="scenario-section">
+                <div class="bg-[var(--azul-oscuro)] p-6 rounded-lg mb-6 border border-[var(--borde-sutil)]">
+                    <h3 class="font-bold text-lg text-[var(--dorado)] mb-2">Escenario Actual:</h3>
+                    <p id="scenario-text" class="text-[var(--texto-claro)]"></p>
+                </div>
+
+                <h3 class="font-bold text-lg text-white mb-4">¿Cómo responderías?</h3>
+                <div id="options-container" class="space-y-4">
+                    <!-- Las opciones se generarán aquí -->
+                </div>
+            </div>
+
+            <!-- Sección de Feedback -->
+            <div id="feedback-section" class="mt-8 hidden">
+                <h3 class="font-serif text-xl font-bold text-white mb-4">Feedback de tu Respuesta</h3>
+                <div id="feedback-card" class="feedback-card p-4 rounded-lg bg-[var(--azul-oscuro)]">
+                    <p id="feedback-text" class="text-sm"></p>
+                </div>
+                <div class="text-center mt-6">
+                    <button id="next-scenario-btn" class="btn">Siguiente Escenario</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="status-message" class="status-message"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const scenarioText = document.getElementById('scenario-text');
+            const optionsContainer = document.getElementById('options-container');
+            const scenarioSection = document.getElementById('scenario-section');
+            const feedbackSection = document.getElementById('feedback-section');
+            const feedbackCard = document.getElementById('feedback-card');
+            const feedbackText = document.getElementById('feedback-text');
+            const nextScenarioBtn = document.getElementById('next-scenario-btn');
+            
+            const scenarios = [
+                {
+                    scenario: "Un miembro clave de tu equipo, que ha estado rindiendo por debajo de lo esperado, te pide un aumento de sueldo que la empresa no puede permitirse en este momento.",
+                    options: [
+                        { text: "Ser directo y decirle que su rendimiento no justifica un aumento, y que además no hay presupuesto.", impact: "red", feedback: "Esta respuesta, aunque honesta, es muy confrontacional y desmotivadora. Podría dañar permanentemente la relación y hacer que el empleado se sienta atacado y sin valor." },
+                        { text: "Escuchar su petición, reconocer su valor para la empresa, y explicarle con transparencia la situación financiera actual, proponiendo reevaluarlo en 6 meses a cambio de metas de rendimiento claras.", impact: "green", feedback: "¡Excelente! Esta respuesta es empática, transparente y orientada a soluciones. Valida al empleado, establece expectativas claras y crea un camino a seguir, convirtiendo una situación difícil en una oportunidad de crecimiento." },
+                        { text: "Evitar el tema del rendimiento, culpar a la 'mala situación económica' y decirle que 'quizás más adelante' sin dar plazos concretos.", impact: "yellow", feedback: "Esta respuesta evita el conflicto a corto plazo, pero es pasiva y poco clara. No aborda el problema del rendimiento y crea falsas expectativas, lo que puede generar frustración y desconfianza a largo plazo." }
+                    ]
+                },
+                {
+                    scenario: "Acabas de recibir feedback de varios miembros del equipo quejándose de que un compañero es muy negativo en las reuniones y frena la creatividad.",
+                    options: [
+                        { text: "Hablar con el compañero en privado, usando ejemplos concretos y sin juicios, para explicarle el impacto de su comportamiento en el equipo y buscar entender su perspectiva.", impact: "green", feedback: "Este es el enfoque ideal. Es privado, se basa en hechos observables ('he notado que en las reuniones...') y busca entender la causa en lugar de culpar. Fomenta la autoconciencia y abre la puerta a una solución constructiva." },
+                        { text: "Ignorar el problema esperando que se resuelva solo, para no crear un mal ambiente.", impact: "red", feedback: "Ignorar el problema es la peor opción. El comportamiento negativo no desaparecerá; al contrario, se enquistará, desmotivará al resto del equipo y dañará la cultura de la empresa de forma silenciosa pero segura." },
+                        { text: "Mencionar el problema de forma general en la siguiente reunión de equipo, diciendo 'necesitamos ser más positivos', sin nombrar a nadie.", impact: "yellow", feedback: "Aunque bien intencionado, este enfoque es ambiguo. La persona en cuestión puede no darse por aludida, y el resto del equipo sentirá que no se aborda el problema real, generando cinismo." }
+                    ]
+                }
+            ];
+            
+            let currentScenarioIndex = 0;
+
+            function loadScenario(index) {
+                const current = scenarios[index];
+                scenarioText.textContent = current.scenario;
+                optionsContainer.innerHTML = '';
+                current.options.forEach((opt, i) => {
+                    const card = document.createElement('div');
+                    card.className = 'option-card p-4 rounded-lg';
+                    card.innerHTML = `<p>${opt.text}</p>`;
+                    card.dataset.impact = opt.impact;
+                    card.dataset.feedback = opt.feedback;
+                    card.addEventListener('click', handleOptionClick);
+                    optionsContainer.appendChild(card);
+                });
+
+                scenarioSection.classList.remove('hidden');
+                feedbackSection.classList.add('hidden');
+            }
+
+            function handleOptionClick(event) {
+                const selectedCard = event.currentTarget;
+                const impact = selectedCard.dataset.impact;
+                const feedback = selectedCard.dataset.feedback;
+
+                feedbackText.textContent = feedback;
+                feedbackCard.className = 'feedback-card p-4 rounded-lg bg-[var(--azul-oscuro)]'; // Reset classes
+                if (impact === 'green') feedbackCard.classList.add('feedback-green');
+                if (impact === 'yellow') feedbackCard.classList.add('feedback-yellow');
+                if (impact === 'red') feedbackCard.classList.add('feedback-red');
+                
+                scenarioSection.classList.add('hidden');
+                feedbackSection.classList.remove('hidden');
+            }
+
+            nextScenarioBtn.addEventListener('click', () => {
+                currentScenarioIndex = (currentScenarioIndex + 1) % scenarios.length;
+                loadScenario(currentScenarioIndex);
+            });
+
+            loadScenario(currentScenarioIndex);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Radar de Mentores - MENTE DE FUNDADOR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --azul-oscuro: #0A192F;
+            --azul-noche: #112240;
+            --dorado: #FBBF24;
+            --dorado-hover: #F59E0B;
+            --texto-claro: #E2E8F0;
+            --texto-secundario: #a7a9be;
+            --borde-sutil: #334155;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--azul-oscuro);
+            color: var(--texto-claro);
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .btn {
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: var(--dorado-hover);
+            transform: scale(1.05);
+        }
+        .btn-secondary {
+            background-color: var(--azul-noche);
+            color: var(--texto-secundario);
+            border: 1px solid var(--borde-sutil);
+        }
+        .btn-secondary:hover {
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            border-color: var(--dorado);
+        }
+        input, select {
+            background-color: var(--azul-noche);
+            border: 1px solid var(--borde-sutil);
+            color: var(--texto-claro);
+        }
+        input:focus, select:focus {
+            border-color: var(--dorado);
+            outline: none;
+        }
+        .status-message {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-weight: 600;
+            z-index: 100;
+            display: none;
+        }
+        .mentor-card {
+            background-color: var(--azul-noche);
+            border-left: 4px solid var(--dorado);
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Panel Izquierdo: Explicaciones -->
+        <aside class="bg-[var(--azul-noche)] p-8 rounded-xl shadow-lg sticky top-8 self-start">
+            <span class="text-sm font-bold text-[var(--dorado)] tracking-widest">MENTE DE FUNDADOR</span>
+            <h1 class="font-serif text-3xl font-bold text-white mt-2">El Radar de Mentores</h1>
+            <div class="mt-6 space-y-6">
+                 <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-satellite-dish"></i>Objetivo</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Transformar el networking esporádico en una gestión estratégica de relaciones clave, asegurando que los mentores y consejeros importantes se mantengan activos en el radar del fundador.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-star"></i>Importancia</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Nadie construye una empresa solo. Una red de mentores sólida es una ventaja competitiva incalculable. Esta herramienta evita que las relaciones valiosas se "enfríen" por falta de seguimiento.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-info-circle"></i>¿Qué es?</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Un CRM (Customer Relationship Management) personal y minimalista. Permite listar contactos clave, anotar su área de expertise, registrar la última fecha de contacto y programar recordatorios para futuros seguimientos.</p>
+                </div>
+                 <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-cogs"></i>¿Para qué sirve?</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Para cultivar de forma proactiva tu capital relacional. Úsalo para asegurarte de contactar a tus mentores cada 3-6 meses, para preparar tus conversaciones con ellos y para tener siempre a mano a la persona correcta a la que pedir consejo.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Panel Derecho: Herramienta -->
+        <main class="bg-[var(--azul-noche)] p-8 rounded-xl shadow-lg">
+            <h2 class="font-serif text-2xl font-bold text-white mb-6">Añade un Mentor a tu Radar</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div>
+                    <label for="mentor-name" class="block text-sm font-medium mb-1 text-[var(--texto-secundario)]">Nombre del Mentor</label>
+                    <input type="text" id="mentor-name" class="w-full p-2 rounded-lg" placeholder="Ej: Elena Rojas">
+                </div>
+                <div>
+                    <label for="mentor-expertise" class="block text-sm font-medium mb-1 text-[var(--texto-secundario)]">Área de Expertise</label>
+                    <input type="text" id="mentor-expertise" class="w-full p-2 rounded-lg" placeholder="Ej: Marketing B2B">
+                </div>
+                 <div>
+                    <label for="last-contact" class="block text-sm font-medium mb-1 text-[var(--texto-secundario)]">Último Contacto</label>
+                    <input type="date" id="last-contact" class="w-full p-2 rounded-lg">
+                </div>
+                <div>
+                    <label for="follow-up" class="block text-sm font-medium mb-1 text-[var(--texto-secundario)]">Próximo Seguimiento</label>
+                    <input type="date" id="follow-up" class="w-full p-2 rounded-lg">
+                </div>
+            </div>
+            <div class="text-center">
+                <button id="add-btn" class="btn">Añadir Mentor</button>
+            </div>
+
+
+            <!-- Lista de Mentores -->
+            <div id="results-section" class="mt-10 border-t-2 border-[var(--borde-sutil)] pt-6">
+                <h2 class="font-serif text-2xl font-bold text-white mb-6">Tu Radar de Mentores</h2>
+                 <div id="mentors-container" class="space-y-4 max-h-[400px] overflow-y-auto pr-2">
+                     <p id="placeholder" class="text-center text-[var(--texto-secundario)] py-10">Aún no has añadido mentores a tu radar.</p>
+                 </div>
+
+                 <div class="flex flex-wrap justify-center gap-4 mt-8">
+                    <button id="save-btn" class="btn btn-secondary"><i class="fas fa-save mr-2"></i> Guardar</button>
+                    <button id="download-btn" class="btn btn-secondary"><i class="fas fa-download mr-2"></i> Descargar</button>
+                    <button id="share-btn" class="btn btn-secondary"><i class="fas fa-share-alt mr-2"></i> Compartir</button>
+                    <button id="clear-btn" class="btn btn-secondary"><i class="fas fa-trash mr-2"></i> Limpiar Radar</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="status-message" class="status-message"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const addBtn = document.getElementById('add-btn');
+            const mentorNameInput = document.getElementById('mentor-name');
+            const mentorExpertiseInput = document.getElementById('mentor-expertise');
+            const lastContactInput = document.getElementById('last-contact');
+            const followUpInput = document.getElementById('follow-up');
+            const mentorsContainer = document.getElementById('mentors-container');
+            const placeholder = document.getElementById('placeholder');
+            
+            const saveBtn = document.getElementById('save-btn');
+            const downloadBtn = document.getElementById('download-btn');
+            const shareBtn = document.getElementById('share-btn');
+            const clearBtn = document.getElementById('clear-btn');
+            const statusMessage = document.getElementById('status-message');
+            
+            let mentors = [];
+
+            const showStatusMessage = (message) => {
+                statusMessage.textContent = message;
+                statusMessage.style.display = 'block';
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 3000);
+            };
+            
+            const formatDate = (dateString) => {
+                if (!dateString) return 'N/A';
+                const date = new Date(dateString + 'T00:00:00'); // Fix for timezone issues
+                return date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            };
+
+            const renderMentors = () => {
+                mentorsContainer.innerHTML = '';
+                if (mentors.length === 0) {
+                    mentorsContainer.appendChild(placeholder);
+                    placeholder.classList.remove('hidden');
+                } else {
+                    placeholder.classList.add('hidden');
+                    mentors.sort((a, b) => new Date(a.followUp) - new Date(b.followUp)); // Sort by next follow-up
+                    
+                    mentors.forEach(mentor => {
+                        const card = document.createElement('div');
+                        card.className = 'mentor-card p-4 rounded-lg shadow-md flex justify-between items-center';
+                        
+                        const today = new Date();
+                        today.setHours(0,0,0,0);
+                        const followUpDate = new Date(mentor.followUp + 'T00:00:00');
+                        let followUpStatus = '';
+                        if (followUpDate < today) {
+                            followUpStatus = '<span class="text-xs font-bold text-red-400">¡Vencido!</span>';
+                        } else {
+                            followUpStatus = `<span class="text-xs font-bold text-green-400">Pendiente</span>`;
+                        }
+
+                        card.innerHTML = `
+                            <div>
+                                <h4 class="font-bold text-lg text-white">${mentor.name}</h4>
+                                <p class="text-sm text-[var(--texto-secundario)]">${mentor.expertise}</p>
+                                <p class="text-xs text-gray-400 mt-2">Último contacto: ${formatDate(mentor.lastContact)}</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-[var(--dorado)]">${formatDate(mentor.followUp)}</p>
+                                ${followUpStatus}
+                            </div>
+                        `;
+                        mentorsContainer.appendChild(card);
+                    });
+                }
+            };
+            
+            addBtn.addEventListener('click', () => {
+                const name = mentorNameInput.value.trim();
+                const expertise = mentorExpertiseInput.value.trim();
+                const lastContact = lastContactInput.value;
+                const followUp = followUpInput.value;
+
+                if (name && expertise && followUp) {
+                    mentors.push({ name, expertise, lastContact, followUp });
+                    mentorNameInput.value = '';
+                    mentorExpertiseInput.value = '';
+                    lastContactInput.value = '';
+                    followUpInput.value = '';
+                    renderMentors();
+                    showStatusMessage("¡Mentor añadido al radar!");
+                } else {
+                    showStatusMessage("Nombre, expertise y fecha de seguimiento son obligatorios.");
+                }
+            });
+
+            clearBtn.addEventListener('click', () => {
+                if (confirm("¿Estás seguro de que quieres limpiar tu radar de mentores?")) {
+                    mentors = [];
+                    renderMentors();
+                    showStatusMessage("Radar de mentores limpiado.");
+                }
+            });
+
+            downloadBtn.addEventListener('click', () => {
+                if (mentors.length === 0) {
+                    showStatusMessage("Añade mentores antes de descargar.");
+                    return;
+                }
+                showStatusMessage("Generando descarga...");
+                mentorsContainer.style.backgroundColor = 'var(--azul-noche)';
+                html2canvas(mentorsContainer, { scale: 2 }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = 'radar-de-mentores.png';
+                    link.href = canvas.toDataURL();
+                    link.click();
+                    mentorsContainer.style.backgroundColor = '';
+                });
+            });
+
+            saveBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Guardar': ¡Próximamente!"));
+            shareBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Compartir': ¡Próximamente!"));
+
+            // Cargar mentores iniciales de ejemplo
+            const today = new Date();
+            const nextWeek = new Date(today);
+            nextWeek.setDate(today.getDate() + 7);
+            const lastMonth = new Date(today);
+            lastMonth.setMonth(today.getMonth() - 1);
+
+            mentors = [
+                { name: 'Javier Pérez', expertise: 'Finanzas y Fundraising', lastContact: '2025-08-15', followUp: today.toISOString().slice(0, 10)},
+                { name: 'Carolina Soto', expertise: 'Growth Hacking y SEO', lastContact: '2025-09-01', followUp: nextWeek.toISOString().slice(0, 10)},
+                 { name: 'Miguel Torres', expertise: 'Desarrollo de Producto', lastContact: '2025-06-20', followUp: lastMonth.toISOString().slice(0, 10)}
+            ];
+            renderMentors();
+        });
+    </script>
+</body>
+</html>

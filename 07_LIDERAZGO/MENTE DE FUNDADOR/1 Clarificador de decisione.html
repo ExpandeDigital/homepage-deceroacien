@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Clarificador de Decisiones - MENTE DE FUNDADOR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --azul-oscuro: #0A192F;
+            --azul-noche: #112240;
+            --dorado: #FBBF24;
+            --dorado-hover: #F59E0B;
+            --texto-claro: #E2E8F0;
+            --texto-secundario: #a7a9be;
+            --borde-sutil: #334155;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--azul-oscuro);
+            color: var(--texto-claro);
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .btn {
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: var(--dorado-hover);
+            transform: scale(1.05);
+        }
+        .btn-secondary {
+            background-color: var(--azul-noche);
+            color: var(--texto-secundario);
+            border: 1px solid var(--borde-sutil);
+        }
+        .btn-secondary:hover {
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            border-color: var(--dorado);
+        }
+        textarea, input {
+            background-color: var(--azul-noche);
+            border: 1px solid var(--borde-sutil);
+            color: var(--texto-claro);
+        }
+        textarea:focus, input:focus {
+            border-color: var(--dorado);
+            outline: none;
+        }
+        .status-message {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-weight: 600;
+            z-index: 100;
+            display: none;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Panel Izquierdo: Explicaciones -->
+        <aside class="bg-[var(--azul-noche)] p-8 rounded-xl shadow-lg sticky top-8 self-start">
+            <span class="text-sm font-bold text-[var(--dorado)] tracking-widest">MENTE DE FUNDADOR</span>
+            <h1 class="font-serif text-3xl font-bold text-white mt-2">El Clarificador de Decisiones</h1>
+            <div class="mt-6 space-y-6">
+                 <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-bullseye"></i>Objetivo</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Combatir la parálisis por análisis y la fatiga de decisión, proporcionando un marco estructurado para evaluar decisiones complejas de forma objetiva.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-star"></i>Importancia</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Las decisiones de un fundador definen el rumbo de la empresa. Tomarlas bajo presión y sin un proceso claro conduce a errores costosos. Esta herramienta asegura que cada elección sea deliberada y bien ponderada.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-info-circle"></i>¿Qué es?</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Una herramienta interactiva que te guía para desglosar cualquier decisión en cuatro cuadrantes clave: Pros, Contras, Riesgos y Mitigaciones. Al final, genera un resumen visual para una máxima claridad.</p>
+                </div>
+                 <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-cogs"></i>¿Para qué sirve?</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Para estructurar tu pensamiento en momentos críticos. Úsala para evaluar la contratación de un rol clave, un pivote en el producto, una nueva estrategia de marketing o cualquier decisión de alto impacto.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Panel Derecho: Herramienta -->
+        <main class="bg-[var(--azul-noche)] p-8 rounded-xl shadow-lg">
+            <h2 class="font-serif text-2xl font-bold text-white mb-6">Analiza tu Decisión</h2>
+            
+            <div class="space-y-6">
+                <div>
+                    <label for="decision-input" class="block text-sm font-medium mb-2 text-[var(--texto-secundario)]">Decisión a Tomar:</label>
+                    <input type="text" id="decision-input" class="w-full p-3 rounded-lg" placeholder="Ej: ¿Deberíamos contratar a un Gerente de Marketing ahora?">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="pros-input" class="block text-sm font-medium mb-2 text-green-400">✅ Pros (Argumentos a favor)</label>
+                        <textarea id="pros-input" rows="5" class="w-full p-3 rounded-lg" placeholder="- Aceleraría nuestro crecimiento...&#10;- Liberaría mi tiempo para enfocarme en el producto..."></textarea>
+                    </div>
+                    <div>
+                        <label for="cons-input" class="block text-sm font-medium mb-2 text-red-400">❌ Contras (Argumentos en contra)</label>
+                        <textarea id="cons-input" rows="5" class="w-full p-3 rounded-lg" placeholder="- Aumentaría nuestros costos fijos...&#10;- Podríamos contratar mal si nos apuramos..."></textarea>
+                    </div>
+                    <div>
+                        <label for="risks-input" class="block text-sm font-medium mb-2 text-orange-400">⚠️ Riesgos (¿Qué podría salir mal?)</label>
+                        <textarea id="risks-input" rows="5" class="w-full p-3 rounded-lg" placeholder="- El nuevo gerente no se adapta a la cultura...&#10;- La estrategia que implementa no da resultados..."></textarea>
+                    </div>
+                    <div>
+                        <label for="mitigations-input" class="block text-sm font-medium mb-2 text-blue-400">🛡️ Mitigaciones (¿Cómo prevenimos los riesgos?)</label>
+                        <textarea id="mitigations-input" rows="5" class="w-full p-3 rounded-lg" placeholder="- Implementar un riguroso proceso de entrevista cultural...&#10;- Establecer un período de prueba de 3 meses con OKRs claros..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="text-center pt-4">
+                     <button id="generate-btn" class="btn">Generar Resumen de Decisión</button>
+                </div>
+            </div>
+
+            <!-- Sección de Resultados -->
+            <div id="results-section" class="mt-10 border-t-2 border-[var(--borde-sutil)] pt-6 hidden">
+                <h2 class="font-serif text-2xl font-bold text-white mb-6">Resumen Visual de tu Decisión</h2>
+                 <div id="summary-container" class="bg-[var(--azul-oscuro)] p-6 rounded-lg">
+                    <h3 id="summary-title" class="text-xl font-bold text-[var(--dorado)] mb-4 border-b border-[var(--borde-sutil)] pb-2"></h3>
+                    <div id="summary-content" class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm"></div>
+                 </div>
+
+                 <div class="flex flex-wrap justify-center gap-4 mt-8">
+                    <button id="save-btn" class="btn btn-secondary"><i class="fas fa-save mr-2"></i> Guardar</button>
+                    <button id="download-btn" class="btn btn-secondary"><i class="fas fa-download mr-2"></i> Descargar</button>
+                    <button id="share-btn" class="btn btn-secondary"><i class="fas fa-share-alt mr-2"></i> Compartir</button>
+                    <button id="clear-btn" class="btn btn-secondary"><i class="fas fa-trash mr-2"></i> Limpiar</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="status-message" class="status-message"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const generateBtn = document.getElementById('generate-btn');
+            const resultsSection = document.getElementById('results-section');
+            const summaryContainer = document.getElementById('summary-container');
+            const summaryTitle = document.getElementById('summary-title');
+            const summaryContent = document.getElementById('summary-content');
+            
+            const decisionInput = document.getElementById('decision-input');
+            const prosInput = document.getElementById('pros-input');
+            const consInput = document.getElementById('cons-input');
+            const risksInput = document.getElementById('risks-input');
+            const mitigationsInput = document.getElementById('mitigations-input');
+            
+            const saveBtn = document.getElementById('save-btn');
+            const downloadBtn = document.getElementById('download-btn');
+            const shareBtn = document.getElementById('share-btn');
+            const clearBtn = document.getElementById('clear-btn');
+            const statusMessage = document.getElementById('status-message');
+
+            const showStatusMessage = (message) => {
+                statusMessage.textContent = message;
+                statusMessage.style.display = 'block';
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 3000);
+            };
+
+            const formatList = (text) => {
+                return '<ul>' + text.split('\n').filter(line => line.trim() !== '').map(line => `<li class="ml-4 list-disc">${line.replace(/^- /, '')}</li>`).join('') + '</ul>';
+            };
+
+            generateBtn.addEventListener('click', () => {
+                if (!decisionInput.value.trim()) {
+                    showStatusMessage("Por favor, define la decisión que quieres tomar.");
+                    return;
+                }
+
+                summaryTitle.textContent = decisionInput.value;
+                summaryContent.innerHTML = `
+                    <div>
+                        <h4 class="font-bold text-green-400 mb-2">✅ Pros</h4>
+                        <div class="text-[var(--texto-secundario)]">${formatList(prosInput.value) || '<p>No se especificaron pros.</p>'}</div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-red-400 mb-2">❌ Contras</h4>
+                        <div class="text-[var(--texto-secundario)]">${formatList(consInput.value) || '<p>No se especificaron contras.</p>'}</div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-orange-400 mb-2">⚠️ Riesgos</h4>
+                        <div class="text-[var(--texto-secundario)]">${formatList(risksInput.value) || '<p>No se especificaron riesgos.</p>'}</div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-blue-400 mb-2">🛡️ Mitigaciones</h4>
+                        <div class="text-[var(--texto-secundario)]">${formatList(mitigationsInput.value) || '<p>No se especificaron mitigaciones.</p>'}</div>
+                    </div>
+                `;
+                resultsSection.classList.remove('hidden');
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            clearBtn.addEventListener('click', () => {
+                decisionInput.value = '';
+                prosInput.value = '';
+                consInput.value = '';
+                risksInput.value = '';
+                mitigationsInput.value = '';
+                resultsSection.classList.add('hidden');
+                showStatusMessage("Formulario limpiado.");
+            });
+            
+            downloadBtn.addEventListener('click', () => {
+                showStatusMessage("Generando descarga...");
+                html2canvas(summaryContainer, { backgroundColor: '#0A192F', scale: 2 }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `decision-${decisionInput.value.trim().replace(/ /g, '_')}.png`;
+                    link.href = canvas.toDataURL();
+                    link.click();
+                });
+            });
+
+            saveBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Guardar': ¡Próximamente!"));
+            shareBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Compartir': ¡Próximamente!"));
+        });
+    </script>
+</body>
+</html>

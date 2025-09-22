@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Dosis Semanal de Sabiduría - MENTE DE FUNDADOR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --azul-oscuro: #0A192F;
+            --azul-noche: #112240;
+            --dorado: #FBBF24;
+            --dorado-hover: #F59E0B;
+            --texto-claro: #E2E8F0;
+            --texto-secundario: #a7a9be;
+            --borde-sutil: #334155;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--azul-oscuro);
+            color: var(--texto-claro);
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .btn {
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: var(--dorado-hover);
+            transform: scale(1.05);
+        }
+        .btn-secondary {
+            background-color: var(--azul-noche);
+            color: var(--texto-secundario);
+            border: 1px solid var(--borde-sutil);
+        }
+        .btn-secondary:hover:not(:disabled) {
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            border-color: var(--dorado);
+        }
+        .btn-secondary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .status-message {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-weight: 600;
+            z-index: 100;
+            display: none;
+        }
+        .dose-card {
+            background-color: var(--azul-noche);
+            border-top: 4px solid var(--dorado);
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Panel Izquierdo: Explicaciones -->
+        <aside class="bg-[var(--azul-noche)] p-8 rounded-xl shadow-lg sticky top-8 self-start">
+            <span class="text-sm font-bold text-[var(--dorado)] tracking-widest">MENTE DE FUNDADOR</span>
+            <h1 class="font-serif text-3xl font-bold text-white mt-2">La Dosis Semanal de Sabiduría</h1>
+            <div class="mt-6 space-y-6">
+                 <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-lightbulb"></i>Objetivo</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Proporcionar al fundador una fuente curada de conocimiento estratégico de alto impacto, ahorrándole el tiempo de búsqueda y garantizando un aprendizaje continuo y relevante.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-star"></i>Importancia</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">La sobrecarga de información es un problema real. Una "dosis" concentrada de sabiduría es más efectiva que horas de navegación. Mantiene la perspectiva del fundador fresca, inspirada y conectada con las mejores ideas del mundo empresarial.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-info-circle"></i>¿Qué es?</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Una herramienta que presenta cada semana un único recurso de conocimiento curado: el resumen de un libro de negocios clave, una charla TED fundamental o un ensayo estratégico de una fuente de prestigio.</p>
+                </div>
+                 <div>
+                    <h3 class="font-bold text-xl text-[var(--dorado)] flex items-center gap-2"><i class="fas fa-cogs"></i>¿Para qué sirve?</h3>
+                    <p class="text-[var(--texto-secundario)] mt-1 text-sm">Como un ritual de aprendizaje para empezar la semana. Sirve para obtener nuevas ideas, desafiar las propias suposiciones y mantenerse a la vanguardia sin sentirse abrumado por el exceso de contenido.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Panel Derecho: Herramienta -->
+        <main class="bg-[var(--azul-noche)] p-8 rounded-xl shadow-lg">
+            <h2 class="font-serif text-2xl font-bold text-white mb-6 text-center">Tu Dosis de Sabiduría</h2>
+            
+            <div id="dose-card" class="dose-card p-6 rounded-lg shadow-lg min-h-[300px]">
+                <div class="flex justify-between items-center mb-4">
+                    <span id="dose-type" class="text-xs font-bold uppercase tracking-wider bg-[var(--dorado)] text-[var(--azul-noche)] px-2 py-1 rounded"></span>
+                    <span id="dose-week" class="text-sm text-[var(--texto-secundario)]"></span>
+                </div>
+                <h3 id="dose-title" class="text-2xl font-bold text-white mb-3"></h3>
+                <p id="dose-summary" class="text-[var(--texto-secundario)] mb-4"></p>
+                <a id="dose-link" href="#" target="_blank" class="font-bold text-[var(--dorado)] hover:text-[var(--dorado-hover)] inline-flex items-center gap-2">
+                    Acceder al Recurso Completo <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Navegación -->
+            <div class="flex justify-between mt-6">
+                <button id="prev-btn" class="btn btn-secondary flex items-center gap-2"><i class="fas fa-chevron-left"></i> Semana Anterior</button>
+                <button id="next-btn" class="btn btn-secondary flex items-center gap-2">Siguiente Semana <i class="fas fa-chevron-right"></i></button>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-4 mt-10 border-t-2 border-[var(--borde-sutil)] pt-6">
+                <button id="save-btn" class="btn btn-secondary"><i class="fas fa-save mr-2"></i> Guardar</button>
+                <button id="download-btn" class="btn btn-secondary"><i class="fas fa-download mr-2"></i> Descargar</button>
+                <button id="share-btn" class="btn btn-secondary"><i class="fas fa-share-alt mr-2"></i> Compartir</button>
+            </div>
+        </main>
+    </div>
+
+    <div id="status-message" class="status-message"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const doseType = document.getElementById('dose-type');
+            const doseWeek = document.getElementById('dose-week');
+            const doseTitle = document.getElementById('dose-title');
+            const doseSummary = document.getElementById('dose-summary');
+            const doseLink = document.getElementById('dose-link');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+
+            const saveBtn = document.getElementById('save-btn');
+            const downloadBtn = document.getElementById('download-btn');
+            const shareBtn = document.getElementById('share-btn');
+            const statusMessage = document.getElementById('status-message');
+
+            const doses = [
+                {
+                    type: "LIBRO CLAVE",
+                    title: "The Lean Startup - Eric Ries",
+                    summary: "Un método para desarrollar negocios y productos que acorta los ciclos de desarrollo, mide el progreso real y ayuda a las startups a descubrir qué es lo que los clientes realmente quieren.",
+                    link: "https://www.amazon.com/Lean-Startup-Entrepreneurs-Continuous-Innovation/dp/0307887898"
+                },
+                {
+                    type: "CHARLA TED",
+                    title: "Cómo los grandes líderes inspiran a la acción - Simon Sinek",
+                    summary: "Sinek presenta un modelo simple pero poderoso para el liderazgo inspirador. Todo comienza con una pregunta fundamental: ¿Por qué? El 'Círculo Dorado' explica por qué algunas organizaciones son capaces de inspirar donde otras fracasan.",
+                    link: "https://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action?language=es"
+                },
+                {
+                    type: "ENSAYO ESTRATÉGICO",
+                    title: "Haz cosas que no escalen - Paul Graham",
+                    summary: "El fundador de Y Combinator argumenta que, en las primeras etapas, las startups deben hacer esfuerzos manuales y no escalables para adquirir sus primeros clientes. Este enfoque práctico es a menudo la única manera de despegar.",
+                    link: "http://www.paulgraham.com/ds.html"
+                }
+            ];
+
+            let currentDoseIndex = doses.length - 1; // Empezar por la más reciente
+
+            const showStatusMessage = (message) => {
+                statusMessage.textContent = message;
+                statusMessage.style.display = 'block';
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 3000);
+            };
+
+            function loadDose(index) {
+                const dose = doses[index];
+                doseType.textContent = dose.type;
+                doseWeek.textContent = `Semana ${index + 1}`;
+                doseTitle.textContent = dose.title;
+                doseSummary.textContent = dose.summary;
+                doseLink.href = dose.link;
+
+                prevBtn.disabled = index === 0;
+                nextBtn.disabled = index === doses.length - 1;
+            }
+
+            prevBtn.addEventListener('click', () => {
+                if (currentDoseIndex > 0) {
+                    currentDoseIndex--;
+                    loadDose(currentDoseIndex);
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (currentDoseIndex < doses.length - 1) {
+                    currentDoseIndex++;
+                    loadDose(currentDoseIndex);
+                }
+            });
+
+            downloadBtn.addEventListener('click', () => {
+                const dose = doses[currentDoseIndex];
+                const content = `Dosis de Sabiduría - Semana ${currentDoseIndex + 1}\n\nTipo: ${dose.type}\nTítulo: ${dose.title}\n\nResumen:\n${dose.summary}\n\nEnlace: ${dose.link}`;
+                const blob = new Blob([content], { type: 'text/plain' });
+                const link = document.createElement('a');
+                link.download = `dosis_semana_${currentDoseIndex + 1}.txt`;
+                link.href = window.URL.createObjectURL(blob);
+                link.click();
+                showStatusMessage("Dosis descargada como .txt");
+            });
+            
+            shareBtn.addEventListener('click', () => {
+                const dose = doses[currentDoseIndex];
+                const textToShare = `Esta semana en #MenteDeFundador: "${dose.title}". Una idea clave sobre cómo las startups deben operar.`;
+                 navigator.clipboard.writeText(textToShare)
+                    .then(() => showStatusMessage("¡Mensaje para compartir copiado!"))
+                    .catch(err => console.error('Error al copiar:', err));
+            });
+
+            saveBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Guardar': ¡Próximamente!"));
+            
+            // Carga inicial
+            loadDose(currentDoseIndex);
+        });
+    </script>
+</body>
+</html>

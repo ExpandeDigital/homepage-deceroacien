@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suite Levantamiento de Capital - DE CERO A CIEN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --azul-oscuro: #0A192F;
+            --azul-noche: #112240;
+            --dorado: #FBBF24;
+            --dorado-hover: #F59E0B;
+            --texto-claro: #E2E8F0;
+            --texto-secundario: #a7a9be;
+            --borde-sutil: #334155;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--azul-oscuro);
+            color: var(--texto-claro);
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .btn-gold {
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .btn-gold:hover {
+            background-color: var(--dorado-hover);
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(251, 191, 36, 0.1);
+        }
+        .tool-card {
+            background-color: var(--azul-noche);
+            border: 1px solid var(--borde-sutil);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .tool-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--dorado);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <section class="text-center py-24 md:py-32 px-4 relative overflow-hidden" style="background: radial-gradient(circle at 50% 0%, var(--azul-noche), var(--azul-oscuro) 80%);">
+        <div class="container mx-auto">
+            <span class="text-sm font-bold text-[var(--dorado)] tracking-widest">DE CERO A CIEN</span>
+            <h1 class="font-serif text-4xl md:text-6xl font-bold text-white mt-4 leading-tight">LEVANTAMIENTO DE CAPITAL</h1>
+            <p class="text-lg md:text-xl text-[var(--texto-secundario)] mt-6 max-w-3xl mx-auto">La suite de herramientas estratégicas para preparar, negociar y cerrar tu ronda de inversión como un profesional.</p>
+            <a href="#tools" class="mt-10 btn-gold">Descubre la Suite</a>
+        </div>
+    </section>
+
+    <section class="py-20 px-4">
+        <div class="container mx-auto text-center max-w-4xl">
+            <h2 class="font-serif text-3xl md:text-4xl font-bold text-white">Deja de Improvisar con tu Futuro Financiero</h2>
+            <p class="text-[var(--texto-secundario)] mt-4 leading-relaxed">Levantar capital no es un arte, es una ciencia. Requiere preparación, estrategia y las herramientas correctas. Hemos construido el arsenal definitivo para que dejes de sentir que vas a la guerra con las manos vacías. Prepárate para dominar cada etapa del proceso, desde tu valuación hasta la firma del acuerdo.</p>
+        </div>
+    </section>
+
+    <section id="tools" class="py-20 px-4 bg-[var(--azul-noche)]">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-white">La Suite Completa para el Fundraising</h2>
+                <p class="text-[var(--texto-secundario)] mt-2 max-w-2xl mx-auto">Herramientas interactivas para cada fase de tu levantamiento de capital.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="tool-card p-6 rounded-xl"><i class="fas fa-bullseye text-2xl text-[var(--dorado)] mb-3"></i><h4 class="font-bold text-white">Simulador de Tesis de Inversión</h4><p class="text-sm text-[var(--texto-secundario)] mt-1">Define y articula tu visión para alinearla con la de los inversores correctos.</p></div>
+                <div class="tool-card p-6 rounded-xl"><i class="fas fa-calculator text-2xl text-[var(--dorado)] mb-3"></i><h4 class="font-bold text-white">Calculadora de Valuación y Dilución</h4><p class="text-sm text-[var(--texto-secundario)] mt-1">Simula escenarios y entiende el impacto real de la inversión en tu capital.</p></div>
+                <div class="tool-card p-6 rounded-xl"><i class="fas fa-file-powerpoint text-2xl text-[var(--dorado)] mb-3"></i><h4 class="font-bold text-white">Constructor de Pitch Deck</h4><p class="text-sm text-[var(--texto-secundario)] mt-1">Estructura una presentación ganadora, diapositiva por diapositiva.</p></div>
+                <div class="tool-card p-6 rounded-xl"><i class="fas fa-file-alt text-2xl text-[var(--dorado)] mb-3"></i><h4 class="font-bold text-white">Optimizador de One Pager</h4><p class="text-sm text-[var(--texto-secundario)] mt-1">Sintetiza tu negocio en una sola página de alto impacto para captar la atención.</p></div>
+                <div class="tool-card p-6 rounded-xl"><i class="fas fa-address-book text-2xl text-[var(--dorado)] mb-3"></i><h4 class="font-bold text-white">Directorio de Inversores Estratégicos</h4><p class="text-sm text-[var(--texto-secundario)] mt-1">Organiza y personaliza tu acercamiento a cada fondo o inversor ángel.</p></div>
+                <div class="tool-card p-6 rounded-xl"><i class="fas fa-cogs text-2xl text-[var(--dorado)] mb-3"></i><h4 class="font-bold text-white">Simulador de Modelo de Negocio</h4><p class="text-sm text-[var(--texto-secundario)] mt-1">Proyecta el impacto de tus decisiones estratégicas en métricas clave como LTV y CAC.</p></div>
+                <div class="tool-card p-6 rounded-xl"><i class="fas fa-tasks text-2xl text-[var(--dorado)] mb-3"></i><h4 class="font-bold text-white">Checklist de Due Diligence y CRM</h4><p class="text-sm text-[var(--texto-secundario)] mt-1">Gestiona el proceso de revisión de forma profesional y organizada.</p></div>
+                <div class="tool-card p-6 rounded-xl"><i class="fas fa-lightbulb text-2xl text-[var(--dorado)] mb-3"></i><h4 class="font-bold text-white">Creador de Propuesta de Valor Única</h4><p class="text-sm text-[var(--texto-secundario)] mt-1">Articula por qué tu solución es la inversión que no pueden dejar pasar.</p></div>
+                <div class="tool-card p-6 rounded-xl"><i class="fas fa-flag-checkered text-2xl text-[var(--dorado)] mb-3"></i><h4 class="font-bold text-white">Planificador de Estrategia de Salida</h4><p class="text-sm text-[var(--texto-secundario)] mt-1">Define tu visión a largo plazo para maximizar el retorno para ti y tus inversores.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-4">
+        <div class="container mx-auto max-w-3xl text-center">
+            <h2 class="font-serif text-3xl md:text-4xl font-bold text-white">Tu Visión Merece el Capital para Hacerla Realidad.</h2>
+            <p class="text-lg text-[var(--texto-secundario)] mt-4 mb-8">El acceso a la suite LEVANTAMIENTO DE CAPITAL es un beneficio exclusivo para los miembros de nuestro ecosistema. Deja de enviar emails a ciegas. Empieza a levantar capital con un plan.</p>
+            <a href="#" class="btn-gold">Únete al Ecosistema y Accede a la Suite</a>
+        </div>
+    </section>
+    
+    <footer class="text-center py-8 border-t border-[var(--borde-sutil)]">
+        <p class="text-[var(--texto-secundario)]">&copy; 2025 DE CERO A CIEN. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>

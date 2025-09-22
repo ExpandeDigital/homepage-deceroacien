@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Cero a Cien - El Mural de Hitos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0d1a2e; /* Azul Noche */
+            color: #f0f0f0;
+        }
+        .panel-dorado {
+            border-color: #D4AF37; /* Dorado */
+        }
+        .texto-dorado {
+            color: #D4AF37;
+        }
+        .bg-dorado {
+            background-color: #D4AF37;
+        }
+        .bg-dorado-hover:hover {
+            background-color: #b89b31;
+        }
+        .panel-explicativo {
+            background-color: #102a43;
+        }
+        .herramienta-panel {
+            background-color: #0d1a2e;
+        }
+        .hito-card {
+            background-color: rgba(13, 26, 46, 0.8);
+            border-left: 4px solid #D4AF37;
+            transition: all 0.2s ease-in-out;
+        }
+        .hito-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        #confetti-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 shadow-2xl rounded-lg overflow-hidden relative">
+        <canvas id="confetti-canvas"></canvas>
+        
+        <!-- Panel Izquierdo: Explicaciones -->
+        <div class="panel-explicativo p-8 lg:p-12 flex flex-col justify-center rounded-lg">
+            <h1 class="text-3xl lg:text-4xl font-bold texto-dorado mb-6">El Mural de Hitos</h1>
+            
+            <div class="space-y-6 text-gray-300">
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">Objetivo</h2>
+                    <p>Visibilizar y celebrar las "pequeñas victorias" y los logros del equipo de forma continua, aumentando la motivación y reforzando el sentido de progreso colectivo.</p>
+                </div>
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">Importancia</h2>
+                    <p>El trabajo diario puede hacer que se pierda la perspectiva del avance. Celebrar los hitos, por pequeños que sean, combate el agotamiento, aumenta la moral y recuerda al equipo que su esfuerzo está generando resultados tangibles.</p>
+                </div>
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">¿Qué es?</h2>
+                    <p>Un dashboard visual y colaborativo donde cualquier miembro del equipo puede añadir un hito alcanzado. Cada vez que se añade un logro, se dispara una pequeña celebración virtual para todo el equipo.</p>
+                </div>
+                <div>
+                    <h2 class="font-bold text-lg texto-dorado mb-2">¿Para qué sirve?</h2>
+                    <p>Sirve como un registro positivo del progreso del equipo. Es ideal para la reunión de cierre de semana, para mantener la energía alta durante un proyecto largo o simplemente para fomentar una cultura de reconocimiento y celebración.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel Derecho: Herramienta Interactiva -->
+        <div class="herramienta-panel p-8 lg:p-12 flex flex-col items-center justify-center text-center">
+            
+            <h2 class="text-2xl font-bold mb-4">¡Celebremos una Victoria!</h2>
+            <p class="text-gray-400 mb-6">Añade un hito que el equipo haya alcanzado.</p>
+
+            <div class="w-full max-w-lg mb-4 flex gap-2">
+                <input id="hito-input" class="flex-grow p-3 rounded-lg bg-gray-800 border-2 border-gray-700 focus:border-dorado focus:outline-none" placeholder="Ej: ¡Lanzamos la nueva landing page!">
+                <button id="agregar-hito" class="bg-dorado text-gray-900 font-bold py-3 px-6 rounded-lg bg-dorado-hover transition-colors duration-300">Añadir</button>
+            </div>
+            
+            <div id="mural-container" class="w-full max-w-lg h-64 bg-gray-900/50 rounded-lg p-4 overflow-y-auto border-2 panel-dorado mb-6">
+                <div id="mural-de-hitos" class="space-y-3">
+                     <p id="mural-placeholder" class="text-gray-500 mt-16">El mural está esperando su primer hito de la semana.</p>
+                </div>
+            </div>
+
+            <div id="mensaje-accion" class="text-green-400 h-8 mb-4 transition-opacity duration-300 opacity-0">
+                <!-- Mensajes de confirmación -->
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-lg">
+                <button id="guardar" class="w-full bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded-lg transition-colors duration-300">Guardar</button>
+                <button id="descargar" class="w-full bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded-lg transition-colors duration-300">Descargar</button>
+                <button id="compartir" class="w-full bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded-lg transition-colors duration-300">Compartir</button>
+                <button id="limpiar" class="w-full bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded-lg transition-colors duration-300">Limpiar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const agregarHitoBtn = document.getElementById('agregar-hito');
+            const hitoInput = document.getElementById('hito-input');
+            const muralDeHitos = document.getElementById('mural-de-hitos');
+            const muralPlaceholder = document.getElementById('mural-placeholder');
+            const mensajeAccion = document.getElementById('mensaje-accion');
+            
+            const guardarBtn = document.getElementById('guardar');
+            const descargarBtn = document.getElementById('descargar');
+            const compartirBtn = document.getElementById('compartir');
+            const limpiarBtn = document.getElementById('limpiar');
+            
+            const miembros = ["Equipo de Marketing", "Equipo de Desarrollo", "Ventas", "Soporte", "Todo el equipo"];
+            
+            function celebrar() {
+                const confettiCanvas = document.getElementById('confetti-canvas');
+                const myConfetti = confetti.create(confettiCanvas, {
+                    resize: true,
+                    useWorker: true
+                });
+                myConfetti({
+                    particleCount: 150,
+                    spread: 160,
+                    origin: { y: 0.6 }
+                });
+            }
+
+            agregarHitoBtn.addEventListener('click', () => {
+                const hitoTexto = hitoInput.value.trim();
+                if (hitoTexto) {
+                    if (muralPlaceholder) {
+                        muralPlaceholder.remove();
+                    }
+
+                    const autor = miembros[Math.floor(Math.random() * miembros.length)];
+                    const fecha = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit'});
+
+                    const hitoCard = document.createElement('div');
+                    hitoCard.className = 'hito-card p-3 rounded-lg text-left flex items-center justify-between';
+                    hitoCard.innerHTML = `
+                        <div>
+                            <p class="font-bold text-gray-200">✅ ${hitoTexto}</p>
+                            <p class="text-xs text-gray-400 mt-1">Logrado por: ${autor} - ${fecha}</p>
+                        </div>
+                    `;
+                    muralDeHitos.prepend(hitoCard); // Añadir al principio
+                    hitoInput.value = "";
+                    
+                    celebrar();
+
+                } else {
+                    alert("Por favor, escribe un hito para celebrar.");
+                }
+            });
+
+            limpiarBtn.addEventListener('click', () => {
+                muralDeHitos.innerHTML = '<p id="mural-placeholder" class="text-gray-500 mt-16">El mural está esperando su primer hito de la semana.</p>';
+                hitoInput.value = '';
+            });
+
+            descargarBtn.addEventListener('click', () => {
+                const muralContainer = document.getElementById('mural-container');
+                 mensajeAccion.textContent = "Generando imagen...";
+                 mensajeAccion.classList.remove('opacity-0');
+
+                html2canvas(muralContainer, {
+                    backgroundColor: "#0d1a2e",
+                    scale: 2
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = 'mural-de-hitos.png';
+                    link.href = canvas.toDataURL();
+                    link.click();
+                    mensajeAccion.textContent = "¡Mural descargado como imagen!";
+                    setTimeout(() => mensajeAccion.classList.add('opacity-0'), 2500);
+                });
+            });
+
+             compartirBtn.addEventListener('click', () => {
+                const urlSimulada = "https://deceroacien.tools/mural/xyz123";
+                navigator.clipboard.writeText(urlSimulada).then(() => {
+                    mensajeAccion.textContent = "¡Enlace del mural copiado!";
+                    mensajeAccion.classList.remove('opacity-0');
+                    setTimeout(() => mensajeAccion.classList.add('opacity-0'), 2500);
+                }).catch(err => {
+                    console.error('Error al copiar: ', err);
+                });
+            });
+
+            guardarBtn.addEventListener('click', () => {
+                mensajeAccion.textContent = "¡Mural guardado!";
+                mensajeAccion.classList.remove('opacity-0');
+                setTimeout(() => mensajeAccion.classList.add('opacity-0'), 2500);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Configuración del documento HTML y metadatos -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constructor de Pitch Deck | El Camino Dorado</title>
+    
+    <!-- Incluye el framework Tailwind CSS para estilos rápidos y responsivos -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Enlaces a fuentes de Google Fonts (Inter) y a Font Awesome para iconos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Estilos personalizados para la interfaz, complementando a Tailwind CSS -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a1f2f;
+            color: #e6f1ff;
+            min-height: 100vh;
+        }
+        .highlight-text { color: #FBBF24; }
+        .tool-container { background-color: #112240; }
+        .doc-container { background-color: #0a1f2f; }
+        .form-input {
+            background-color: #0a1f2f;
+            border: 1px solid #334155;
+            color: #e6f1ff;
+            padding: 8px;
+            border-radius: 6px;
+        }
+        .action-button, .list-action-button {
+            background-color: #1E293B;
+            color: #cbd5e1;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+        .action-button:hover, .list-action-button:hover {
+            background-color: #334155;
+        }
+        .result-card {
+            background-color: #112240;
+            border: 1px solid #1e293b;
+        }
+        /* Estilos para el modal personalizado, usado en lugar de 'alert' y 'confirm' */
+        .custom-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .custom-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: #112240;
+            padding: 24px;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+        /* Estilos para la vista previa de las diapositivas */
+        .preview-slide {
+            background-color: #0d1e2e;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            border: 1px solid #1e293b;
+        }
+        .preview-slide h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #e6f1ff;
+            margin-bottom: 0.5rem;
+        }
+        .preview-slide p {
+            color: #94a3b8;
+        }
+        .preview-slide.title-slide h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #FBBF24;
+        }
+        .preview-slide.title-slide p {
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <!-- Contenedor principal de la interfaz, dividido en panel de control y vista previa -->
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
+        <!-- Panel de control y formulario (lado izquierdo) -->
+        <div class="tool-container p-6 rounded-xl shadow-2xl flex-shrink-0 lg:w-1/2 overflow-y-auto max-h-screen">
+            <h2 class="text-3xl font-black mb-4">
+                Constructor de <span class="highlight-text">Pitch Deck</span>
+            </h2>
+            <p class="text-sm text-gray-400 mb-6">
+                Guía interactiva para estructurar tu presentación a inversionistas.
+            </p>
+
+            <form id="pitch-deck-form" class="space-y-6">
+                <!-- Diapositiva 1: Título y Tagline -->
+                <div>
+                    <h3 class="font-bold text-lg text-yellow-500 mb-2 flex items-center gap-2"><i class="fa-solid fa-1"></i> Título y Tagline</h3>
+                    <p class="text-sm text-gray-400 mb-2">Tu carta de presentación. Debe ser claro y memorable.</p>
+                    <label for="slide1-title" class="block text-sm font-medium text-gray-300">Nombre del Proyecto</label>
+                    <input type="text" id="slide1-title" class="mt-1 block w-full form-input" placeholder="DE CERO A CIEN">
+                    <label for="slide1-tagline" class="block text-sm font-medium text-gray-300 mt-2">Tagline (Lema)</label>
+                    <textarea id="slide1-tagline" class="mt-1 block w-full form-input" rows="2" placeholder="El Co-Piloto Estratégico para Fundadores que Construyen un Legado."></textarea>
+                </div>
+                
+                <!-- Diapositiva 2: El Problema -->
+                <div>
+                    <h3 class="font-bold text-lg text-yellow-500 mb-2 flex items-center gap-2"><i class="fa-solid fa-2"></i> El Problema</h3>
+                    <p class="text-sm text-gray-400 mb-2">Define el dolor que resuelves. Muestra que entiendes el mercado.</p>
+                    <textarea id="slide2-problem" class="mt-1 block w-full form-input" rows="4" placeholder="El 90% de las nuevas empresas fracasan. Los emprendedores operan en universos paralelos, sin herramientas ni sistemas que los guíen."></textarea>
+                </div>
+
+                <!-- Diapositiva 3: La Solución -->
+                <div>
+                    <h3 class="font-bold text-lg text-yellow-500 mb-2 flex items-center gap-2"><i class="fa-solid fa-3"></i> La Solución</h3>
+                    <p class="text-sm text-gray-400 mb-2">Presenta tu producto o servicio como la cura al problema.</p>
+                    <textarea id="slide3-solution" class="mt-1 block w-full form-input" rows="4" placeholder="Hemos creado DE CERO A CIEN: un ecosistema integral que sirve como 'sistema operativo' para el emprendedor, combinando SaaS, IA y una comunidad."></textarea>
+                </div>
+
+                <!-- Diapositiva 4: Oportunidad de Mercado -->
+                <div>
+                    <h3 class="font-bold text-lg text-yellow-500 mb-2 flex items-center gap-2"><i class="fa-solid fa-4"></i> Oportunidad de Mercado</h3>
+                    <p class="text-sm text-gray-400 mb-2">Cuantifica el mercado. Muestra su tamaño y por qué es atractivo.</p>
+                    <textarea id="slide4-market" class="mt-1 block w-full form-input" rows="4" placeholder="El 94,4% de las PYMES en Chile se estanca. Este 'segmento medio hueco' representa un mercado de millones de emprendedores en toda Latinoamérica."></textarea>
+                </div>
+                
+                <!-- Diapositiva 5: Modelo de Negocio -->
+                <div>
+                    <h3 class="font-bold text-lg text-yellow-500 mb-2 flex items-center gap-2"><i class="fa-solid fa-5"></i> Modelo de Negocio</h3>
+                    <p class="text-sm text-gray-400 mb-2">Explica cómo generas ingresos. Muestra la rentabilidad.</p>
+                    <textarea id="slide5-model" class="mt-1 block w-full form-input" rows="4" placeholder="Modelo de Negocio: Freemium / Suscripción SaaS. El flywheel de rentabilidad convierte usuarios a servicios premium y formación de alto valor."></textarea>
+                </div>
+                
+                <!-- Diapositiva 6: Tracción y Métricas -->
+                <div>
+                    <h3 class="font-bold text-lg text-yellow-500 mb-2 flex items-center gap-2"><i class="fa-solid fa-6"></i> Tracción y Métricas</h3>
+                    <p class="text-sm text-gray-400 mb-2">La evidencia de tu progreso. Muestra que no eres solo una idea.</p>
+                    <textarea id="slide6-traction" class="mt-1 block w-full form-input" rows="4" placeholder="LTV/CAC proyectado de 16:1. Metodología validada por 5 años en nuestra consultora, con una facturación de $8,000 USD/mes."></textarea>
+                </div>
+
+                <!-- Diapositiva 7: El Equipo -->
+                <div>
+                    <h3 class="font-bold text-lg text-yellow-500 mb-2 flex items-center gap-2"><i class="fa-solid fa-7"></i> El Equipo</h3>
+                    <p class="text-sm text-gray-400 mb-2">Tu ventaja injusta. Muestra la experiencia y el compromiso.</p>
+                    <textarea id="slide7-team" class="mt-1 block w-full form-input" rows="4" placeholder="Somos un equipo de emprendedores en serie. Track Record: +$250,000 USD levantados. Skin in the Game: $105,000 USD invertidos personalmente."></textarea>
+                </div>
+
+                <!-- Diapositiva 8: La Petición (The Ask) -->
+                <div>
+                    <h3 class="font-bold text-lg text-yellow-500 mb-2 flex items-center gap-2"><i class="fa-solid fa-8"></i> La Petición (The Ask)</h3>
+                    <p class="text-sm text-gray-400 mb-2">Sé claro sobre cuánto pides y para qué lo usarás.</p>
+                    <textarea id="slide8-ask" class="mt-1 block w-full form-input" rows="4" placeholder="Estamos levantando nuestra ronda Pre-Semilla de $150,000 USD. Uso de Fondos: 40% Desarrollo, 40% Marketing, 20% Operaciones."></textarea>
+                </div>
+            </form>
+
+            <!-- Botones de Acción -->
+            <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mt-6">
+                <button id="save-button" class="action-button w-full flex-1 flex items-center justify-center gap-2"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                <button id="download-button" class="action-button w-full flex-1 flex items-center justify-center gap-2"><i class="fa-solid fa-download"></i> Descargar</button>
+                <button id="share-button" class="action-button w-full flex-1 flex items-center justify-center gap-2"><i class="fa-solid fa-share-nodes"></i> Compartir</button>
+                <button id="clear-button" class="action-button w-full flex-1 flex items-center justify-center gap-2"><i class="fa-solid fa-eraser"></i> Limpiar</button>
+            </div>
+        </div>
+        
+        <!-- Vista previa del Pitch Deck (lado derecho) -->
+        <div class="doc-container p-6 rounded-xl shadow-2xl flex-1 overflow-y-auto max-h-screen">
+            <h3 class="text-2xl font-black mb-6">Vista Previa del Pitch Deck</h3>
+            <p id="user-id-display" class="text-sm text-gray-400 mb-4"></p>
+            <div id="slides-container" class="space-y-8">
+                <!-- Las diapositivas se renderizarán aquí dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal personalizado para mensajes de la app (sustituto de 'alert' y 'confirm') -->
+    <div id="custom-modal" class="custom-modal">
+        <div class="modal-content">
+            <h3 id="modal-title" class="text-2xl font-bold mb-4"></h3>
+            <p id="modal-message" class="text-gray-300 mb-6"></p>
+            <div id="modal-buttons" class="modal-buttons flex justify-center space-x-4"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        // --- Variables de Entorno y Configuración de Firebase (No Modificar) ---
+        // Estas variables se inyectan automáticamente en el entorno
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // --- Firebase Imports ---
+        // Se importan los módulos necesarios de Firebase para autenticación y base de datos (Firestore)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Establece el nivel de registro de Firebase para la depuración
+        setLogLevel('debug');
+
+        // Inicializa Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // --- Elementos del DOM ---
+        // Se obtienen las referencias a los elementos del HTML
+        const pitchDeckForm = document.getElementById('pitch-deck-form');
+        const slidesContainer = document.getElementById('slides-container');
+        const userIdDisplay = document.getElementById('user-id-display');
+
+        const saveButton = document.getElementById('save-button');
+        const downloadButton = document.getElementById('download-button');
+        const shareButton = document.getElementById('share-button');
+        const clearButton = document.getElementById('clear-button');
+
+        const customModal = document.getElementById('custom-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalMessage = document.getElementById('modal-message');
+        const modalButtons = document.getElementById('modal-buttons');
+
+        let userId = null;
+        let unsubscribe = null;
+        let currentSlideData = {};
+
+        // --- Funcionalidad del Modal Personalizado ---
+        // Función para mostrar el modal con un título, mensaje y botones
+        function showModal(title, message, buttons) {
+            modalTitle.textContent = title;
+            modalMessage.innerHTML = message;
+            modalButtons.innerHTML = '';
+            buttons.forEach(btn => {
+                const buttonElement = document.createElement('button');
+                buttonElement.textContent = btn.text;
+                buttonElement.className = `action-button ${btn.class}`;
+                buttonElement.onclick = () => {
+                    btn.action();
+                    hideModal();
+                };
+                modalButtons.appendChild(buttonElement);
+            });
+            customModal.classList.add('show');
+        }
+
+        // Función para ocultar el modal
+        function hideModal() {
+            customModal.classList.remove('show');
+        }
+        
+        // --- Funciones de la Aplicación ---
+        // Array de objetos que define la estructura y contenido de cada diapositiva
+        const pitchDeckSlides = [
+            { id: 'slide1', title: 'Título y Tagline', subtitle: 'Presentación', class: 'title-slide' },
+            { id: 'slide2', title: 'El Problema', subtitle: 'El dolor que resuelves' },
+            { id: 'slide3', title: 'La Solución', subtitle: 'Tu producto o servicio' },
+            { id: 'slide4', title: 'Oportunidad de Mercado', subtitle: 'El tamaño de tu mercado' },
+            { id: 'slide5', title: 'Modelo de Negocio', subtitle: 'Cómo generas ingresos' },
+            { id: 'slide6', title: 'Tracción y Métricas', subtitle: 'La evidencia de tu progreso' },
+            { id: 'slide7', title: 'El Equipo', subtitle: 'Tu ventaja injusta' },
+            { id: 'slide8', title: 'La Petición (The Ask)', subtitle: 'Cuánto y para qué' },
+        ];
+
+        // Función para renderizar la vista previa de las diapositivas en el lado derecho
+        function renderSlides(data) {
+            slidesContainer.innerHTML = '';
+            pitchDeckSlides.forEach(slide => {
+                const content = data[slide.id] || '';
+                const title = document.createElement('h2');
+                const p = document.createElement('p');
+                const div = document.createElement('div');
+                
+                if (slide.id === 'slide1') {
+                    const [mainTitle, tagline] = content.split('\n').filter(Boolean);
+                    title.textContent = mainTitle || 'Título del Proyecto';
+                    p.textContent = tagline || 'Tu Tagline Aquí';
+                    div.className = `preview-slide ${slide.class} text-center`;
+                } else {
+                    title.textContent = slide.title;
+                    p.textContent = content || slide.subtitle;
+                    div.className = `preview-slide text-left`;
+                    p.classList.add('mt-2');
+                }
+
+                div.appendChild(title);
+                div.appendChild(p);
+                slidesContainer.appendChild(div);
+            });
+        }
+        
+        // Función para actualizar los datos del objeto 'currentSlideData' con el contenido del formulario
+        function updateAllData() {
+            pitchDeckSlides.forEach(slide => {
+                const input = document.getElementById(slide.id + (slide.id === 'slide1' ? '-title' : ''));
+                const textarea = document.getElementById(slide.id + (slide.id === 'slide1' ? '-tagline' : ''));
+                if (input) {
+                    currentSlideData[slide.id] = input.value;
+                }
+                if (textarea) {
+                    currentSlideData[slide.id] = `${input.value}\n${textarea.value}`;
+                }
+            });
+            renderSlides(currentSlideData);
+        }
+
+        // Función para limpiar todos los campos del formulario
+        function clearInputs() {
+            pitchDeckForm.reset();
+            updateAllData();
+            showModal("Limpiar", "Todos los campos han sido borrados. Puedes empezar de nuevo.", [{ text: "OK", action: () => {} }]);
+        }
+
+        // Función asincrónica para guardar los datos en Firestore
+        async function saveData() {
+            if (!userId) {
+                console.error("No se puede guardar, el usuario no está autenticado.");
+                return;
+            }
+            try {
+                // Guarda el documento en la ruta específica para el usuario
+                const docRef = doc(db, `artifacts/${appId}/users/${userId}/pitch-deck/my-deck`);
+                await setDoc(docRef, currentSlideData);
+                showModal("¡Guardado!", "Tu Pitch Deck ha sido guardado en la nube.", [{ text: "OK", action: () => {} }]);
+            } catch (e) {
+                console.error("Error al guardar el documento: ", e);
+                showModal("Error", "Ocurrió un error al guardar tus datos. Intenta de nuevo.", [{ text: "OK", action: () => {} }]);
+            }
+        }
+
+        // Función para descargar el contenido del Pitch Deck como un archivo de texto
+        function downloadFile() {
+            const pitchDeckText = pitchDeckSlides.map(slide => {
+                const content = currentSlideData[slide.id] || '';
+                return `--- Diapositiva ${pitchDeckSlides.indexOf(slide) + 1}: ${slide.title} ---\n\n${content}\n\n`;
+            }).join('');
+
+            const blob = new Blob([pitchDeckText], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'Pitch-Deck.txt';
+            link.click();
+            URL.revokeObjectURL(link.href);
+        }
+
+        // Función para compartir el Pitch Deck, copiando la URL al portapapeles
+        function shareContent() {
+            if (!userId) {
+                showModal("Error", "Debes iniciar sesión para compartir.", [{ text: "OK", action: () => {} }]);
+                return;
+            }
+            // Crea una URL con el ID de usuario para que otros puedan ver el deck
+            const shareUrl = `${window.location.origin}${window.location.pathname}?share=${userId}#${appId}`;
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                showModal("Enlace Copiado", `Comparte este enlace con tus socios e inversionistas. El enlace ha sido copiado a tu portapapeles: <br/><code class="text-sm break-all">${shareUrl}</code>`, [{ text: "OK", action: () => {} }]);
+            }).catch(err => {
+                console.error('Error al copiar el enlace: ', err);
+                showModal("Error", "No se pudo copiar el enlace. Intenta de nuevo.", [{ text: "OK", action: () => {} }]);
+            });
+        }
+        
+        // Función para cargar un Pitch Deck compartido de otro usuario
+        function loadSharedDeck(sharedUserId) {
+            const docRef = doc(db, `artifacts/${appId}/users/${sharedUserId}/pitch-deck/my-deck`);
+            showModal("Cargando Pitch Deck", "Cargando el Pitch Deck compartido...", [{ text: "OK", class: 'hidden', action: () => {} }]);
+            onSnapshot(docRef, (docSnap) => {
+                hideModal();
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    // Llena los campos del formulario con los datos cargados
+                    pitchDeckSlides.forEach(slide => {
+                        const content = data[slide.id] || '';
+                        if (slide.id === 'slide1') {
+                            const [mainTitle, tagline] = content.split('\n').filter(Boolean);
+                            document.getElementById('slide1-title').value = mainTitle || '';
+                            document.getElementById('slide1-tagline').value = tagline || '';
+                        } else {
+                            document.getElementById(slide.id).value = content;
+                        }
+                    });
+                    renderSlides(data);
+                    showModal("Pitch Deck Cargado", "El Pitch Deck compartido se ha cargado correctamente.", [{ text: "OK", action: () => {} }]);
+                } else {
+                    showModal("Error", "No se encontró el Pitch Deck compartido.", [{ text: "OK", action: () => {} }]);
+                }
+            }, (error) => {
+                console.error("Error al obtener el documento compartido:", error);
+                showModal("Error", "Ocurrió un error al cargar el Pitch Deck compartido.", [{ text: "OK", action: () => {} }]);
+            });
+        }
+
+        // Verifica la URL al cargar la página para ver si hay un enlace compartido
+        function checkUrlForShare() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const sharedUserId = urlParams.get('share');
+            if (sharedUserId) {
+                // Inicia sesión anónima si un usuario accede a través de un enlace compartido
+                signInAnonymously(auth).then(() => {
+                    loadSharedDeck(sharedUserId);
+                }).catch(error => {
+                    console.error("Error al iniciar sesión anónima: ", error);
+                    showModal("Error de Autenticación", "No se pudo iniciar sesión para cargar el contenido compartido.", [{ text: "OK", action: () => {} }]);
+                });
+            } else {
+                 // Si no hay enlace compartido, carga el documento del usuario actual
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        userIdDisplay.textContent = `ID de Usuario: ${userId}`;
+                        const docRef = doc(db, `artifacts/${appId}/users/${userId}/pitch-deck/my-deck`);
+                        
+                        if (unsubscribe) {
+                            unsubscribe();
+                        }
+
+                        // Escucha los cambios en tiempo real en el documento del usuario
+                        unsubscribe = onSnapshot(docRef, (docSnap) => {
+                            if (docSnap.exists()) {
+                                const data = docSnap.data();
+                                // Llena los campos del formulario con los datos de Firestore
+                                Object.keys(data).forEach(key => {
+                                    const input = document.getElementById(key + (key === 'slide1' ? '-title' : ''));
+                                    const textarea = document.getElementById(key + (key === 'slide1' ? '-tagline' : ''));
+                                    if (input) {
+                                        const [title, tagline] = data[key].split('\n').filter(Boolean);
+                                        input.value = title || '';
+                                        if (textarea) textarea.value = tagline || '';
+                                    } else if (textarea) {
+                                        textarea.value = data[key] || '';
+                                    }
+                                });
+                                renderSlides(data);
+                            } else {
+                                // Si no existe el documento, renderiza una vista previa vacía
+                                renderSlides({});
+                            }
+                        }, (error) => {
+                            console.error("Error al obtener el documento:", error);
+                        });
+                    }
+                });
+            }
+        }
+        
+        // --- Event Listeners ---
+        // Se ejecuta cuando el documento HTML ha sido completamente cargado
+        document.addEventListener('DOMContentLoaded', () => {
+            // Maneja la autenticación inicial, usando el token personalizado si está disponible
+            if (initialAuthToken) {
+                signInWithCustomToken(auth, initialAuthToken).then(checkUrlForShare).catch((error) => {
+                    console.error("Error al autenticar con el token personalizado:", error);
+                    checkUrlForShare();
+                });
+            } else {
+                signInAnonymously(auth).then(checkUrlForShare).catch((error) => {
+                    console.error("Error al iniciar sesión anónima:", error);
+                });
+            }
+
+            // Escucha los eventos de 'input' para actualizar la vista previa en tiempo real
+            pitchDeckForm.querySelectorAll('input, textarea').forEach(input => {
+                input.addEventListener('input', () => {
+                    updateAllData();
+                });
+            });
+
+            // Asigna los event listeners a los botones de acción
+            saveButton.addEventListener('click', saveData);
+            downloadButton.addEventListener('click', downloadFile);
+            shareButton.addEventListener('click', shareContent);
+            clearButton.addEventListener('click', clearInputs);
+        });
+    </script>
+</body>
+</html>
