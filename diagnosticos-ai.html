@@ -48,99 +48,7 @@
         }
     </script>
     
-    <!-- Estilos específicos de la página -->
-    <style>
-        /* Estilos específicos para la página de diagnósticos IA */
-        .diagnostics-hero {
-            padding: 80px 20px;
-            background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.95)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
-        }
-        
-        .diagnostics-value-prop {
-            display: flex;
-            justify-content: space-around;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 2em;
-        }
-
-        .diagnostics-prop-item {
-            background-color: var(--color-secondary-dark);
-            padding: 25px;
-            border-radius: 8px;
-            flex-basis: 250px;
-            flex-grow: 1;
-            border: 1px solid var(--color-border);
-        }
-        
-        .diagnostics-prop-item .icon {
-            font-size: 2.5em;
-            margin-bottom: 15px;
-        }
-
-        /* Formulario específico de diagnósticos */
-        .diagnostics-form-section {
-            background-color: var(--color-secondary-dark);
-            padding: 50px 20px;
-            border-radius: 10px;
-            margin-top: 2em;
-            border: 1px solid var(--color-border);
-        }
-        
-        .diagnostics-form-group {
-            margin-bottom: 25px;
-            text-align: left;
-        }
-        
-        .diagnostics-form-group label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-            color: var(--color-text-white);
-            font-size: 1.2em;
-        }
-
-        .diagnostics-form-group input, .diagnostics-form-group textarea, .diagnostics-form-group select {
-            width: 100%;
-            padding: 12px;
-            box-sizing: border-box;
-            border-radius: 5px;
-            border: 1px solid var(--color-border-light);
-            background-color: var(--color-primary-dark);
-            color: var(--color-text-light);
-            font-size: 1em;
-        }
-
-        .diagnostics-checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .diagnostics-checkbox-group input[type="checkbox"] {
-            width: auto;
-            margin-right: 10px;
-        }
-
-        .diagnostics-checkbox-group label {
-            font-size: 1em;
-            color: var(--color-text-gray);
-            margin-bottom: 0;
-        }
-
-        /* Mensaje de agradecimiento */
-        .diagnostics-thank-you-message {
-            display: none;
-            background-color: var(--color-secondary-dark);
-            padding: 50px;
-            border-radius: 10px;
-            border: 1px solid var(--color-accent-gold);
-        }
-        
-        .diagnostics-thank-you-message h2 {
-            border-bottom: none;
-        }
-    </style>
+    <!-- Sin estilos inline: usamos utilidades y common.css -->
 </head>
 <body class="base-container">
 
@@ -152,8 +60,8 @@
         <!-- =============================================== -->
         <!-- SECCIÓN 1: HERO (EL GANCHO PRINCIPAL)             -->
         <!-- =============================================== -->
-        <section class="diagnostics-hero">
-            <div class="container">
+        <section class="hero-ai">
+            <div class="section-container">
                 <h1 class="heading-xl text-center mb-6">Descubre el Potencial Oculto de tu Emprendimiento con IA</h1>
                 <p class="text-lg text-center max-w-4xl mx-auto mb-8">¿No estás seguro de los próximos pasos? ¿Sientes que podrías crecer más rápido? Nuestra herramienta de Inteligencia Artificial analiza los pilares de tu negocio y te envía un diagnóstico completo y gratuito a tu correo.</p>
                 <div class="text-center">
@@ -161,92 +69,93 @@
                 </div>
             </div>
         </section>
-
-        <div class="container">
-            <!-- =============================================== -->
-            <!-- SECCIÓN 2: ¿QUÉ OBTENDRÁS? (VALOR)               -->
-            <!-- =============================================== -->
-            <section id="valor" class="section-padding">
+        <!-- =============================================== -->
+        <!-- SECCIÓN 2: ¿QUÉ OBTENDRÁS? (VALOR)               -->
+        <!-- =============================================== -->
+        <section id="valor" class="main-section">
+            <div class="section-container">
                 <h2 class="heading-lg text-center mb-12">Un Reporte Claro y Accionable en tu Bandeja de Entrada</h2>
-                <div class="diagnostics-value-prop">
-                    <div class="diagnostics-prop-item">
-                        <div class="icon text-center">🎯</div>
+                <div class="flex flex-wrap justify-around gap-5 mt-8">
+                    <div class="bg-secondary-dark p-6 rounded-lg border border-border-custom basis-[250px] grow">
+                        <div class="text-center text-3xl mb-3">🎯</div>
                         <h3 class="heading-md text-center mb-4">Análisis de Etapa Actual</h3>
                         <p class="text-base text-center">Identificaremos las fortalezas y debilidades más comunes de la fase en la que se encuentra tu proyecto.</p>
                     </div>
-                    <div class="diagnostics-prop-item">
-                        <div class="icon text-center">💡</div>
+                    <div class="bg-secondary-dark p-6 rounded-lg border border-border-custom basis-[250px] grow">
+                        <div class="text-center text-3xl mb-3">💡</div>
                         <h3 class="heading-md text-center mb-4">Oportunidades Clave</h3>
                         <p class="text-base text-center">Nuestro sistema detectará las áreas de mayor potencial de crecimiento para tu negocio.</p>
                     </div>
-                    <div class="diagnostics-prop-item">
-                        <div class="icon text-center">🚀</div>
+                    <div class="bg-secondary-dark p-6 rounded-lg border border-border-custom basis-[250px] grow">
+                        <div class="text-center text-3xl mb-3">🚀</div>
                         <h3 class="heading-md text-center mb-4">Recomendaciones Estratégicas</h3>
                         <p class="text-base text-center">Te daremos los 3 próximos pasos recomendados que puedes implementar desde mañana.</p>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- =============================================== -->
-            <!-- SECCIÓN 3: FORMULARIO                           -->
-            <!-- =============================================== -->
-            <section id="form-diagnostico" class="diagnostics-form-section">
-                <div id="form-container">
-                    <h2 class="heading-lg text-center mb-6">Comienza tu Diagnóstico en Menos de 3 Minutos</h2>
-                    <p class="text-lg text-center mb-8">Responde estas breves preguntas. Nuestra IA se encargará del resto.</p>
-                    <form id="diagnosticoForm">
-                        <div class="diagnostics-form-group">
-                            <label for="nombre">Nombre</label>
-                            <input type="text" id="nombre" name="nombre" required>
-                        </div>
-                        <div class="diagnostics-form-group">
-                            <label for="email">Email Profesional</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="diagnostics-form-group">
-                            <label for="emprendimiento">Nombre de tu Emprendimiento</label>
-                            <input type="text" id="emprendimiento" name="emprendimiento" required>
-                        </div>
-                        <div class="diagnostics-form-group">
-                            <label for="etapa">¿En qué etapa se encuentra tu proyecto?</label>
-                            <select id="etapa" name="etapa" required>
-                                <option value="">Selecciona una etapa...</option>
-                                <option value="Idea">Idea / Concepto</option>
-                                <option value="PMV">Producto Mínimo Viable (PMV)</option>
-                                <option value="Traccion">Tracción (Primeros Clientes)</option>
-                                <option value="Crecimiento">Crecimiento / Escalabilidad</option>
-                                <option value="Madurez">Madurez</option>
-                            </select>
-                        </div>
-                        <div class="diagnostics-form-group">
-                            <label for="descripcion">Describe tu negocio o idea en una frase</label>
-                            <textarea id="descripcion" name="descripcion" rows="3" placeholder="Ej: Somos un marketplace que conecta a artesanos locales..."></textarea>
-                        </div>
-                        <div class="diagnostics-form-group">
-                            <label for="desafio">¿Cuál es tu mayor desafío en este momento?</label>
-                            <textarea id="desafio" name="desafio" rows="3" placeholder="Ej: Nos cuesta conseguir nuestros primeros 100 clientes..."></textarea>
-                        </div>
-                        <div class="diagnostics-checkbox-group">
-                            <input type="checkbox" id="consentimiento" name="consentimiento" required>
-                            <label for="consentimiento">Acepto recibir mi diagnóstico por email y otras comunicaciones de valor de "De Cero a Cien".</label>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn-primary">Generar y Enviar mi Diagnóstico</button>
-                        </div>
-                    </form>
-                </div>
+        <!-- =============================================== -->
+        <!-- SECCIÓN 3: FORMULARIO                           -->
+        <!-- =============================================== -->
+        <section id="form-diagnostico" class="main-section">
+            <div class="section-container">
+                <div class="bg-secondary-dark border border-border-custom rounded-lg">
+                    <div id="form-container" class="max-w-3xl mx-auto px-6 py-10">
+                        <h2 class="heading-lg text-center mb-6">Comienza tu Diagnóstico en Menos de 3 Minutos</h2>
+                        <p class="text-lg text-center mb-8">Responde estas breves preguntas. Nuestra IA se encargará del resto.</p>
+                        <form id="diagnosticoForm" data-behavior="simple-toggle">
+                            <div class="mb-6 text-left">
+                                <label for="nombre">Nombre</label>
+                                <input type="text" id="nombre" name="nombre" class="w-full p-3 rounded border border-border-custom bg-primary-dark text-text-light" required>
+                            </div>
+                            <div class="mb-6 text-left">
+                                <label for="email">Email Profesional</label>
+                                <input type="email" id="email" name="email" class="w-full p-3 rounded border border-border-custom bg-primary-dark text-text-light" required>
+                            </div>
+                            <div class="mb-6 text-left">
+                                <label for="emprendimiento">Nombre de tu Emprendimiento</label>
+                                <input type="text" id="emprendimiento" name="emprendimiento" class="w-full p-3 rounded border border-border-custom bg-primary-dark text-text-light" required>
+                            </div>
+                            <div class="mb-6 text-left">
+                                <label for="etapa">¿En qué etapa se encuentra tu proyecto?</label>
+                                <select id="etapa" name="etapa" class="w-full p-3 rounded border border-border-custom bg-primary-dark text-text-light" required>
+                                    <option value="">Selecciona una etapa...</option>
+                                    <option value="Idea">Idea / Concepto</option>
+                                    <option value="PMV">Producto Mínimo Viable (PMV)</option>
+                                    <option value="Traccion">Tracción (Primeros Clientes)</option>
+                                    <option value="Crecimiento">Crecimiento / Escalabilidad</option>
+                                    <option value="Madurez">Madurez</option>
+                                </select>
+                            </div>
+                            <div class="mb-6 text-left">
+                                <label for="descripcion">Describe tu negocio o idea en una frase</label>
+                                <textarea id="descripcion" name="descripcion" rows="3" class="w-full p-3 rounded border border-border-custom bg-primary-dark text-text-light" placeholder="Ej: Somos un marketplace que conecta a artesanos locales..."></textarea>
+                            </div>
+                            <div class="mb-6 text-left">
+                                <label for="desafio">¿Cuál es tu mayor desafío en este momento?</label>
+                                <textarea id="desafio" name="desafio" rows="3" class="w-full p-3 rounded border border-border-custom bg-primary-dark text-text-light" placeholder="Ej: Nos cuesta conseguir nuestros primeros 100 clientes..."></textarea>
+                            </div>
+                            <div class="flex items-center mb-6">
+                                <input type="checkbox" id="consentimiento" name="consentimiento" class="w-auto mr-2" required>
+                                <label for="consentimiento" class="text-gray-400 mb-0">Acepto recibir mi diagnóstico por email y otras comunicaciones de valor de "De Cero a Cien".</label>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn-primary">Generar y Enviar mi Diagnóstico</button>
+                            </div>
+                        </form>
+                    </div>
 
-                <!-- =============================================== -->
-                <!-- MENSAJE DE AGRADECIMIENTO (OCULTO)              -->
-                <!-- =============================================== -->
-                <div id="thank-you" class="diagnostics-thank-you-message">
-                    <h2 class="heading-lg text-center mb-6">¡Excelente! Tu diagnóstico está en camino.</h2>
-                    <p class="text-lg text-center mb-4">Hemos recibido tu información. Nuestra IA ya está trabajando en tu análisis personalizado.</p>
-                    <p class="text-lg text-center mb-4">Recibirás el reporte en tu correo <strong id="user-email"></strong> en los próximos 10-15 minutos.</p>
-                    <p class="text-lg text-center">Mientras esperas, puedes explorar otros recursos.</p>
+                    <!-- MENSAJE DE AGRADECIMIENTO (OCULTO) -->
+                    <div id="thank-you" class="hidden border border-accent-gold rounded-lg max-w-3xl mx-auto px-6 py-10 bg-secondary-dark">
+                        <h2 class="heading-lg text-center mb-6">¡Excelente! Tu diagnóstico está en camino.</h2>
+                        <p class="text-lg text-center mb-4">Hemos recibido tu información. Nuestra IA ya está trabajando en tu análisis personalizado.</p>
+                        <p class="text-lg text-center mb-4">Recibirás el reporte en tu correo <strong id="user-email"></strong> en los próximos 10-15 minutos.</p>
+                        <p class="text-lg text-center">Mientras esperas, puedes explorar otros recursos.</p>
+                    </div>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer dinámico -->
@@ -266,29 +175,7 @@
     <!-- Scripts -->
     <script src="assets/js/components.js"></script>
     <script src="assets/js/auth.js"></script>
-    <script>
-        // Inicializar aplicación cuando el DOM esté listo
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof AppManager !== 'undefined') {
-                AppManager.init();
-            }
-        });
-
-        // --- Lógica simple para simular el envío del formulario ---
-        document.getElementById('diagnosticoForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Evita que la página se recargue
-
-            // Captura el email del usuario
-            const userEmail = document.getElementById('email').value;
-            document.getElementById('user-email').textContent = userEmail;
-
-            // Oculta el formulario
-            document.getElementById('form-container').style.display = 'none';
-
-            // Muestra el mensaje de agradecimiento
-            document.getElementById('thank-you').style.display = 'block';
-        });
-    </script>
+    <script src="assets/js/forms.js"></script>
 
 </body>
 </html>

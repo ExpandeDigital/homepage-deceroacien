@@ -246,12 +246,14 @@ class HeaderComponent extends BaseComponent {
 
         // Detección: si es un artículo del blog, marcamos como 'blog'
         const p = path.toLowerCase();
+        // Academy: cualquier ruta dentro de /academy-fases/ activa 'academy'
+        if (p.includes('/academy-fases/')) return 'academy';
         const isBlogArticle = (
-            p.includes('no_te_enamores_de_tu_idea') ||
-            p.includes('tu_pmv_no_es_un_producto_barato') ||
-            p.includes('tu_producto_ya_existe_y_ahora_que_la') ||
-            p.includes('de_fundador_a_arquitecto_como_construir_una') ||
-            p.includes('ya_eres_grande_ahora_se_imborrable')
+            p.includes('no-te-enamores-de-tu-idea') ||
+            p.includes('tu-pmv-no-es-un-producto-barato') ||
+            p.includes('tu-producto-ya-existe-y-ahora-que') ||
+            p.includes('de-fundador-a-arquitecto-maquina-de-crecimiento') ||
+            p.includes('ya-eres-grande-ahora-se-imborrable')
         );
         if (isBlogArticle) return 'blog';
 
@@ -568,12 +570,14 @@ class FooterComponent extends BaseComponent {
 
         // Detección de artículos del blog para activar 'Blog'
         const p = path.toLowerCase();
+        // Academy: cualquier ruta dentro de /academy-fases/ activa 'academy'
+        if (p.includes('/academy-fases/')) return 'academy';
         const isBlogArticle = (
-            p.includes('no_te_enamores_de_tu_idea') ||
-            p.includes('tu_pmv_no_es_un_producto_barato') ||
-            p.includes('tu_producto_ya_existe_y_ahora_que_la') ||
-            p.includes('de_fundador_a_arquitecto_como_construir_una') ||
-            p.includes('ya_eres_grande_ahora_se_imborrable')
+            p.includes('no-te-enamores-de-tu-idea') ||
+            p.includes('tu-pmv-no-es-un-producto-barato') ||
+            p.includes('tu-producto-ya-existe-y-ahora-que') ||
+            p.includes('de-fundador-a-arquitecto-maquina-de-crecimiento') ||
+            p.includes('ya-eres-grande-ahora-se-imborrable')
         );
         if (isBlogArticle) return 'blog';
 

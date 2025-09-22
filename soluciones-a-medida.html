@@ -48,94 +48,7 @@
         }
     </script>
     
-    <!-- Estilos específicos de la página -->
-    <style>
-        /* Estilos específicos para la página de soluciones a medida */
-        .solutions-hero {
-            padding: 80px 20px;
-        }
-        
-        /* Formulario de soluciones */
-        .solutions-form-section {
-            background-color: var(--color-secondary-dark);
-            padding: 50px 20px;
-            border-radius: 10px;
-            margin-top: 2em;
-            border: 1px solid var(--color-border);
-        }
-        
-        .solutions-form-group {
-            margin-bottom: 25px;
-            text-align: left;
-        }
-        
-        .solutions-form-group label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-            color: var(--color-text-white);
-            font-size: 1.2em;
-        }
-
-        .solutions-form-group textarea, .solutions-form-group input {
-            width: 100%;
-            padding: 12px;
-            box-sizing: border-box;
-            border-radius: 5px;
-            border: 1px solid var(--color-border-light);
-            background-color: var(--color-primary-dark);
-            color: var(--color-text-light);
-            font-size: 1em;
-        }
-        
-        .solutions-service-categories {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 10px;
-        }
-
-        .solutions-service-categories label {
-            background-color: var(--color-primary-dark);
-            border: 1px solid var(--color-border-light);
-            padding: 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.2s ease, border-color 0.2s ease;
-            display: flex;
-            align-items: center;
-            font-size: 1em;
-            font-weight: normal;
-        }
-
-        .solutions-service-categories input[type="radio"] {
-            display: none;
-        }
-
-        .solutions-service-categories input[type="radio"]:checked + label {
-            background-color: var(--color-accent-gold);
-            border-color: var(--color-accent-gold);
-            color: var(--color-primary-dark);
-            font-weight: bold;
-        }
-
-        .solutions-service-categories label:hover {
-            border-color: var(--color-accent-gold);
-        }
-
-        /* Mensaje de agradecimiento */
-        .solutions-thank-you-message {
-            display: none;
-            background-color: var(--color-secondary-dark);
-            padding: 50px;
-            border-radius: 10px;
-            border: 1px solid var(--color-accent-gold);
-        }
-        
-        .solutions-thank-you-message h2 {
-            border-bottom: none;
-        }
-    </style>
+    <!-- Sin estilos inline: usamos utilidades y common.css -->
 </head>
 <body class="base-container">
 
@@ -147,7 +60,7 @@
         <!-- =============================================== -->
         <!-- SECCIÓN 1: HERO                                   -->
         <!-- =============================================== -->
-        <section class="solutions-hero">
+        <section class="py-20 px-5">
             <div class="container">
                 <h1 class="heading-xl text-center mb-6">Soluciones a Medida para tu Mayor Desafío</h1>
                 <p class="text-lg text-center max-w-4xl mx-auto mb-8">Sabemos que emprender es un camino de obstáculos. Cuéntanos cuál es el tuyo y te enviaremos una propuesta de servicio personalizada, sin compromiso, para ayudarte a superarlo.</p>
@@ -158,42 +71,41 @@
             <!-- =============================================== -->
             <!-- SECCIÓN 2: FORMULARIO DE DOLOR + SOLUCIÓN       -->
             <!-- =============================================== -->
-            <section id="form-solucion" class="solutions-form-section">
-                <div id="form-container">
+            <section id="form-solucion" class="bg-secondary-dark border border-border-custom rounded-lg mt-8">
+                <div id="form-container" class="max-w-3xl mx-auto px-6 py-10">
                     <h2 class="heading-lg text-center mb-6">Diseña tu Solución en 2 Pasos</h2>
-                    
-                    <form id="solucionForm">
+                    <form id="solucionForm" data-behavior="simple-toggle">
                         <!-- PASO 1: DESCRIBIR EL DOLOR -->
-                        <div class="solutions-form-group">
+                        <div class="mb-6 text-left">
                             <label for="dolor">1. Describe tu principal obstáculo o "dolor"</label>
-                            <textarea id="dolor" name="dolor" rows="4" placeholder="Ej: 'Hemos lanzado nuestro producto pero no logramos conseguir ventas consistentes' o 'Necesito levantar capital y no sé por dónde empezar'..." required></textarea>
+                            <textarea id="dolor" name="dolor" rows="4" class="w-full p-3 rounded border border-border-custom bg-primary-dark text-text-light" placeholder="Ej: 'Hemos lanzado nuestro producto pero no logramos conseguir ventas consistentes' o 'Necesito levantar capital y no sé por dónde empezar'..." required></textarea>
                         </div>
 
                         <!-- PASO 2: ELEGIR CATEGORÍA DE SERVICIO -->
-                        <div class="solutions-form-group">
+                        <div class="mb-6 text-left">
                             <label>2. Selecciona el área donde crees que necesitas más ayuda</label>
-                            <div class="solutions-service-categories">
-                                <input type="radio" id="cat-estrategia" name="categoria" value="Estrategia y Modelo de Negocio" required>
-                                <label for="cat-estrategia">Estrategia y Modelo de Negocio</label>
-                                
-                                <input type="radio" id="cat-marketing" name="categoria" value="Marketing y Ventas">
-                                <label for="cat-marketing">Marketing y Ventas</label>
-                                
-                                <input type="radio" id="cat-producto" name="categoria" value="Tecnología y Producto">
-                                <label for="cat-producto">Tecnología y Producto</label>
-                                
-                                <input type="radio" id="cat-finanzas" name="categoria" value="Finanzas y Fundraising">
-                                <label for="cat-finanzas">Finanzas y Fundraising</label>
-                                
-                                <input type="radio" id="cat-operaciones" name="categoria" value="Equipo y Operaciones">
-                                <label for="cat-operaciones">Equipo y Operaciones</label>
+                            <div class="grid gap-3 mt-2" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+                                <input type="radio" id="cat-estrategia" class="hidden" name="categoria" value="Estrategia y Modelo de Negocio" required>
+                                <label for="cat-estrategia" class="bg-primary-dark border border-border-custom rounded p-4 cursor-pointer hover:border-accent-gold">Estrategia y Modelo de Negocio</label>
+
+                                <input type="radio" id="cat-marketing" class="hidden" name="categoria" value="Marketing y Ventas">
+                                <label for="cat-marketing" class="bg-primary-dark border border-border-custom rounded p-4 cursor-pointer hover:border-accent-gold">Marketing y Ventas</label>
+
+                                <input type="radio" id="cat-producto" class="hidden" name="categoria" value="Tecnología y Producto">
+                                <label for="cat-producto" class="bg-primary-dark border border-border-custom rounded p-4 cursor-pointer hover:border-accent-gold">Tecnología y Producto</label>
+
+                                <input type="radio" id="cat-finanzas" class="hidden" name="categoria" value="Finanzas y Fundraising">
+                                <label for="cat-finanzas" class="bg-primary-dark border border-border-custom rounded p-4 cursor-pointer hover:border-accent-gold">Finanzas y Fundraising</label>
+
+                                <input type="radio" id="cat-operaciones" class="hidden" name="categoria" value="Equipo y Operaciones">
+                                <label for="cat-operaciones" class="bg-primary-dark border border-border-custom rounded p-4 cursor-pointer hover:border-accent-gold">Equipo y Operaciones</label>
                             </div>
                         </div>
 
                         <!-- PASO 3: EMAIL PARA ENVIAR PROPUESTA -->
-                         <div class="solutions-form-group">
+                         <div class="mb-6 text-left">
                             <label for="email">3. ¿A qué email te enviamos la propuesta a medida?</label>
-                            <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+                            <input type="email" id="email" name="email" class="w-full p-3 rounded border border-border-custom bg-primary-dark text-text-light" placeholder="tu@email.com" required>
                         </div>
 
                         <div class="text-center">
@@ -203,7 +115,7 @@
                 </div>
 
                 <!-- MENSAJE DE AGRADECIMIENTO (OCULTO) -->
-                <div id="thank-you" class="solutions-thank-you-message">
+                <div id="thank-you" class="hidden bg-secondary-dark border border-accent-gold rounded-lg max-w-3xl mx-auto px-6 py-10">
                     <h2 class="heading-lg text-center mb-6">¡Recibido! Estamos en ello.</h2>
                     <p class="text-lg text-center mb-4">Gracias por compartir tu desafío con nosotros. Uno de nuestros especialistas analizará tu caso personalmente.</p>
                     <p class="text-lg text-center mb-4">Recibirás una propuesta de servicio a medida en tu correo <strong id="user-email"></strong> en las próximas 24 horas hábiles.</p>
@@ -229,25 +141,7 @@
     <!-- Scripts -->
     <script src="assets/js/components.js"></script>
     <script src="assets/js/auth.js"></script>
-    <script>
-        // Inicializar aplicación cuando el DOM esté listo
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof AppManager !== 'undefined') {
-                AppManager.init();
-            }
-        });
-
-        // Lógica del formulario de soluciones
-        document.getElementById('solucionForm').addEventListener('submit', function(event) {
-            event.preventDefault(); 
-
-            const userEmail = document.getElementById('email').value;
-            document.getElementById('user-email').textContent = userEmail;
-
-            document.getElementById('form-container').style.display = 'none';
-            document.getElementById('thank-you').style.display = 'block';
-        });
-    </script>
+    <script src="assets/js/forms.js"></script>
 
 </body>
 </html>
