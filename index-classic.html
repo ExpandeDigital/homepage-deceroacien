@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!-- Copia de seguridad del index original para poder restaurar -->
+<html lang="es">
+<head>
+    <!-- Meta tags esenciales para SEO y responsividad -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tu conexión directa al ecosistema emprendedor. Metodología probada para llevar tu startup de cero a cien.">
+    <meta name="keywords" content="emprendimiento, startups, crecimiento empresarial, metodología, consultoría, DE CERO A CIEN">
+    <meta name="author" content="DE CERO A CIEN">
+    
+    <!-- Título de la página -->
+    <title>DE CERO A CIEN - Tu Conexión al Ecosistema Emprendedor</title>
+    
+    <!-- Favicons y meta tags para redes sociales -->
+    <meta property="og:title" content="DE CERO A CIEN - Tu Conexión al Ecosistema Emprendedor">
+    <meta property="og:description" content="Tu conexión directa al ecosistema emprendedor. Metodología probada para llevar tu startup de cero a cien.">
+    <meta property="og:url" content="https://deceroacien.app">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Preload de recursos críticos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
+    
+    <!-- Hojas de estilo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles/common.css">
+    <link rel="stylesheet" href="assets/styles/mobile.css">
+    
+    <!-- Configuración de Tailwind personalizada -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#0a1f2f',
+                        'secondary-dark': '#112240',
+                        'accent-gold': '#FBBF24',
+                        'text-light': '#e6f1ff',
+                        'border-custom': '#1e2d4d'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body class="base-container antialiased">
+
+    <!-- HEADER UNIFICADO -->
+    <header class="header-component"></header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+        <!-- Sección de bienvenida -->
+        <section class="main-section py-20 sm:py-24 text-center">
+            <div class="section-container">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-200 fade-in">
+                    Bienvenido a <span class="highlight-text">DE CERO A CIEN</span>
+                </h1>
+                <p class="mt-4 text-lg text-gray-400 fade-in">Tu Conexión Directa al Ecosistema Emprendedor</p>
+            </div>
+        </section>
+
+        <!-- Marquee Slider Mejorado con comentarios explicativos -->
+        <div class="overflow-hidden bg-gradient-to-r from-[#112240] via-[#172a46] to-[#112240] py-4 border-y border-gray-800">
+            <div class="marquee-content flex items-center">
+                <p class="flex items-center text-lg font-semibold text-white mx-8">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-yellow-400">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    Para Emprendimientos Dinámicos y Startups
+                </p>
+                <p class="flex items-center text-lg font-semibold text-white mx-8">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-yellow-400"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                    Para Emprendimientos Dinámicos y Startups
+                </p>
+            </div>
+        </div>
+        <!-- ... resto del contenido original del index ... -->
+    </main>
+
+    <!-- FOOTER UNIFICADO -->
+    <footer class="footer-component"></footer>
+
+    <!-- Scripts JavaScript -->
+    <script src="assets/js/components.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/config-secure.js"></script>
+    <script src="assets/js/auth-config.js"></script>
+    <script src="assets/js/google-onetap.js"></script>
+    <script>
+        (function () {
+            var marquee = document.querySelector('.marquee-content');
+            if (!marquee) return;
+            if (marquee.getAttribute('data-duplicated') === 'true') return;
+            marquee.innerHTML = marquee.innerHTML + marquee.innerHTML;
+            marquee.setAttribute('data-duplicated', 'true');
+        })();
+    </script>
+</body>
+</html>

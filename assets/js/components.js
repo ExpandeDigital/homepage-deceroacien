@@ -277,6 +277,7 @@ class HeaderComponent extends BaseComponent {
         this.generateHeaderHTML();
         this.createMobileMenu();
     this.applyMobileAuthVisibility();
+        this.setupPriorityNav();
         console.log('Header inicializado correctamente con HTML dinámico');
     }
 
@@ -285,27 +286,38 @@ class HeaderComponent extends BaseComponent {
      */
     generateHeaderHTML() {
     const headerHTML = `
-            <nav class="header-nav">
+            <nav class="header-nav" style="display:flex; align-items:center; gap:16px; padding:12px 20px; width:100%; max-width:100%; box-sizing:border-box;">
                 <!-- Logo principal -->
-        <a href="${this.basePath}index.html" class="header-logo" aria-label="Inicio DE CERO A CIEN">
+        <a href="${this.basePath}index.html" class="header-logo" aria-label="Inicio DE CERO A CIEN" style="flex:0 0 auto; display:flex; align-items:center; gap:8px;">
             <img src="${this.basePath}assets/logo_de_cero_a_cien_blanco_y_dorado.png" alt="DE CERO A CIEN" class="header-logo-img" loading="lazy" />
                 </a>
                 
                 <!-- Navegación principal (desktop) -->
-                <div class="header-nav-links">
-            <a href="${this.basePath}index.html" class="header-link ${this.currentPage === 'index' ? 'active' : ''}">Inicio</a>
-            <a href="${this.basePath}nosotros.html" class="header-link ${this.currentPage === 'nosotros' ? 'active' : ''}">Nosotros</a>
-            <a href="${this.basePath}servicios.html" class="header-link ${this.currentPage === 'servicios' ? 'active' : ''}">Servicios Empresariales</a>
-            <a href="${this.basePath}formacion-semilla-talleres/index.html" class="header-link ${this.currentPage === 'formacion-semilla' ? 'active' : ''}">Formación Semilla</a>
-            <a href="${this.basePath}liderazgo/index.html" class="header-link ${this.currentPage === 'liderazgo' ? 'active' : ''}">Liderazgo</a>
-            <a href="${this.basePath}de-cero-a-cien.html" class="header-link ${this.currentPage === 'de-cero-a-cien' ? 'active' : ''}">De Cero a Cien</a>
-            <a href="${this.basePath}camino-dorado.html" class="header-link ${this.currentPage === 'camino-dorado' ? 'active' : ''}">Camino Dorado</a>
-            <a href="${this.basePath}talento/index.html" class="header-link ${this.currentPage === 'talent' ? 'active' : ''}">Talent</a>
-            <a href="${this.basePath}academy-fases/index.html" class="header-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a>
+                <div class="header-nav-links" style="flex:1 1 auto; display:flex; flex-wrap:nowrap; align-items:center; gap:12px; overflow:hidden; min-width:0;">
+            <a href="${this.basePath}index.html" data-priority="0" class="header-link ${this.currentPage === 'index' ? 'active' : ''}">Inicio</a>
+            <a href="${this.basePath}nosotros.html" data-priority="2" class="header-link ${this.currentPage === 'nosotros' ? 'active' : ''}">Nosotros</a>
+            <a href="${this.basePath}servicios.html" data-priority="1" class="header-link ${this.currentPage === 'servicios' ? 'active' : ''}">Servicios Empresariales</a>
+            <a href="${this.basePath}formacion-semilla-talleres/index.html" data-priority="3" class="header-link ${this.currentPage === 'formacion-semilla' ? 'active' : ''}">Formación Semilla</a>
+            <a href="${this.basePath}liderazgo/index.html" data-priority="3" class="header-link ${this.currentPage === 'liderazgo' ? 'active' : ''}">Liderazgo</a>
+            <a href="${this.basePath}de-cero-a-cien.html" data-priority="1" class="header-link ${this.currentPage === 'de-cero-a-cien' ? 'active' : ''}">De Cero a Cien</a>
+            <a href="${this.basePath}camino-dorado.html" data-priority="2" class="header-link ${this.currentPage === 'camino-dorado' ? 'active' : ''}">Camino Dorado</a>
+            <a href="${this.basePath}talent/index.html" data-priority="3" class="header-link ${this.currentPage === 'talent' ? 'active' : ''}">Talent</a>
+            <a href="${this.basePath}academy-fases/index.html" data-priority="3" class="header-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a>
+                </div>
+
+                <!-- Menú overflow "Más" (desktop) -->
+                <div class="header-more" style="position:relative; display:none; margin-left:8px; flex:0 0 auto;">
+                    <button class="header-more-btn" aria-haspopup="true" aria-expanded="false" aria-label="Más enlaces"
+                        style="background:transparent; color:inherit; border:1px solid rgba(255,255,255,0.2); padding:6px 10px; border-radius:9999px; cursor:pointer;">
+                        Más ▾
+                    </button>
+                    <div class="header-more-menu" role="menu"
+                        style="position:absolute; right:0; top:calc(100% + 6px); background:rgba(2,6,23,0.98); border:1px solid rgba(255,255,255,0.15); border-radius:10px; min-width:200px; padding:6px; display:none; z-index:50; box-shadow:0 10px 25px rgba(0,0,0,0.3);">
+                    </div>
                 </div>
                 
                 <!-- Sección de autenticación -->
-                <div class="header-auth-section" id="headerAuthSection">
+                <div class="header-auth-section" id="headerAuthSection" style="flex:0 0 auto; display:flex; align-items:center; gap:10px;">
                     <a href="${this.basePath}auth/login.html" class="header-login-link">Ingresar</a>
                     <a href="${this.basePath}auth/register.html" class="header-register-btn">Registrarse</a>
                 </div>
@@ -370,6 +382,9 @@ class HeaderComponent extends BaseComponent {
                 });
             }
         }
+
+        // Recalcular distribución del menú tras cambios de ancho
+        this.reflowPriorityNav && this.reflowPriorityNav();
     }
 
     /**
@@ -428,6 +443,23 @@ class HeaderComponent extends BaseComponent {
                     <a href="#" class="mobile-auth-link">Ingresa</a>
                     <a href="#" class="mobile-register-btn">Regístrate</a>
                 </div>
+                     <div class="mobile-menu-social" style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+                          <a href="https://www.instagram.com/deceroacien.app/" class="mobile-social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+                              style="border:1px solid rgba(255,255,255,0.2); border-radius:9999px; padding:6px 10px; text-decoration:none; color:inherit; display:inline-flex; align-items:center; gap:6px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="#FFD700" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.056 1.97.24 2.427.403a4.92 4.92 0 0 1 1.775 1.153 4.92 4.92 0 0 1 1.153 1.775c.163.457.347 1.257.403 2.427.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.056 1.17-.24 1.97-.403 2.427a4.92 4.92 0 0 1-1.153 1.775 4.92 4.92 0 0 1-1.775 1.153c-.457.163-1.257.347-2.427.403-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.056-1.97-.24-2.427-.403a4.92 4.92 0 0 1-1.775-1.153 4.92 4.92 0 0 1-1.153-1.775c-.163-.457-.347-1.257-.403-2.427C2.175 15.784 2.163 15.404 2.163 12s.012-3.584.07-4.85c.056-1.17.24-1.97.403-2.427a4.92 4.92 0 0 1 1.153-1.775A4.92 4.92 0 0 1 5.494.636c.457-.163 1.257-.347 2.427-.403C9.187.175 9.567.163 12 .163Zm0 5.7a4.137 4.137 0 1 0 0 8.274 4.137 4.137 0 0 0 0-8.274Z"/></svg>
+                                Instagram
+                          </a>
+                          <a href="https://www.linkedin.com/company/de-cero-a-cien-app/?viewAsMember=true" class="mobile-social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+                              style="border:1px solid rgba(255,255,255,0.2); border-radius:9999px; padding:6px 10px; text-decoration:none; color:inherit; display:inline-flex; align-items:center; gap:6px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="#FFD700" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v16H0V8zm7.5 0H12v2.2h.06c.63-1.2 2.17-2.46 4.47-2.46 4.78 0 5.66 3.15 5.66 7.25V24h-5v-7.5c0-1.79-.03-4.09-2.49-4.09-2.49 0-2.87 1.94-2.87 3.96V24h-5V8z"/></svg>
+                                LinkedIn
+                          </a>
+                          <a href="https://www.facebook.com/profile.php?id=61580145107768&locale=es_LA" class="mobile-social-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+                              style="border:1px solid rgba(255,255,255,0.2); border-radius:9999px; padding:6px 10px; text-decoration:none; color:inherit; display:inline-flex; align-items:center; gap:6px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="#FFD700" aria-hidden="true"><path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692V11.09h3.128V8.414c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.794.143v3.24l-1.918.001c-1.504 0-1.796.715-1.796 1.764v2.317h3.588l-.467 3.616h-3.12V24h6.116C23.407 24 24 23.407 24 22.675V1.325C24 .593 23.407 0 22.675 0z"/></svg>
+                                Facebook
+                          </a>
+                     </div>
             </div>
         `;
     }
@@ -444,6 +476,17 @@ class HeaderComponent extends BaseComponent {
             if (this.isMenuOpen && this.mobileMenu && this.mobileMenuButton) {
                 if (!this.mobileMenu.contains(e.target) && !this.mobileMenuButton.contains(e.target)) {
                     this.closeMobileMenu();
+                }
+            }
+
+            // Cerrar menú "Más" si se hace click fuera
+            const more = this.element.querySelector('.header-more');
+            const menu = this.element.querySelector('.header-more-menu');
+            const btn = this.element.querySelector('.header-more-btn');
+            if (more && menu && btn) {
+                if (!more.contains(e.target)) {
+                    menu.style.display = 'none';
+                    btn.setAttribute('aria-expanded', 'false');
                 }
             }
         });
@@ -475,6 +518,9 @@ class HeaderComponent extends BaseComponent {
                 this.attachMobileInternalEvents();
             }
             this.applyMobileAuthVisibility();
+            // En móvil no usamos "Más"
+            const more = this.element.querySelector('.header-more');
+            if (more) more.style.display = 'none';
         } else {
             // Eliminar si estamos en desktop
             if (this.mobileMenuButton) {
@@ -488,7 +534,134 @@ class HeaderComponent extends BaseComponent {
             this.isMenuOpen = false;
             document.body.style.overflow = '';
             this.applyMobileAuthVisibility();
+            // Reflujo de enlaces para desktop
+            this.reflowPriorityNav && this.reflowPriorityNav();
         }
+    }
+
+    /**
+     * Configura el patrón Priority+ para el menú de navegación (desktop)
+     */
+    setupPriorityNav() {
+        try {
+            this.navRoot = this.element.querySelector('.header-nav');
+            this.linksContainer = this.element.querySelector('.header-nav-links');
+            this.moreContainer = this.element.querySelector('.header-more');
+            this.moreBtn = this.element.querySelector('.header-more-btn');
+            this.moreMenu = this.element.querySelector('.header-more-menu');
+
+            if (!this.navRoot || !this.linksContainer || !this.moreContainer) return;
+
+            // Array base de ítems (orden original)
+            const linkEls = Array.from(this.linksContainer.querySelectorAll('a.header-link'));
+            this.navItems = linkEls.map((el, index) => ({
+                el,
+                index,
+                priority: parseInt(el.getAttribute('data-priority') || '2', 10)
+            }));
+
+            // Toggle del menú "Más"
+            if (this.moreBtn && this.moreMenu) {
+                this.moreBtn.addEventListener('click', () => {
+                    const isOpen = this.moreMenu.style.display === 'block';
+                    this.moreMenu.style.display = isOpen ? 'none' : 'block';
+                    this.moreBtn.setAttribute('aria-expanded', String(!isOpen));
+                });
+            }
+
+            // Ejecutar reflow al cargar y en resize
+            const doReflow = () => this.reflowPriorityNav();
+            setTimeout(doReflow, 0);
+            window.addEventListener('load', doReflow);
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= this.breakpoint) doReflow();
+            });
+        } catch (e) {
+            console.warn('PriorityNav no disponible:', e);
+        }
+    }
+
+    /**
+     * Mueve enlaces de baja prioridad a un menú "Más" cuando no hay espacio
+     */
+    reflowPriorityNav() {
+        if (!this.navRoot || !this.linksContainer || !this.moreContainer) return;
+        if (window.innerWidth < this.breakpoint) return; // Solo desktop
+
+        // 1) Reset: devolver todos los enlaces a su contenedor en orden original
+        this.linksContainer.innerHTML = '';
+        const ordered = this.navItems.slice().sort((a, b) => a.index - b.index);
+        ordered.forEach(item => this.linksContainer.appendChild(item.el));
+
+        // Limpiar menú "Más"
+        if (this.moreMenu) this.moreMenu.innerHTML = '';
+        // Mostrar contenedor "Más" invisible para reservar ancho cuando se necesite
+        this.moreContainer.style.display = 'inline-flex';
+        this.moreMenu.style.display = 'none';
+        this.moreBtn.setAttribute('aria-expanded', 'false');
+        this.moreContainer.style.visibility = 'hidden';
+
+        // 2) Calcular espacio disponible
+        const navWidth = this.navRoot.clientWidth;
+        const logo = this.element.querySelector('.header-logo');
+        const auth = this.element.querySelector('#headerAuthSection');
+        const logoW = logo ? logo.getBoundingClientRect().width : 0;
+        const authW = auth ? auth.getBoundingClientRect().width : 0;
+        const moreW = this.moreContainer.getBoundingClientRect().width || 64; // aproximado
+        const buffer = 24; // margen de seguridad
+        let available = navWidth - logoW - authW - buffer;
+
+        // 3) Ancho usado por los enlaces actuales
+        const itemsNow = Array.from(this.linksContainer.querySelectorAll('a.header-link'));
+        const widths = itemsNow.map(el => el.getBoundingClientRect().width + 12); // sumar gap estimado
+        let used = widths.reduce((a, b) => a + b, 0);
+
+        // Si caben todos, ocultar "Más"
+        if (used <= available) {
+            this.moreContainer.style.display = 'none';
+            this.moreContainer.style.visibility = '';
+            return;
+        }
+
+        // 4) Necesitamos "Más"; incluir su ancho
+        available -= moreW;
+
+        // 5) Mover por prioridad: 3 -> 2 -> 1 (0 nunca se mueve)
+        const moveByPriority = (prio) => {
+            // desde el final hacia el inicio para preservar orden de la izquierda
+            for (let i = itemsNow.length - 1; i >= 0; i--) {
+                const el = itemsNow[i];
+                const item = this.navItems.find(n => n.el === el);
+                if (!item) continue;
+                if (item.priority !== prio) continue;
+                if (used <= available) break;
+
+                // mover a menú Más
+                const w = el.getBoundingClientRect().width + 12;
+                used -= w;
+                // quitar del contenedor principal
+                el.remove();
+                // añadir al menú Más como clon ligero para estilos de lista
+                const clone = el.cloneNode(true);
+                clone.classList.add('header-more-link');
+                clone.style.display = 'block';
+                clone.style.padding = '8px 10px';
+                clone.style.borderRadius = '8px';
+                clone.addEventListener('click', () => {
+                    // Cerrar menú tras click
+                    this.moreMenu.style.display = 'none';
+                    this.moreBtn.setAttribute('aria-expanded', 'false');
+                });
+                this.moreMenu.appendChild(clone);
+            }
+        };
+
+        [3, 2, 1].forEach(moveByPriority);
+
+        // Mostrar contenedor "Más" si hay elementos
+        const hasOverflow = this.moreMenu && this.moreMenu.children.length > 0;
+        this.moreContainer.style.display = hasOverflow ? 'inline-flex' : 'none';
+        this.moreContainer.style.visibility = '';
     }
 
     /**
@@ -565,6 +738,8 @@ class FooterComponent extends BaseComponent {
         const p = path.toLowerCase();
         // Academy: cualquier ruta dentro de /academy-fases/ activa 'academy'
         if (p.includes('/academy-fases/')) return 'academy';
+        // Comunidad: activar cuando estamos en rutas /comunidad/
+        if (p.includes('/comunidad/')) return 'comunidad';
         const isBlogArticle = (
             p.includes('no-te-enamores-de-tu-idea') ||
             p.includes('tu-pmv-no-es-un-producto-barato') ||
@@ -656,6 +831,24 @@ class FooterComponent extends BaseComponent {
                 <!-- Línea inferior con copyright -->
                 <div class="footer-bottom">
                     <p class="footer-copyright">© ${this.currentYear} DE CERO A CIEN. Todos los derechos reservados.</p>
+                    <div class="footer-social" style="margin-top: 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                        <span style="color: #94a3b8; font-size: 0.9rem;">Síguenos:</span>
+                        <a href="https://www.instagram.com/deceroacien.app/" class="footer-social-pill" aria-label="Instagram" title="Instagram"
+                           style="border:1px solid rgba(255,255,255,0.2); border-radius:9999px; padding:6px 12px; text-decoration:none; color:inherit; display:inline-flex; align-items:center; gap:8px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="#FFD700" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.056 1.97.24 2.427.403a4.92 4.92 0 0 1 1.775 1.153 4.92 4.92 0 0 1 1.153 1.775c.163.457.347 1.257.403 2.427.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.056 1.17-.24 1.97-.403 2.427a4.92 4.92 0 0 1-1.153 1.775 4.92 4.92 0 0 1-1.775 1.153c-.457.163-1.257.347-2.427.403-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.056-1.97-.24-2.427-.403a4.92 4.92 0 0 1-1.775-1.153 4.92 4.92 0 0 1-1.153-1.775c-.163-.457-.347-1.257-.403-2.427C2.175 15.784 2.163 15.404 2.163 12s.012-3.584.07-4.85c.056-1.17.24-1.97.403-2.427a4.92 4.92 0 0 1 1.153-1.775A4.92 4.92 0 0 1 5.494.636c.457-.163 1.257-.347 2.427-.403C9.187.175 9.567.163 12 .163Zm0 1.8c-3.16 0-3.527.012-4.768.069-1.024.049-1.58.216-1.948.36-.49.19-.84.417-1.207.784-.367.367-.595.717-.784 1.207-.144.368-.311.924-.36 1.948-.057 1.241-.069 1.608-.069 4.768s.012 3.527.069 4.768c.049 1.024.216 1.58.36 1.948.19.49.417.84.784 1.207.367.367.717.595 1.207.784.368.144.924.311 1.948.36 1.241.057 1.608.069 4.768.069s3.527-.012 4.768-.069c1.024-.049 1.58-.216 1.948-.36.49-.19.84-.417 1.207-.784.367-.367.595-.717.784-1.207.144-.368.311-.924.36-1.948.057-1.241.069-1.608.069-4.768s-.012-3.527-.069-4.768c-.049-1.024-.216-1.58-.36-1.948a3.12 3.12 0 0 0-.784-1.207 3.12 3.12 0 0 0-1.207-.784c-.368-.144-.924-.311-1.948-.36-1.241-.057-1.608-.069-4.768-.069Zm0 3.9a5.137 5.137 0 1 1 0 10.274 5.137 5.137 0 0 1 0-10.274Zm0 1.8a3.337 3.337 0 1 0 0 6.674 3.337 3.337 0 0 0 0-6.674Zm5.34-2.247a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4Z"/></svg>
+                            Instagram
+                        </a>
+                        <a href="https://www.linkedin.com/company/de-cero-a-cien-app/?viewAsMember=true" class="footer-social-pill" aria-label="LinkedIn" title="LinkedIn"
+                           style="border:1px solid rgba(255,255,255,0.2); border-radius:9999px; padding:6px 12px; text-decoration:none; color:inherit; display:inline-flex; align-items:center; gap:8px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="#FFD700" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v16H0V8zm7.5 0H12v2.2h.06c.63-1.2 2.17-2.46 4.47-2.46 4.78 0 5.66 3.15 5.66 7.25V24h-5v-7.5c0-1.79-.03-4.09-2.49-4.09-2.49 0-2.87 1.94-2.87 3.96V24h-5V8z"/></svg>
+                            LinkedIn
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=61580145107768&locale=es_LA" class="footer-social-pill" aria-label="Facebook" title="Facebook"
+                           style="border:1px solid rgba(255,255,255,0.2); border-radius:9999px; padding:6px 12px; text-decoration:none; color:inherit; display:inline-flex; align-items:center; gap:8px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="#FFD700" aria-hidden="true"><path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692V11.09h3.128V8.414c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.794.143v3.24l-1.918.001c-1.504 0-1.796.715-1.796 1.764v2.317h3.588l-.467 3.616h-3.12V24h6.116C23.407 24 24 23.407 24 22.675V1.325C24 .593 23.407 0 22.675 0z"/></svg>
+                            Facebook
+                        </a>
+                    </div>
                 </div>
             </div>
         `;
