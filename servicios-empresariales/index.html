@@ -1,27 +1,290 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Servicios Empresariales</title>
+  <!-- Meta tags esenciales para SEO y responsividad -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Descubre nuestros servicios empresariales especializados para el crecimiento de tu startup.">
+  <meta name="keywords" content="emprendimiento, startups, crecimiento empresarial, metodología, consultoría, servicios">
+  <meta name="author" content="DE CERO A CIEN">
+    
+  <!-- Título de la página -->
+  <title>Servicios Empresariales - DE CERO A CIEN</title>
+    
+  <!-- Favicons y meta tags para redes sociales -->
+  <meta property="og:title" content="Servicios Empresariales - DE CERO A CIEN">
+  <meta property="og:description" content="Soluciones empresariales en Estrategia, Operaciones, Marketing, Tecnología y Finanzas.">
+  <meta property="og:url" content="https://deceroacien.app/servicios-empresariales/">
+  <meta name="twitter:card" content="summary_large_image">
+    
+  <!-- Preload de recursos críticos -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
+    
+  <!-- Hojas de estilo -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-  <style>body{font-family:'Inter',sans-serif;background:#0a1f2f;color:#e6f1ff}.card{background:#112240;border:1px solid #1e2d4d}</style>
+  <link rel="stylesheet" href="../assets/styles/common.css">
+  <link rel="stylesheet" href="../assets/styles/mobile.css">
+    
+  <!-- Configuración de Tailwind personalizada -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'primary-dark': '#0a1f2f',
+            'secondary-dark': '#112240',
+            'accent-gold': '#FBBF24',
+            'text-light': '#e6f1ff',
+            'border-custom': '#1e2d4d'
+          },
+          fontFamily: {
+            'sans': ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+    
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
-<body>
-  <header class="header-component"></header>
-  <main class="py-16">
-    <div class="container mx-auto max-w-7xl px-6">
-      <h1 class="text-4xl font-black">Servicios Empresariales</h1>
-      <p class="mt-3 text-gray-400">Elige una línea de servicio:</p>
-      <section class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <a class="card rounded-lg p-6 block" href="../conferencias_catalogo.html">Conferencias</a>
-        <a class="card rounded-lg p-6 block" href="../desarrollo_catalogo.html">Desarrollo</a>
-        <a class="card rounded-lg p-6 block" href="../marketing_catalogo.html">Marketing</a>
-      </section>
-    </div>
+<body class="base-container antialiased">
+
+  <!-- HEADER UNIFICADO -->
+  <header class="header-component">
+    <!-- El contenido del header se genera dinamicamente por JavaScript -->
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main-content">
+    <!-- Sección Hero -->
+    <section class="main-section py-20 sm:py-28">
+      <div class="section-container max-w-4xl text-center">
+        <h1 class="text-4xl sm:text-5xl font-bold section-title leading-tight fade-in">
+          Servicios <span class="highlight-text">Empresariales</span>
+        </h1>
+        <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto fade-in">
+          Soluciones especializadas en 5 áreas clave para acelerar tu crecimiento con estrategia, ejecución y medición.
+        </p>
+      </div>
+    </section>
+
+    <!-- Grid de Servicios Principales -->
+    <section class="main-section pb-20 sm:pb-28">
+      <div class="section-container">
+        <div class="responsive-grid lg:grid-cols-2 gap-8">
+                    
+          <!-- El Camino Dorado -->
+          <div class="service-card card-spotlight slide-in-left">
+            <h2 class="text-2xl font-bold text-white flex items-center">
+              <span class="highlight-text">EL CAMINO DORADO</span>
+            </h2>
+            <p class="mt-3 text-gray-400 flex-grow">
+              Nuestra metodología insignia. 31 micro-herramientas estructuradas en 5 fases 
+              que te llevan desde la ideación hasta la consolidación de tu startup.
+            </p>
+            <div class="mt-6">
+              <a href="../camino-dorado.html" class="cta-button card-primary-link">
+                Comenzar el Camino &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- Servicios Empresariales (detalle) -->
+          <div class="service-card slide-in-right">
+            <h2 class="text-2xl font-bold text-white">SERVICIOS EMPRESARIALES</h2>
+            <p class="mt-3 text-gray-400 flex-grow">
+              Más de 20 servicios especializados distribuidos en 5 áreas estratégicas: 
+              Estrategia, Operaciones, Marketing, Tecnología y Finanzas.
+            </p>
+            <div class="mt-6">
+              <a href="#servicios-detalle" class="cta-button card-primary-link">
+                Ver Servicios &rarr;
+              </a>
+              <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                <a href="consultoria.html" class="underline hover:text-yellow-400">Consultoría 1:1</a>
+                <a href="marketing/catalogo.html" class="underline hover:text-yellow-400">Catálogo de Marketing</a>
+                <a href="desarrollo/catalogo.html" class="underline hover:text-yellow-400">Catálogo de Desarrollo</a>
+                <a href="conferencias/catalogo.html" class="underline hover:text-yellow-400">Conferencias</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Academy -->
+          <div class="service-card fade-in">
+            <h2 class="text-2xl font-bold text-white flex items-center">
+              <span class="highlight-text">ACADEMY</span>
+            </h2>
+            <p class="mt-3 text-gray-400 flex-grow">
+              La unidad de formación escalable. Un itinerario de Bootcamps y Masterclasses 
+              que cubren las 5 fases de nuestro "Camino Dorado" para que aprendas a tu propio ritmo.
+            </p>
+            <div class="mt-6">
+              <a href="../academy-fases/index.html" class="cta-button card-primary-link">
+                Explorar Academy &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- Comunidad -->
+          <div class="service-card fade-in">
+            <h2 class="text-2xl font-bold text-white flex items-center">
+              <span class="highlight-text">COMUNIDAD</span>
+            </h2>
+            <p class="mt-3 text-gray-400 flex-grow">
+              La comunidad que combate la "soledad del estratega". Un espacio para fomentar 
+              la interacción, el aprendizaje entre pares y la generación de alianzas estratégicas.
+            </p>
+            <div class="mt-6">
+              <a href="../comunidad/conecta.html" class="cta-button card-primary-link">
+                Unirse a la Comunidad &rarr;
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección Detalle de Servicios Empresariales -->
+    <section id="servicios-detalle" class="main-section py-20 bg-[var(--color-secondary-dark)]">
+      <div class="section-container">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl sm:text-4xl font-bold section-title slide-in-left">
+            Servicios Empresariales por Área
+          </h2>
+          <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto slide-in-right">
+            Servicios especializados organizados en 5 áreas estratégicas clave para el 
+            crecimiento sostenible de tu empresa.
+          </p>
+        </div>
+
+        <!-- Grid de Áreas de Servicio -->
+        <div class="responsive-grid lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                    
+          <!-- Estrategia -->
+          <div class="card-component text-center fade-in">
+            <h3 class="text-xl font-bold text-white mb-3">
+              <span class="highlight-text">📋 Estrategia</span>
+            </h3>
+            <ul class="text-sm text-gray-400 space-y-2">
+              <li>• Validación de modelo de negocio</li>
+              <li>• Análisis de mercado</li>
+              <li>• Planificación estratégica</li>
+              <li>• Definición de KPIs</li>
+            </ul>
+          </div>
+
+          <!-- Operaciones -->
+          <div class="card-component text-center fade-in">
+            <h3 class="text-xl font-bold text-white mb-3">
+              <span class="highlight-text">⚙️ Operaciones</span>
+            </h3>
+            <ul class="text-sm text-gray-400 space-y-2">
+              <li>• Optimización de procesos</li>
+              <li>• Gestión de la cadena de valor</li>
+              <li>• Automatización</li>
+              <li>• Control de calidad</li>
+            </ul>
+          </div>
+
+          <!-- Marketing -->
+          <div class="card-component text-center fade-in">
+            <h3 class="text-xl font-bold text-white mb-3">
+              <span class="highlight-text">📢 Marketing</span>
+            </h3>
+            <ul class="text-sm text-gray-400 space-y-2">
+              <li>• Estrategia de marca</li>
+              <li>• Marketing digital</li>
+              <li>• Growth hacking</li>
+              <li>• Análisis de métricas</li>
+            </ul>
+          </div>
+
+          <!-- Tecnología -->
+          <div class="card-component text-center fade-in">
+            <h3 class="text-xl font-bold text-white mb-3">
+              <span class="highlight-text">💻 Tecnología</span>
+            </h3>
+            <ul class="text-sm text-gray-400 space-y-2">
+              <li>• Desarrollo de MVP</li>
+              <li>• Arquitectura de sistemas</li>
+              <li>• Integración de IA</li>
+              <li>• Seguridad y escalabilidad</li>
+            </ul>
+          </div>
+
+          <!-- Finanzas -->
+          <div class="card-component text-center fade-in">
+            <h3 class="text-xl font-bold text-white mb-3">
+              <span class="highlight-text">💰 Finanzas</span>
+            </h3>
+            <ul class="text-sm text-gray-400 space-y-2">
+              <li>• Modelado financiero</li>
+              <li>• Búsqueda de inversión</li>
+              <li>• Control de costos</li>
+              <li>• Análisis de rentabilidad</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- CTA para contactar -->
+        <div class="text-center mt-16">
+          <p class="text-lg text-gray-400 mb-6">
+            ¿Necesitas un servicio específico para tu startup?
+          </p>
+          <a href="../contacto.html" class="btn-primary text-lg">
+            Hablemos de tu Proyecto &rarr;
+          </a>
+          <div class="mt-6 flex flex-wrap gap-4 justify-center text-sm text-gray-400">
+            <a href="consultoria.html" class="underline hover:text-yellow-400">Agenda una Consultoría 1:1</a>
+            <a href="../portal-alumno.html" class="underline hover:text-yellow-400">Portal del Alumno</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Accesos rápidos -->
+    <section class="main-section py-16">
+      <div class="section-container">
+        <div class="text-center mb-10">
+          <h3 class="text-3xl font-bold text-gray-200">Accesos rápidos</h3>
+          <p class="mt-2 text-gray-400">Navega directo a las áreas más consultadas.</p>
+        </div>
+        <div class="responsive-grid lg:grid-cols-3">
+          <a href="../portal-alumno.html" class="card-component slide-in-left">
+            <h4 class="text-xl font-bold highlight-text">Portal del Alumno</h4>
+            <p class="mt-2 text-gray-400">Herramientas por fases para ejecutar tu estrategia.</p>
+            <span class="mt-4 inline-block card-primary-link">Entrar &rarr;</span>
+          </a>
+          <a href="../comunidad/conecta.html" class="card-component fade-in">
+            <h4 class="text-xl font-bold highlight-text">Comunidad</h4>
+            <p class="mt-2 text-gray-400">Comunidad, eventos y pertenencia al ecosistema.</p>
+            <span class="mt-4 inline-block card-primary-link">Ver más &rarr;</span>
+          </a>
+          <a href="consultoria.html" class="card-component slide-in-right">
+            <h4 class="text-xl font-bold highlight-text">Consultoría 1:1</h4>
+            <p class="mt-2 text-gray-400">Acompañamiento estratégico personalizado.</p>
+            <span class="mt-4 inline-block card-primary-link">Agendar &rarr;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
   </main>
-  <footer class="footer-component"></footer>
+
+  <!-- FOOTER UNIFICADO -->
+  <footer class="footer-component">
+    <!-- El contenido del footer se genera dinamicamente por JavaScript -->
+  </footer>
+
+  <!-- Scripts JavaScript -->
   <script src="../assets/js/components.js"></script>
+  <script src="../assets/js/auth.js"></script>
+
 </body>
 </html>
