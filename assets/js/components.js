@@ -244,23 +244,17 @@ class HeaderComponent extends BaseComponent {
         const path = window.location.pathname || '';
         const filename = path.split('/').pop() || 'index.html';
 
-        // Detección: si es un artículo del blog, marcamos como 'blog'
         const p = path.toLowerCase();
         // Academy: cualquier ruta dentro de /academy-fases/ activa 'academy'
         if (p.includes('/academy-fases/')) return 'academy';
-        const isBlogArticle = (
-            p.includes('no-te-enamores-de-tu-idea') ||
-            p.includes('tu-pmv-no-es-un-producto-barato') ||
-            p.includes('tu-producto-ya-existe-y-ahora-que') ||
-            p.includes('de-fundador-a-arquitecto-maquina-de-crecimiento') ||
-            p.includes('ya-eres-grande-ahora-se-imborrable')
-        );
-        if (isBlogArticle) return 'blog';
-
-    // Detección: cualquier ruta dentro de /gamificacion/ activa 'gamificacion'
-    if (p.includes('/gamificacion/')) return 'gamificacion';
-    // Detección: rutas dentro de /talent/
-    if (p.includes('/talent/')) return 'talent';
+    // Talento
+    if (p.includes('/talento/')) return 'talent';
+    // Liderazgo
+    if (p.includes('/liderazgo/')) return 'liderazgo';
+        // Nuevas secciones del header
+        if (p.includes('/formacion-semilla-talleres/')) return 'formacion-semilla';
+        if (p.endsWith('/de-cero-a-cien.html') || p.endsWith('/de_cero_a_cien.html')) return 'de-cero-a-cien';
+        if (p.endsWith('/camino-dorado.html') || p.includes('/camino-dorado-fases/')) return 'camino-dorado';
 
         // Remover extensión .html y manejar casos comunes
         let pageName = filename.replace('.html', '');
@@ -302,12 +296,11 @@ class HeaderComponent extends BaseComponent {
             <a href="${this.basePath}index.html" class="header-link ${this.currentPage === 'index' ? 'active' : ''}">Inicio</a>
             <a href="${this.basePath}nosotros.html" class="header-link ${this.currentPage === 'nosotros' ? 'active' : ''}">Nosotros</a>
             <a href="${this.basePath}servicios.html" class="header-link ${this.currentPage === 'servicios' ? 'active' : ''}">Servicios</a>
-            <a href="${this.basePath}metodologia.html" class="header-link ${this.currentPage === 'metodologia' ? 'active' : ''}">Metodología</a>
-            <a href="${this.basePath}blog.html" class="header-link ${this.currentPage === 'blog' ? 'active' : ''}">Blog</a>
-            <a href="${this.basePath}faq.html" class="header-link ${this.currentPage === 'faq' ? 'active' : ''}">FAQ</a>
-            <a href="${this.basePath}gamificacion/index.html" class="header-link ${this.currentPage === 'gamificacion' ? 'active' : ''}">Gamificación</a>
-            <a href="${this.basePath}talent/index.html" class="header-link ${this.currentPage === 'talent' ? 'active' : ''}">Talent</a>
-            <a href="${this.basePath}contacto.html" class="header-link ${this.currentPage === 'contacto' ? 'active' : ''}">Contacto</a>
+            <a href="${this.basePath}formacion-semilla-talleres/index.html" class="header-link ${this.currentPage === 'formacion-semilla' ? 'active' : ''}">Formación Semilla</a>
+            <a href="${this.basePath}liderazgo/index.html" class="header-link ${this.currentPage === 'liderazgo' ? 'active' : ''}">Liderazgo</a>
+            <a href="${this.basePath}de-cero-a-cien.html" class="header-link ${this.currentPage === 'de-cero-a-cien' ? 'active' : ''}">De Cero a Cien</a>
+            <a href="${this.basePath}camino-dorado.html" class="header-link ${this.currentPage === 'camino-dorado' ? 'active' : ''}">Camino Dorado</a>
+            <a href="${this.basePath}talento/index.html" class="header-link ${this.currentPage === 'talent' ? 'active' : ''}">Talent</a>
             <a href="${this.basePath}academy-fases/index.html" class="header-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a>
                 </div>
                 
@@ -628,12 +621,12 @@ class FooterComponent extends BaseComponent {
                 <li><a href="${this.basePath}servicios.html" class="footer-link">Servicios Premium</a></li>
                 <li><a href="${this.basePath}academy-fases/index.html" class="footer-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a></li>
                 <li><a href="${this.basePath}gamificacion/index.html" class="footer-link ${this.currentPage === 'gamificacion' ? 'active' : ''}">Gamificación</a></li>
-                <li><a href="${this.basePath}diagnosticos_ai.html" class="footer-link ${this.currentPage === 'diagnosticos_ai' ? 'active' : ''}">Diagnósticos con IA</a></li>
-                <li><a href="${this.basePath}conecta/conecta.html" class="footer-link ${this.currentPage === 'conecta' ? 'active' : ''}">Conecta</a></li>
-                <li><a href="${this.basePath}conferencias.html" class="footer-link ${this.currentPage === 'conferencias' ? 'active' : ''}">Conferencias</a></li>
-                <li><a href="${this.basePath}soluciones_a_medida.html" class="footer-link ${this.currentPage === 'soluciones_a_medida' ? 'active' : ''}">Soluciones a Medida</a></li>
+                <li><a href="${this.basePath}diagnosticos-ai.html" class="footer-link ${this.currentPage === 'diagnosticos-ai' ? 'active' : ''}">Diagnósticos con IA</a></li>
+                <li><a href="${this.basePath}comunidad/conecta.html" class="footer-link ${this.currentPage === 'conecta' ? 'active' : ''}">Conecta</a></li>
+                <li><a href="${this.basePath}servicios-empresariales/conferencias/index.html" class="footer-link ${this.currentPage === 'conferencias' ? 'active' : ''}">Conferencias</a></li>
+                <li><a href="${this.basePath}soluciones-a-medida.html" class="footer-link ${this.currentPage === 'soluciones-a-medida' ? 'active' : ''}">Soluciones a Medida</a></li>
                 <li><a href="${this.basePath}servicios-empresariales/index.html" class="footer-link">Servicios Empresariales</a></li>
-                <li><a href="${this.basePath}talent/index.html" class="footer-link ${this.currentPage === 'talent' ? 'active' : ''}">Talent</a></li>
+                <li><a href="${this.basePath}talento/index.html" class="footer-link ${this.currentPage === 'talent' ? 'active' : ''}">Talent</a></li>
             </ul>
         </div>
 
@@ -641,10 +634,10 @@ class FooterComponent extends BaseComponent {
                     <div class="footer-section">
                         <h3>Legal</h3>
                         <ul>
-                <li><a href="${this.basePath}terminos.html" class="footer-link ${this.currentPage === 'terminos' ? 'active' : ''}">Términos y Condiciones</a></li>
-                <li><a href="${this.basePath}politica_privacidad.html" class="footer-link ${this.currentPage === 'politica_privacidad' ? 'active' : ''}">Política de Privacidad</a></li>
-                <li><a href="${this.basePath}politica_cookies.html" class="footer-link ${this.currentPage === 'politica_cookies' ? 'active' : ''}">Política de Cookies</a></li>
-                <li><a href="${this.basePath}aviso_legal.html" class="footer-link ${this.currentPage === 'aviso_legal' ? 'active' : ''}">Aviso Legal</a></li>
+                <li><a href="${this.basePath}legal/terminos.html" class="footer-link ${this.currentPage === 'terminos' ? 'active' : ''}">Términos y Condiciones</a></li>
+                <li><a href="${this.basePath}legal/politica-privacidad.html" class="footer-link ${this.currentPage === 'politica-privacidad' ? 'active' : ''}">Política de Privacidad</a></li>
+                <li><a href="${this.basePath}legal/politica-cookies.html" class="footer-link ${this.currentPage === 'politica-cookies' ? 'active' : ''}">Política de Cookies</a></li>
+                <li><a href="${this.basePath}legal/aviso-legal.html" class="footer-link ${this.currentPage === 'aviso-legal' ? 'active' : ''}">Aviso Legal</a></li>
                         </ul>
                     </div>
                     
