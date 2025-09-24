@@ -276,7 +276,8 @@ class HeaderComponent extends BaseComponent {
         super.init(); // Llamar al método padre
         this.generateHeaderHTML();
         this.createMobileMenu();
-    this.applyMobileAuthVisibility();
+        this.applyMobileAuthVisibility();
+        this.applyMobileNavVisibility && this.applyMobileNavVisibility();
         this.setupPriorityNav();
         console.log('Header inicializado correctamente con HTML dinámico');
     }
@@ -385,6 +386,10 @@ class HeaderComponent extends BaseComponent {
 
         // Recalcular distribución del menú tras cambios de ancho
         this.reflowPriorityNav && this.reflowPriorityNav();
+        // Refrescar auth en menú móvil
+        if (typeof this.updateMobileAuthInMenu === 'function') {
+            this.updateMobileAuthInMenu();
+        }
     }
 
     /**
@@ -420,6 +425,10 @@ class HeaderComponent extends BaseComponent {
 
         // Vincular evento de toggle inmediatamente (si bindEvents ya corrió)
         this.mobileMenuButton.addEventListener('click', () => this.toggleMobileMenu());
+        // Sincronizar estado de auth dentro del menú móvil
+        if (typeof this.updateMobileAuthInMenu === 'function') {
+            this.updateMobileAuthInMenu();
+        }
     }
 
     /**
@@ -518,6 +527,13 @@ class HeaderComponent extends BaseComponent {
                 this.attachMobileInternalEvents();
             }
             this.applyMobileAuthVisibility();
+            // Ocultar enlaces de escritorio en móvil y sincronizar auth del menú móvil
+            if (typeof this.applyMobileNavVisibility === 'function') {
+                this.applyMobileNavVisibility();
+            }
+            if (typeof this.updateMobileAuthInMenu === 'function') {
+                this.updateMobileAuthInMenu();
+            }
             // En móvil no usamos "Más"
             const more = this.element.querySelector('.header-more');
             if (more) more.style.display = 'none';
@@ -534,6 +550,10 @@ class HeaderComponent extends BaseComponent {
             this.isMenuOpen = false;
             document.body.style.overflow = '';
             this.applyMobileAuthVisibility();
+            // Mostrar enlaces de escritorio nuevamente
+            if (typeof this.applyMobileNavVisibility === 'function') {
+                this.applyMobileNavVisibility();
+            }
             // Reflujo de enlaces para desktop
             this.reflowPriorityNav && this.reflowPriorityNav();
         }
@@ -676,6 +696,54 @@ class HeaderComponent extends BaseComponent {
             authSection.style.display = 'none';
         } else {
             authSection.style.display = 'flex';
+        }
+    }
+
+    /**
+     * Oculta la barra de enlaces en móvil y la muestra en desktop
+     */
+    applyMobileNavVisibility() {
+        const links = this.element.querySelector('.header-nav-links');
+        if (!links) return;
+        if (window.innerWidth < this.breakpoint) {
+            links.style.display = 'none';
+        } else {
+            links.style.display = 'flex';
+        }
+    }
+
+    /**
+     * Actualiza la sección de autenticación dentro del menú móvil
+     */
+    updateMobileAuthInMenu() {
+        if (!this.mobileMenu) return;
+        const authBlock = this.mobileMenu.querySelector('.mobile-menu-auth');
+        if (!authBlock) return;
+
+        // Usuario autenticado
+        if (window.authManager && typeof window.authManager.isUserAuthenticated === 'function' && window.authManager.isUserAuthenticated()) {
+            const user = (typeof window.authManager.getCurrentUser === 'function') ? window.authManager.getCurrentUser() : null;
+            const firstName = (user && user.firstName) || 'Usuario';
+            authBlock.innerHTML = `
+                <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+                    <span style="color:#94a3b8;">Hola, ${firstName}</span>
+                    <a href="${this.basePath}auth/dashboard.html" class="mobile-register-btn" style="text-align:center; text-decoration:none;">Ir al Dashboard</a>
+                    <button class="mobile-auth-link" data-logout style="background:none; border:none; color:#94a3b8; cursor:pointer;">Cerrar Sesión</button>
+                </div>
+            `;
+            const btn = authBlock.querySelector('[data-logout]');
+            if (btn) btn.addEventListener('click', () => {
+                if (window.authManager && typeof window.authManager.logout === 'function') {
+                    window.authManager.logout();
+                }
+                window.location.reload();
+            });
+        } else {
+            // Invitado
+            authBlock.innerHTML = `
+                <a href="${this.basePath}auth/login.html" class="mobile-auth-link">Ingresa</a>
+                <a href="${this.basePath}auth/register.html" class="mobile-register-btn">Regístrate</a>
+            `;
         }
     }
 
