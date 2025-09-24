@@ -368,8 +368,9 @@
 }
 .social-36 { width: 36px; height: 36px; }
 .social-40 { width: 40px; height: 40px; }
-.social-36 svg { width: 16px; height: 16px; }
-.social-40 svg { width: 18px; height: 18px; }
+/* Tamaños de los íconos al usar Font Awesome */
+.social-36 i.fa { font-size: 16px; line-height: 1; }
+.social-40 i.fa { font-size: 18px; line-height: 1; }
 
 /* Clase para botones principales */
 .btn-primary {

@@ -63,7 +63,9 @@ function ensureGlobalStyles() {
 
         const styles = [
             `${GlobalConfig.basePath}assets/styles/common.css`,
-            `${GlobalConfig.basePath}assets/styles/mobile.css`
+            `${GlobalConfig.basePath}assets/styles/mobile.css`,
+            // Iconos: Font Awesome 4.7 (ligero y suficiente para íconos sociales)
+            `https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css`
         ];
 
         styles.forEach(href => {
@@ -454,15 +456,15 @@ class HeaderComponent extends BaseComponent {
                 </div>
                <div class="mobile-menu-social" style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
                  <a href="https://www.instagram.com/deceroacien.app/" class="mobile-social-link social-pill social-40" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">
-                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.056 1.97.24 2.427.403a4.92 4.92 0 0 1 1.775 1.153 4.92 4.92 0 0 1 1.153 1.775c.163.457.347 1.257.403 2.427.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.056 1.17-.24 1.97-.403 2.427a4.92 4.92 0 0 1-1.153 1.775 4.92 4.92 0 0 1-1.775 1.153c-.457.163-1.257.347-2.427.403-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.056-1.97-.24-2.427-.403a4.92 4.92 0 0 1-1.775-1.153 4.92 4.92 0 0 1-1.153-1.775c-.163-.457-.347-1.257-.403-2.427C2.175 15.784 2.163 15.404 2.163 12s.012-3.584.07-4.85c.056-1.17.24-1.97.403-2.427a4.92 4.92 0 0 1 1.153-1.775A4.92 4.92 0 0 1 5.494.636c.457-.163 1.257-.347 2.427-.403C9.187.175 9.567.163 12 .163Zm0 5.7a4.137 4.137 0 1 0 0 8.274 4.137 4.137 0 0 0 0-8.274Z"/></svg>
+                     <i class="fa fa-instagram" aria-hidden="true"></i>
                  </a>
                  <a href="https://www.linkedin.com/company/de-cero-a-cien-app/?viewAsMember=true" class="mobile-social-link social-pill social-40" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn">
-                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v16H0V8zm7.5 0H12v2.2h.06c.63-1.2 2.17-2.46 4.47-2.46 4.78 0 5.66 3.15 5.66 7.25V24h-5v-7.5c0-1.79-.03-4.09-2.49-4.09-2.49 0-2.87 1.94-2.87 3.96V24h-5V8z"/></svg>
+                     <i class="fa fa-linkedin" aria-hidden="true"></i>
                  </a>
                  <a href="https://www.facebook.com/profile.php?id=61580145107768&locale=es_LA" class="mobile-social-link social-pill social-40" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook">
-                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692V11.09h3.128V8.414c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.794.143v3.24l-1.918.001c-1.504 0-1.796.715-1.796 1.764v2.317h3.588l-.467 3.616h-3.12V24h6.116C23.407 24 24 23.407 24 22.675V1.325C24 .593 23.407 0 22.675 0z"/></svg>
+                     <i class="fa fa-facebook" aria-hidden="true"></i>
                  </a>
-                     </div>
+                </div>
             </div>
         `;
     }
@@ -906,13 +908,13 @@ class FooterComponent extends BaseComponent {
                     <div class="footer-social" style="margin-top: 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                         <span style="color: #94a3b8; font-size: 0.9rem;">Síguenos:</span>
                         <a href="https://www.instagram.com/deceroacien.app/" class="footer-social-pill social-pill social-36" aria-label="Instagram" title="Instagram">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.056 1.97.24 2.427.403a4.92 4.92 0 0 1 1.775 1.153 4.92 4.92 0 0 1 1.153 1.775c.163.457.347 1.257.403 2.427.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.056 1.17-.24 1.97-.403 2.427a4.92 4.92 0 0 1-1.153 1.775 4.92 4.92 0 0 1-1.775 1.153c-.457.163-1.257.347-2.427.403-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.056-1.97-.24-2.427-.403a4.92 4.92 0 0 1-1.775-1.153 4.92 4.92 0 0 1-1.153-1.775c-.163-.457-.347-1.257-.403-2.427C2.175 15.784 2.163 15.404 2.163 12s.012-3.584.07-4.85c.056-1.17.24-1.97.403-2.427a4.92 4.92 0 0 1 1.153-1.775A4.92 4.92 0 0 1 5.494.636c.457-.163 1.257-.347 2.427-.403C9.187.175 9.567.163 12 .163Zm0 3.6c-3.16 0-3.527.012-4.768.069-1.024.049-1.58.216-1.948.36-.49.19-.84.417-1.207.784-.367.367-.595.717-.784 1.207-.144.368-.311.924-.36 1.948-.057 1.241-.069 1.608-.069 4.768s.012 3.527.069 4.768c.049 1.024.216 1.58.36 1.948.19.49.417.84.784 1.207.367.367.717.595 1.207.784.368.144.924.311 1.948.36 1.241.057 1.608.069 4.768.069s3.527-.012 4.768-.069c1.024-.049 1.58-.216 1.948-.36.49-.19.84-.417 1.207-.784.367-.367.595-.717.784-1.207.144-.368.311-.924.36-1.948.057-1.241.069-1.608.069-4.768s-.012-3.527-.069-4.768c-.049-1.024-.216-1.58-.36-1.948a3.12 3.12 0 0 0-.784-1.207 3.12 3.12 0 0 0-1.207-.784c-.368-.144-.924-.311-1.948-.36-1.241-.057-1.608-.069-4.768-.069Zm0 3.9a5.137 5.137 0 1 1 0 10.274 5.137 5.137 0 0 1 0-10.274Zm0 1.8a3.337 3.337 0 1 0 0 6.674 3.337 3.337 0 0 0 0-6.674Zm5.34-2.247a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4Z"/></svg>
+                            <i class="fa fa-instagram" aria-hidden="true"></i>
                         </a>
                         <a href="https://www.linkedin.com/company/de-cero-a-cien-app/?viewAsMember=true" class="footer-social-pill social-pill social-36" aria-label="LinkedIn" title="LinkedIn">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v16H0V8zm7.5 0H12v2.2h.06c.63-1.2 2.17-2.46 4.47-2.46 4.78 0 5.66 3.15 5.66 7.25V24h-5v-7.5c0-1.79-.03-4.09-2.49-4.09-2.49 0-2.87 1.94-2.87 3.96V24h-5V8z"/></svg>
+                            <i class="fa fa-linkedin" aria-hidden="true"></i>
                         </a>
                         <a href="https://www.facebook.com/profile.php?id=61580145107768&locale=es_LA" class="footer-social-pill social-pill social-36" aria-label="Facebook" title="Facebook">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692V11.09h3.128V8.414c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.794.143v3.24l-1.918.001c-1.504 0-1.796.715-1.796 1.764v2.317h3.588l-.467 3.616h-3.12V24h6.116C23.407 24 24 23.407 24 22.675V1.325C24 .593 23.407 0 22.675 0z"/></svg>
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
                         </a>
                     </div>
                 </div>
