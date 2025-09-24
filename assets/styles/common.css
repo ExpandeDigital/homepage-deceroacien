@@ -349,6 +349,28 @@
     color: var(--color-accent-gold);
 }
 
+/* Botones de iconos sociales (píldoras circulares) */
+.social-pill {
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 9999px;
+    text-decoration: none;
+    color: var(--color-accent-gold); /* los SVG usan currentColor */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast), opacity var(--transition-fast);
+    background-color: transparent;
+}
+.social-pill:hover { 
+    border-color: rgba(251,191,36,0.6);
+    background-color: rgba(251,191,36,0.05);
+    transform: translateY(-1px);
+}
+.social-36 { width: 36px; height: 36px; }
+.social-40 { width: 40px; height: 40px; }
+.social-36 svg { width: 16px; height: 16px; }
+.social-40 svg { width: 18px; height: 18px; }
+
 /* Clase para botones principales */
 .btn-primary {
     background-color: var(--color-accent-gold);
