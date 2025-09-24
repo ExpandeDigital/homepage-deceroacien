@@ -63,7 +63,7 @@
                 <h1 class="text-4xl sm:text-6xl font-bold section-title mt-4">Encuentra tu Product-Market Fit en 6 Semanas</h1>
                 <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Tu producto ya está en el mercado, pero la tracción es esquiva. En este bootcamp intensivo, te sumergirás en un ciclo de data, feedback y experimentación para encontrar el anhelado Product-Market Fit y construir un negocio que tus clientes amen de verdad.</p>
                 <div class="mt-10">
-                    <a href="../contacto.html" class="cta-button-large">Inscríbete por $499 USD</a>
+                    <a href="#" id="buy-pmf-top" class="cta-button-large">Inscríbete por $499.000 CLP</a>
                 </div>
             </div>
         </section>
@@ -194,7 +194,7 @@
                 <h2 class="text-3xl sm:text-4xl font-bold section-title">Construye un Negocio que tus Clientes Amen</h2>
                 <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Deja de adivinar. Únete a la próxima cohorte y aprende a usar los datos y el feedback para encontrar el Product-Market Fit y asegurar el futuro de tu negocio.</p>
                 <div class="mt-10">
-                    <a href="../contacto.html" class="cta-button-large">Inscríbete Ahora por $499 USD</a>
+                    <a href="#" id="buy-pmf-bottom" class="cta-button-large">Inscríbete Ahora por $499.000 CLP</a>
                 </div>
             </div>
         </section>
@@ -209,6 +209,8 @@
     <!-- Scripts JavaScript -->
     <script src="../assets/js/components.js"></script>
     <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/pricing.js"></script>
+    <script src="../assets/js/payments.js"></script>
 
     <!-- Script personalizado para funcionalidad específica del bootcamp -->
     <script>
@@ -228,6 +230,32 @@
                 }
             });
         });
+
+        // Conectar CTAs PMF a Mercado Pago
+        function hookBuy(btnId) {
+          const el = document.getElementById(btnId);
+          if (!el) return;
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (!window.Payments) return alert('No se pudo iniciar el pago');
+            window.Payments.startCheckout({ items: ['course.pmf'] });
+          });
+        }
+                hookBuy('buy-pmf-top');
+                hookBuy('buy-pmf-bottom');
+
+                // Cargar precio dinámico desde pricing.json y actualizar textos
+                (async () => {
+                    if (!window.Pricing) return;
+                    const data = await window.Pricing.load();
+                    const p = data.products && data.products['course.pmf'];
+                    if (!p) return;
+                    const price = window.Pricing.format(p.unit_price);
+                    const top = document.getElementById('buy-pmf-top');
+                    const bottom = document.getElementById('buy-pmf-bottom');
+                    if (top) top.textContent = `Inscríbete por ${price}`;
+                    if (bottom) bottom.textContent = `Inscríbete Ahora por ${price}`;
+                })();
     </script>
 
 </body>

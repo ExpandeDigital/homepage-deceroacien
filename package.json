@@ -1,0 +1,8 @@
+{
+  "name": "homepage-deceroacien",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "mercadopago": "^2.6.2"
+  }
+}

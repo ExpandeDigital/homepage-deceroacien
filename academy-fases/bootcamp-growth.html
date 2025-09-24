@@ -63,7 +63,7 @@
                 <h1 class="text-4xl sm:text-6xl font-bold section-title mt-4">Construye tu Máquina de Crecimiento en 8 Semanas</h1>
                 <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Has encontrado el Product-Market Fit. Ahora es el momento de pisar el acelerador. En este bootcamp, pasarás de ser un fundador que 'hace de todo' a un CEO que construye sistemas para escalar las ventas, el marketing y el equipo de forma predecible.</p>
                 <div class="mt-10">
-                    <a href="../contacto.html" class="cta-button-large">Inscríbete por $499 USD</a>
+                    <a href="#" id="buy-growth-top" class="cta-button-large">Inscríbete por $699.000 CLP</a>
                 </div>
             </div>
         </section>
@@ -174,7 +174,7 @@
                 <h2 class="text-3xl sm:text-4xl font-bold section-title">¿Listo para Pisar el Acelerador?</h2>
                 <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Deja de operar en el caos. Únete a la próxima cohorte y aprende a construir los sistemas que te permitirán escalar tu negocio de forma predecible y sostenible.</p>
                 <div class="mt-10">
-                    <a href="../contacto.html" class="cta-button-large">Inscríbete Ahora por $499 USD</a>
+                    <a href="#" id="buy-growth-bottom" class="cta-button-large">Inscríbete Ahora por $699.000 CLP</a>
                 </div>
             </div>
         </section>
@@ -189,6 +189,8 @@
     <!-- Scripts JavaScript -->
     <script src="../assets/js/components.js"></script>
     <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/pricing.js"></script>
+    <script src="../assets/js/payments.js"></script>
     <!-- Script personalizado para funcionalidad específica del bootcamp -->
     <script>
         /**
@@ -207,6 +209,32 @@
                 }
             });
         });
+
+        // Conectar CTAs Growth a Mercado Pago
+        function hookBuy(btnId) {
+          const el = document.getElementById(btnId);
+          if (!el) return;
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (!window.Payments) return alert('No se pudo iniciar el pago');
+            window.Payments.startCheckout({ items: ['course.growth'] });
+          });
+        }
+                hookBuy('buy-growth-top');
+                hookBuy('buy-growth-bottom');
+
+                // Precio dinámico para Growth
+                (async () => {
+                    if (!window.Pricing) return;
+                    const data = await window.Pricing.load();
+                    const p = data.products && data.products['course.growth'];
+                    if (!p) return;
+                    const price = window.Pricing.format(p.unit_price);
+                    const top = document.getElementById('buy-growth-top');
+                    const bottom = document.getElementById('buy-growth-bottom');
+                    if (top) top.textContent = `Inscríbete por ${price}`;
+                    if (bottom) bottom.textContent = `Inscríbete Ahora por ${price}`;
+                })();
     </script>
 
 </body>

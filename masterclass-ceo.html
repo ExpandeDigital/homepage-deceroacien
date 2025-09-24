@@ -92,7 +92,7 @@
                 <h1 class="text-4xl sm:text-6xl font-bold section-title mt-4">El Taller del CEO Estratega</h1>
                 <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Tu negocio ya es una empresa consolidada. Este no es un bootcamp, es un taller estratégico de alto nivel para CEOs que buscan definir el legado de su compañía. Trabajarás con un grupo reducido de pares para diseñar el futuro a largo plazo de tu empresa.</p>
                 <div class="mt-10">
-                    <a href="contacto.html" class="cta-button-large">Inscríbete por $499 USD</a>
+                    <a href="#" id="buy-ceo-top" class="cta-button-large">Inscríbete por $149.000 CLP</a>
                 </div>
             </div>
         </section>
@@ -223,7 +223,7 @@
                 <h2 class="text-3xl sm:text-4xl font-bold section-title">Define el Futuro de tu Compañía</h2>
                 <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Únete a un grupo exclusivo de líderes y diseña el plan estratégico que asegurará el legado y la trascendencia de tu empresa.</p>
                 <div class="mt-10">
-                    <a href="contacto.html" class="cta-button-large">Inscríbete Ahora por $499 USD</a>
+                    <a href="#" id="buy-ceo-bottom" class="cta-button-large">Inscríbete Ahora por $149.000 CLP</a>
                 </div>
             </div>
         </section>
@@ -238,6 +238,8 @@
     <!-- Scripts JavaScript -->
     <script src="assets/js/components.js"></script>
     <script src="assets/js/auth.js"></script>
+    <script src="assets/js/pricing.js"></script>
+    <script src="assets/js/payments.js"></script>
     
     <!-- Script específico para accordion -->
     <script>
@@ -252,6 +254,32 @@
                 }
             });
         });
+
+                // Conectar CTAs Masterclass CEO a Mercado Pago
+        function hookBuy(btnId) {
+          const el = document.getElementById(btnId);
+          if (!el) return;
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (!window.Payments) return alert('No se pudo iniciar el pago');
+            window.Payments.startCheckout({ items: ['course.ceo'] });
+          });
+        }
+        hookBuy('buy-ceo-top');
+        hookBuy('buy-ceo-bottom');
+
+                // Precio dinámico para Masterclass CEO
+                (async () => {
+                    if (!window.Pricing) return;
+                    const data = await window.Pricing.load();
+                    const p = data.products && data.products['course.ceo'];
+                    if (!p) return;
+                    const price = window.Pricing.format(p.unit_price);
+                    const top = document.getElementById('buy-ceo-top');
+                    const bottom = document.getElementById('buy-ceo-bottom');
+                    if (top) top.textContent = `Inscríbete por ${price}`;
+                    if (bottom) bottom.textContent = `Inscríbete Ahora por ${price}`;
+                })();
     </script>
 
 </body>
