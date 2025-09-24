@@ -64,6 +64,29 @@
                             <a href="gamificacion/index.html" class="inline-block font-semibold highlight-text">Ir a los Desafíos &rarr;</a>
                         </div>
 
+                        <!-- Acceso de Prueba $500 (con gating por test.clp500) -->
+                        <section class="dashboard-card rounded-lg p-6" data-entitlement="test.clp500" data-cta-override="/pago-prueba.html" data-cta-label="Comprar prueba $500">
+                            <h2 class="text-2xl font-bold text-white mb-1">Acceso de Prueba ($500)</h2>
+                            <p class="text-xs text-gray-400">Compra simbólica para validar el flujo real de pago y desbloqueo.</p>
+
+                            <div data-when="granted" class="mt-4">
+                                <span class="inline-block text-xs px-2 py-1 rounded bg-green-600/30 border border-green-500 text-green-300">Acceso activo</span>
+                                <p class="text-sm text-gray-400 mt-2">¡Listo! Ya puedes ver este contenido exclusivo de prueba.</p>
+                                <div class="mt-4 space-y-2 text-sm">
+                                    <p class="text-slate-200 font-semibold">Contenido de prueba:</p>
+                                    <ul class="list-disc list-inside text-gray-300">
+                                        <li>Enlace secreto 1: <a href="#" class="highlight-text">Cómo usar tu acceso</a></li>
+                                        <li>Enlace secreto 2: <a href="#" class="highlight-text">Recursos de ejemplo</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div data-when="denied" class="hidden mt-4">
+                                <span class="inline-block text-xs px-2 py-1 rounded bg-slate-700 border border-slate-600 text-gray-300">Aún no disponible</span>
+                                <p class="text-sm text-gray-400 mt-2">Haz la compra de prueba para desbloquear este bloque y validar la experiencia completa.</p>
+                                <!-- El CTA de compra se genera automáticamente -->
+                            </div>
+                        </section>
+
                         <!-- Bonus: Formación Semilla -->
                         <section class="dashboard-card rounded-lg p-6" data-entitlement-any="course.pmv,course.pmf,course.growth,course.ceo" data-cta-override="/academy-fases/index.html" data-cta-label="Ver programas disponibles">
                             <h2 class="text-2xl font-bold text-white mb-1">Bonus: Formación Semilla</h2>
