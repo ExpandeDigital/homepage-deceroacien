@@ -22,5 +22,10 @@
       "title": "Membresía PRO",
       "unit_price": 129000
     }
+    ,
+    "test.clp500": {
+      "title": "Compra de prueba (CLP 500)",
+      "unit_price": 500
+    }
   }
 }

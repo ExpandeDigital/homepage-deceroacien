@@ -26,7 +26,8 @@
   'course.pmf': { href: '/academy-fases/bootcamp-pmf.html', label: 'Comprar Bootcamp PMF' },
   'course.growth': { href: '/academy-fases/bootcamp-growth.html', label: 'Comprar Bootcamp Growth' },
   'course.ceo': { href: '/masterclass-ceo.html', label: 'Comprar Masterclass CEO' },
-  'membership.pro': { href: '/academy-fases/index.html', label: 'Unirme a la Membresía' }
+  'membership.pro': { href: '/academy-fases/index.html', label: 'Unirme a la Membresía' },
+  'test.clp500': { href: '/pago-prueba.html', label: 'Comprar prueba $500' }
   };
 
   function readEntitlements() {
