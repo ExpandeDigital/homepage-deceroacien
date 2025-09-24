@@ -17,11 +17,11 @@
           returnTo: returnTo || w.location.href
         };
 
-        const base = (w.Environment && w.Environment.isDevelopment)
-          ? 'http://localhost:3000'
-          : 'https://deceroacien.app';
+        const endpoint = (w.Environment && w.Environment.isDevelopment)
+          ? 'http://localhost:3000/api/mp/create-preference'
+          : '/api/mp/create-preference'; // misma origin para evitar CORS y funcionar en previews
 
-        const resp = await fetch(base + '/api/mp/create-preference', {
+        const resp = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)

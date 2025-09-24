@@ -7,16 +7,9 @@ import { MercadoPagoConfig, Preference } from 'mercadopago';
 
 export default async function handler(req, res) {
   // CORS básico (localhost y dominio principal)
-  const origin = req.headers.origin || '';
-  const allowOrigins = [
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-    'https://deceroacien.app',
-    'https://www.deceroacien.app'
-  ];
-  if (allowOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
+  const origin = req.headers.origin || '*';
+  // Permitimos CORS amplio porque el endpoint no expone credenciales y se usa solo POST/OPTIONS
+  res.setHeader('Access-Control-Allow-Origin', origin);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();
@@ -66,7 +59,11 @@ export default async function handler(req, res) {
     }
 
     // Base URL: para back_urls y webhook
-    const BASE_URL = process.env.MP_BASE_URL || 'https://deceroacien.app';
+  // Detectar base dinámica si no hay MP_BASE_URL: intenta deducir de headers host (ej. previews vercel)
+  const host = req.headers['x-forwarded-host'] || req.headers.host;
+  const proto = (req.headers['x-forwarded-proto'] || 'https');
+  const inferredBase = host ? `${proto}://${host}` : null;
+  const BASE_URL = process.env.MP_BASE_URL || inferredBase || 'https://deceroacien.app';
     const ACCESS_TOKEN = process.env.MP_ACCESS_TOKEN;
     if (!ACCESS_TOKEN) {
       return res.status(500).json({ error: 'Misconfigured server: missing MP_ACCESS_TOKEN' });
@@ -77,7 +74,7 @@ export default async function handler(req, res) {
     const successUrl = `${BASE_URL}/portal-alumno.html?grant=${encodeURIComponent(firstSku)}`;
     const failureUrl = `${BASE_URL}/academy-fases/index.html`;
     const pendingUrl = `${BASE_URL}/academy-fases/index.html`;
-    const notificationUrl = `${BASE_URL}/api/mp/webhook`;
+  const notificationUrl = `${BASE_URL}/api/mp/webhook`;
 
     // SDK oficial: crear preferencia
     const mp = new MercadoPagoConfig({ accessToken: ACCESS_TOKEN });
