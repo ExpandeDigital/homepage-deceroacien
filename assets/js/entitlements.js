@@ -220,26 +220,48 @@
     } catch { return {}; }
   }
 
-  w.grantFromURLParams = function grantFromURLParams() {
+  w.grantFromURLParams = async function grantFromURLParams() {
     const q = parseQuery();
     // Ejemplos soportados: ?grant=course.pmv | ?entitlement=membership.pro | ?grants=course.pmv,course.pmf
     const grants = q.grant || q.entitlement || q.grants;
     if (!grants) return;
     const list = String(grants).split(/[\s,]+/).filter(Boolean);
-    if (list.length) {
+    if (!list.length) return;
+
+    const hasSignature = !!(q.sig && q.t);
+    const isDev = !!(w.Environment && w.Environment.isDevelopment);
+
+    async function applyGrant(ids) {
       const cur = new Set((w.entitlements && w.entitlements.getAll && w.entitlements.getAll()) || []);
-      list.forEach(id => cur.add(String(id)));
+      ids.forEach(id => cur.add(String(id)));
       try { localStorage.setItem('deceroacien_entitlements', JSON.stringify(Array.from(cur))); } catch {}
       try { localStorage.setItem('deceroacien_entitlements_updated', Date.now().toString()); } catch {}
       if (w.applyEntitlementsGating) w.applyEntitlementsGating();
       // Limpiar la URL
       try {
         const url = new URL(w.location.href);
-        url.searchParams.delete('grant');
-        url.searchParams.delete('grants');
-        url.searchParams.delete('entitlement');
+        ['grant','grants','entitlement','sig','t','ref'].forEach(k => url.searchParams.delete(k));
         history.replaceState({}, '', url.toString());
       } catch {}
+    }
+
+    if (hasSignature && !isDev) {
+      try {
+        const qs = new URLSearchParams({ grant: list[0], t: q.t, ref: q.ref || '', sig: q.sig }).toString();
+        const endpoint = '/api/mp/verify-grant';
+        const resp = await fetch(`${endpoint}?${qs}`);
+        const data = await resp.json();
+        if (data && data.ok) {
+          await applyGrant(list);
+        } else {
+          console.warn('Grant ignorado: firma inválida o expirada');
+        }
+      } catch (e) {
+        console.warn('No se pudo verificar firma del grant');
+      }
+    } else {
+      // Desarrollo: permitir grants manuales por URL
+      await applyGrant(list);
     }
   };
 

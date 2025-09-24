@@ -3,6 +3,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 import { MercadoPagoConfig, Preference } from 'mercadopago';
 
 export default async function handler(req, res) {
@@ -69,9 +70,15 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Misconfigured server: missing MP_ACCESS_TOKEN' });
     }
 
-    // Elegimos el primer SKU para el grant del PoC (uno por checkout)
-    const firstSku = items[0];
-    const successUrl = `${BASE_URL}/portal-alumno.html?grant=${encodeURIComponent(firstSku)}`;
+  // Elegimos el primer SKU para el grant del PoC (uno por checkout)
+  const firstSku = items[0];
+  // Firmar el retorno para evitar grants manuales en producción
+  const externalRef = user?.email || user?.id || 'anonymous';
+  const ts = Date.now().toString();
+  const GRANT_SECRET = process.env.GRANT_SECRET || process.env.MP_WEBHOOK_SECRET || 'dev-secret';
+  const payload = `${firstSku}|${ts}|${externalRef}`;
+  const sig = crypto.createHmac('sha256', GRANT_SECRET).update(payload).digest('hex');
+  const successUrl = `${BASE_URL}/portal-alumno.html?grant=${encodeURIComponent(firstSku)}&t=${encodeURIComponent(ts)}&ref=${encodeURIComponent(externalRef)}&sig=${sig}`;
     const failureUrl = `${BASE_URL}/academy-fases/index.html`;
     const pendingUrl = `${BASE_URL}/academy-fases/index.html`;
   const notificationUrl = `${BASE_URL}/api/mp/webhook`;
