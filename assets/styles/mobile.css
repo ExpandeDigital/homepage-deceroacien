@@ -78,7 +78,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--spacing-xl);
+    /* gap global más contenido, los links tendrán su propio margen */
+    gap: var(--spacing-lg);
     padding: var(--spacing-2xl);
     width: 100%;
     max-width: 720px;
@@ -88,17 +89,23 @@
 .mobile-menu-link {
     color: var(--color-text-light);
     text-decoration: none;
-    font-size: 1.5rem;
-    font-weight: 600;
-    padding: var(--spacing-md);
-    transition: all var(--transition-normal);
-    border-bottom: 2px solid transparent;
+    /* Tipografía fluida en móviles */
+    font-size: clamp(1.1rem, 2.8vw, 1.4rem);
+    line-height: 1.35;
+    font-weight: 700;
+    padding: 0.6rem 0.75rem;
+    width: 100%;
+    text-align: center;
+    transition: color var(--transition-normal), transform var(--transition-normal);
+    position: relative;
+    /* Separador sutil entre elementos */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    margin: 0.1rem 0;
 }
 
 .mobile-menu-link:hover {
     color: var(--color-accent-gold);
-    border-bottom-color: var(--color-accent-gold);
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 
 .mobile-menu-auth {
@@ -107,8 +114,8 @@
     align-items: center;
     gap: var(--spacing-md);
     margin-top: var(--spacing-xl);
-    padding-top: var(--spacing-xl);
-    border-top: 1px solid var(--color-border);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid rgba(255,255,255,0.08);
 }
 
 .mobile-auth-link {
@@ -127,7 +134,7 @@
     background-color: var(--color-accent-gold);
     color: var(--color-primary-dark);
     font-weight: 700;
-    padding: var(--spacing-md) var(--spacing-xl);
+    padding: 0.8rem 1.25rem;
     border-radius: 8px;
     text-decoration: none;
     transition: all var(--transition-normal);

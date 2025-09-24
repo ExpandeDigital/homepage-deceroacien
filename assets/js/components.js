@@ -766,6 +766,9 @@ class HeaderComponent extends BaseComponent {
         this.mobileMenuButton.classList.add('open');
         this.isMenuOpen = true;
         document.body.style.overflow = 'hidden'; // Prevenir scroll
+        // Ocultar botón flotante de WhatsApp para evitar solape visual
+        const wa = document.getElementById('whatsapp-floating');
+        if (wa) wa.style.display = 'none';
     }
 
     /**
@@ -776,6 +779,9 @@ class HeaderComponent extends BaseComponent {
         this.mobileMenuButton.classList.remove('open');
         this.isMenuOpen = false;
         document.body.style.overflow = ''; // Restaurar scroll
+        // Reaparecer botón de WhatsApp
+        const wa = document.getElementById('whatsapp-floating');
+        if (wa) wa.style.display = '';
     }
 }
 
