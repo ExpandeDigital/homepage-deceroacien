@@ -304,7 +304,7 @@ class HeaderComponent extends BaseComponent {
             <a href="${this.basePath}liderazgo/index.html" data-priority="3" class="header-link ${this.currentPage === 'liderazgo' ? 'active' : ''}">Liderazgo</a>
             <a href="${this.basePath}de-cero-a-cien.html" data-priority="1" class="header-link ${this.currentPage === 'de-cero-a-cien' ? 'active' : ''}">De Cero a Cien</a>
             <a href="${this.basePath}camino-dorado.html" data-priority="2" class="header-link ${this.currentPage === 'camino-dorado' ? 'active' : ''}">Camino Dorado</a>
-            <a href="${this.basePath}talent/index.html" data-priority="3" class="header-link ${this.currentPage === 'talent' ? 'active' : ''}">Talent</a>
+            
             <a href="${this.basePath}academy-fases/index.html" data-priority="3" class="header-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a>
                 </div>
 
@@ -447,7 +447,7 @@ class HeaderComponent extends BaseComponent {
         <a href="${this.basePath}liderazgo/index.html" class="mobile-menu-link">Liderazgo</a>
         <a href="${this.basePath}de-cero-a-cien.html" class="mobile-menu-link">De Cero a Cien</a>
         <a href="${this.basePath}camino-dorado.html" class="mobile-menu-link">Camino Dorado</a>
-        <a href="${this.basePath}talent/index.html" class="mobile-menu-link">Talent</a>
+        
         <a href="${this.basePath}academy-fases/index.html" class="mobile-menu-link">Academy</a>
         <a href="${this.basePath}contacto.html" class="mobile-menu-link">Contacto</a>
                 <div class="mobile-menu-auth">
@@ -825,8 +825,7 @@ class FooterComponent extends BaseComponent {
 
     // Detección: rutas dentro de /gamificacion/
     if (p.includes('/gamificacion/')) return 'gamificacion';
-    // Detección: rutas dentro de /talent/
-    if (p.includes('/talent/')) return 'talent';
+    
 
         return filename.replace('.html', '') || 'index';
     }
@@ -875,7 +874,7 @@ class FooterComponent extends BaseComponent {
                 <li><a href="${this.basePath}servicios-empresariales/conferencias/index.html" class="footer-link ${this.currentPage === 'conferencias' ? 'active' : ''}">Conferencias</a></li>
                 <li><a href="${this.basePath}soluciones-a-medida.html" class="footer-link ${this.currentPage === 'soluciones-a-medida' ? 'active' : ''}">Soluciones a Medida</a></li>
 
-                <li><a href="${this.basePath}talento/index.html" class="footer-link ${this.currentPage === 'talento' ? 'active' : ''}">Talent</a></li>
+                <li><a href="${this.basePath}liderazgo/index.html" class="footer-link ${this.currentPage === 'liderazgo' ? 'active' : ''}">Liderazgo</a></li>
             </ul>
         </div>
 
