@@ -59,13 +59,14 @@
     transition: transform var(--transition-normal);
     z-index: 999;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start; /* contenido pegado arriba */
+    justify-content: flex-start; /* evitar centrado vertical que oculta opciones superiores */
+    box-sizing: border-box;
     /* Habilitar scroll vertical dentro del menú en móviles */
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
-    padding-top: var(--spacing-xl);
+    padding-top: calc(env(safe-area-inset-top, 0px) + var(--spacing-xl));
     padding-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--spacing-xl));
 }
 
@@ -81,6 +82,7 @@
     padding: var(--spacing-2xl);
     width: 100%;
     max-width: 720px;
+    box-sizing: border-box;
 }
 
 .mobile-menu-link {

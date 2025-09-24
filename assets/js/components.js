@@ -759,6 +759,10 @@ class HeaderComponent extends BaseComponent {
      */
     openMobileMenu() {
         this.mobileMenu.classList.add('open');
+        // Resetear scroll al inicio para mostrar los enlaces superiores
+        try {
+            this.mobileMenu.scrollTop = 0;
+        } catch (e) {}
         this.mobileMenuButton.classList.add('open');
         this.isMenuOpen = true;
         document.body.style.overflow = 'hidden'; // Prevenir scroll
