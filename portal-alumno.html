@@ -28,6 +28,11 @@
         <!-- Dashboard Grid -->
         <section class="pb-20 sm:pb-28">
             <div class="container mx-auto max-w-7xl px-6">
+                <!-- Progreso Global (render dinámico) -->
+                <div class="dashboard-card rounded-lg p-6 mb-10" data-progress-dashboard>
+                    <h2 class="text-2xl font-bold text-white mb-4">Tu Progreso</h2>
+                    <div class="text-gray-400 text-sm animate-pulse">Cargando progreso...</div>
+                </div>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     
                     <!-- Columna Izquierda: Acompañamiento y Biblioteca -->
@@ -245,6 +250,8 @@
     <!-- Componentes globales -->
     <script src="assets/js/components.js"></script>
     <script src="assets/js/auth.js"></script>
+    <!-- Script demo full access (rama feature/full-access-demo) -->
+    <script src="assets/js/demo-full-access.js"></script>
     <script src="assets/js/entitlements.js"></script>
     <script src="assets/js/portal.js"></script>
 

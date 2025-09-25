@@ -119,50 +119,12 @@
             </div>
         </section>
 
-        <!-- Progress Section -->
+        <!-- Progress Section (dinámica por demo-full-access.js) -->
         <section class="main-section pb-12">
             <div class="section-container">
                 <h2 class="text-2xl font-bold text-white mb-6">Tu Progreso</h2>
-                <div class="responsive-grid lg:grid-cols-2 gap-6">
-                    <div class="card-component">
-                        <h3 class="text-xl font-semibold text-white mb-4">Fases Completadas</h3>
-                        <div class="space-y-3">
-                            <div class="flex items-center justify-between">
-                                <span class="text-gray-300">Fase 1: Validación</span>
-                                <span class="text-green-400 font-semibold">✓ Completada</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-gray-300">Fase 2: Desarrollo</span>
-                                <span class="text-yellow-400 font-semibold">📍 En progreso</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-gray-400">Fase 3: Lanzamiento</span>
-                                <span class="text-gray-500">⏳ Pendiente</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card-component">
-                        <h3 class="text-xl font-semibold text-white mb-4">Herramientas Utilizadas</h3>
-                        <div class="grid grid-cols-2 gap-4 text-center">
-                            <div>
-                                <div class="text-2xl font-bold text-yellow-400">8</div>
-                                <div class="text-sm text-gray-400">Completadas</div>
-                            </div>
-                            <div>
-                                <div class="text-2xl font-bold text-blue-400">5</div>
-                                <div class="text-sm text-gray-400">En progreso</div>
-                            </div>
-                            <div>
-                                <div class="text-2xl font-bold text-gray-400">18</div>
-                                <div class="text-sm text-gray-400">Disponibles</div>
-                            </div>
-                            <div>
-                                <div class="text-2xl font-bold text-green-400">31</div>
-                                <div class="text-sm text-gray-400">Total</div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="card-component" data-progress-dashboard>
+                    <div class="text-gray-400 text-sm animate-pulse">Cargando progreso...</div>
                 </div>
             </div>
         </section>
@@ -215,6 +177,8 @@
     <script src="../assets/js/components.js"></script>
     <script src="../assets/js/auth-config.js"></script>
     <script src="../assets/js/auth.js"></script>
+    <!-- Script de modo demo full access (solo en rama feature/full-access-demo) -->
+    <script src="../assets/js/demo-full-access.js"></script>
     <script>
         // Proteger esta página requiriendo autenticación
         document.addEventListener('DOMContentLoaded', function() {
