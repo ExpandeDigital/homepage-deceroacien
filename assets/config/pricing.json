@@ -3,15 +3,15 @@
   "symbol": "$",
   "products": {
     "course.pmv": {
-      "title": "Bootcamp PMV (Fases 1 y 2)",
+      "title": "Programa PMV (Fases 1 y 2)",
       "unit_price": 499000
     },
     "course.pmf": {
-      "title": "Bootcamp PMF (Fase 3)",
+      "title": "Programa PMF (Fase 3)",
       "unit_price": 499000
     },
     "course.growth": {
-      "title": "Bootcamp Growth (Fase 4)",
+      "title": "Programa Growth (Fase 4)",
       "unit_price": 699000
     },
     "course.ceo": {

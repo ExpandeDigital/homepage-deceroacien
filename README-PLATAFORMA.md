@@ -15,9 +15,9 @@ Esta guía explica, en lenguaje simple, cómo funciona la plataforma web: qué h
 - Pagos: `assets/js/payments.js` + endpoints `/api/mp/*` integran Mercado Pago Checkout Pro.
 
 ## Productos típicos (ejemplos)
-- course.pmv – Bootcamp PMV
-- course.pmf – Bootcamp PMF
-- course.growth – Bootcamp Growth
+- course.pmv – Programa PMV
+- course.pmf – Programa PMF
+- course.growth – Programa Growth
 - course.ceo – Masterclass CEO
 
 ## Cómo navega un alumno

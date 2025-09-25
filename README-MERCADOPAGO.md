@@ -7,7 +7,7 @@ Esta guía explica cómo usar la integración incluida para iniciar pagos con Ch
 - Frontend:
   - `assets/js/entitlements.js` → gating en cliente; soporta `?grant=sku`.
   - `assets/js/payments.js` → `Payments.startCheckout({ items: [...] })`.
-  - CTAs conectados en `academy-fases/bootcamp-pmv.html`.
+  - CTAs conectados en `academy-fases/bootcamp-pmv.html` (Programa PMV).
 - Backend serverless (Vercel-style):
   - `api/mp/create-preference.js` → crea preferencia y devuelve `init_point`.
   - `api/mp/webhook.js` → recibe notificaciones y valida pagos.
@@ -23,7 +23,7 @@ Configúralas solo en tu proveedor de despliegue (no en el repo):
 
 1. En el proveedor (Vercel/Netlify) setea `MP_ACCESS_TOKEN` con la credencial de prueba.
 2. Asegura `MP_BASE_URL` (por ejemplo, la URL preview o dominio de dev si está publicado con HTTPS).
-3. Abre `academy-fases/bootcamp-pmv.html` y usa los botones “Inscríbete…”.
+3. Abre `academy-fases/bootcamp-pmv.html` (Programa PMV) y usa los botones “Inscríbete…”.
 4. En el success, volverás a `/portal-alumno.html?grant=course.pmv`. El script otorga acceso en `localStorage`.
 
 ## Producción

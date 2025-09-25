@@ -22,9 +22,9 @@
 
   // Mapa de productos → CTA por defecto (ajustable)
   const PRODUCT_CTAS = {
-  'course.pmv': { href: '/academy-fases/bootcamp-pmv.html', label: 'Comprar Bootcamp PMV' },
-  'course.pmf': { href: '/academy-fases/bootcamp-pmf.html', label: 'Comprar Bootcamp PMF' },
-  'course.growth': { href: '/academy-fases/bootcamp-growth.html', label: 'Comprar Bootcamp Growth' },
+  'course.pmv': { href: '/academy-fases/bootcamp-pmv.html', label: 'Comprar Programa PMV' },
+  'course.pmf': { href: '/academy-fases/bootcamp-pmf.html', label: 'Comprar Programa PMF' },
+  'course.growth': { href: '/academy-fases/bootcamp-growth.html', label: 'Comprar Programa Growth' },
   'course.ceo': { href: '/masterclass-ceo.html', label: 'Comprar Masterclass CEO' },
   'membership.pro': { href: '/academy-fases/index.html', label: 'Unirme a la Membresía' },
   'test.clp500': { href: '/pago-prueba.html', label: 'Comprar prueba $500' }
