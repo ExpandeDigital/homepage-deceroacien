@@ -91,6 +91,10 @@
     if (!blocks.length) return;
 
     const isLogged = !!(w.authManager && w.authManager.isUserAuthenticated && w.authManager.isUserAuthenticated());
+    // Conjunto efectivo y almacenado para distinguir derivaciones
+    const storedRaw = (function(){ try { const r=localStorage.getItem(STORAGE_KEY); const a=JSON.parse(r||'[]'); return Array.isArray(a)?a:[];} catch(_){return [];} })();
+    const effective = new Set(readEntitlements());
+    const storedSet = new Set(storedRaw);
 
     blocks.forEach(block => {
       const anyAttr = block.getAttribute('data-entitlement-any');
@@ -113,6 +117,20 @@
         if (deniedEl) deniedEl.classList.add('hidden');
         if (grantedEl) grantedEl.classList.remove('hidden');
         block.classList.remove('opacity-60');
+        // Badge si todos los ids vienen concedidos por derivación (ninguno aparece almacenado directamente)
+        const allDerived = ids.every(id => effective.has(id) && !storedSet.has(id));
+        if(allDerived){
+          let badge = block.querySelector('.entitlement-derived-badge');
+            if(!badge){
+              badge = document.createElement('div');
+              badge.className='entitlement-derived-badge text-[10px] tracking-wide inline-flex items-center gap-1 px-2 py-1 rounded bg-indigo-600/70 text-white border border-indigo-300/30 ml-2';
+              badge.innerHTML = '<span>Incluido por compra completa</span>';
+              // Insertar al principio del grantedEl o del bloque
+              const target = grantedEl || block;
+              target.insertBefore(badge, target.firstChild);
+              badge.title = 'Este acceso proviene de un entitlement macro (ej. producto completo)';
+            }
+        }
       } else {
         // No acceso: ocultar granted y mostrar denied; si no hay denied, generar CTA por defecto
         if (grantedEl) grantedEl.classList.add('hidden');
@@ -206,6 +224,34 @@
   };
 
   init();
+
+  // Panel debug (Shift + E): muestra entitlements almacenados vs efectivos
+  function openEntitlementsDebug(){
+    let existing = document.getElementById('entitlements-debug-panel');
+    if(existing) existing.remove();
+    const panel=document.createElement('div');
+    panel.id='entitlements-debug-panel';
+    panel.className='fixed bottom-4 right-4 w-[360px] max-h-[70vh] overflow-auto text-xs font-mono bg-slate-900/95 border border-slate-700 rounded-lg shadow-xl p-4 z-[99999] space-y-3';
+    const stored = (function(){ try { const r=localStorage.getItem(STORAGE_KEY); const a=JSON.parse(r||'[]'); return Array.isArray(a)?a:[];} catch(_){return [];} })();
+    const effectiveList = readEntitlements();
+    const derivedOnly = effectiveList.filter(e => !stored.includes(e));
+    panel.innerHTML=`<div class='flex justify-between items-center'><strong>Entitlements Debug</strong><button id='closeEDbg' class='text-slate-400 hover:text-white'>×</button></div>
+      <div class='space-y-2'>
+        <div><span class='font-semibold'>Stored (${stored.length}):</span><pre class='mt-1 whitespace-pre-wrap break-all'>${stored.join(', ')||'—'}</pre></div>
+        <div><span class='font-semibold'>Effective (${effectiveList.length}):</span><pre class='mt-1 whitespace-pre-wrap break-all'>${effectiveList.join(', ')||'—'}</pre></div>
+        <div><span class='font-semibold'>Derived Only (${derivedOnly.length}):</span><pre class='mt-1 whitespace-pre-wrap break-all'>${derivedOnly.join(', ')||'—'}</pre></div>
+      </div>
+      <div class='flex gap-2 pt-2'>
+        <button id='refreshEDbg' class='px-2 py-1 rounded bg-slate-700 hover:bg-slate-600'>Refrescar</button>
+        <button id='closeBtnEDbg' class='px-2 py-1 rounded bg-slate-700 hover:bg-slate-600'>Cerrar</button>
+        <button id='clearEDbg' class='ml-auto px-2 py-1 rounded bg-red-700/70 hover:bg-red-600'>Limpiar (stored)</button>
+      </div>`;
+    document.body.appendChild(panel);
+    panel.querySelector('#closeEDbg').onclick = panel.querySelector('#closeBtnEDbg').onclick = ()=>panel.remove();
+    panel.querySelector('#refreshEDbg').onclick = ()=>{ panel.remove(); openEntitlementsDebug(); };
+    panel.querySelector('#clearEDbg').onclick = ()=>{ localStorage.removeItem(STORAGE_KEY); broadcastUpdate(); panel.remove(); openEntitlementsDebug(); };
+  }
+  document.addEventListener('keydown', e=>{ if(e.shiftKey && e.key.toLowerCase()==='e'){ openEntitlementsDebug(); }});
 })(window);
 
 // =============================
