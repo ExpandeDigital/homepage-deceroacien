@@ -20,11 +20,8 @@
 (function (w) {
   const STORAGE_KEY = 'deceroacien_entitlements';
 
-  // Entitlements derivados: al tener el producto maestro se consideran otorgados sus componentes
-  const DERIVED_ENTITLEMENTS = {
-    'product.deceroacien': ['course.pmv','course.pmf','course.growth','course.ceo'],
-    'product.camino_dorado': ['course.pmv','course.pmf','course.growth','course.ceo'] // ajustar si difiere más adelante
-  };
+  // Eliminado: NO hay derivación cruzada entre productos (cada suite es independiente)
+  const DERIVED_ENTITLEMENTS = {}; // reservado para futuros sub‑niveles internos del mismo producto
 
   // Mapa de productos → CTA por defecto (ajustable)
   const PRODUCT_CTAS = {
@@ -44,17 +41,8 @@
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return [];
       const arr = JSON.parse(raw);
-      const base = Array.isArray(arr) ? arr : [];
-      // Expandir derivados sin mutar almacenamiento (derivación en memoria)
-      const expanded = new Set(base);
-      base.forEach(id => {
-        const derived = DERIVED_ENTITLEMENTS[id];
-        if (derived) derived.forEach(d => expanded.add(d));
-      });
-      return Array.from(expanded);
-    } catch (e) {
-      return [];
-    }
+      return Array.isArray(arr) ? arr : [];
+    } catch (e) { return []; }
   }
 
   function writeEntitlements(list) {

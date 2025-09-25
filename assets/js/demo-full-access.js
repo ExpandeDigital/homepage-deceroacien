@@ -18,14 +18,15 @@
   const TOKEN_KEY = 'deceroacien_token';
 
   // Lista base de entitlements conocida (se extenderá dinámicamente si aparecen nuevos data-entitlement)
+  // Nota: En producción cada producto (academy / de cero a cien / camino dorado) es independiente.
+  // Aquí en la demo full-access concedemos todos para mostrar el catálogo completo simultáneamente.
   const BASE_ENTITLEMENTS = [
-    'course.pmv','course.pmf','course.growth','course.ceo',
+    'course.pmv','course.pmf','course.growth','course.ceo', // Academy
     'membership.pro',
-    'product.deceroacien','product.camino_dorado',
-    'fase_1_ecd','fase_2_ecd','fase_3_ecd','fase_4_ecd','fase_5_ecd',
-    'bootcamp.pmv','bootcamp.pmf','bootcamp.growth','bootcamp.ceo',
+    'product.deceroacien','product.camino_dorado', // Productos independientes (no derivan cursos automáticamente)
+    'fase_1_ecd','fase_2_ecd','fase_3_ecd','fase_4_ecd','fase_5_ecd', // Camino Dorado fases/herramientas
+    'bootcamp.pmv','bootcamp.pmf','bootcamp.growth','bootcamp.ceo', // alias internos si se usan
     'bundle.full',
-    // herramientas (placeholder; agregar según se identifiquen)
     'tool.canvas','tool.mapa-estrategia','tool.metricas'
   ];
 
