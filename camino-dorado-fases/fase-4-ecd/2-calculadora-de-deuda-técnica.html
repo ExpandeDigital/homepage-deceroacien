@@ -132,7 +132,7 @@
     </style>
 </head>
 <body>
-
+    <main data-entitlement="camino.fase4">
     <div class="container">
         <div class="column pedagogical-column">
             <h1>20. Calculadora de Deuda Técnica</h1>
@@ -166,7 +166,7 @@
                 <li><strong>Calcular:</strong> La herramienta revelará el coste mensual de no hacer nada y en cuánto tiempo se amortizaría la inversión de arreglarlo.</li>
             </ul>
         </div>
-        <div class="column tool-column">
+        <div class="column tool-column" data-when="granted">
             <h2>Herramienta Interactiva</h2>
             <div id="debt-form">
                 <div class="form-group">
@@ -204,6 +204,8 @@
             </div>
         </div>
     </div>
+    <div data-when="denied" class="hidden"></div>
+    </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -246,6 +248,8 @@
             }
         });
     </script>
+    <script src="../../assets/js/components.js"></script>
+    <script src="../../assets/js/entitlements.js"></script>
 
 </body>
 </html>

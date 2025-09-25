@@ -423,6 +423,116 @@
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 
+/* =============================================================
+     LAYOUT GENERICO HERRAMIENTAS (A2)
+     -------------------------------------------------------------
+     - Se adopta un layout común (.tool-app) para todas las herramientas
+         de fases evitando duplicar bloques por cada archivo.
+     - Las clases específicas en <body> (ej: .calculadora-valor-marca,
+         .disenador-programas-lealtad, .matriz-diversificacion-ingresos,
+         .simulador-expansion-mercados) quedan para ajustes puntuales.
+     - Próximo paso: ir eliminando gradualmente las reglas duplicadas
+         específicas una vez validado que el layout genérico cubre casos.
+     ============================================================= */
+body.tool-app { --color-night-blue:#0D223F; --color-gold:#D4AF37; --color-gold-dark:#B89B2E; --color-card-bg:#FFFFFF; --color-text-on-dark:#F0F0F0; --color-text-on-light:#0D223F; --color-border:#E0D6B3; --font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-family:var(--font-family); background-color:var(--color-night-blue); color:var(--color-text-on-dark); margin:0; padding:40px 20px; line-height:1.6; display:flex; justify-content:center; align-items:flex-start; min-height:100vh; }
+body.tool-app .container { display:flex; width:100%; max-width:1200px; background:var(--color-card-bg); color:var(--color-text-on-light); border-radius:8px; box-shadow:0 10px 30px rgba(0,0,0,.2); overflow:hidden; border:1px solid var(--color-gold); }
+body.tool-app .column { padding:35px; flex-basis:50%; box-sizing:border-box; display:flex; flex-direction:column; }
+body.tool-app .pedagogical-column { background-color:var(--color-night-blue); color:var(--color-text-on-dark); border-right:1px solid var(--color-gold); }
+body.tool-app .tool-column { background-color:var(--color-card-bg); }
+body.tool-app h1, body.tool-app h2 { margin-top:0; }
+body.tool-app .pedagogical-column h1 { color:var(--color-card-bg); }
+body.tool-app .tool-column h2 { color:var(--color-night-blue); }
+body.tool-app h1 { font-size:1.8em; border-bottom:2px solid var(--color-gold); padding-bottom:10px; margin-bottom:25px; }
+body.tool-app h2 { font-size:1.6em; }
+body.tool-app h3 { font-size:1.2em; margin-top:25px; margin-bottom:10px; display:flex; align-items:center; color:var(--color-gold); }
+body.tool-app h3 .icon { width:24px; height:24px; margin-right:10px; fill:currentColor; }
+body.tool-app p, body.tool-app li { font-size:.95em; }
+body.tool-app ul { list-style:none; padding-left:0; }
+body.tool-app ul li { padding-left:1.5em; text-indent:-1.5em; margin-bottom:5px; }
+body.tool-app ul li::before { content:'•'; color:var(--color-gold); margin-right:.5em; font-size:1.2em; }
+body.tool-app .form-group { margin-bottom:15px; }
+body.tool-app label { display:block; font-weight:700; margin-bottom:5px; }
+body.tool-app input[type=text], body.tool-app input[type=number], body.tool-app textarea, body.tool-app select { width:100%; padding:10px; border:1px solid var(--color-border); border-radius:4px; box-sizing:border-box; font-size:1em; color:var(--color-text-on-light); }
+body.tool-app input[type=range] { -webkit-appearance:none; appearance:none; width:100%; height:8px; background:var(--color-border); outline:none; opacity:.7; transition:opacity .2s; border-radius:5px; }
+body.tool-app input[type=range]:hover { opacity:1; }
+body.tool-app input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; appearance:none; width:20px; height:20px; background:var(--color-gold); cursor:pointer; border-radius:50%; }
+body.tool-app .slider-container { display:flex; align-items:center; gap:15px; }
+body.tool-app .slider-container input[type=range] { flex-grow:1; }
+body.tool-app .slider-container span { font-weight:700; color:var(--color-gold-dark); min-width:30px; text-align:center; }
+body.tool-app button { background-color:var(--color-gold); color:var(--color-night-blue); border:none; padding:12px 20px; border-radius:5px; font-size:1em; font-weight:700; cursor:pointer; transition:background-color .3s, transform .1s; width:100%; margin-top:10px; }
+body.tool-app button:hover { background-color:var(--color-gold-dark); }
+body.tool-app button:active { transform:scale(.98); }
+@media (max-width:900px) { body.tool-app { padding:0; } body.tool-app .container { flex-direction:column; border-radius:0; max-width:100%; } body.tool-app .pedagogical-column { border-right:none; border-bottom:1px solid var(--color-gold); } }
+
+/* Estilos específicos herramienta: Matriz Diversificación (25) */
+body.matriz-diversificacion-ingresos #matrix-container { display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(3,1fr); gap:5px; width:100%; aspect-ratio:1/1; margin-top:20px; position:relative; }
+body.matriz-diversificacion-ingresos .matrix-cell { border-radius:4px; padding:5px; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+body.matriz-diversificacion-ingresos .cell-label { position:absolute; top:5px; font-size:.7em; font-weight:700; opacity:.5; }
+body.matriz-diversificacion-ingresos .initiative-dot { background-color:var(--color-night-blue); color:#fff; padding:3px 8px; border-radius:12px; font-size:.8em; margin:2px; z-index:10; }
+
+/* Estilos específicos herramienta: Simulador Expansión Nuevos Mercados (26) */
+body.simulador-expansion-mercados #results-container { margin-top:20px; padding:20px; background-color:#f9f9f9; border-radius:5px; border:1px solid var(--color-border); }
+body.simulador-expansion-mercados .result-item { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px dashed var(--color-border); }
+body.simulador-expansion-mercados .result-item:last-child { border-bottom:none; }
+body.simulador-expansion-mercados .result-label { font-size:1em; color:#555; }
+body.simulador-expansion-mercados .result-value { font-size:1.2em; font-weight:700; }
+body.simulador-expansion-mercados #verdict-card { margin-top:15px; padding:15px; border-radius:5px; text-align:center; font-size:1.1em; font-weight:700; }
+
+/* =============================================================
+     BLOQUES ESPECIFICOS (LEGACY) - Se irán consolidando
+     ============================================================= */
+/* Herramienta 27: Planes de Sucesión */
+body.generador-planes-sucesion #succession-map { margin-top:20px; flex-grow:1; overflow-y:auto; }
+body.generador-planes-sucesion .plan-card { background:#fdfdfd; border:1px solid var(--color-border); border-left-width:4px; padding:15px; border-radius:5px; margin-bottom:15px; }
+body.generador-planes-sucesion .plan-card h4 { margin:0 0 10px 0; color:var(--color-night-blue); }
+body.generador-planes-sucesion .plan-card strong { color:var(--color-night-blue); }
+body.generador-planes-sucesion .plan-card ul { padding-left:20px; margin-top:5px; }
+body.generador-planes-sucesion .plan-card ul li { font-size:.9em; list-style:disc; }
+body.generador-planes-sucesion .readiness-bar-container { height:8px; background:#eee; border-radius:4px; margin:5px 0 10px; }
+body.generador-planes-sucesion .readiness-bar { height:100%; border-radius:4px; transition:width .5s ease; }
+
+/* Herramienta 28: Evaluador Riesgos Estratégicos */
+body.evaluador-riesgos-estrategicos #risk-map { position:relative; width:100%; aspect-ratio:1/1; background:#f9f9f9; border:1px solid var(--color-border); border-radius:5px; margin-top:20px; }
+body.evaluador-riesgos-estrategicos #risk-map::before, body.evaluador-riesgos-estrategicos #risk-map::after { content:''; position:absolute; background:#ccc; }
+body.evaluador-riesgos-estrategicos #risk-map::before { left:50%; top:0; width:1px; height:100%; transform:translateX(-50%); }
+body.evaluador-riesgos-estrategicos #risk-map::after { top:50%; left:0; height:1px; width:100%; transform:translateY(-50%); }
+body.evaluador-riesgos-estrategicos .axis-label { position:absolute; font-size:.8em; font-weight:700; color:#777; }
+body.evaluador-riesgos-estrategicos #x-axis-label { bottom:-20px; left:50%; transform:translateX(-50%); }
+body.evaluador-riesgos-estrategicos #y-axis-label { left:-5px; top:50%; transform:translateY(-50%) rotate(-90deg); transform-origin:left top; }
+body.evaluador-riesgos-estrategicos .factor-dot { position:absolute; width:12px; height:12px; border-radius:50%; transform:translate(-50%,-50%); cursor:pointer; }
+body.evaluador-riesgos-estrategicos .factor-dot::after { content:attr(data-title); position:absolute; bottom:120%; left:50%; transform:translateX(-50%); font-size:.8em; background:var(--color-night-blue); color:#fff; padding:3px 8px; border-radius:4px; white-space:nowrap; opacity:0; transition:opacity .2s; pointer-events:none; }
+body.evaluador-riesgos-estrategicos .factor-dot:hover::after { opacity:1; }
+
+/* Herramienta 31: Informe ESG */
+body.generador-informes-esg #report-preview { margin-top:20px; flex-grow:1; overflow-y:auto; background:#f9f9f9; border:1px solid var(--color-border); padding:20px; border-radius:5px; }
+body.generador-informes-esg .report-section h4 { margin-top:20px; padding-bottom:5px; border-bottom-width:2px; border-bottom-style:solid; }
+body.generador-informes-esg .report-section h4.e { border-color:var(--color-e); color:var(--color-e); }
+body.generador-informes-esg .report-section h4.s { border-color:var(--color-s); color:var(--color-s); }
+body.generador-informes-esg .report-section h4.g { border-color:var(--color-g); color:var(--color-g); }
+body.generador-informes-esg .initiative-item { margin-bottom:10px; }
+body.generador-informes-esg .initiative-item strong { color:var(--color-night-blue); }
+body.generador-informes-esg .initiative-item p { font-size:.9em; margin:2px 0 0 0; }
+/* Pruning duplicados layout calculadora: reutiliza body.tool-app; se conservan solo bloques específicos de resultados */
+body.calculadora-valor-marca #results-container { margin-top:20px; padding:20px; background-color:#f9f9f9; border-radius:5px; border:1px solid var(--color-border); }
+body.calculadora-valor-marca .result-item { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px dashed var(--color-border); }
+body.calculadora-valor-marca .result-item:last-child { border-bottom:none; }
+body.calculadora-valor-marca .result-label { font-size:.9em; color:#555; }
+body.calculadora-valor-marca .result-value { font-size:1.1em; font-weight:700; }
+body.calculadora-valor-marca .total-value { margin-top:10px; padding-top:10px; border-top:2px solid var(--color-night-blue); text-align:center; }
+body.calculadora-valor-marca .total-value .result-label { font-size:1.1em; }
+body.calculadora-valor-marca .total-value .result-value { font-size:2em; color:var(--color-night-blue); }
+/* Responsive ya cubierto por body.tool-app media query */
+
+/* Pruning duplicados layout lealtad: reutiliza body.tool-app; se conservan solo tarjetas resumen */
+body.disenador-programas-lealtad #program-summary { margin-top:20px; flex-grow:1; overflow-y:auto; }
+body.disenador-programas-lealtad .summary-card { background:#fdfdfd; border:1px solid var(--color-border); border-left:4px solid var(--color-gold); padding:20px; border-radius:5px; }
+body.disenador-programas-lealtad .summary-card h4 { margin:0 0 15px 0; color:var(--color-night-blue); border-bottom:1px solid var(--color-border); padding-bottom:10px; }
+body.disenador-programas-lealtad .summary-card p { margin:0 0 10px 0; font-size:.95em; }
+body.disenador-programas-lealtad .summary-card strong { color:var(--color-night-blue); }
+body.disenador-programas-lealtad .summary-card ul { padding-left:20px; }
+body.disenador-programas-lealtad .summary-card ul li { list-style:disc; }
+/* Responsive ya cubierto por body.tool-app media query */
+
 /* ===== Portal / Dashboard helpers ===== */
 .dashboard-card {
     background-color: var(--color-secondary-dark);

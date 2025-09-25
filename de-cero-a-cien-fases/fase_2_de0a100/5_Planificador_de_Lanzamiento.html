@@ -73,7 +73,7 @@
         </nav>
     </div>
 
-    <main class="container mx-auto max-w-7xl px-6 py-12">
+    <main class="container mx-auto max-w-7xl px-6 py-12" data-entitlement="decero.fase2">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
             <aside class="lg:col-span-1 doc-container p-6 rounded-lg">
@@ -100,7 +100,7 @@
                 </div>
             </aside>
 
-            <div class="lg:col-span-2 tool-container p-6 rounded-lg">
+            <div class="lg:col-span-2 tool-container p-6 rounded-lg" data-when="granted">
                 <div class="flex flex-wrap items-center justify-between pb-4 border-b border-gray-700 gap-4">
                     <h2 class="text-xl font-bold text-white">Tu Checklist de Lanzamiento</h2>
                      <div class="flex space-x-3">
@@ -152,6 +152,7 @@
                 </div>
             </div>
         </div>
+        <div data-when="denied" class="hidden"></div>
     </main>
 
     <script>
@@ -234,6 +235,7 @@
         function compartir() { alert('Funcionalidad "Compartir": ¡Próximamente!'); }
     </script>
     <script src="../../assets/js/components.js"></script>
+    <script src="../../assets/js/entitlements.js"></script>
 </body>
 </html>
 

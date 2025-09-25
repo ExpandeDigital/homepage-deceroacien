@@ -189,6 +189,7 @@
 </head>
 <body>
 
+    <main data-entitlement="camino.fase1">
     <div class="container">
         <div class="column pedagogical-column">
             <h1>1. Optimizador de Procesos Clave</h1>
@@ -223,7 +224,7 @@
                 <li><strong>Añadir y Analizar:</strong> La tabla se ordenará automáticamente, mostrando los procesos con mayor prioridad de optimización en la cima.</li>
             </ul>
         </div>
-        <div class="column tool-column">
+        <div class="column tool-column" data-when="granted">
             <h2>Herramienta Interactiva</h2>
             <div id="process-form">
                 <div class="form-group">
@@ -274,7 +275,10 @@
             </table>
              <button id="clear-btn" style="display: none;">Limpiar Lista</button>
         </div>
+        <!-- Bloque denied vacío: se autocompleta con CTA si no hay acceso -->
+        <div data-when="denied" class="hidden"></div>
     </div>
+    </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -380,6 +384,8 @@
         });
     </script>
 
+    <script src="../../assets/js/components.js"></script>
+    <script src="../../assets/js/entitlements.js"></script>
 </body>
 </html>
 

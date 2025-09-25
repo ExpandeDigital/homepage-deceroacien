@@ -4,142 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>De Cien a Mil: 26. Simulador de Expansión a Nuevos Mercados</title>
-    <style>
-        :root {
-            --color-night-blue: #0D223F;
-            --color-gold: #D4AF37;
-            --color-gold-dark: #B89B2E;
-            --color-card-bg: #FFFFFF;
-            --color-text-on-dark: #F0F0F0;
-            --color-text-on-light: #0D223F;
-            --color-border: #E0D6B3;
-            --color-go: #27ae60;
-            --color-caution: #f39c12;
-            --color-stop: #c0392b;
-            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body {
-            font-family: var(--font-family);
-            background-color: var(--color-night-blue);
-            color: var(--color-text-on-dark);
-            margin: 0;
-            padding: 40px 20px;
-            line-height: 1.6;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-        }
-        .container {
-            display: flex;
-            width: 100%;
-            max-width: 1200px;
-            background: var(--color-card-bg);
-            color: var(--color-text-on-light);
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0, 0.2);
-            overflow: hidden;
-            border: 1px solid var(--color-gold);
-        }
-        .column {
-            padding: 35px;
-            flex-basis: 50%;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-        }
-        .pedagogical-column {
-            background-color: var(--color-night-blue);
-            color: var(--color-text-on-dark);
-            border-right: 1px solid var(--color-gold);
-        }
-        .tool-column {
-            background-color: var(--color-card-bg);
-        }
-        h1, h2 { margin-top: 0; }
-        .pedagogical-column h1 { color: var(--color-card-bg); }
-        .tool-column h2 { color: var(--color-night-blue); }
-        h1 {
-            font-size: 1.8em;
-            border-bottom: 2px solid var(--color-gold);
-            padding-bottom: 10px;
-            margin-bottom: 25px;
-        }
-        h2 { font-size: 1.6em; }
-        h3 {
-            font-size: 1.2em;
-            margin-top: 25px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            color: var(--color-gold);
-        }
-        h3 .icon { width: 24px; height: 24px; margin-right: 10px; fill: currentColor; }
-        p, li { font-size: 0.95em; }
-        ul { list-style: none; padding-left: 0; }
-        ul li {
-            padding-left: 1.5em;
-            text-indent: -1.5em;
-            margin-bottom: 5px;
-        }
-        ul li::before {
-            content: '•';
-            color: var(--color-gold);
-            margin-right: 0.5em;
-            font-size: 1.2em;
-        }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-weight: bold; margin-bottom: 5px; }
-        input[type="text"], input[type="number"] {
-            width: 100%; padding: 10px;
-            border: 1px solid var(--color-border); border-radius: 4px;
-            box-sizing: border-box; font-size: 1em; color: var(--color-text-on-light);
-        }
-        button {
-            background-color: var(--color-gold);
-            color: var(--color-night-blue); border: none; padding: 12px 20px;
-            border-radius: 5px; font-size: 1em; font-weight: bold;
-            cursor: pointer; transition: background-color 0.3s, transform 0.1s;
-            width: 100%; margin-top: 10px;
-        }
-        button:hover { background-color: var(--color-gold-dark); }
-        button:active { transform: scale(0.98); }
-
-        #results-container {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-            border: 1px solid var(--color-border);
-        }
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px dashed var(--color-border);
-        }
-        .result-item:last-child { border-bottom: none; }
-        .result-label { font-size: 1em; color: #555; }
-        .result-value { font-size: 1.2em; font-weight: bold; }
-        #verdict-card {
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 5px;
-            text-align: center;
-            font-size: 1.1em;
-            font-weight: bold;
-        }
-
-        @media (max-width: 900px) {
-            body { padding: 0; }
-            .container { flex-direction: column; border-radius: 0; max-width: 100%; }
-            .pedagogical-column { border-right: none; border-bottom: 1px solid var(--color-gold); }
-        }
-    </style>
+    <!-- Estilos consolidados: layout común en body.tool-app y específicos en body.simulador-expansion-mercados -->
 </head>
-<body>
-
+<body class="tool-app simulador-expansion-mercados">
+    <main data-entitlement="camino.fase5">
     <div class="container">
         <div class="column pedagogical-column">
             <h1>26. Simulador de Expansión a Nuevos Mercados</h1>
@@ -174,7 +42,7 @@
                 <li><strong>Analizar:</strong> La herramienta te dará un diagnóstico rápido de la viabilidad.</li>
             </ul>
         </div>
-        <div class="column tool-column">
+        <div class="column tool-column" data-when="granted">
             <h2>Herramienta Interactiva</h2>
             <div id="expansion-form">
                 <div class="form-group">
@@ -209,69 +77,12 @@
             </div>
         </div>
     </div>
+    <div data-when="denied" class="hidden"></div>
+    </main>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const analyzeBtn = document.getElementById('analyze-btn');
-            
-            analyzeBtn.addEventListener('click', analyzeExpansion);
-
-            function analyzeExpansion() {
-                const marketSize = parseFloat(document.getElementById('market-size').value);
-                const marketShare = parseFloat(document.getElementById('market-share').value) / 100;
-                const setupCosts = parseFloat(document.getElementById('setup-costs').value);
-                const monthlyCosts = parseFloat(document.getElementById('monthly-costs').value);
-                const breakevenMonths = parseFloat(document.getElementById('breakeven-months').value);
-
-                if (isNaN(marketSize) || isNaN(marketShare) || isNaN(setupCosts) || isNaN(monthlyCosts) || isNaN(breakevenMonths)) {
-                    alert('Por favor, introduce valores numéricos válidos en todos los campos.');
-                    return;
-                }
-
-                // Calculations
-                const potentialRevenue = marketSize * marketShare;
-                // Simplified investment: setup + total operational loss until breakeven
-                const totalInvestment = setupCosts + (monthlyCosts * breakevenMonths);
-                const revenueToInvestmentRatio = potentialRevenue / totalInvestment;
-
-                const currencyFormatter = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' });
-
-                let verdictText = '';
-                let verdictColor = '';
-                if (revenueToInvestmentRatio > 1.5) {
-                    verdictText = 'Expansión Potencialmente Atractiva';
-                    verdictColor = 'var(--color-go)';
-                } else if (revenueToInvestmentRatio > 0.8) {
-                    verdictText = 'Riesgo Elevado, Recompensa Moderada';
-                    verdictColor = 'var(--color-caution)';
-                } else {
-                    verdictText = 'Reconsiderar Expansión: Alto Riesgo, Bajo Retorno';
-                    verdictColor = 'var(--color-stop)';
-                }
-                
-                const resultsContainer = document.getElementById('results-container');
-                resultsContainer.innerHTML = `
-                    <h4>Análisis de Expansión</h4>
-                    <div class="result-item">
-                        <span class="result-label">Potencial de Ingresos Anuales:</span>
-                        <span class="result-value">${currencyFormatter.format(potentialRevenue)}</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Inversión Total Estimada (hasta B/E):</span>
-                        <span class="result-value">${currencyFormatter.format(totalInvestment)}</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Meses hasta Punto de Equilibrio:</span>
-                        <span class="result-value">${breakevenMonths} meses</span>
-                    </div>
-                    <div id="verdict-card" style="background-color: ${verdictColor}; color: white;">
-                        ${verdictText}
-                    </div>
-                `;
-                resultsContainer.style.display = 'block';
-            }
-        });
-    </script>
+    <script src="../../assets/js/tools/simulador-expansion-mercados.js"></script>
+    <script src="../../assets/js/components.js"></script>
+    <script src="../../assets/js/entitlements.js"></script>
 
 </body>
 </html>

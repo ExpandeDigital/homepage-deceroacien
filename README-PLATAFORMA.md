@@ -28,11 +28,9 @@ Esta guía explica, en lenguaje simple, cómo funciona la plataforma web: qué h
 4) Con acceso, ve el contenido sin bloqueos. Si inicia sesión, además verá su nombre y atajos en el dashboard.
 
 ## Control de acceso (Entitlements)
-- Cada bloque de contenido privado lleva una etiqueta `data-entitlement` en el HTML.
-- El script `entitlements.js` revisa si el alumno tiene los permisos para ver cada bloque.
-- Si no, muestra una llamada a la acción (CTA) para comprar o iniciar sesión.
+- Auditoría: Shift + G ejecuta auditor rápido de la página actual (estructura de gating). También disponible `GatingAuditor.runDeep()` para escanear todas las fases.
 - Los accesos del alumno se guardan en `localStorage` del navegador con la clave `deceroacien_entitlements`.
-
+- `assets/js/gating-auditor.js`: Auditor cliente de páginas protegidas (estructura data-entitlement, bloques granted/denied, orden de scripts, duplicados de badge).
 ## Autenticación (opcional)
 - Se puede entrar con Google (One Tap) o con email simulado. 
 - La sesión se guarda localmente (`localStorage`) para recordar al alumno entre visitas.

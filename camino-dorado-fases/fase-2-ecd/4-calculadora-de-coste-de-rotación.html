@@ -143,9 +143,10 @@
             .pedagogical-column { border-right: none; border-bottom: 1px solid var(--color-gold); }
         }
     </style>
-</head>
+ </head>
 <body>
 
+    <main data-entitlement="camino.fase2">
     <div class="container">
         <div class="column pedagogical-column">
             <h1>10. Calculadora de Coste de Rotación</h1>
@@ -179,7 +180,7 @@
                 <li><strong>Pérdida de Productividad:</strong> Estima el coste del tiempo que el puesto está vacante y el nuevo empleado tarda en ser 100% productivo.</li>
             </ul>
         </div>
-        <div class="column tool-column">
+        <div class="column tool-column" data-when="granted">
             <h2>Herramienta Interactiva</h2>
             <div id="calculator-form">
                 <div class="form-group">
@@ -214,7 +215,9 @@
                 <!-- Results go here -->
             </div>
         </div>
+        <div data-when="denied" class="hidden"></div>
     </div>
+    </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -276,5 +279,7 @@
         });
     </script>
 
+    <script src="../../assets/js/components.js"></script>
+    <script src="../../assets/js/entitlements.js"></script>
 </body>
 </html>

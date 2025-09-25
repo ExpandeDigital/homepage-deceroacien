@@ -146,9 +146,10 @@
             #errc-grid { grid-template-columns: 1fr; }
         }
     </style>
-</head>
+ </head>
 <body>
 
+    <main data-entitlement="camino.fase3">
     <div class="container">
         <div class="column pedagogical-column">
             <h1>14. Generador de Océano Azul</h1>
@@ -183,7 +184,7 @@
                 <li><strong>Crear:</strong> ¿Qué factores, nunca antes ofrecidos, se pueden crear?</li>
             </ul>
         </div>
-        <div class="column tool-column">
+        <div class="column tool-column" data-when="granted">
             <h2>Herramienta Interactiva</h2>
             <div id="strategy-form">
                 <div class="form-group">
@@ -214,7 +215,9 @@
             </div>
             <div id="strategy-output" style="display:none; margin-top:20px;"></div>
         </div>
+        <div data-when="denied" class="hidden"></div>
     </div>
+    </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -291,5 +294,7 @@
             }
         });
     </script>
+    <script src="../../assets/js/components.js"></script>
+    <script src="../../assets/js/entitlements.js"></script>
 </body>
 </html>
