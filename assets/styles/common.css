@@ -512,6 +512,15 @@ body.generador-informes-esg .report-section h4.g { border-color:var(--color-g); 
 body.generador-informes-esg .initiative-item { margin-bottom:10px; }
 body.generador-informes-esg .initiative-item strong { color:var(--color-night-blue); }
 body.generador-informes-esg .initiative-item p { font-size:.9em; margin:2px 0 0 0; }
+/* Herramienta Fase 1: Mapeador de Dependencias Críticas */
+body.mapeador-de-dependencias-criticas #dependency-map { margin-top:20px; flex-grow:1; overflow-y:auto; }
+body.mapeador-de-dependencias-criticas .activity-card { background:#f9f9f9; border:1px solid var(--color-border); border-radius:5px; padding:15px; margin-bottom:15px; }
+body.mapeador-de-dependencias-criticas .activity-header { display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--color-border); padding-bottom:10px; margin-bottom:10px; }
+body.mapeador-de-dependencias-criticas .activity-header h4 { margin:0; color:var(--color-night-blue); }
+body.mapeador-de-dependencias-criticas .delete-activity-btn { background:none; border:none; font-size:1.2em; cursor:pointer; color:#aaa; }
+body.mapeador-de-dependencias-criticas .dependency-tag { display:inline-block; padding:4px 10px; border-radius:15px; color:#fff; font-size:.85em; margin:2px; }
+body.mapeador-de-dependencias-criticas .tag-internal { background:#2980b9; }
+body.mapeador-de-dependencias-criticas .tag-external { background:#c0392b; }
 /* Pruning duplicados layout calculadora: reutiliza body.tool-app; se conservan solo bloques específicos de resultados */
 body.calculadora-valor-marca #results-container { margin-top:20px; padding:20px; background-color:#f9f9f9; border-radius:5px; border:1px solid var(--color-border); }
 body.calculadora-valor-marca .result-item { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px dashed var(--color-border); }
