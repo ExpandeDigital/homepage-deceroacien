@@ -33,19 +33,33 @@
   function ensureDemoUser(){
     let user = safeParse(localStorage.getItem(USER_KEY));
     if(!user || user.email !== DEMO_EMAIL){
-      user = DEMO_USER;
+      user = { ...DEMO_USER, lastLogin: new Date().toISOString() };
       localStorage.setItem(USER_KEY, JSON.stringify(user));
     }
-    // Simula token simple
     if(!localStorage.getItem(TOKEN_KEY)){
       localStorage.setItem(TOKEN_KEY, 'demo-token-'+Date.now());
     }
-    // Sesión básica
     if(!localStorage.getItem(SESSION_KEY)){
-      localStorage.setItem(SESSION_KEY, JSON.stringify({ email: DEMO_EMAIL, ts: Date.now() }));
+      localStorage.setItem(SESSION_KEY, JSON.stringify({ email: DEMO_EMAIL, ts: Date.now(), persistent: true }));
     }
+    // Sincronizar con authManager si ya existe
+    syncAuthManager(user);
     window.DemoFullAccessUser = user;
     return user;
+  }
+
+  function syncAuthManager(user){
+    if(window.authManager){
+      try {
+        window.authManager.currentUser = user;
+        window.authManager.isAuthenticated = true;
+        // Evitar redirecciones innecesarias si requireAuth se llamó muy temprano
+        window.authManager.showSuccess && window.authManager.showSuccess('Sesión demo full-access activa');
+      } catch(e){ console.warn('[FULL-DEMO] No se pudo sincronizar authManager', e); }
+    } else {
+      // Reintentar pronto si aún no existe
+      setTimeout(()=>syncAuthManager(user), 50);
+    }
   }
 
   function collectEntitlementsFromDOM(){
@@ -193,15 +207,24 @@
     panel.querySelector('#dbgClose').onclick = panel.querySelector('#closeDbg').onclick = ()=>panel.remove();
   }
 
-  function bootstrap(){
-    ensureDemoUser();
-    ensureEntitlements();
+  // Paso 1: asegurar el usuario DEMO inmediatamente (antes de que components.js llame requireAuth)
+  const earlyUser = ensureDemoUser();
+  // Marcamos autenticado lo antes posible
+  // (syncAuthManager ya se llamó dentro de ensureDemoUser)
+
+  // Paso 2: diferir operaciones que requieren DOM completo
+  function bootstrapLate(){
+    ensureEntitlements(); // ahora el DOM está disponible para detectar data-entitlement
     ensureProgress();
     renderProgressIfContainer();
     addDebugShortcuts();
+    window.dispatchEvent(new CustomEvent('fullaccess:ready',{ detail: { user: earlyUser } }));
     window.addEventListener('progress:updated', renderProgressIfContainer);
   }
 
-  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', bootstrap); }
-  else { bootstrap(); }
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', bootstrapLate);
+  } else {
+    bootstrapLate();
+  }
 })();

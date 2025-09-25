@@ -174,12 +174,12 @@
     <footer class="footer-component"></footer>
 
     <!-- Scripts JavaScript -->
-    <script src="../assets/js/components.js"></script>
     <script src="../assets/js/auth-config.js"></script>
     <script src="../assets/js/auth.js"></script>
-    <!-- Script de modo demo full access (solo en rama feature/full-access-demo) -->
+    <!-- Script de modo demo full access (solo en rama feature/full-access-demo). Debe ir ANTES de components.js para que authManager ya tenga user -->
     <script src="../assets/js/demo-full-access.js"></script>
     <script src="../assets/js/tracking-demo.js"></script>
+    <script src="../assets/js/components.js"></script>
     <script>
         // Proteger esta página requiriendo autenticación
         document.addEventListener('DOMContentLoaded', function() {
