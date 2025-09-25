@@ -20,6 +20,12 @@
 (function (w) {
   const STORAGE_KEY = 'deceroacien_entitlements';
 
+  // Entitlements derivados: al tener el producto maestro se consideran otorgados sus componentes
+  const DERIVED_ENTITLEMENTS = {
+    'product.deceroacien': ['course.pmv','course.pmf','course.growth','course.ceo'],
+    'product.camino_dorado': ['course.pmv','course.pmf','course.growth','course.ceo'] // ajustar si difiere más adelante
+  };
+
   // Mapa de productos → CTA por defecto (ajustable)
   const PRODUCT_CTAS = {
   'course.pmv': { href: '/academy-fases/bootcamp-pmv.html', label: 'Comprar Programa PMV' },
@@ -27,7 +33,10 @@
   'course.growth': { href: '/academy-fases/bootcamp-growth.html', label: 'Comprar Programa Growth' },
   'course.ceo': { href: '/masterclass-ceo.html', label: 'Comprar Masterclass CEO' },
   'membership.pro': { href: '/academy-fases/index.html', label: 'Unirme a la Membresía' },
-  'test.clp500': { href: '/pago-prueba.html', label: 'Comprar prueba $500' }
+  'test.clp500': { href: '/pago-prueba.html', label: 'Comprar prueba $500' },
+  // Nuevos productos macro
+  'product.deceroacien': { href: '/de-cero-a-cien.html', label: 'Comprar De Cero a Cien' },
+  'product.camino_dorado': { href: '/camino-dorado.html', label: 'Comprar Camino Dorado' }
   };
 
   function readEntitlements() {
@@ -35,7 +44,14 @@
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return [];
       const arr = JSON.parse(raw);
-      return Array.isArray(arr) ? arr : [];
+      const base = Array.isArray(arr) ? arr : [];
+      // Expandir derivados sin mutar almacenamiento (derivación en memoria)
+      const expanded = new Set(base);
+      base.forEach(id => {
+        const derived = DERIVED_ENTITLEMENTS[id];
+        if (derived) derived.forEach(d => expanded.add(d));
+      });
+      return Array.from(expanded);
     } catch (e) {
       return [];
     }

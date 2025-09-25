@@ -21,6 +21,7 @@
   const BASE_ENTITLEMENTS = [
     'course.pmv','course.pmf','course.growth','course.ceo',
     'membership.pro',
+    'product.deceroacien','product.camino_dorado',
     'fase_1_ecd','fase_2_ecd','fase_3_ecd','fase_4_ecd','fase_5_ecd',
     'bootcamp.pmv','bootcamp.pmf','bootcamp.growth','bootcamp.ceo',
     'bundle.full',
