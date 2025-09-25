@@ -20,8 +20,12 @@
 (function (w) {
   const STORAGE_KEY = 'deceroacien_entitlements';
 
-  // Eliminado: NO hay derivación cruzada entre productos (cada suite es independiente)
-  const DERIVED_ENTITLEMENTS = {}; // reservado para futuros sub‑niveles internos del mismo producto
+  // Derivaciones internas (solo dentro del mismo producto, NO cruzadas entre suites)
+  // Al comprar el producto macro se otorgan sus fases internas.
+  const DERIVED_ENTITLEMENTS = {
+    'product.deceroacien': ['decero.fase1','decero.fase2','decero.fase3','decero.fase4','decero.fase5'],
+    'product.camino_dorado': ['camino.fase1','camino.fase2','camino.fase3','camino.fase4','camino.fase5']
+  };
 
   // Mapa de productos → CTA por defecto (ajustable)
   const PRODUCT_CTAS = {
@@ -36,12 +40,25 @@
   'product.camino_dorado': { href: '/camino-dorado.html', label: 'Comprar Camino Dorado' }
   };
 
+  // CTAs para fases internas (apuntan al producto principal). Facilita mostrar botón correcto si se usa data-entitlement="decero.fase1" etc.
+  ['1','2','3','4','5'].forEach(n => {
+    PRODUCT_CTAS['decero.fase'+n] = { href: '/de-cero-a-cien.html', label: 'Comprar De Cero a Cien' };
+    PRODUCT_CTAS['camino.fase'+n] = { href: '/camino-dorado.html', label: 'Comprar Camino Dorado' };
+  });
+
   function readEntitlements() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return [];
       const arr = JSON.parse(raw);
-      return Array.isArray(arr) ? arr : [];
+      const base = Array.isArray(arr) ? arr : [];
+      // Expandir sólo derivaciones internas del mismo producto
+      const expanded = new Set(base);
+      base.forEach(id => {
+        const derived = DERIVED_ENTITLEMENTS[id];
+        if (derived) derived.forEach(d => expanded.add(d));
+      });
+      return Array.from(expanded);
     } catch (e) { return []; }
   }
 
@@ -196,24 +213,24 @@
 // =============================
 (function (w) {
   const PATH_GUARD = [
+    // Academy (mantiene course.*)
     { test: /\/fase_1_ecd\//i, required: ['course.pmv'] },
     { test: /\/fase_2_ecd\//i, required: ['course.pmv'] },
     { test: /\/fase_3_ecd\//i, required: ['course.pmf'] },
     { test: /\/fase_4_ecd\//i, required: ['course.growth'] },
     { test: /\/fase_5_ecd\//i, required: ['course.ceo'] },
-  // Rutas del programa Camino Dorado (carpetas con guiones)
-  // Importante: no bloquear el index de cada carpeta (solo archivos internos)
-  { test: /\/camino-dorado-fases\/fase-1-ecd\/(?!index\.html)([^/?#]+)/i, required: ['course.pmv'] },
-  { test: /\/camino-dorado-fases\/fase-2-ecd\/(?!index\.html)([^/?#]+)/i, required: ['course.pmv'] },
-  { test: /\/camino-dorado-fases\/fase-3-ecd\/(?!index\.html)([^/?#]+)/i, required: ['course.pmf'] },
-  { test: /\/camino-dorado-fases\/fase-4-ecd\/(?!index\.html)([^/?#]+)/i, required: ['course.growth'] },
-  { test: /\/camino-dorado-fases\/fase-5-ecd\/(?!index\.html)([^/?#]+)/i, required: ['course.ceo'] },
-    // Rutas equivalentes ya existentes en el repo (de0a100)
-    { test: /\/fase_1_de0a100\//i, required: ['course.pmv'] },
-    { test: /\/fase_2_de0a100\//i, required: ['course.pmv'] },
-    { test: /\/fase_3_de0a100\//i, required: ['course.pmf'] },
-    { test: /\/fase_4_de0a100\//i, required: ['course.growth'] },
-    { test: /\/fase_5_de0a100\//i, required: ['course.ceo'] },
+    // Camino Dorado (granular camino.faseX). Respetar index libre, sólo bloquear archivos internos
+    { test: /\/camino-dorado-fases\/fase-1-ecd\/(?!index\.html)([^/?#]+)/i, required: ['camino.fase1'] },
+    { test: /\/camino-dorado-fases\/fase-2-ecd\/(?!index\.html)([^/?#]+)/i, required: ['camino.fase2'] },
+    { test: /\/camino-dorado-fases\/fase-3-ecd\/(?!index\.html)([^/?#]+)/i, required: ['camino.fase3'] },
+    { test: /\/camino-dorado-fases\/fase-4-ecd\/(?!index\.html)([^/?#]+)/i, required: ['camino.fase4'] },
+    { test: /\/camino-dorado-fases\/fase-5-ecd\/(?!index\.html)([^/?#]+)/i, required: ['camino.fase5'] },
+    // De Cero a Cien (granular decero.faseX)
+    { test: /\/fase_1_de0a100\//i, required: ['decero.fase1'] },
+    { test: /\/fase_2_de0a100\//i, required: ['decero.fase2'] },
+    { test: /\/fase_3_de0a100\//i, required: ['decero.fase3'] },
+    { test: /\/fase_4_de0a100\//i, required: ['decero.fase4'] },
+    { test: /\/fase_5_de0a100\//i, required: ['decero.fase5'] },
   ];
 
   function parseQuery() {

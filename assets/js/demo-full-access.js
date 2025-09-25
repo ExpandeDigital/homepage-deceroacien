@@ -24,6 +24,8 @@
     'course.pmv','course.pmf','course.growth','course.ceo', // Academy
     'membership.pro',
     'product.deceroacien','product.camino_dorado', // Productos independientes (no derivan cursos automáticamente)
+    'decero.fase1','decero.fase2','decero.fase3','decero.fase4','decero.fase5',
+    'camino.fase1','camino.fase2','camino.fase3','camino.fase4','camino.fase5',
     'fase_1_ecd','fase_2_ecd','fase_3_ecd','fase_4_ecd','fase_5_ecd', // Camino Dorado fases/herramientas
     'bootcamp.pmv','bootcamp.pmf','bootcamp.growth','bootcamp.ceo', // alias internos si se usan
     'bundle.full',
