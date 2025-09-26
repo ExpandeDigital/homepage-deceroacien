@@ -31,57 +31,81 @@ const GlobalConfig = {
  */
 function ensureFirebaseSDKAndConfig() {
     try {
-        // 1) Config por defecto si no fue definida previamente
-        if (!window.__FIREBASE_APP_CONFIG) {
-            window.__FIREBASE_APP_CONFIG = {
-                apiKey: "AIzaSyCRCfyX8XX59D_gZ9TXnwr9HRQDBRmEaL4",
-                authDomain: "deceroacienfirebase.firebaseapp.com",
-                projectId: "deceroacienfirebase",
-                storageBucket: "deceroacienfirebase.firebasestorage.app",
-                messagingSenderId: "59979742637",
-                appId: "1:59979742637:web:b50080c220cfc35ef7b524",
-                measurementId: "G-WJ7PS0GW8D"
-            };
-        }
-
-        // 2) Verificar si ya está cargado el SDK
-        const hasFirebase = typeof window.firebase !== 'undefined' && !!window.firebase.initializeApp;
-        const scripts = Array.from(document.getElementsByTagName('script')).map(s => s.src || '');
+        const base = GlobalConfig.basePath || '';
         const appCompatUrl = 'https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js';
         const authCompatUrl = 'https://www.gstatic.com/firebasejs/10.13.1/firebase-auth-compat.js';
-        const hasAppScript = scripts.some(src => src.includes('firebase-app-compat.js'));
-        const hasAuthScript = scripts.some(src => src.includes('firebase-auth-compat.js'));
 
-        if (hasFirebase || (hasAppScript && hasAuthScript)) {
-            // SDK presente o ya en carga: notificar de forma asíncrona
-            setTimeout(() => {
-                document.dispatchEvent(new CustomEvent('firebase:sdk-ready'));
-            }, 0);
-            return;
-        }
+        // Helper: cargar un script y devolver Promesa
+        const loadScript = (url) => new Promise((resolve, reject) => {
+            const el = document.createElement('script');
+            el.src = url;
+            el.async = true;
+            el.onload = () => resolve(url);
+            el.onerror = () => reject(new Error('No se pudo cargar ' + url));
+            (document.head || document.getElementsByTagName('head')[0]).appendChild(el);
+        });
 
-        // 3) Inyectar scripts si faltan
-        let loaded = 0;
-        const onPartLoaded = () => {
-            loaded += 1;
-            if (loaded >= 2) {
-                document.dispatchEvent(new CustomEvent('firebase:sdk-ready'));
-                if (window.DEBUG_MODE) console.log('[components] Firebase SDK listo');
+        // 1) Asegurar configuración: primero intentar local ignorada por git, luego fallback a config por defecto del repo
+        const ensureConfigLoaded = () => new Promise((resolve) => {
+            if (window.__FIREBASE_APP_CONFIG) return resolve(true);
+            // intentar local
+            loadScript(base + 'assets/js/firebase-config.local.js')
+                .then(() => resolve(true))
+                .catch(() => {
+                    // intentar la config estándar versionada
+                    loadScript(base + 'assets/js/firebase-config.js')
+                        .then(() => resolve(true))
+                        .catch(() => resolve(false));
+                });
+        }).then((loaded) => {
+            if (!window.__FIREBASE_APP_CONFIG) {
+                // fallback seguro (público)
+                window.__FIREBASE_APP_CONFIG = {
+                    apiKey: "AIzaSyCRCfyX8XX59D_gZ9TXnwr9HRQDBRmEaL4",
+                    authDomain: "deceroacienfirebase.firebaseapp.com",
+                    projectId: "deceroacienfirebase",
+                    storageBucket: "deceroacienfirebase.firebasestorage.app",
+                    messagingSenderId: "59979742637",
+                    appId: "1:59979742637:web:b50080c220cfc35ef7b524",
+                    measurementId: "G-WJ7PS0GW8D"
+                };
             }
-        };
+        });
 
-        const head = document.head || document.getElementsByTagName('head')[0];
-        const s1 = document.createElement('script');
-        s1.src = appCompatUrl;
-        s1.async = true;
-        s1.onload = onPartLoaded;
-        head.appendChild(s1);
+        // 2) Luego asegurar SDK
+        const ensureSDKLoaded = () => new Promise((resolve) => {
+            const hasFirebase = typeof window.firebase !== 'undefined' && !!window.firebase.initializeApp;
+            const scripts = Array.from(document.getElementsByTagName('script')).map(s => s.src || '');
+            const hasAppScript = scripts.some(src => src.includes('firebase-app-compat.js'));
+            const hasAuthScript = scripts.some(src => src.includes('firebase-auth-compat.js'));
 
-        const s2 = document.createElement('script');
-        s2.src = authCompatUrl;
-        s2.async = true;
-        s2.onload = onPartLoaded;
-        head.appendChild(s2);
+            if (hasFirebase || (hasAppScript && hasAuthScript)) {
+                // Ya presente/en carga
+                return resolve(true);
+            }
+
+            let parts = 0;
+            const onPartLoaded = () => {
+                parts += 1;
+                if (parts >= 2) resolve(true);
+            };
+
+            loadScript(appCompatUrl).then(onPartLoaded).catch(() => resolve(false));
+            loadScript(authCompatUrl).then(onPartLoaded).catch(() => resolve(false));
+        });
+
+        // Orquestación: config -> SDK -> evento
+        ensureConfigLoaded()
+            .then(() => ensureSDKLoaded())
+            .then(() => {
+                setTimeout(() => {
+                    document.dispatchEvent(new CustomEvent('firebase:sdk-ready'));
+                    if (window.DEBUG_MODE) console.log('[components] Firebase SDK listo');
+                }, 0);
+            })
+            .catch((e) => {
+                console.warn('No se pudo asegurar Firebase SDK/config de forma centralizada:', e);
+            });
     } catch (e) {
         console.warn('No se pudo asegurar Firebase SDK/config de forma centralizada:', e);
     }
