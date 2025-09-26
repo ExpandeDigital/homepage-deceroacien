@@ -2,6 +2,12 @@
 // Recibe notificaciones de Mercado Pago y verifica pagos.
 import crypto from 'crypto';
 import { MercadoPagoConfig, Payment, MerchantOrder } from 'mercadopago';
+import { upsertUserByFirebaseUID, findUserByEmail } from '../_lib/users.js';
+import { grantEnrollment } from '../_lib/enrollments.js';
+import { query } from '../_lib/db.js';
+import { sendEmail } from '../_lib/mailer.js';
+import { welcomeEmail, purchaseConfirmationEmail } from '../_lib/emailTemplates.js';
+import { initFirebase } from '../_lib/firebaseAdmin.js';
 
 // Log de salud del SDK (una sola vez por cold start)
 let SDK_HEALTH_LOGGED = false;
@@ -164,14 +170,75 @@ export default async function handler(req, res) {
       external_reference: details?.external_reference
     });
 
-    // Ruteo de acciones mínimas (stubs) según tópico
+    // Ruteo de acciones
     if (t.includes('payment')) {
-      // Cuando el pago se aprueba, aquí es donde persistirías el acceso (entitlements) en tu base de datos
-      // if (details?.status === 'approved') {
-      //   const entitlements = details?.metadata?.entitlements || [];
-      //   const userEmail = details?.metadata?.userEmail;
-      //   await grantEntitlementsToUser(userEmail, entitlements);
-      // }
+      if (details?.status === 'approved') {
+        try {
+          const entitlements = details?.metadata?.entitlements || [];
+          const firebase_uid_meta = details?.metadata?.firebase_uid || null;
+          const userEmail = (details?.payer?.email || details?.metadata?.userEmail || '').toLowerCase();
+          if (entitlements.length > 0 && userEmail) {
+            let userRecord = null;
+            if (firebase_uid_meta) {
+              // upsert directo por firebase uid
+              userRecord = await upsertUserByFirebaseUID({ firebase_uid: firebase_uid_meta, email: userEmail });
+            } else {
+              // checkout invitado: buscar por email (puede no existir todavía)
+              userRecord = await findUserByEmail(userEmail);
+              if (!userRecord) {
+                // Crear registro placeholder usando firebase_uid sintético pref_*
+                const syntheticUid = `guest_${details.external_reference || 'ref'}_${Date.now()}`.slice(0,128);
+                userRecord = await upsertUserByFirebaseUID({ firebase_uid: syntheticUid, email: userEmail });
+                // (Opcional) Crear usuario en Firebase Auth para facilitar onboarding (si se configuró service account)
+                try {
+                  const admin = initFirebase();
+                  if (admin) {
+                    await admin.auth().getUserByEmail(userEmail).catch(async () => {
+                      // crea firebase user sin password; el usuario podrá usar email link o set password luego
+                      await admin.auth().createUser({ email: userEmail, emailVerified: true, disabled: false });
+                    });
+                  }
+                } catch (e) {
+                  console.warn('No se pudo crear/consultar usuario Firebase (opcional)', e.message);
+                }
+              }
+            }
+            // Otorgar cada entitlement
+            for (const sku of entitlements) {
+              try { await grantEnrollment(userRecord.id, sku, 'webhook_mp'); } catch (e) { /* ignore one-off */ }
+            }
+            // Registrar pago si no existe
+            try {
+              await query(`INSERT INTO payments (mp_payment_id, external_reference, user_id, payer_email, status, amount, currency, raw_payload)
+                           VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
+                           ON CONFLICT (mp_payment_id) DO NOTHING`, [
+                String(details.id),
+                details.external_reference || null,
+                userRecord.id,
+                userEmail,
+                details.status,
+                details.transaction_amount || null,
+                details.currency_id || null,
+                JSON.stringify(details)
+              ]);
+            } catch (e) {
+              console.warn('No se pudo registrar pago (dup o error menor)', e.message);
+            }
+
+            // Emails transaccionales
+            try {
+              await sendEmail({ to: userEmail, ...purchaseConfirmationEmail({ email: userEmail, items: entitlements }) });
+              if (!firebase_uid_meta) {
+                await sendEmail({ to: userEmail, ...welcomeEmail({ email: userEmail }) });
+              }
+            } catch (e) {
+              console.warn('Fallo envío email transaccional', e.message);
+            }
+          }
+        } catch (grantErr) {
+          console.error('Error otorgando entitlements desde webhook', grantErr);
+        }
+      }
     } else if (t.includes('charge')) {
       // Contracargo: podrías revertir o suspender entitlements y abrir un caso interno
       // TODO: implementar lógica de contracargo si se confirma

@@ -47,6 +47,8 @@
             }
         }
     </script>
+    
+    <!-- Firebase cargado de forma centralizada por assets/js/components.js -->
 </head>
 <body class="base-container antialiased">
 
@@ -174,8 +176,9 @@
     <footer class="footer-component"></footer>
 
     <!-- Scripts JavaScript -->
-    <script src="../assets/js/auth-config.js"></script>
+    <script src="../assets/js/firebase-client.js"></script>
     <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/auth-config.js"></script>
     <!-- Script de modo demo full access (solo en rama feature/full-access-demo). Debe ir ANTES de components.js para que authManager ya tenga user -->
     <script src="../assets/js/demo-full-access.js"></script>
     <script src="../assets/js/tracking-demo.js"></script>

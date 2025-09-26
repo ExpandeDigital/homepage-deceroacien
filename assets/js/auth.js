@@ -723,3 +723,125 @@ window.authManager = authManager;
 window.requireAuth = requireAuth;
 window.redirectIfAuthenticated = redirectIfAuthenticated;
 window.handleCredentialResponse = handleCredentialResponse;
+
+// =============================
+// Integración Firebase Auth (opcional)
+// =============================
+(function(){
+    if (!window.__firebaseAuth) return; // Firebase no cargado
+    const fbAuth = window.__firebaseAuth;
+
+    async function syncServerEntitlements(idToken){
+        try {
+            const resp = await fetch('/api/auth/me', { headers: { 'Authorization': 'Bearer ' + idToken } });
+            if (!resp.ok) return;
+            const data = await resp.json();
+            if (data && data.enrollments && Array.isArray(data.enrollments)) {
+                if (window.entitlements && window.entitlements.setAll) {
+                    window.entitlements.setAll(data.enrollments);
+                } else {
+                    // fallback directo localStorage
+                    localStorage.setItem('deceroacien_entitlements', JSON.stringify(data.enrollments));
+                    localStorage.setItem('deceroacien_entitlements_updated', Date.now().toString());
+                }
+            }
+            // Persist simple user for UI reuse
+            if (data.user) {
+                localStorage.setItem(AuthConfig.storage.userKey, JSON.stringify({
+                    id: data.user.id,
+                    email: data.user.email,
+                    firebase_uid: data.user.firebase_uid,
+                    firstName: data.user.first_name,
+                    lastName: data.user.last_name
+                }));
+                localStorage.setItem(AuthConfig.storage.tokenKey, idToken);
+                if (window.authManager) {
+                    window.authManager.currentUser = data.user;
+                    window.authManager.isAuthenticated = true;
+                }
+            }
+        } catch(e){ console.warn('syncServerEntitlements error', e); }
+    }
+
+    fbAuth.onAuthStateChanged(async (user)=>{
+        if (user) {
+            try {
+                const idToken = await user.getIdToken(/* forceRefresh */ true);
+                await syncServerEntitlements(idToken);
+            } catch(e){ console.error('Error obteniendo idToken Firebase', e); }
+        } else {
+            // sign out
+            localStorage.removeItem(AuthConfig.storage.userKey);
+            localStorage.removeItem(AuthConfig.storage.tokenKey);
+            if (window.authManager){
+                window.authManager.currentUser = null;
+                window.authManager.isAuthenticated = false;
+            }
+        }
+    });
+
+    // Exponer helpers
+    window.firebaseAuthHelpers = {
+        async loginEmailPassword(email, password){
+            await fbAuth.signInWithEmailAndPassword(email, password);
+            const user = fbAuth.currentUser;
+            const token = user ? await user.getIdToken() : null;
+            return { success: true, token };
+        },
+        async registerEmailPassword(email, password){
+            await fbAuth.createUserWithEmailAndPassword(email, password);
+            const user = fbAuth.currentUser;
+            const token = user ? await user.getIdToken() : null;
+            return { success: true, token };
+        },
+        async logout(){
+            await fbAuth.signOut();
+        },
+        async getToken(){
+            const user = fbAuth.currentUser;
+            if (!user) return null;
+            return user.getIdToken();
+        },
+        async manualSync(){
+            const user = fbAuth.currentUser;
+            if (!user) return;
+            const t = await user.getIdToken(true);
+            await syncServerEntitlements(t);
+        }
+    };
+
+    // Parchear métodos existentes del AuthManager si existe
+    if (window.authManager) {
+        const mgr = window.authManager;
+        mgr.authenticateUser = async function(email, password){
+            try {
+                const r = await window.firebaseAuthHelpers.loginEmailPassword(email, password);
+                if (r.success) {
+                    const token = await window.firebaseAuthHelpers.getToken();
+                    return { success: true, user: { email }, token };
+                }
+            } catch(e){
+                return { success:false, message: e.message };
+            }
+            return { success:false, message: 'login_failed' };
+        };
+        mgr.registerUser = async function(data){
+            try {
+                const r = await window.firebaseAuthHelpers.registerEmailPassword(data.email, data.password);
+                if (r.success) {
+                    const token = await window.firebaseAuthHelpers.getToken();
+                    return { success: true, user: { email: data.email }, token };
+                }
+            } catch(e){
+                return { success:false, message: e.message };
+            }
+            return { success:false };
+        };
+        mgr.logout = async function(){
+            try { await window.firebaseAuthHelpers.logout(); } catch(_) {}
+            mgr.clearSession();
+            const currentPath = window.location.pathname;
+            window.location.href = currentPath.includes('/auth/') ? '../index.html' : '/index.html';
+        };
+    }
+})();

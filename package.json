@@ -3,6 +3,13 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "mercadopago": "^2.6.2"
+    "mercadopago": "^2.6.2",
+    "firebase-admin": "^12.5.0",
+    "pg": "^8.11.5",
+    "nodemailer": "^6.9.11"
+  },
+  "scripts": {
+    "apply:schema": "node scripts/apply-schema.mjs",
+    "seed:products": "node scripts/seed-products.mjs"
   }
 }

@@ -4,7 +4,9 @@
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
+import { randomUUID } from 'crypto';
 import { MercadoPagoConfig, Preference } from 'mercadopago';
+import { verifyIdToken } from '../_lib/firebaseAdmin.js';
 
 export default async function handler(req, res) {
   // CORS básico (localhost y dominio principal)
@@ -21,10 +23,23 @@ export default async function handler(req, res) {
 
   try {
     const {
-      items = [], // ['course.pmv', 'course.pmf']
-      user = {},  // { id, email }
-      returnTo // optional: para volver luego
+      items = [], // ['course.pmv']
+      returnTo // optional redirect hint
     } = req.body || {};
+
+    // Si viene Authorization intentar decodificar Firebase para asociar external_reference estable
+    let firebaseUid = null;
+    let userEmail = null;
+    try {
+      if (req.headers.authorization) {
+        const decoded = await verifyIdToken(req.headers.authorization);
+        firebaseUid = decoded.uid;
+        userEmail = decoded.email || null;
+      }
+    } catch (e) {
+      // token inválido -> tratamos como invitado (no abortamos para permitir checkout guest)
+      firebaseUid = null;
+    }
 
     if (!Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ error: 'items is required (array of SKUs)' });
@@ -72,8 +87,8 @@ export default async function handler(req, res) {
 
   // Elegimos el primer SKU para el grant del PoC (uno por checkout)
   const firstSku = items[0];
-  // Firmar el retorno para evitar grants manuales en producción
-  const externalRef = user?.email || user?.id || 'anonymous';
+  // external_reference estable si logueado, UUID si invitado
+  const externalRef = firebaseUid || randomUUID();
   const ts = Date.now().toString();
   const GRANT_SECRET = process.env.GRANT_SECRET || process.env.MP_WEBHOOK_SECRET || 'dev-secret';
   const payload = `${firstSku}|${ts}|${externalRef}`;
@@ -97,12 +112,13 @@ export default async function handler(req, res) {
         auto_return: 'approved',
         notification_url: notificationUrl,
         statement_descriptor: 'DE CERO A CIEN',
-        external_reference: user?.email || user?.id || 'anonymous',
+        external_reference: externalRef,
         metadata: {
           entitlements: items,
-          userEmail: user?.email || null,
-          userId: user?.id || null,
-          returnTo: returnTo || null
+          firebase_uid: firebaseUid,
+          userEmail: userEmail,
+          returnTo: returnTo || null,
+          checkout_mode: firebaseUid ? 'authenticated' : 'guest'
         }
       }
     });

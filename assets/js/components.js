@@ -25,6 +25,68 @@ const GlobalConfig = {
 };
 
 /**
+ * Carga centralizada de Firebase SDK (compat) y configuración pública.
+ * - Evita duplicar scripts/config en cada HTML.
+ * - Emite evento 'firebase:sdk-ready' cuando ambos scripts estén cargados.
+ */
+function ensureFirebaseSDKAndConfig() {
+    try {
+        // 1) Config por defecto si no fue definida previamente
+        if (!window.__FIREBASE_APP_CONFIG) {
+            window.__FIREBASE_APP_CONFIG = {
+                apiKey: "AIzaSyCRCfyX8XX59D_gZ9TXnwr9HRQDBRmEaL4",
+                authDomain: "deceroacienfirebase.firebaseapp.com",
+                projectId: "deceroacienfirebase",
+                storageBucket: "deceroacienfirebase.firebasestorage.app",
+                messagingSenderId: "59979742637",
+                appId: "1:59979742637:web:b50080c220cfc35ef7b524",
+                measurementId: "G-WJ7PS0GW8D"
+            };
+        }
+
+        // 2) Verificar si ya está cargado el SDK
+        const hasFirebase = typeof window.firebase !== 'undefined' && !!window.firebase.initializeApp;
+        const scripts = Array.from(document.getElementsByTagName('script')).map(s => s.src || '');
+        const appCompatUrl = 'https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js';
+        const authCompatUrl = 'https://www.gstatic.com/firebasejs/10.13.1/firebase-auth-compat.js';
+        const hasAppScript = scripts.some(src => src.includes('firebase-app-compat.js'));
+        const hasAuthScript = scripts.some(src => src.includes('firebase-auth-compat.js'));
+
+        if (hasFirebase || (hasAppScript && hasAuthScript)) {
+            // SDK presente o ya en carga: notificar de forma asíncrona
+            setTimeout(() => {
+                document.dispatchEvent(new CustomEvent('firebase:sdk-ready'));
+            }, 0);
+            return;
+        }
+
+        // 3) Inyectar scripts si faltan
+        let loaded = 0;
+        const onPartLoaded = () => {
+            loaded += 1;
+            if (loaded >= 2) {
+                document.dispatchEvent(new CustomEvent('firebase:sdk-ready'));
+                if (window.DEBUG_MODE) console.log('[components] Firebase SDK listo');
+            }
+        };
+
+        const head = document.head || document.getElementsByTagName('head')[0];
+        const s1 = document.createElement('script');
+        s1.src = appCompatUrl;
+        s1.async = true;
+        s1.onload = onPartLoaded;
+        head.appendChild(s1);
+
+        const s2 = document.createElement('script');
+        s2.src = authCompatUrl;
+        s2.async = true;
+        s2.onload = onPartLoaded;
+        head.appendChild(s2);
+    } catch (e) {
+        console.warn('No se pudo asegurar Firebase SDK/config de forma centralizada:', e);
+    }
+}
+/**
  * Detecta el basePath a partir del src del script que carga este archivo.
  * Permite que las rutas del header/footer funcionen desde subcarpetas.
  */
@@ -50,6 +112,9 @@ function detectBasePath() {
 // Detectar basePath lo antes posible
 if (typeof document !== 'undefined') {
     detectBasePath();
+    // Asegurar Firebase SDK + configuración pública para toda la app
+    ensureGlobalStyles(); // mantener orden de estilos
+    ensureFirebaseSDKAndConfig();
 }
 
 /**
