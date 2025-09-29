@@ -462,6 +462,25 @@ class AuthManager {
 function handleCredentialResponse(response) {
     try {
         console.log("Encoded JWT ID token: " + response.credential);
+
+        // Si Firebase está disponible, usar el ID token de Google para firmar en Firebase
+        if (window.__firebaseAuth && window.firebase && window.firebase.auth && window.firebase.auth.GoogleAuthProvider) {
+            (async () => {
+                try {
+                    const cred = window.firebase.auth.GoogleAuthProvider.credential(response.credential);
+                    await window.__firebaseAuth.signInWithCredential(cred);
+                    // Sincronizar enrollments y redirigir
+                    if (window.firebaseAuthHelpers && window.firebaseAuthHelpers.manualSync) {
+                        try { await window.firebaseAuthHelpers.manualSync(); } catch(_) {}
+                    }
+                    if (window.authManager && typeof window.authManager.redirectAfterAuth === 'function') {
+                        window.authManager.redirectAfterAuth();
+                    }
+                } catch (err) {
+                    console.error('Error vinculando Google con Firebase:', err);
+                }
+            })();
+        }
         
         // Decodificar el JWT usando la función mejorada
         const responsePayload = decodeJwtResponse(response.credential);
@@ -601,11 +620,25 @@ function decodeJwtResponse(token) {
 AuthManager.prototype.handleGoogleAuth = async function(googleUser) {
     try {
         this.showLoading('g_id_signin', 'Procesando...');
-        
-        // Aquí deberías enviar los datos de Google a tu backend
-        // para crear/verificar el usuario y obtener un token de tu sistema
+
+        // Si Firebase está disponible, iniciar sesión con credential
+        if (window.__firebaseAuth && window.firebase && window.firebase.auth && window.firebase.auth.GoogleAuthProvider) {
+            try {
+                // Nota: el token original está en googleUser.originalToken si se requiere
+                const cred = window.firebase.auth.GoogleAuthProvider.credential(googleUser.originalToken);
+                await window.__firebaseAuth.signInWithCredential(cred);
+                if (window.firebaseAuthHelpers && window.firebaseAuthHelpers.manualSync) {
+                    try { await window.firebaseAuthHelpers.manualSync(); } catch(_) {}
+                }
+                this.redirectAfterAuth();
+                return;
+            } catch (e) {
+                console.warn('Fallo signInWithCredential, usando flujo simulado', e);
+            }
+        }
+
+        // Fallback simulado previo (no Firebase)
         const response = await this.processGoogleAuth(googleUser);
-        
         if (response.success) {
             this.handleSuccessfulAuth(response.user, response.token);
         } else {
@@ -730,6 +763,8 @@ window.handleCredentialResponse = handleCredentialResponse;
 (function(){
     if (!window.__firebaseAuth) return; // Firebase no cargado
     const fbAuth = window.__firebaseAuth;
+    // Estado de conocimiento de auth
+    window.__firebaseAuthKnown = false;
 
     async function syncServerEntitlements(idToken){
         try {
@@ -764,6 +799,7 @@ window.handleCredentialResponse = handleCredentialResponse;
     }
 
     fbAuth.onAuthStateChanged(async (user)=>{
+        window.__firebaseAuthKnown = true;
         if (user) {
             try {
                 const idToken = await user.getIdToken(/* forceRefresh */ true);
