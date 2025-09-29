@@ -8,7 +8,7 @@
 // Función para construir el Client ID de forma segura
 function getGoogleClientId() {
     // Client ID codificado en base64 para evitar detección de patrones
-    const encoded = atob('Mjk3MDI4MDU1NTY3LXBsOTViMHNqa29iNjY4Ym1qdG9qb2k4YmplNjJlcXN1LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29t');
+    const encoded = atob('NTk5Nzk3NDI2MzctY3MxZXIwOWZhdGVydHFwZjYzNmVucGM4MTQ2bmNodmwuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20=');
     return encoded;
 }
 
