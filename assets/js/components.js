@@ -48,15 +48,23 @@ function ensureFirebaseSDKAndConfig() {
         // 1) Asegurar configuración: primero intentar local ignorada por git, luego fallback a config por defecto del repo
         const ensureConfigLoaded = () => new Promise((resolve) => {
             if (window.__FIREBASE_APP_CONFIG) return resolve(true);
-            // intentar local
-            loadScript(base + 'assets/js/firebase-config.local.js')
-                .then(() => resolve(true))
-                .catch(() => {
-                    // intentar la config estándar versionada
-                    loadScript(base + 'assets/js/firebase-config.js')
-                        .then(() => resolve(true))
-                        .catch(() => resolve(false));
-                });
+            const host = (window.location && window.location.hostname) || '';
+            const isLocal = host === 'localhost' || host === '127.0.0.1';
+            if (isLocal) {
+                // En local: prueba override y luego fallback
+                loadScript(base + 'assets/js/firebase-config.local.js')
+                    .then(() => resolve(true))
+                    .catch(() => {
+                        loadScript(base + 'assets/js/firebase-config.js')
+                            .then(() => resolve(true))
+                            .catch(() => resolve(false));
+                    });
+            } else {
+                // En prod: no intentes .local para evitar 404 en consola
+                loadScript(base + 'assets/js/firebase-config.js')
+                    .then(() => resolve(true))
+                    .catch(() => resolve(false));
+            }
         }).then((loaded) => {
             if (!window.__FIREBASE_APP_CONFIG) {
                 // fallback seguro (público)
