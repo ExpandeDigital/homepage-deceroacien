@@ -478,6 +478,19 @@ function handleCredentialResponse(response) {
                     }
                 } catch (err) {
                     console.error('Error vinculando Google con Firebase:', err);
+                    // Fallback: intentar con Popup
+                    try {
+                        const provider = new window.firebase.auth.GoogleAuthProvider();
+                        await window.__firebaseAuth.signInWithPopup(provider);
+                        if (window.firebaseAuthHelpers && window.firebaseAuthHelpers.manualSync) {
+                            try { await window.firebaseAuthHelpers.manualSync(); } catch(_) {}
+                        }
+                        if (window.authManager && typeof window.authManager.redirectAfterAuth === 'function') {
+                            window.authManager.redirectAfterAuth();
+                        }
+                    } catch (e2) {
+                        console.error('Fallback signInWithPopup también falló:', e2);
+                    }
                 }
             })();
         }
@@ -633,7 +646,18 @@ AuthManager.prototype.handleGoogleAuth = async function(googleUser) {
                 this.redirectAfterAuth();
                 return;
             } catch (e) {
-                console.warn('Fallo signInWithCredential, usando flujo simulado', e);
+                console.warn('Fallo signInWithCredential, intento Popup', e);
+                try {
+                    const provider = new window.firebase.auth.GoogleAuthProvider();
+                    await window.__firebaseAuth.signInWithPopup(provider);
+                    if (window.firebaseAuthHelpers && window.firebaseAuthHelpers.manualSync) {
+                        try { await window.firebaseAuthHelpers.manualSync(); } catch(_) {}
+                    }
+                    this.redirectAfterAuth();
+                    return;
+                } catch (e2) {
+                    console.warn('Popup también falló, usando flujo simulado', e2);
+                }
             }
         }
 
