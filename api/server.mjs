@@ -67,6 +67,8 @@ async function verifyBearer(req) {
 const app = express();
 app.disable('x-powered-by');
 app.use(cors({ origin: ALLOWED_ORIGINS, credentials: false }));
+// Asegurar preflight para cualquier ruta
+app.options('*', cors({ origin: ALLOWED_ORIGINS }));
 app.use(express.json());
 
 // Health
