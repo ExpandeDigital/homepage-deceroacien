@@ -8,14 +8,14 @@ Esta rama (`feature/full-access-demo`) simula un cliente con acceso completo a t
 - Base para evolucionar a reporting real más adelante.
 
 ## Componentes clave
-- `assets/js/demo-full-access.js`: Inyecta usuario demo, entitlements y progreso.
-- Usuario demo: `contacto@expandedigital.com` (auto-login sin contraseña / simulado).
+- `assets/js/demo-full-access.js`: Aplica entitlements y modelo de progreso a cualquier usuario autenticado (agnóstico de proveedor: Google u otro método local).
+- Ya no existe un usuario único forzado; si no hay sesión, el script no interfiere con el flujo de login.
 - Entitlements almacenados en `localStorage.deceroacien_entitlements`.
 - Progreso almacenado en `localStorage.deceroacien_progress`.
 
 ## Uso rápido
 1. Abrir `portal-alumno.html` o `auth/dashboard.html` en un navegador.
-2. El script crea (si no existen) el usuario y todos los entitlements.
+2. Iniciar sesión (Google One Tap/Popup o el método de login local). El script aplicará todos los entitlements al usuario autenticado.
 3. Se renderiza un bloque de progreso si la página define un contenedor con `data-progress-dashboard`.
 4. Pulsar `Shift + P` abre un panel de debug para ver / resetear el progreso.
 
@@ -51,7 +51,7 @@ Si el usuario borra manualmente:
 ## Consideraciones
 - No hay backend real: todo ocurre en `localStorage`.
 - Evitar llevar este script a `main` salvo feature flagging.
-- Para limpiar y re-probar: borrar claves en DevTools y recargar.
+- Para limpiar y re-probar: borrar en DevTools `deceroacien_entitlements`, `deceroacien_progress` y (si aplica) el usuario de sesión local, luego recargar.
 
 ## Próximos pasos sugeridos
 - Llevar el modelo de progreso a granularidad real (módulos / lecciones).
