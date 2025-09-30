@@ -3,19 +3,12 @@
  * Objetivo: garantizar un usuario full-access con todos los entitlements y un modelo de progreso.
  */
 (function(){
-  const DEMO_EMAIL = 'contacto@expandedigital.com';
-  const DEMO_USER = {
-    name: 'Cliente Demo Full',
-    email: DEMO_EMAIL,
-    role: 'full_access_demo',
-    createdAt: new Date().toISOString()
-  };
+  // Demo agnóstico de email: se aplica a cualquier usuario autenticado (Google o método propio)
+  // Sin auto-crear usuario ni forzar una sesión específica
 
   const ENTITLEMENTS_KEY = 'deceroacien_entitlements';
   const PROGRESS_KEY = 'deceroacien_progress';
-  const SESSION_KEY = 'deceroacien_session';
   const USER_KEY = 'deceroacien_user';
-  const TOKEN_KEY = 'deceroacien_token';
 
   // Lista base de entitlements conocida (se extenderá dinámicamente si aparecen nuevos data-entitlement)
   // Nota: En producción cada producto (academy / de cero a cien / camino dorado) es independiente.
@@ -34,35 +27,35 @@
 
   function log(...args){ console.log('[FULL-DEMO]', ...args); }
 
-  function ensureDemoUser(){
-    let user = safeParse(localStorage.getItem(USER_KEY));
-    if(!user || user.email !== DEMO_EMAIL){
-      user = { ...DEMO_USER, lastLogin: new Date().toISOString() };
-      localStorage.setItem(USER_KEY, JSON.stringify(user));
+  function getCurrentUserOrNull(){
+    // 1) Si hay authManager y usuario autenticado, úsalo
+    if (window.authManager && typeof window.authManager.isUserAuthenticated === 'function'){
+      try {
+        if (window.authManager.isUserAuthenticated()){
+          const u = window.authManager.getCurrentUser ? window.authManager.getCurrentUser() : window.authManager.currentUser;
+          if (u) return u;
+        }
+      } catch(_){ /* noop */ }
     }
-    if(!localStorage.getItem(TOKEN_KEY)){
-      localStorage.setItem(TOKEN_KEY, 'demo-token-'+Date.now());
-    }
-    if(!localStorage.getItem(SESSION_KEY)){
-      localStorage.setItem(SESSION_KEY, JSON.stringify({ email: DEMO_EMAIL, ts: Date.now(), persistent: true }));
-    }
-    // Sincronizar con authManager si ya existe
-    syncAuthManager(user);
-    window.DemoFullAccessUser = user;
-    return user;
+    // 2) Fallback: si existe usuario en localStorage (del flujo propio), úsalo tal cual
+    const user = safeParse(localStorage.getItem(USER_KEY));
+    return user || null;
   }
 
-  function syncAuthManager(user){
+  function syncAuthManagerIfNeeded(user){
+    // No fuerces estado si ya hay autenticación real; solo sincroniza si el authManager existe y no tiene usuario
+    if (!user) return;
     if(window.authManager){
       try {
-        window.authManager.currentUser = user;
-        window.authManager.isAuthenticated = true;
-        // Evitar redirecciones innecesarias si requireAuth se llamó muy temprano
-        window.authManager.showSuccess && window.authManager.showSuccess('Sesión demo full-access activa');
+        const hasUser = typeof window.authManager.isUserAuthenticated === 'function' && window.authManager.isUserAuthenticated();
+        if (!hasUser && !window.authManager.currentUser){
+          window.authManager.currentUser = user;
+          window.authManager.isAuthenticated = true;
+        }
       } catch(e){ console.warn('[FULL-DEMO] No se pudo sincronizar authManager', e); }
     } else {
       // Reintentar pronto si aún no existe
-      setTimeout(()=>syncAuthManager(user), 50);
+      setTimeout(()=>syncAuthManagerIfNeeded(user), 100);
     }
   }
 
@@ -212,7 +205,9 @@
   }
 
   // Paso 1: asegurar el usuario DEMO inmediatamente (antes de que components.js llame requireAuth)
-  const earlyUser = ensureDemoUser();
+  const earlyUser = getCurrentUserOrNull();
+  // Sincroniza solo si hace falta (no sobreescribir sesiones reales)
+  syncAuthManagerIfNeeded(earlyUser);
   // Marcamos autenticado lo antes posible
   // (syncAuthManager ya se llamó dentro de ensureDemoUser)
 
@@ -222,7 +217,7 @@
     ensureProgress();
     renderProgressIfContainer();
     addDebugShortcuts();
-    window.dispatchEvent(new CustomEvent('fullaccess:ready',{ detail: { user: earlyUser } }));
+  window.dispatchEvent(new CustomEvent('fullaccess:ready',{ detail: { user: getCurrentUserOrNull() } }));
     window.addEventListener('progress:updated', renderProgressIfContainer);
   }
 
