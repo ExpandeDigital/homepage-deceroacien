@@ -77,7 +77,16 @@
   console.log = (...args)=>{ log('log', args.map(a=> typeof a==='string'?a:JSON.stringify(a)).join(' ')); _log(...args); };
 
   // Firebase eventos
-  document.addEventListener('firebase:sdk-ready', ()=>{ state.flags.firebaseSDKReady = true; log('log','evento firebase:sdk-ready'); setTimeout(()=>{ state.flags.firebaseAuthReady = !!window.__firebaseAuth; renderStatus(); }, 0); });
+  document.addEventListener('firebase:sdk-ready', ()=>{ 
+    state.flags.firebaseSDKReady = true; 
+    state.flags.firebaseConfig = !!window.__FIREBASE_APP_CONFIG;
+    log('log','evento firebase:sdk-ready'); 
+    setTimeout(()=>{ 
+      state.flags.firebaseAuthReady = !!window.__firebaseAuth; 
+      state.flags.firebaseConfig = !!window.__FIREBASE_APP_CONFIG;
+      renderStatus(); 
+    }, 0); 
+  });
   if (window.__firebaseAuth) { state.flags.firebaseAuthReady = true; }
 
   // GIS detección
@@ -89,6 +98,30 @@
     else log('log','GIS detectado.');
   }
   document.addEventListener('DOMContentLoaded', ()=> pollGIS());
+
+  // Detectar initialización real de GIS envolviendo initialize/renderButton
+  function hookGIS(){
+    try {
+      if (!window.google || !google.accounts || !google.accounts.id) return;
+      if (google.accounts.id.__wrapped_dbg) return; // evitar doble wrap
+      const origInit = google.accounts.id.initialize;
+      const origRender = google.accounts.id.renderButton;
+      google.accounts.id.initialize = function(cfg){
+        state.flags.gisInitialized = true;
+        if (cfg && cfg.client_id) state.flags.googleClientId = cfg.client_id;
+        renderStatus();
+        log('log','GIS initialize llamado');
+        return origInit.apply(this, arguments);
+      };
+      google.accounts.id.renderButton = function(){
+        log('log','GIS renderButton llamado');
+        return origRender.apply(this, arguments);
+      };
+      google.accounts.id.__wrapped_dbg = true;
+    } catch(e){ /* ignore */ }
+  }
+  const gisObs = new MutationObserver(hookGIS); gisObs.observe(document.documentElement, { childList:true, subtree:true });
+  hookGIS();
 
   // Envolver handleCredentialResponse si existe (o cuando aparezca)
   function hookHCR(){

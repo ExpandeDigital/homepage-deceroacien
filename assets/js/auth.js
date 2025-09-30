@@ -793,8 +793,61 @@ window.handleCredentialResponse = handleCredentialResponse;
 
         async function syncServerEntitlements(idToken){
             try {
-                const resp = await fetch('/api/auth/me', { headers: { 'Authorization': 'Bearer ' + idToken } });
-                if (!resp.ok) return;
+                // Construir URL del backend (prod/dev) desde PublicAuthConfig si está disponible
+                const api = (window.PublicAuthConfig && window.PublicAuthConfig.api) || null;
+                const mePath = (api && api.endpoints && api.endpoints.me) ? api.endpoints.me : '/auth/me';
+                const url = api && api.baseUrl ? (api.baseUrl + mePath) : ('/api' + mePath);
+                const verifyPath = (api && api.endpoints && api.endpoints.verify) ? api.endpoints.verify : '/auth/verify';
+                const verifyUrl = api && api.baseUrl ? (api.baseUrl + verifyPath) : ('/api' + verifyPath);
+
+                // 1) Intentar provisionar/verificar usuario en backend (idempotente)
+                try {
+                    await fetch(verifyUrl, {
+                        method: 'POST',
+                        headers: { 'Authorization': 'Bearer ' + idToken, 'Accept': 'application/json' },
+                        body: null
+                    });
+                } catch(_) { /* si falla, seguimos, el backend puede no requerirlo */ }
+
+                // 2) Consultar /auth/me con pequeños reintentos (por eventual consistencia)
+                const fetchMe = async () => fetch(url, { headers: { 'Authorization': 'Bearer ' + idToken, 'Accept': 'application/json' } });
+                let resp = await fetchMe();
+                if (!resp.ok && !(window.Environment && window.Environment.isDevelopment)) {
+                    // reintentos cortos en prod
+                    for (let i=0;i<2 && !resp.ok;i++) {
+                        await new Promise(r=> setTimeout(r, 400*(i+1)));
+                        resp = await fetchMe();
+                    }
+                }
+                if (!resp.ok) {
+                    // Fallback de desarrollo: si no hay backend local, usar datos de Firebase para habilitar sesión local
+                    try {
+                        const isDev = !!(window.Environment && window.Environment.isDevelopment);
+                        const u = fbAuth && fbAuth.currentUser;
+                        if (isDev && u) {
+                            const simpleUser = {
+                                id: u.uid,
+                                email: u.email || (u.providerData && u.providerData[0] && u.providerData[0].email) || '',
+                                firstName: (u.displayName && u.displayName.split(' ')[0]) || 'Usuario',
+                                lastName: (u.displayName && u.displayName.split(' ').slice(1).join(' ')) || '',
+                                profilePicture: (u.photoURL) || ''
+                            };
+                            localStorage.setItem(AuthConfig.storage.userKey, JSON.stringify(simpleUser));
+                            localStorage.setItem(AuthConfig.storage.tokenKey, idToken);
+                            if (window.authManager) {
+                                window.authManager.currentUser = simpleUser;
+                                window.authManager.isAuthenticated = true;
+                            }
+                            console.warn('[dev-fallback] /api/auth/me no disponible; usando datos de Firebase para sesión local.');
+                        }
+                    } catch(_e) {}
+                    // En producción: mostrar notificación visible
+                    if (!(window.Environment && window.Environment.isDevelopment)) {
+                        const msg = 'No se pudo obtener tu perfil desde el servidor (status ' + (resp.status||'') + ').';
+                        if (window.authManager && window.authManager.showError) window.authManager.showError(msg);
+                    }
+                    return; // terminar sin romper flujo local
+                }
                 const data = await resp.json();
                 if (data && data.enrollments && Array.isArray(data.enrollments)) {
                     if (window.entitlements && window.entitlements.setAll) {
