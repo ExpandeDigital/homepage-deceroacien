@@ -46,38 +46,29 @@ function ensureFirebaseSDKAndConfig() {
         });
 
         // 1) Asegurar configuración: primero intentar local ignorada por git, luego fallback a config por defecto del repo
-        const ensureConfigLoaded = () => new Promise((resolve) => {
-            if (window.__FIREBASE_APP_CONFIG) return resolve(true);
+        const ensureConfigLoaded = () => new Promise(async (resolve) => {
+            try {
+                if (window.__FIREBASE_APP_CONFIG) return resolve(true);
+                // 0) Intentar obtener config desde el backend (evita secretos en el repo)
+                const res = await fetch((GlobalConfig.basePath || '') + 'api/public-config', { cache: 'no-store' });
+                if (res.ok) {
+                    const cfg = await res.json();
+                    if (cfg && cfg.firebase) {
+                        window.__FIREBASE_APP_CONFIG = cfg.firebase;
+                        return resolve(true);
+                    }
+                }
+            } catch (e) {}
+            // 1) Intentar cargar scripts de config locales (sin claves reales en el repo)
             const host = (window.location && window.location.hostname) || '';
             const isLocal = host === 'localhost' || host === '127.0.0.1';
-            if (isLocal) {
-                // En local: prueba override y luego fallback
-                loadScript(base + 'assets/js/firebase-config.local.js')
-                    .then(() => resolve(true))
-                    .catch(() => {
-                        loadScript(base + 'assets/js/firebase-config.js')
-                            .then(() => resolve(true))
-                            .catch(() => resolve(false));
-                    });
-            } else {
-                // En prod: no intentes .local para evitar 404 en consola
-                loadScript(base + 'assets/js/firebase-config.js')
-                    .then(() => resolve(true))
-                    .catch(() => resolve(false));
-            }
-        }).then((loaded) => {
-            if (!window.__FIREBASE_APP_CONFIG) {
-                // fallback seguro (público)
-                window.__FIREBASE_APP_CONFIG = {
-                    apiKey: "AIzaSyCRCfyX8XX59D_gZ9TXnwr9HRQDBRmEaL4",
-                    authDomain: "deceroacienfirebase.firebaseapp.com",
-                    projectId: "deceroacienfirebase",
-                    storageBucket: "deceroacienfirebase.firebasestorage.app",
-                    messagingSenderId: "59979742637",
-                    appId: "1:59979742637:web:b50080c220cfc35ef7b524",
-                    measurementId: "G-WJ7PS0GW8D"
-                };
-            }
+            const tryLocal = async () => {
+                try { await loadScript(base + 'assets/js/firebase-config.local.js'); return true; } catch {}
+                try { await loadScript(base + 'assets/js/firebase-config.js'); return true; } catch {}
+                return false;
+            };
+            const ok = await tryLocal();
+            resolve(ok);
         });
 
         // 2) Luego asegurar SDK
