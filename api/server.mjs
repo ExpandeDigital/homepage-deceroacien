@@ -278,7 +278,9 @@ router.post('/mp/create-preference', async (req, res) => {
       const pricingPath = path.join(process.cwd(), 'assets', 'config', 'pricing.json');
       const raw = fs.readFileSync(pricingPath, 'utf-8');
       pricing = JSON.parse(raw);
-    } catch {}
+    } catch (e) {
+      console.warn('[api] No se pudo leer assets/config/pricing.json:', e?.message || e);
+    }
 
     const DEFAULT_DESC = 'Dispositivo de tienda móvil de comercio electrónico';
     const DEFAULT_IMG = `${PUBLIC_SITE_BASE}/assets/logo_de_cero_a_cien.png`;
@@ -303,6 +305,14 @@ router.post('/mp/create-preference', async (req, res) => {
         category_id: it.category_id || undefined
       };
     });
+    // Validación de productos
+    if (!pricing || !pricing.products) {
+      return res.status(500).json({ error: 'pricing_missing', message: 'No se encontró assets/config/pricing.json dentro del servidor' });
+    }
+    const invalid = (items || []).filter(s => typeof s === 'string' && !pricing.products[s]);
+    if (invalid.length) {
+      return res.status(400).json({ error: 'invalid_items', items: invalid });
+    }
 
     const prefBody = {
       items: itemsForPref,
