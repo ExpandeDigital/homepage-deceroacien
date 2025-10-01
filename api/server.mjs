@@ -383,7 +383,33 @@ router.post('/mp/create-preference', async (req, res) => {
     });
   } catch (e) {
     console.error('[api] mp/create-preference error:', e?.message || e);
-    return res.status(500).json({ error: 'mp_error', message: e?.message || String(e) });
+    // Fallback REST para obtener más detalle del error
+    try {
+      const r = await fetch('https://api.mercadopago.com/checkout/preferences', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${MP_ACCESS_TOKEN}`,
+          ...(MP_INTEGRATOR_ID ? { 'x-integrator-id': MP_INTEGRATOR_ID } : {})
+        },
+        body: JSON.stringify({
+          items: [{ title: 'Diagnóstico', quantity: 1, unit_price: 1000, currency_id: 'CLP', id: '1234' }],
+          back_urls: { success: 'https://example.com', pending: 'https://example.com', failure: 'https://example.com' }
+        })
+      });
+      const body = await r.json();
+      const status = r.status;
+      // Devolver detalles para diagnóstico del integrador
+      return res.status(500).json({
+        error: 'mp_error',
+        message: e?.message || String(e),
+        mp_status: status,
+        mp_error: body?.error || body?.message || null,
+        mp_cause: body?.cause || body?.causes || null
+      });
+    } catch (e2) {
+      return res.status(500).json({ error: 'mp_error', message: e?.message || String(e) });
+    }
   }
 });
 
