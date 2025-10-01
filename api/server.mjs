@@ -18,6 +18,12 @@ const MP_INTEGRATOR_ID = process.env.MP_INTEGRATOR_ID || '';
 const PUBLIC_API_BASE = process.env.PUBLIC_API_BASE || '';
 const PUBLIC_SITE_BASE = process.env.PUBLIC_SITE_BASE || 'https://www.deceroacien.app';
 const GRANT_SECRET = process.env.GRANT_SECRET || '';
+// Parámetros de pago (configurables por entorno)
+const MP_INSTALLMENTS = Number(process.env.MP_INSTALLMENTS || 6);
+const _EXC = (process.env.MP_EXCLUDE_PAYMENT_METHODS ?? 'visa');
+const MP_EXCLUDED_PAYMENT_METHODS = _EXC
+  ? _EXC.split(',').map(s => s.trim()).filter(Boolean).map(id => ({ id }))
+  : [];
 
 // Inicializar Firebase Admin (usa credenciales del entorno)
 try {
@@ -345,8 +351,8 @@ router.post('/mp/create-preference', async (req, res) => {
       auto_return: 'approved',
       notification_url: notificationUrl,
       payment_methods: {
-        installments: 6,
-        excluded_payment_methods: [{ id: 'visa' }]
+        installments: MP_INSTALLMENTS,
+        ...(MP_EXCLUDED_PAYMENT_METHODS.length ? { excluded_payment_methods: MP_EXCLUDED_PAYMENT_METHODS } : {})
       },
       external_reference: process.env.MP_CERT_EMAIL || (user && user.email) || undefined,
       metadata: md
