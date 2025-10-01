@@ -18,7 +18,8 @@
       gisLoaded: false,
       gisInitialized: false,
       googleClientId: null
-    }
+    },
+    _gis: { injected: false, initialized: false }
   };
 
   // UI básica
@@ -93,9 +94,18 @@
   function pollGIS(attempt=0){
     const ok = (typeof google !== 'undefined') && google.accounts && google.accounts.id;
     state.flags.gisLoaded = !!ok; renderStatus();
-    if (!ok && attempt < 50) return setTimeout(()=>pollGIS(attempt+1), 200);
-    if (!ok) log('warn','GIS no disponible tras espera.');
-    else log('log','GIS detectado.');
+    if (!ok) {
+      // Inyectar script de GIS automáticamente en debug si no está presente
+      if (!state._gis.injected && attempt >= 3) {
+        injectGisScript();
+      }
+      if (attempt < 50) return setTimeout(()=>pollGIS(attempt+1), 200);
+      log('warn','GIS no disponible tras espera.');
+      return;
+    }
+    log('log','GIS detectado.');
+    // Intentar una inicialización segura (sin prompt) para marcar init OK en debug
+    safeInitGIS();
   }
   document.addEventListener('DOMContentLoaded', ()=> pollGIS());
 
@@ -136,4 +146,40 @@
   // Mensajes útiles al iniciar
   log('log', 'Debug Auth activado. Usa ?debug=1 en la URL para ocultarlo/mostrarlo.');
   if (!state.flags.googleClientId) log('warn','PublicAuthConfig.googleClientId no definido.');
+
+  // Utilidades: inyectar GIS script y realizar init seguro en modo debug
+  function injectGisScript(){
+    try {
+      if (state._gis.injected) return;
+      const existing = Array.from(document.scripts || []).some(s => (s.src||'').includes('accounts.google.com/gsi/client'));
+      if (existing) { state._gis.injected = true; return; }
+      const el = document.createElement('script');
+      el.src = 'https://accounts.google.com/gsi/client?hl=es';
+      el.async = true; el.defer = true;
+      el.onload = ()=>{ state._gis.injected = true; log('log','GIS script inyectado (debug).'); pollGIS(); };
+      el.onerror = ()=>{ log('warn','Fallo al cargar GIS script (debug).'); };
+      (document.head || document.getElementsByTagName('head')[0]).appendChild(el);
+    } catch(e){ /* ignore */ }
+  }
+
+  function safeInitGIS(){
+    try {
+      if (state._gis.initialized) return;
+      if (!window.google || !google.accounts || !google.accounts.id) return;
+      const clientId = state.flags.googleClientId || (window.PublicAuthConfig && window.PublicAuthConfig.googleClientId);
+      if (!clientId) return;
+      // Inicialización sin prompt y sin auto-select para no interferir con UX
+      google.accounts.id.initialize({
+        client_id: clientId,
+        callback: function(){ /* no-op for debug */ },
+        auto_select: false,
+        cancel_on_tap_outside: true,
+        itp_support: true
+      });
+      state._gis.initialized = true;
+      state.flags.gisInitialized = true;
+      renderStatus();
+      log('log','GIS inicializado en modo debug (sin prompt).');
+    } catch(e){ /* ignore */ }
+  }
 })();
