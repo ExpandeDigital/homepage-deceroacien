@@ -351,8 +351,25 @@ router.post('/mp/create-preference', async (req, res) => {
       external_reference: process.env.MP_CERT_EMAIL || (user && user.email) || undefined,
       metadata: md
     };
-    const resp = await mpPreference.create({ body: prefBody, requestOptions: MP_INTEGRATOR_ID ? { headers: { 'x-integrator-id': MP_INTEGRATOR_ID } } : undefined });
-    const body = resp && resp.init_point ? resp : (resp?.body || resp);
+    let resp;
+    let body;
+    try {
+      resp = await mpPreference.create({ body: prefBody, requestOptions: MP_INTEGRATOR_ID ? { headers: { 'x-integrator-id': MP_INTEGRATOR_ID } } : undefined });
+      body = resp && resp.init_point ? resp : (resp?.body || resp);
+    } catch (eCreate) {
+      // Si falla por integrator/client id, reintentar sin header x-integrator-id
+      const msg = (eCreate && (eCreate.message || eCreate.description || '')) + '';
+      if (/client\.id unauthorized|unauthorized/i.test(msg)) {
+        try {
+          const r2 = await mpPreference.create({ body: prefBody });
+          body = r2 && r2.init_point ? r2 : (r2?.body || r2);
+        } catch (e2) {
+          throw e2;
+        }
+      } else {
+        throw eCreate;
+      }
+    }
     return res.json({
       id: body.id,
       init_point: body.init_point,

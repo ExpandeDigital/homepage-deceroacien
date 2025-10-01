@@ -50,7 +50,24 @@ function ensureFirebaseSDKAndConfig() {
             try {
                 if (window.__FIREBASE_APP_CONFIG) return resolve(true);
                 // 0) Intentar obtener config desde el backend (evita secretos en el repo)
-                const res = await fetch((GlobalConfig.basePath || '') + 'api/public-config', { cache: 'no-store' });
+                // Determinar base del API para producción vs local
+                let apiBase = null;
+                try {
+                    if (window.PublicAuthConfig && window.PublicAuthConfig.api && window.PublicAuthConfig.api.baseUrl) {
+                        apiBase = window.PublicAuthConfig.api.baseUrl;
+                    } else {
+                        const host = (window.location && window.location.hostname) || '';
+                        const isLocal = host === 'localhost' || host === '127.0.0.1';
+                        if (isLocal) {
+                            apiBase = (GlobalConfig.basePath || '') + 'api';
+                        } else if (/(^|\.)deceroacien\.app$/.test(host)) {
+                            apiBase = 'https://api.deceroacien.app/api';
+                        } else {
+                            apiBase = (GlobalConfig.basePath || '') + 'api';
+                        }
+                    }
+                } catch(_) { apiBase = (GlobalConfig.basePath || '') + 'api'; }
+                const res = await fetch(apiBase.replace(/\/+$/, '') + '/public-config', { cache: 'no-store' });
                 if (res.ok) {
                     const cfg = await res.json();
                     if (cfg && cfg.firebase) {
