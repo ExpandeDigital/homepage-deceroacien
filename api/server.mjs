@@ -395,9 +395,25 @@ router.get('/mp/debug-preference', async (req, res) => {
     if (!mpPreference) return res.status(503).json({ ok: false, error: 'mp_unavailable' });
     const prefId = req.query.pref_id || req.query.id;
     if (!prefId) return res.status(400).json({ ok: false, error: 'missing_pref_id' });
-    const resp = await mpPreference.get({ preferenceId: String(prefId), requestOptions: MP_INTEGRATOR_ID ? { headers: { 'x-integrator-id': MP_INTEGRATOR_ID } } : undefined });
-    const body = resp?.body || resp;
-    res.json({ ok: true, preference: body });
+    try {
+      const resp = await mpPreference.get({ preferenceId: String(prefId), requestOptions: MP_INTEGRATOR_ID ? { headers: { 'x-integrator-id': MP_INTEGRATOR_ID } } : undefined });
+      const body = resp?.body || resp;
+      return res.json({ ok: true, source: 'sdk', preference: body });
+    } catch (sdkErr) {
+      // Fallback REST para ver el error exacto
+      try {
+        const r = await fetch(`https://api.mercadopago.com/checkout/preferences/${encodeURIComponent(String(prefId))}`, {
+          headers: {
+            Authorization: `Bearer ${MP_ACCESS_TOKEN}`,
+            ...(MP_INTEGRATOR_ID ? { 'x-integrator-id': MP_INTEGRATOR_ID } : {})
+          }
+        });
+        const body = await r.json();
+        return res.status(r.ok ? 200 : 200).json({ ok: r.ok, source: 'rest', status: r.status, response: body });
+      } catch (restErr) {
+        return res.status(500).json({ ok: false, error: restErr?.message || String(restErr) });
+      }
+    }
   } catch (e) {
     res.status(500).json({ ok: false, error: e?.message || String(e) });
   }
