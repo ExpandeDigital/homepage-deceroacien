@@ -10,6 +10,7 @@
         const user = (w.authManager && w.authManager.isUserAuthenticated && w.authManager.isUserAuthenticated())
           ? (w.authManager.getCurrentUser && w.authManager.getCurrentUser())
           : null;
+        const idToken = (w.authManager && w.authManager.getIdToken) ? await w.authManager.getIdToken() : null;
 
         const payload = {
           items,
@@ -18,12 +19,16 @@
         };
 
         const endpoint = (w.Environment && w.Environment.isDevelopment)
-          ? 'http://localhost:3000/api/mp/create-preference'
-          : '/api/mp/create-preference'; // misma origin para evitar CORS y funcionar en previews
+          ? 'http://localhost:3001/api/mp/create-preference'
+          : ((w.PublicAuthConfig && w.PublicAuthConfig.api && w.PublicAuthConfig.api.baseUrl)
+              ? (w.PublicAuthConfig.api.baseUrl + '/mp/create-preference')
+              : '/api/mp/create-preference');
 
+        const headers = { 'Content-Type': 'application/json' };
+        if (idToken) headers['Authorization'] = `Bearer ${idToken}`;
         const resp = await fetch(endpoint, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers,
           body: JSON.stringify(payload)
         });
 

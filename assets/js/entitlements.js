@@ -315,9 +315,10 @@
 
     if (hasSignature && !isDev) {
       try {
-        const qs = new URLSearchParams({ grant: list[0], t: q.t, ref: q.ref || '', sig: q.sig }).toString();
-        const endpoint = '/api/mp/verify-grant';
-        const resp = await fetch(`${endpoint}?${qs}`);
+  const qs = new URLSearchParams({ grant: list[0], t: q.t, ref: q.ref || '', sig: q.sig }).toString();
+  const api = (w.PublicAuthConfig && w.PublicAuthConfig.api) || {};
+  const endpoint = (api.baseUrl ? (api.baseUrl + '/mp/verify-grant') : '/api/mp/verify-grant');
+  const resp = await fetch(`${endpoint}?${qs}`);
         const data = await resp.json();
         if (data && data.ok) {
           await applyGrant(list);
