@@ -20,7 +20,7 @@ const PUBLIC_SITE_BASE = process.env.PUBLIC_SITE_BASE || 'https://www.deceroacie
 const GRANT_SECRET = process.env.GRANT_SECRET || '';
 // Parámetros de pago (configurables por entorno)
 const MP_INSTALLMENTS = Number(process.env.MP_INSTALLMENTS || 6);
-const _EXC = (process.env.MP_EXCLUDE_PAYMENT_METHODS ?? 'visa');
+const _EXC = (process.env.MP_EXCLUDE_PAYMENT_METHODS ?? '');
 const MP_EXCLUDED_PAYMENT_METHODS = _EXC
   ? _EXC.split(',').map(s => s.trim()).filter(Boolean).map(id => ({ id }))
   : [];
