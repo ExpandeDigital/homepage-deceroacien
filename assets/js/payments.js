@@ -18,11 +18,18 @@
           returnTo: returnTo || w.location.href
         };
 
-        const endpoint = (w.Environment && w.Environment.isDevelopment)
-          ? 'http://localhost:3001/api/mp/create-preference'
-          : ((w.PublicAuthConfig && w.PublicAuthConfig.api && w.PublicAuthConfig.api.baseUrl)
-              ? (w.PublicAuthConfig.api.baseUrl + '/mp/create-preference')
-              : '/api/mp/create-preference');
+        const isDev = !!(w.Environment && w.Environment.isDevelopment);
+        let endpoint;
+        if (isDev) {
+          endpoint = 'http://localhost:3001/api/mp/create-preference';
+        } else if (w.PublicAuthConfig && w.PublicAuthConfig.api && w.PublicAuthConfig.api.baseUrl) {
+          endpoint = w.PublicAuthConfig.api.baseUrl + '/mp/create-preference';
+        } else if ((w.location && /(^|\.)deceroacien\.app$/.test(w.location.hostname))) {
+          // Fallback seguro en producción para evitar usar /api relativo (Vercel)
+          endpoint = 'https://api.deceroacien.app/api/mp/create-preference';
+        } else {
+          endpoint = '/api/mp/create-preference';
+        }
 
         const headers = { 'Content-Type': 'application/json' };
         if (idToken) headers['Authorization'] = `Bearer ${idToken}`;

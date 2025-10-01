@@ -316,14 +316,7 @@ router.post('/mp/create-preference', async (req, res) => {
       notification_url: notificationUrl,
       payment_methods: {
         installments: 6,
-        excluded_payment_methods: [{ id: 'visa' }],
-        excluded_payment_types: [
-          { id: 'debit_card' },
-          { id: 'prepaid_card' },
-          { id: 'ticket' },
-          { id: 'atm' },
-          { id: 'bank_transfer' }
-        ]
+        excluded_payment_methods: [{ id: 'visa' }]
       },
       external_reference: process.env.MP_CERT_EMAIL || (user && user.email) || undefined,
       metadata: md
@@ -405,6 +398,23 @@ router.get('/mp/debug-preference', async (req, res) => {
     const resp = await mpPreference.get({ preferenceId: String(prefId), requestOptions: MP_INTEGRATOR_ID ? { headers: { 'x-integrator-id': MP_INTEGRATOR_ID } } : undefined });
     const body = resp?.body || resp;
     res.json({ ok: true, preference: body });
+  } catch (e) {
+    res.status(500).json({ ok: false, error: e?.message || String(e) });
+  }
+});
+
+// Diagnóstico: ¿quién es el vendedor según el MP_ACCESS_TOKEN?
+router.get('/mp/debug-whoami', async (req, res) => {
+  try {
+    if (!MP_ACCESS_TOKEN) return res.status(200).json({ ok: false, error: 'no_token_configured' });
+    const r = await fetch('https://api.mercadopago.com/users/me', {
+      headers: {
+        Authorization: `Bearer ${MP_ACCESS_TOKEN}`,
+        ...(MP_INTEGRATOR_ID ? { 'x-integrator-id': MP_INTEGRATOR_ID } : {})
+      }
+    });
+    const body = await r.json();
+    res.status(r.ok ? 200 : 200).json({ ok: r.ok, status: r.status, user: body });
   } catch (e) {
     res.status(500).json({ ok: false, error: e?.message || String(e) });
   }
