@@ -39,7 +39,8 @@
           return;
         }
 
-        const url = data.init_point || data.sandbox_init_point;
+  // Para pruebas con usuarios de prueba, preferimos sandbox_init_point
+  const url = data.sandbox_init_point || data.init_point;
         if (!url) {
           alert('No se pudo iniciar el pago (URL no disponible).');
           return;
