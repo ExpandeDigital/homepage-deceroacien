@@ -41,8 +41,8 @@
     </section>
   </main>
 
-  <script src="/assets/js/payments.js"></script>
   <script src="/assets/js/pricing.js"></script>
+  <script src="/assets/js/payments.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       try {
@@ -52,8 +52,11 @@
         if (p && priceEl) priceEl.textContent = Pricing.format(p.unit_price);
       } catch {}
       const btn = document.getElementById('buyBtn');
-      btn.addEventListener('click', () => {
-  Payments.startCheckout({ items: ['test.clp2000'] });
+      btn.addEventListener('click', async () => {
+        try {
+          await Pricing.load();
+        } catch {}
+        Payments.startCheckout({ items: ['test.clp2000'] });
       });
     });
   </script>

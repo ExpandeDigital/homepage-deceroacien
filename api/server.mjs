@@ -305,13 +305,15 @@ router.post('/mp/create-preference', async (req, res) => {
         category_id: it.category_id || undefined
       };
     });
-    // Validación de productos
-    if (!pricing || !pricing.products) {
-      return res.status(500).json({ error: 'pricing_missing', message: 'No se encontró assets/config/pricing.json dentro del servidor' });
-    }
-    const invalid = (items || []).filter(s => typeof s === 'string' && !pricing.products[s]);
-    if (invalid.length) {
-      return res.status(400).json({ error: 'invalid_items', items: invalid });
+    // Validación de productos: si vienen SKUs y no tenemos pricing, lo rechazamos; si vienen objetos completos, permitimos pasar
+    if ((items || []).some(s => typeof s === 'string')) {
+      if (!pricing || !pricing.products) {
+        return res.status(400).json({ error: 'invalid_items', message: 'Se enviaron SKUs pero el servidor no tiene pricing.json; enviar ítems completos desde el frontend o incluir pricing.json' });
+      }
+      const invalid = (items || []).filter(s => typeof s === 'string' && !pricing.products[s]);
+      if (invalid.length) {
+        return res.status(400).json({ error: 'invalid_items', items: invalid });
+      }
     }
 
     const prefBody = {
@@ -340,7 +342,7 @@ router.post('/mp/create-preference', async (req, res) => {
     });
   } catch (e) {
     console.error('[api] mp/create-preference error:', e?.message || e);
-    return res.status(500).json({ error: 'mp_error' });
+    return res.status(500).json({ error: 'mp_error', message: e?.message || String(e) });
   }
 });
 
