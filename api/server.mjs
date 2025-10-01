@@ -359,21 +359,48 @@ router.post('/mp/create-preference', async (req, res) => {
     };
     let resp;
     let body;
+    let lastErr = null;
+    // 1) SDK con integrator (si está configurado)
     try {
       resp = await mpPreference.create({ body: prefBody, requestOptions: MP_INTEGRATOR_ID ? { headers: { 'x-integrator-id': MP_INTEGRATOR_ID } } : undefined });
       body = resp && resp.init_point ? resp : (resp?.body || resp);
-    } catch (eCreate) {
-      // Si falla por integrator/client id, reintentar sin header x-integrator-id
-      const msg = (eCreate && (eCreate.message || eCreate.description || '')) + '';
-      if (/client\.id unauthorized|unauthorized/i.test(msg)) {
+    } catch (eCreate1) {
+      lastErr = eCreate1;
+      // 2) SDK sin integrator header
+      try {
+        const r2 = await mpPreference.create({ body: prefBody });
+        body = r2 && r2.init_point ? r2 : (r2?.body || r2);
+      } catch (eCreate2) {
+        lastErr = eCreate2;
+        // 3) REST con integrator header
         try {
-          const r2 = await mpPreference.create({ body: prefBody });
-          body = r2 && r2.init_point ? r2 : (r2?.body || r2);
-        } catch (e2) {
-          throw e2;
+          const r3 = await fetch('https://api.mercadopago.com/checkout/preferences', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${MP_ACCESS_TOKEN}`,
+              ...(MP_INTEGRATOR_ID ? { 'x-integrator-id': MP_INTEGRATOR_ID } : {})
+            },
+            body: JSON.stringify(prefBody)
+          });
+          const b3 = await r3.json();
+          if (!r3.ok) throw new Error(`REST create failed: ${r3.status} ${b3?.error || b3?.message || ''}`);
+          body = b3;
+        } catch (eCreate3) {
+          lastErr = eCreate3;
+          // 4) REST sin integrator header
+          const r4 = await fetch('https://api.mercadopago.com/checkout/preferences', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${MP_ACCESS_TOKEN}`
+            },
+            body: JSON.stringify(prefBody)
+          });
+          const b4 = await r4.json();
+          if (!r4.ok) throw new Error(`REST create (no integrator) failed: ${r4.status} ${b4?.error || b4?.message || ''}`);
+          body = b4;
         }
-      } else {
-        throw eCreate;
       }
     }
     return res.json({
