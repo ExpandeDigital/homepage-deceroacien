@@ -470,28 +470,46 @@ class HeaderComponent extends BaseComponent {
             const firstName = user.firstName || 'Usuario';
             const pref = (localStorage.getItem('deceroacien_avatar_pref') || 'male').toLowerCase();
             let avatar = (user && user.profilePicture) ? user.profilePicture : (pref === 'female' ? '/assets/female-avatar.png' : '/assets/male-avatar.png');
-            if (avatar && avatar.startsWith('/') && this.basePath && this.basePath.startsWith('..')) {
-                // si estamos en subcarpetas y usamos rutas absolutas, mantener absoluta
-            }
             authSection.innerHTML = `
-                <div class="header-user-menu" style="display:flex;align-items:center;gap:12px;">
-                    <img src="${avatar}" alt="Avatar" style="width:28px;height:28px;border-radius:9999px;border:2px solid #FBBF24;object-fit:cover;"/>
-                    <span class="header-user-greeting">Hola, ${firstName}</span>
-                    <a href="${this.basePath}auth/dashboard.html" class="header-dashboard-link">Dashboard</a>
-                    <button class="header-logout-btn" data-logout>Cerrar Sesión</button>
+                <div class="header-user-menu" style="position:relative;display:flex;align-items:center;gap:8px;">
+                    <button class="header-user-toggle" aria-haspopup="true" aria-expanded="false" style="display:flex;align-items:center;gap:8px;background:none;border:none;color:#e6f1ff;cursor:pointer;padding:4px 6px;border-radius:8px;">
+                        <img src="${avatar}" alt="Avatar" style="width:28px;height:28px;border-radius:9999px;border:2px solid #FBBF24;object-fit:cover;"/>
+                        <span class="header-user-greeting" style="color:#e6f1ff;">Hola, ${firstName}</span>
+                        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 7l5 5 5-5" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="header-user-dropdown" role="menu" style="display:none;position:absolute;right:0;top:calc(100% + 8px);background:#0b1220;border:1px solid #1e2d4d;border-radius:10px;min-width:220px;box-shadow:0 10px 25px rgba(0,0,0,0.35);overflow:hidden;z-index:9999;">
+                        <a href="${this.basePath}auth/dashboard.html" role="menuitem" style="display:block;padding:10px 12px;color:#e6f1ff;text-decoration:none;">Dashboard</a>
+                        <a href="${this.basePath}portal-alumno.html" role="menuitem" style="display:block;padding:10px 12px;color:#e6f1ff;text-decoration:none;">Portal del Alumno</a>
+                        <div style="height:1px;background:#1e2d4d;margin:4px 0;"></div>
+                        <button role="menuitem" data-logout style="width:100%;text-align:left;padding:10px 12px;background:none;border:none;color:#fca5a5;cursor:pointer;">Cerrar Sesión</button>
+                    </div>
                 </div>
             `;
-            
-            // Agregar event listener al botón de logout (sin forzar reload)
+            // Comportamiento del dropdown
+            const container = authSection.querySelector('.header-user-menu');
+            const toggleBtn = container.querySelector('.header-user-toggle');
+            const dropdown = container.querySelector('.header-user-dropdown');
+            const setOpen = (open)=>{
+                dropdown.style.display = open ? 'block' : 'none';
+                toggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+                container.classList.toggle('open', open);
+            };
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', (e)=>{ e.preventDefault(); setOpen(!container.classList.contains('open')); });
+            }
+            // Cierre al hacer click fuera
+            if (!this._dropdownOutsideHandler) {
+                this._dropdownOutsideHandler = (ev)=>{ try { if (container && !container.contains(ev.target)) setOpen(false); } catch(_){} };
+                document.addEventListener('click', this._dropdownOutsideHandler);
+                this._dropdownEscHandler = (ev)=>{ if (ev.key === 'Escape') setOpen(false); };
+                document.addEventListener('keydown', this._dropdownEscHandler);
+            }
+            // Logout en el dropdown
             const logoutBtn = authSection.querySelector('[data-logout]');
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', async (e) => {
                     e.preventDefault();
-                    try {
-                        if (window.authManager && typeof window.authManager.logout === 'function') {
-                            await window.authManager.logout();
-                        }
-                    } catch(_) {}
+                    try { if (window.authManager && typeof window.authManager.logout === 'function') await window.authManager.logout(); } catch(_){}
                 });
             }
         }
