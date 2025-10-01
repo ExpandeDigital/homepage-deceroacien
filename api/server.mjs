@@ -316,7 +316,14 @@ router.post('/mp/create-preference', async (req, res) => {
       notification_url: notificationUrl,
       payment_methods: {
         installments: 6,
-        excluded_payment_methods: [{ id: 'visa' }]
+        excluded_payment_methods: [{ id: 'visa' }],
+        excluded_payment_types: [
+          { id: 'debit_card' },
+          { id: 'prepaid_card' },
+          { id: 'ticket' },
+          { id: 'atm' },
+          { id: 'bank_transfer' }
+        ]
       },
       external_reference: process.env.MP_CERT_EMAIL || (user && user.email) || undefined,
       metadata: md
