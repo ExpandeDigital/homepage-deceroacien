@@ -396,6 +396,20 @@ router.get('/mp/verify-grant', async (req, res) => {
 
 app.use(BASE_PATH, router);
 
+// Endpoint de diagnóstico (opcional): inspeccionar preferencia por ID
+router.get('/mp/debug-preference', async (req, res) => {
+  try {
+    if (!mpPreference) return res.status(503).json({ ok: false, error: 'mp_unavailable' });
+    const prefId = req.query.pref_id || req.query.id;
+    if (!prefId) return res.status(400).json({ ok: false, error: 'missing_pref_id' });
+    const resp = await mpPreference.get({ preferenceId: String(prefId), requestOptions: MP_INTEGRATOR_ID ? { headers: { 'x-integrator-id': MP_INTEGRATOR_ID } } : undefined });
+    const body = resp?.body || resp;
+    res.json({ ok: true, preference: body });
+  } catch (e) {
+    res.status(500).json({ ok: false, error: e?.message || String(e) });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`[api] listening on :${PORT} basePath=${BASE_PATH}`);
   console.log(`[api] allowed origins:`, ALLOWED_ORIGINS);
