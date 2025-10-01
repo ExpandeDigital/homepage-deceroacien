@@ -78,9 +78,12 @@
                                 <p id="userCompany" class="text-xs text-gray-400">Empresa</p>
                             </div>
                         </div>
-                        <button data-logout class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm transition-colors">
-                            Cerrar Sesión
-                        </button>
+                        <!-- Selector de avatar genérico cuando no hay foto de Google -->
+                        <div id="avatarSelector" class="hidden sm:flex items-center gap-2 text-xs text-gray-300">
+                            <span>Avatar:</span>
+                            <button type="button" data-avatar="male" class="px-2 py-1 border border-gray-600 rounded hover:bg-gray-700">Masculino</button>
+                            <button type="button" data-avatar="female" class="px-2 py-1 border border-gray-600 rounded hover:bg-gray-700">Femenino</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -211,8 +214,35 @@
                 document.getElementById('userCompany').textContent = user.company || 'Emprendedor';
                 
                 // Si el usuario tiene foto de perfil (Google), usarla
+                const avatarEl = document.getElementById('userAvatar');
+                const hasGooglePhoto = !!(user.profilePicture && /^https?:\/\//.test(user.profilePicture));
                 if (user.profilePicture) {
-                    document.getElementById('userAvatar').src = user.profilePicture;
+                    avatarEl.src = user.profilePicture.startsWith('/') ? ('..' + user.profilePicture) : user.profilePicture;
+                } else {
+                    const pref = (localStorage.getItem('deceroacien_avatar_pref') || 'male').toLowerCase();
+                    avatarEl.src = pref === 'female' ? '../assets/female-avatar.png' : '../assets/male-avatar.png';
+                }
+
+                // Mostrar selector solo si no hay foto de Google
+                const sel = document.getElementById('avatarSelector');
+                if (sel) {
+                    sel.style.display = hasGooglePhoto ? 'none' : 'flex';
+                    sel.querySelectorAll('button[data-avatar]').forEach(btn => {
+                        btn.onclick = () => {
+                            const choice = btn.getAttribute('data-avatar');
+                            localStorage.setItem('deceroacien_avatar_pref', choice);
+                            const newSrc = choice === 'female' ? '../assets/female-avatar.png' : '../assets/male-avatar.png';
+                            avatarEl.src = newSrc;
+                            // Actualizar en sesión actual
+                            if (window.authManager && window.authManager.currentUser) {
+                                window.authManager.currentUser.profilePicture = '/' + (choice === 'female' ? 'assets/female-avatar.png' : 'assets/male-avatar.png');
+                                try {
+                                    const key = (window.PublicAuthConfig && window.PublicAuthConfig.storage && window.PublicAuthConfig.storage.userKey) || 'deceroacien_user';
+                                    localStorage.setItem(key, JSON.stringify(window.authManager.currentUser));
+                                } catch(_) {}
+                            }
+                        };
+                    });
                 }
             }
         }

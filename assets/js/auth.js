@@ -825,12 +825,14 @@ window.handleCredentialResponse = handleCredentialResponse;
                         const isDev = !!(window.Environment && window.Environment.isDevelopment);
                         const u = fbAuth && fbAuth.currentUser;
                         if (isDev && u) {
+                            const pref = (localStorage.getItem('deceroacien_avatar_pref') || 'male').toLowerCase();
+                            const fallbackAvatar = pref === 'female' ? '/assets/female-avatar.png' : '/assets/male-avatar.png';
                             const simpleUser = {
                                 id: u.uid,
                                 email: u.email || (u.providerData && u.providerData[0] && u.providerData[0].email) || '',
                                 firstName: (u.displayName && u.displayName.split(' ')[0]) || 'Usuario',
                                 lastName: (u.displayName && u.displayName.split(' ').slice(1).join(' ')) || '',
-                                profilePicture: (u.photoURL) || ''
+                                profilePicture: (u.photoURL) || fallbackAvatar
                             };
                             localStorage.setItem(AuthConfig.storage.userKey, JSON.stringify(simpleUser));
                             localStorage.setItem(AuthConfig.storage.tokenKey, idToken);
@@ -860,16 +862,25 @@ window.handleCredentialResponse = handleCredentialResponse;
                 }
                 // Persist simple user for UI reuse
                 if (data.user) {
-                    localStorage.setItem(AuthConfig.storage.userKey, JSON.stringify({
+                    // Enriquecer con foto del usuario de Firebase si existe; si no, aplicar preferencia de avatar genérico
+                    const uFb = (typeof fbAuth !== 'undefined' && fbAuth && fbAuth.currentUser) ? fbAuth.currentUser : null;
+                    let picture = (uFb && uFb.photoURL) || data.user.photo_url || data.user.picture || '';
+                    if (!picture) {
+                        const pref = (localStorage.getItem('deceroacien_avatar_pref') || 'male').toLowerCase();
+                        picture = pref === 'female' ? '/assets/female-avatar.png' : '/assets/male-avatar.png';
+                    }
+                    const simpleUser = {
                         id: data.user.id,
                         email: data.user.email,
                         firebase_uid: data.user.firebase_uid,
                         firstName: data.user.first_name,
-                        lastName: data.user.last_name
-                    }));
+                        lastName: data.user.last_name,
+                        profilePicture: picture
+                    };
+                    localStorage.setItem(AuthConfig.storage.userKey, JSON.stringify(simpleUser));
                     localStorage.setItem(AuthConfig.storage.tokenKey, idToken);
                     if (window.authManager) {
-                        window.authManager.currentUser = data.user;
+                        window.authManager.currentUser = simpleUser;
                         window.authManager.isAuthenticated = true;
                     }
                 }

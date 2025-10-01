@@ -448,6 +448,13 @@ class HeaderComponent extends BaseComponent {
                 setTimeout(() => this.updateAuthSection(), 100);
             });
         }
+        // Escuchar cambios de preferencia de avatar entre pestañas y refrescar header
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'deceroacien_avatar_pref' || e.key === 'deceroacien_user') {
+                setTimeout(() => this.updateAuthSection(), 50);
+                if (typeof this.updateMobileAuthInMenu === 'function') this.updateMobileAuthInMenu();
+            }
+        });
     }
     
     /**
@@ -461,24 +468,30 @@ class HeaderComponent extends BaseComponent {
         if (window.authManager && window.authManager.isUserAuthenticated()) {
             const user = window.authManager.getCurrentUser();
             const firstName = user.firstName || 'Usuario';
-            
+            const pref = (localStorage.getItem('deceroacien_avatar_pref') || 'male').toLowerCase();
+            let avatar = (user && user.profilePicture) ? user.profilePicture : (pref === 'female' ? '/assets/female-avatar.png' : '/assets/male-avatar.png');
+            if (avatar && avatar.startsWith('/') && this.basePath && this.basePath.startsWith('..')) {
+                // si estamos en subcarpetas y usamos rutas absolutas, mantener absoluta
+            }
             authSection.innerHTML = `
-                <div class="header-user-menu">
+                <div class="header-user-menu" style="display:flex;align-items:center;gap:12px;">
+                    <img src="${avatar}" alt="Avatar" style="width:28px;height:28px;border-radius:9999px;border:2px solid #FBBF24;object-fit:cover;"/>
                     <span class="header-user-greeting">Hola, ${firstName}</span>
                     <a href="${this.basePath}auth/dashboard.html" class="header-dashboard-link">Dashboard</a>
                     <button class="header-logout-btn" data-logout>Cerrar Sesión</button>
                 </div>
             `;
             
-            // Agregar event listener al botón de logout
+            // Agregar event listener al botón de logout (sin forzar reload)
             const logoutBtn = authSection.querySelector('[data-logout]');
             if (logoutBtn) {
-                logoutBtn.addEventListener('click', () => {
-                    if (window.authManager) {
-                        window.authManager.logout();
-                        // Recargar la página para reflejar el cambio de estado
-                        window.location.reload();
-                    }
+                logoutBtn.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    try {
+                        if (window.authManager && typeof window.authManager.logout === 'function') {
+                            await window.authManager.logout();
+                        }
+                    } catch(_) {}
                 });
             }
         }
@@ -817,19 +830,22 @@ class HeaderComponent extends BaseComponent {
         if (window.authManager && typeof window.authManager.isUserAuthenticated === 'function' && window.authManager.isUserAuthenticated()) {
             const user = (typeof window.authManager.getCurrentUser === 'function') ? window.authManager.getCurrentUser() : null;
             const firstName = (user && user.firstName) || 'Usuario';
+            const pref = (localStorage.getItem('deceroacien_avatar_pref') || 'male').toLowerCase();
+            let avatar = (user && user.profilePicture) ? user.profilePicture : (pref === 'female' ? '/assets/female-avatar.png' : '/assets/male-avatar.png');
             authBlock.innerHTML = `
                 <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+                    <img src="${avatar}" alt="Avatar" style="width:40px;height:40px;border-radius:9999px;border:2px solid #FBBF24;object-fit:cover;"/>
                     <span style="color:#94a3b8;">Hola, ${firstName}</span>
                     <a href="${this.basePath}auth/dashboard.html" class="mobile-register-btn" style="text-align:center; text-decoration:none;">Ir al Dashboard</a>
                     <button class="mobile-auth-link" data-logout style="background:none; border:none; color:#94a3b8; cursor:pointer;">Cerrar Sesión</button>
                 </div>
             `;
             const btn = authBlock.querySelector('[data-logout]');
-            if (btn) btn.addEventListener('click', () => {
+            if (btn) btn.addEventListener('click', async (e) => {
+                e.preventDefault();
                 if (window.authManager && typeof window.authManager.logout === 'function') {
-                    window.authManager.logout();
+                    try { await window.authManager.logout(); } catch(_) {}
                 }
-                window.location.reload();
             });
         } else {
             // Invitado
