@@ -15,9 +15,20 @@
       firebaseConfig: false,
       firebaseSDKReady: false,
       firebaseAuthReady: false,
+      firebaseSignedIn: false,
       gisLoaded: false,
       gisInitialized: false,
-      googleClientId: null
+      googleClientId: null,
+      // Supabase & Backend
+      supabaseClient: false,
+      supabaseSession: false,
+      supabaseEmail: null,
+      tokenIssuer: null,
+      provider: 'none', // supabase|firebase|none
+      backendApiBase: null,
+      backendMeOk: false,
+      backendMeStatus: null,
+      backendEnrollments: null
     },
     _gis: { injected: false, initialized: false }
   };
@@ -28,6 +39,7 @@
   panel.innerHTML = '<div style="padding:8px 10px;border-bottom:1px solid #1e2d4d;display:flex;align-items:center;gap:8px;justify-content:space-between;">\
     <strong>Debug Auth</strong>\
     <div>\
+      <button id="dbg_refresh" style="margin-right:6px;padding:4px 8px;background:#22c55e;color:#011627;border:none;border-radius:6px;cursor:pointer;">Refrescar</button>\
       <button id="dbg_copy" style="margin-right:6px;padding:4px 8px;background:#0ea5e9;color:#011627;border:none;border-radius:6px;cursor:pointer;">Copiar</button>\
       <button id="dbg_clear" style="padding:4px 8px;background:#64748b;color:#011627;border:none;border-radius:6px;cursor:pointer;">Limpiar</button>\
     </div>\
@@ -39,6 +51,7 @@
   const logsEl = panel.querySelector('#dbg_logs');
   const statusEl = panel.querySelector('#dbg_status');
   panel.querySelector('#dbg_clear').onclick = () => { state.logs.length = 0; renderLogs(); };
+  panel.querySelector('#dbg_refresh').onclick = () => { runChecks().catch(()=>{}); };
   panel.querySelector('#dbg_copy').onclick = () => {
     const txt = state.logs.map(l => `[${l.level}] ${new Date(l.ts).toISOString()} ${l.msg}`).join('\n');
     navigator.clipboard.writeText(txt).catch(()=>{});
@@ -47,12 +60,23 @@
   function renderStatus(){
     const b = (ok)=> `<span style="background:${ok?'#16a34a':'#ef4444'};padding:2px 6px;border-radius:9999px;color:#fff;font-weight:600;font-size:11px;">${ok?'OK':'FAIL'}</span>`;
     const cid = state.flags.googleClientId || '(no)';
+    const prov = state.flags.provider;
     statusEl.innerHTML = `
-      <div>Config: ${b(!!state.flags.firebaseConfig)}</div>
-      <div>SDK: ${b(!!state.flags.firebaseSDKReady)}</div>
-      <div>Auth: ${b(!!state.flags.firebaseAuthReady)}</div>
+      <div>FB Config: ${b(!!state.flags.firebaseConfig)}</div>
+      <div>FB SDK: ${b(!!state.flags.firebaseSDKReady)}</div>
+      <div>FB Auth: ${b(!!state.flags.firebaseAuthReady)}</div>
+      <div>FB SignedIn: ${b(!!state.flags.firebaseSignedIn)}</div>
       <div>GIS script: ${b(!!state.flags.gisLoaded)}</div>
       <div>GIS init: ${b(!!state.flags.gisInitialized)}</div>
+      <div>SB Client: ${b(!!state.flags.supabaseClient)}</div>
+      <div>SB Session: ${b(!!state.flags.supabaseSession)}</div>
+      <div style="grid-column:1/3">Proveedor: <strong>${prov}</strong></div>
+      <div style="grid-column:1/3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">SB Email: ${state.flags.supabaseEmail||'(no)'}</div>
+      <div style="grid-column:1/3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Token iss: ${state.flags.tokenIssuer||'(no)'}</div>
+      <div style="grid-column:1/3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">API: ${state.flags.backendApiBase||'(no)'}</div>
+      <div>me(): ${b(!!state.flags.backendMeOk)}</div>
+      <div>Status: ${state.flags.backendMeStatus ?? '-'}</div>
+      <div style="grid-column:1/3;">Enrollments: ${state.flags.backendEnrollments ?? '-'}</div>
       <div style="grid-column:1/3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">ClientID: ${cid}</div>
     `;
   }
@@ -84,11 +108,12 @@
     log('log','evento firebase:sdk-ready'); 
     setTimeout(()=>{ 
       state.flags.firebaseAuthReady = !!window.__firebaseAuth; 
+      try { state.flags.firebaseSignedIn = !!(window.__firebaseAuth && window.__firebaseAuth.currentUser); } catch {}
       state.flags.firebaseConfig = !!window.__FIREBASE_APP_CONFIG;
       renderStatus(); 
     }, 0); 
   });
-  if (window.__firebaseAuth) { state.flags.firebaseAuthReady = true; }
+  if (window.__firebaseAuth) { state.flags.firebaseAuthReady = true; try { state.flags.firebaseSignedIn = !!window.__firebaseAuth.currentUser; } catch {} }
 
   // GIS detección
   function pollGIS(attempt=0){
@@ -182,4 +207,84 @@
       log('log','GIS inicializado en modo debug (sin prompt).');
     } catch(e){ /* ignore */ }
   }
+
+  // ==========
+  // Supabase + Backend checks (todo-en-uno)
+  // ==========
+  async function runChecks(){
+    try {
+      log('log','[check] Iniciando verificación todo-en-uno…');
+      // 1) Supabase client y sesión
+      let sb = null;
+      try {
+        if (window.SupabaseAuth && window.SupabaseAuth.ensureSupabase) {
+          sb = await window.SupabaseAuth.ensureSupabase();
+          state.flags.supabaseClient = !!sb;
+        } else {
+          state.flags.supabaseClient = false;
+        }
+      } catch(e){ state.flags.supabaseClient = false; log('warn','[check] ensureSupabase falló: '+(e.message||e)); }
+
+      let token = null; let payload = null;
+      if (state.flags.supabaseClient && window.SupabaseAuth && window.SupabaseAuth.getAccessToken) {
+        try { token = await window.SupabaseAuth.getAccessToken(); } catch(e){ log('warn','[check] getAccessToken falló: '+(e.message||e)); }
+      }
+      state.flags.supabaseSession = !!token;
+      if (token) {
+        try {
+          const p = JSON.parse(atob(token.split('.')[1] || ''));
+          payload = p;
+          state.flags.tokenIssuer = p.iss || null;
+          state.flags.supabaseEmail = p.email || null;
+        } catch(e){ log('warn','[check] No se pudo decodificar el JWT: '+(e.message||e)); }
+      } else {
+        state.flags.tokenIssuer = null;
+        state.flags.supabaseEmail = null;
+      }
+
+      // 2) Determinar proveedor activo
+      try { state.flags.firebaseSignedIn = !!(window.__firebaseAuth && window.__firebaseAuth.currentUser); } catch {}
+      state.flags.provider = state.flags.supabaseSession ? 'supabase' : (state.flags.firebaseSignedIn ? 'firebase' : 'none');
+
+      // 3) API base y /auth/me
+      const apiCfg = (window.PublicAuthConfig && window.PublicAuthConfig.api) || null;
+      const apiBase = apiCfg && apiCfg.baseUrl ? apiCfg.baseUrl : (function(){
+        try {
+          const host = (window.location && window.location.hostname) || '';
+          if (host === 'localhost' || host === '127.0.0.1') return '/api';
+          if (/(^|\.)deceroacien\.app$/.test(host)) return 'https://api.deceroacien.app/api';
+        } catch {}
+        return '/api';
+      })();
+      state.flags.backendApiBase = apiBase;
+
+      state.flags.backendMeOk = false; state.flags.backendMeStatus = null; state.flags.backendEnrollments = null;
+      let usedToken = token;
+      if (!usedToken && window.__firebaseAuth && window.__firebaseAuth.currentUser) {
+        try { usedToken = await window.__firebaseAuth.currentUser.getIdToken(/*force*/true); } catch {}
+      }
+      if (usedToken) {
+        try {
+          const r = await fetch(apiBase.replace(/\/$/, '') + '/auth/me', { headers: { Authorization: 'Bearer ' + usedToken } });
+          state.flags.backendMeStatus = r.status;
+          if (r.ok) {
+            const j = await r.json().catch(()=>null);
+            state.flags.backendMeOk = true;
+            state.flags.backendEnrollments = Array.isArray(j?.enrollments) ? j.enrollments.length : null;
+            log('log','[check] /auth/me OK ('+r.status+'), enrollments='+state.flags.backendEnrollments);
+          } else {
+            const txt = await r.text().catch(()=> '');
+            log('warn','[check] /auth/me no OK ('+r.status+'): '+ txt.slice(0,180));
+          }
+        } catch(e){ log('error','[check] Error llamando /auth/me: '+(e.message||e)); }
+      } else {
+        log('warn','[check] No hay token disponible para probar /auth/me');
+      }
+
+      renderStatus();
+      log('log','[check] Verificación completada.');
+    } catch(e){ log('error','[check] Error general: '+(e.message||e)); }
+  }
+
+  document.addEventListener('DOMContentLoaded', ()=>{ setTimeout(()=> runChecks().catch(()=>{}), 0); });
 })();
