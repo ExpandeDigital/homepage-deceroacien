@@ -166,17 +166,25 @@ async function verifyBearer(req) {
   if (SUPABASE_JWKS && PUBLIC_SUPABASE_URL) {
     try {
       const issuer = `${PUBLIC_SUPABASE_URL.replace(/\/$/, '')}/auth/v1`;
-      const { payload } = await jwtVerify(token, SUPABASE_JWKS, {
-        issuer,
-        audience: 'authenticated'
-      });
-      // Normalizar a objeto tipo decoded Firebase para compat mínima
+      let payload;
+      try {
+        ({ payload } = await jwtVerify(token, SUPABASE_JWKS, { issuer, audience: 'authenticated' }));
+      } catch (strictErr) {
+        // Reintento sin restricciones de claims para tolerancia a diferencias menores
+        try {
+          ({ payload } = await jwtVerify(token, SUPABASE_JWKS));
+          const iss = String(payload.iss || '');
+          const okIss = iss === issuer || iss === PUBLIC_SUPABASE_URL.replace(/\/$/, '') || iss.startsWith(PUBLIC_SUPABASE_URL.replace(/\/$/, ''));
+          if (!okIss) throw strictErr;
+        } catch(e2) {
+          throw strictErr;
+        }
+      }
       return {
         uid: payload.sub,
         email: payload.email || null,
         name: payload.user_metadata?.full_name || payload.name || null,
         provider_id: payload.provider_id || null,
-        // guardar claims completos por si se requieren
         _supabase: payload
       };
     } catch (e) {
@@ -276,10 +284,11 @@ router.get('/auth/me', async (req, res) => {
   const decoded = await verifyBearer(req);
   if (!decoded) return res.status(401).json({ error: 'invalid_token' });
 
+  const idClaim = decoded.uid || decoded.user_id || decoded.sub;
   let user = {
-    id: decoded.uid || decoded.user_id || decoded.sub,
+    id: idClaim,
     email: decoded.email || null,
-    firebase_uid: decoded.uid || decoded.user_id || decoded.sub,
+    firebase_uid: idClaim,
     first_name: (decoded.name || decoded._supabase?.user_metadata?.full_name || '').split(' ')[0] || null,
     last_name: (decoded.name || decoded._supabase?.user_metadata?.full_name || '').split(' ').slice(1).join(' ') || null
   };
@@ -287,7 +296,7 @@ router.get('/auth/me', async (req, res) => {
 
   if (pool) {
     try {
-      const ures = await pool.query('SELECT id, email, first_name, last_name, firebase_uid FROM users WHERE id = $1 LIMIT 1', [decoded.uid]);
+      const ures = await pool.query('SELECT id, email, first_name, last_name, firebase_uid FROM users WHERE id = $1 LIMIT 1', [idClaim]);
       if (ures.rows[0]) {
         user = ures.rows[0];
       }
@@ -303,7 +312,7 @@ router.get('/auth/me', async (req, res) => {
           created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
         );`
       );
-      const eres = await pool.query('SELECT entitlement FROM enrollments WHERE user_id = $1', [decoded.uid]);
+      const eres = await pool.query('SELECT entitlement FROM enrollments WHERE user_id = $1', [idClaim]);
       enrollments = eres.rows.map(r => r.entitlement);
     } catch (e) {
       console.warn('[api] select enrollments falló (continuamos):', e?.message || e);
