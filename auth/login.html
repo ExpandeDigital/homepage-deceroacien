@@ -176,8 +176,13 @@
             (async () => {
                 // Esperar brevemente a que Supabase procese el hash/código de OAuth
                 try { if (window.SupabaseAuth && window.SupabaseAuth.ensureSupabase) await window.SupabaseAuth.ensureSupabase(); } catch(_){ }
-                // Pequeña espera por consistencia
-                await new Promise(r => setTimeout(r, 100));
+                // Pequeñas reintentos (hasta ~1.5s) para permitir a detectSessionInUrl completar
+                for (let i=0;i<10;i++) {
+                    let has = false; try { has = !!(window.SupabaseAuth && (await window.SupabaseAuth.getAccessToken())); } catch(_){}
+                    try { console.log('[login] check supabase token try', i, '->', has); } catch(_){ }
+                    if (has) break;
+                    await new Promise(r => setTimeout(r, 150));
+                }
                 let hasSupabase = false;
                 try { hasSupabase = !!(window.SupabaseAuth && (await window.SupabaseAuth.getAccessToken())); } catch(_){}
                 if (hasSupabase) {

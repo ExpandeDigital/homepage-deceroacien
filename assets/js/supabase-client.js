@@ -2,17 +2,8 @@
   let _supabase = null;
   async function ensureSupabase() {
     if (_supabase) return _supabase;
-    // cargar lib si no está
-    if (!w.createClient) {
-      await new Promise((resolve, reject) => {
-        const s = document.createElement('script');
-        s.src = 'https://esm.sh/@supabase/supabase-js@2.45.4?bundle';
-        s.type = 'module';
-        // fallback: usar import() dinámico si el navegador soporta modules
-        s.onload = resolve; s.onerror = () => resolve();
-        document.head.appendChild(s);
-      });
-    }
+    // Reutilizar cliente ya existente si alguna otra parte lo creó
+    if (w.__supabase) { _supabase = w.__supabase; return _supabase; }
     // Obtener config pública del backend (components.js ya lo hace, pero por si se llama temprano)
     if (!w.__PUBLIC_CONFIG) {
       try {
@@ -27,15 +18,17 @@
       return null;
     }
     try {
-      // import dinámico
+      // Cargar la librería mediante import dinámico (una sola vez)
       const mod = await import('https://esm.sh/@supabase/supabase-js@2.45.4');
       _supabase = mod.createClient(sup.url, sup.anonKey, {
         auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
       });
+      try { console.log('[supabase-client] Cliente creado con URL:', sup.url); } catch(_){}
       w.__supabase = _supabase;
       try {
         const storage = (w.PublicAuthConfig && w.PublicAuthConfig.storage) || { userKey: 'deceroacien_user', tokenKey: 'deceroacien_token' };
         _supabase.auth.onAuthStateChange(async (event, session) => {
+          try { console.log('[supabase-client] onAuthStateChange:', event, !!session); } catch(_){ }
           try {
             if (session && session.user) {
               const u = session.user;
@@ -63,6 +56,11 @@
             }
           } catch(e){ console.warn('[supabase-client] onAuthStateChange error', e); }
         });
+        // Log de la sesión actual en cold start
+        try {
+          const s = await _supabase.auth.getSession();
+          console.log('[supabase-client] getSession(cold):', !!s?.data?.session);
+        } catch(_){ }
       } catch(_){ }
       return _supabase;
     } catch (e) {
@@ -85,6 +83,7 @@
     const sb = await ensureSupabase();
     if (!sb) return null;
     const { data } = await sb.auth.getSession();
+    try { console.log('[supabase-client] getAccessToken(): session?', !!data?.session); } catch(_){ }
     return data?.session?.access_token || null;
   }
 
