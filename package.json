@@ -17,6 +17,10 @@
     "start": "node api/server.mjs",
     "apply:schema": "node scripts/apply-schema.mjs",
     "seed:products": "node scripts/seed-products.mjs",
-    "api:start": "node api/server.mjs"
+    "api:start": "node api/server.mjs",
+    "reports:pdf": "node scripts/generate-pdf.mjs"
+  },
+  "devDependencies": {
+    "puppeteer": "^22.13.1"
   }
 }

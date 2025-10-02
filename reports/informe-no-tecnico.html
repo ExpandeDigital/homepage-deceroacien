@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Informe no técnico – Avances 22/09 – 01/10</title>
+  <style>
+    :root { --bg:#0b1220; --fg:#e6f1ff; --muted:#94a3b8; --brand:#FBBF24; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial; margin:0; color:#0b1220; background:#fff; }
+    .cover { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; background:linear-gradient(180deg,#0b1220,#0e1628); color:var(--fg); text-align:center; }
+    .cover img { width:140px; height:auto; margin-bottom:20px; }
+    .cover h1 { margin:6px 0 8px; font-size:32px; }
+    .cover p { color:var(--muted); margin:2px 0; }
+    .page { padding:40px 56px; max-width:900px; margin:0 auto; }
+    h2 { margin:28px 0 10px; color:#0b1220; }
+    ul { margin:4px 0 16px 20px; }
+    .callout { border-left:4px solid var(--brand); padding:10px 14px; background:#fefce8; color:#78350f; border-radius:8px; }
+  </style>
+  <link rel="icon" href="../assets/logo_de_cero_a_cien.png" />
+  <meta name="robots" content="noindex,nofollow" />
+</head>
+<body>
+  <section class="cover">
+    <img src="../assets/logo_de_cero_a_cien_blanco_y_dorado.png" alt="DE CERO A CIEN" />
+    <h1>Informe no técnico</h1>
+    <p>Avances del 22/09/2025 al 01/10/2025</p>
+  </section>
+
+  <section class="page">
+    <h2>Qué logramos</h2>
+    <ul>
+      <li>El sitio ya puede cobrar online con Mercado Pago y funciona de punta a punta.</li>
+      <li>Las páginas de éxito/pendiente/error quedan configuradas y el cliente vuelve al sitio con confirmación.</li>
+      <li>Las notificaciones de pago llegan al servidor y podemos dar acceso automáticamente.</li>
+      <li>Mejoramos la seguridad: ya no exponemos claves en el sitio público.</li>
+      <li>La operación quedó parametrizada: cuotas y tarjetas se ajustan sin tocar el código.</li>
+    </ul>
+
+    <h2>Prueba real aprobada</h2>
+    <div class="callout">
+      Pago aprobado con ID <strong>127705623583</strong>. Esto confirma que los cobros reales funcionan y que las notificaciones se reciben correctamente.
+    </div>
+
+    <h2>Beneficios para el negocio</h2>
+    <ul>
+      <li>Menos fricción para vender (pago en línea en minutos).</li>
+      <li>Menos tareas manuales (accesos automáticos tras el pago).</li>
+      <li>Mayor seguridad y control (config centralizada en el servidor).</li>
+    </ul>
+
+    <h2>Qué queda listo para certificación</h2>
+    <ul>
+      <li>Redirecciones configuradas y retorno automático tras el pago.</li>
+      <li>Identificador de integrador configurado.</li>
+      <li>Referencia externa con email para trazar compras.</li>
+      <li>Notificaciones funcionando y registradas (200 OK).</li>
+    </ul>
+  </section>
+</body>
+</html>

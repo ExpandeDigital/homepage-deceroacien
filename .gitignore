@@ -48,3 +48,6 @@ build/
 
 # Config local de Firebase (no versionar)
 assets/js/firebase-config.local.js
+
+# Informes internos (PDF)
+reports/pdf/

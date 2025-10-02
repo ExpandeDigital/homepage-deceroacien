@@ -51,3 +51,64 @@ Objetivo: maximizar productividad inmediata en este repo. Este es un sitio está
 - Simulación: usa `?grant=` para probar flujos de compra/acceso sin backend.
 
 Para dudas o mejoras, consulta `docs/flujo-plataforma.md` (mermaid con el flujo completo) y abre PRs incrementales enfocados.
+
+---
+
+## Actualización 2025-10-01 — Pagos en producción (Mercado Pago Checkout Pro)
+
+- Frontend
+  - Usa `assets/js/payments.js` y `assets/js/pricing.js` en páginas de pago.
+  - En dominios `deceroacien.app` se redirige a `init_point` (producción). En desarrollo/sandbox se prioriza `sandbox_init_point`.
+  - Inicia pago con `Payments.startCheckout({ items: [...] })`. Si pasas SKUs (strings), `Pricing` normaliza a ítems completos.
+
+- Backend (API Express en `api/` desplegada en Cloud Run)
+  - Endpoints clave:
+    - `POST /api/mp/create-preference`: crea preferencias y cumple requisitos de certificación. Fallback robusto: SDK con/sin `x-integrator-id` → REST con/sin `x-integrator-id`.
+    - `POST /api/mp/webhook`: maneja `topic=payment` y `merchant_order`. Lee el pago por SDK o REST con `Authorization: Bearer <MP_ACCESS_TOKEN>`. Otorga accesos al estar `status=approved`.
+    - `GET /api/public-config`: entrega configuración pública (Firebase + URLs) para no exponer claves en el frontend.
+    - Debug: `GET /api/mp/debug-whoami`, `GET /api/mp/debug-preference?pref_id=...`.
+  - Variables de entorno (mínimas):
+    - `MP_ACCESS_TOKEN`, `MP_INTEGRATOR_ID`, `MP_CERT_EMAIL`
+    - `MP_INSTALLMENTS`, `MP_EXCLUDE_PAYMENT_METHODS`
+    - `PUBLIC_API_BASE`, `PUBLIC_SITE_BASE`, `ALLOWED_ORIGINS`, `PUBLIC_FIREBASE_*`, `GRANT_SECRET`
+  - Requisitos de certificación cubiertos: integrator id, `back_urls` + `auto_return`, `external_reference` (email), imagen/desc/ID 4 dígitos, cuotas, exclusión de métodos y webhook.
+
+- Seguridad y configuración
+  - No hardcodear claves en el frontend; consumir `GET /api/public-config`.
+  - Mantener `ALLOWED_ORIGINS` en `http://localhost:3000, https://deceroacien.app, https://www.deceroacien.app`.
+  - Incluir `assets/config/pricing.json` en la imagen (ajustado `.dockerignore` y `Dockerfile`).
+
+## Roadmap priorizado hacia producto completo
+
+### Prioridad 1 — MVP operable sólido
+- Idempotencia en webhook (tabla `processed_payments`) y conciliación diaria.
+- Modelo de datos mínimo: `users`, `products`, `orders`, `payments`, `enrollments`, `webhook_events`, `audit_log`.
+- Panel interno de operaciones: buscar por email/pedido, ver estado, re-otorgar/revocar acceso.
+- Emails transaccionales (aprobado/pendiente/fallido) con plantillas.
+- Seguridad: secretos en Secret Manager, CSP básica, rate limiting, rotación de tokens.
+- Observabilidad: métricas por endpoint y alertas (errores 5xx/webhook).
+
+### Prioridad 2 — UX y autoservicio
+- Centro de cuenta: perfil, historial, accesos activos, descarga de recibos.
+- Onboarding post-compra (página de primeros pasos + serie de emails).
+- Gestión de catálogo desde backend; pricing como única fuente de verdad.
+- UX checkout: página de selección de plan/SKU y botón de reintento para pendientes.
+
+### Prioridad 3 — Administración/finanzas
+- Integración DTE (boletas/facturas) al aprobar pago.
+- Reembolsos/contracargos: flujo operativo y revocación de accesos.
+- (Opcional) Suscripciones: preapproval, alta/baja, reintentos, prorrateos.
+
+### Prioridad 4 — Valor de producto/contenido
+- Portal del alumno robusto: progreso, certificados, contenidos protegidos (Vimeo/Mux), gamificación.
+- Comunidad: roles automáticos en Discord/Slack/foro, rankings/reto por cohortes.
+- CMS headless para marketing/blog y flujo editorial.
+
+### Prioridad 5 — Growth y analítica
+- Eventos unificados: viewed product, started checkout, payment approved, granted access → GA4/ads + data lake.
+- Recuperación de abandono: detección de pending/failed y nudges (email/WhatsApp).
+
+## Informes internos (PDF)
+- Generación de PDFs desde HTML con Puppeteer: `npm run reports:pdf`.
+- Archivos: `reports/pdf/informe-tecnico.pdf` y `reports/pdf/informe-no-tecnico.pdf`.
+- `reports/pdf/` está en `.gitignore` (uso interno, no público).

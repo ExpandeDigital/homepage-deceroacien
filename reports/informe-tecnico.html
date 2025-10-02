@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Informe Técnico – Integración Checkout Pro (22/09 – 01/10)</title>
+  <style>
+    :root { --bg:#0b1220; --fg:#e6f1ff; --muted:#94a3b8; --brand:#FBBF24; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji"; margin:0; color:var(--fg); background:#fff; }
+    .cover { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; background:linear-gradient(180deg,#0b1220,#0e1628); color:var(--fg); text-align:center; }
+    .cover img { width:140px; height:auto; margin-bottom:20px; }
+    .cover h1 { margin:6px 0 8px; font-size:32px; }
+    .cover p { color:var(--muted); margin:2px 0; }
+    .page { padding:40px 56px; max-width:900px; margin:0 auto; color:#0b1220; }
+    h2 { margin:28px 0 10px; color:#0b1220; }
+    h3 { margin:18px 0 8px; color:#0b1220; }
+    ul { margin:4px 0 16px 20px; }
+    .badge { display:inline-block; background:#0b1220; color:#fff; padding:4px 10px; border-radius:9999px; font-size:12px; vertical-align:middle; }
+    .divider { height:2px; background:#e5e7eb; margin:24px 0; }
+    .muted { color:#6b7280; }
+    .callout { border-left:4px solid var(--brand); padding:10px 14px; background:#fefce8; color:#78350f; border-radius:8px; }
+  </style>
+  <link rel="preload" href="../assets/logo_de_cero_a_cien_blanco_y_dorado.png" as="image" />
+  <link rel="preload" href="../assets/logo_de_cero_a_cien.png" as="image" />
+  <link rel="preload" href="../assets/logo_de_cero_a_cien_blanco.png" as="image" />
+  <link rel="preload" href="../assets/logo_de_cero_a_cien_.png" as="image" />
+  <link rel="preload" href="../assets/avatar_ignacio.jpg" as="image" />
+  <link rel="preload" href="../assets/avatar_cristian.jpg" as="image" />
+  <link rel="preload" href="../assets/avatar_claudia.jpg" as="image" />
+  <link rel="icon" href="../assets/logo_de_cero_a_cien.png" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="format-detection" content="telephone=no" />
+</head>
+<body>
+  <section class="cover">
+    <img src="../assets/logo_de_cero_a_cien_blanco_y_dorado.png" alt="DE CERO A CIEN" />
+    <h1>Informe Técnico</h1>
+    <p class="badge">Integración Checkout Pro – Producción</p>
+    <p>Período: 22/09/2025 – 01/10/2025</p>
+  </section>
+
+  <section class="page">
+    <h2>Resumen ejecutivo</h2>
+    <p>Se implementó Checkout Pro de Mercado Pago end-to-end en producción, con páginas de retorno, notificaciones (webhooks), y otorgamiento de accesos. Se fortaleció la seguridad y se parametrizó la operación por variables de entorno. Hubo validación con pago real aprobado y registro correcto del webhook.</p>
+
+    <div class="divider"></div>
+
+    <h2>Hitos por fecha</h2>
+    <ul>
+      <li><strong>22/09</strong>: Arquitectura y plan de integración (API Express en Cloud Run, Firebase Auth, Checkout Pro y certificación).</li>
+      <li><strong>23–25/09</strong>: Config pública vía backend, endpoints de auth, creación de preferencias con requisitos de certificación y páginas de retorno.</li>
+      <li><strong>26–28/09</strong>: Debug endpoints, Docker packaging para <code>assets/config</code>, remoción de claves y endpoint <code>/api/public-config</code>.</li>
+      <li><strong>29–30/09</strong>: Normalización de SKUs, fix de dominios, y manejo de error “client.id unauthorized”.</li>
+      <li><strong>01/10</strong>: Producción directa (init_point), envs MP_INSTALLMENTS/MP_EXCLUDE_PAYMENT_METHODS, fallbacks REST en creación y webhook robusto.</li>
+    </ul>
+
+    <h2>Cambios técnicos clave</h2>
+    <ul>
+      <li>API: <code>/api/mp/create-preference</code>, <code>/api/mp/webhook</code>, <code>/api/public-config</code>, debug de MP.</li>
+      <li>Frontend: loader centralizado, <code>payments.js</code> con init_point en prod, pricing y páginas de retorno.</li>
+      <li>Infra: Dockerfile y .dockerignore ajustados; configuración por variables de entorno.</li>
+    </ul>
+
+    <h2>Pruebas y resultados</h2>
+    <ul>
+      <li>Pago real aprobado: <strong>Payment ID 127705623583</strong>.</li>
+      <li>Webhook (payment.created) entregado con 200 OK.</li>
+    </ul>
+
+    <h2>Incidencias resueltas</h2>
+    <ul>
+      <li>404 en <code>/api/public-config</code> → corrección de dominio del API.</li>
+      <li>“client.id unauthorized” → reintento sin integrator + REST.</li>
+      <li>Falta de <code>pricing.json</code> en imagen → inclusión en build.</li>
+      <li>Claves expuestas → retiro y provisión segura por backend.</li>
+      <li>Webhook sin token → lectura REST con bearer + manejo de merchant_order.</li>
+    </ul>
+
+    <h2>Estado actual</h2>
+    <div class="callout">
+      Integración en producción, con configuración flexible por entorno, pagos reales funcionando y requisitos de certificación implementados.
+    </div>
+  </section>
+</body>
+</html>
