@@ -65,7 +65,7 @@
         </nav>
     </div>
 
-    <main class="container mx-auto max-w-7xl px-6 py-12">
+    <main class="container mx-auto max-w-7xl px-6 py-12" data-entitlement="decero.fase1">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
             <!-- Columna Izquierda: Documento Pedagógico -->
@@ -94,7 +94,7 @@
             </aside>
 
             <!-- Columna Derecha: Herramienta Interactiva -->
-            <div class="lg:col-span-2 tool-container p-6 rounded-lg">
+            <div class="lg:col-span-2 tool-container p-6 rounded-lg" data-when="granted">
                 <!-- Barra de Acciones -->
                 <div class="flex items-center justify-between pb-4 border-b border-gray-700">
                     <h2 class="text-xl font-bold text-white">Tu Business Model Canvas</h2>
@@ -124,6 +124,8 @@
                 </div>
             </div>
         </div>
+        <!-- Bloque denied autogenerado si no tiene acceso (se deja vacío a propósito) -->
+        <div data-when="denied" class="hidden"></div>
     </main>
 
     <script>

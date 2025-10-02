@@ -22,6 +22,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
     
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/logo_de_cero_a_cien_blanco_y_dorado.png" type="image/png">
+
     <!-- Hojas de estilo -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -48,8 +51,7 @@
         }
     </script>
 
-    <!-- Google Identity Services -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- Autenticación via Supabase (ver assets/js/supabase-client.js) -->
 </head>
 <body class="base-container antialiased">
 
@@ -263,11 +265,9 @@
 
     <!-- Scripts JavaScript -->
     <script src="assets/js/components.js"></script>
-    <script src="assets/js/auth.js"></script>
     <script src="assets/js/config-secure.js"></script>
-    <script src="assets/js/auth-config.js"></script>
+    <script src="assets/js/supabase-client.js"></script>
     <script src="assets/js/auth.js"></script>
-    <script src="assets/js/google-onetap.js"></script>
     <script>
         // Duplica el contenido del marquee para que la animación sea continua (infinita)
         (function () {

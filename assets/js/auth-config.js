@@ -46,7 +46,7 @@ if (!window.PublicAuthConfig) {
         api: {
             baseUrl: window.location.hostname === 'localhost' 
                 ? 'http://localhost:3001/api' 
-                : 'https://api.deceroacien.app',
+                : 'https://api.deceroacien.app/api',
             endpoints: {
                 login: '/auth/login',
                 register: '/auth/register',

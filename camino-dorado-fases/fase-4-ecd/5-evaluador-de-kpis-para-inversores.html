@@ -131,7 +131,7 @@
     </style>
 </head>
 <body>
-
+    <main data-entitlement="camino.fase4">
     <div class="container">
         <div class="column pedagogical-column">
             <h1>23. Evaluador de KPIs para Inversores</h1>
@@ -163,7 +163,7 @@
                 <li><strong>Calcula y Analiza:</strong> La herramienta generará los KPIs clave que un inversor examinará, junto con un diagnóstico rápido de su estado de salud.</li>
             </ul>
         </div>
-        <div class="column tool-column">
+        <div class="column tool-column" data-when="granted">
             <h2>Herramienta Interactiva</h2>
             <div id="kpi-form">
                 <h4>Métricas de Adquisición (último mes)</h4>
@@ -197,6 +197,8 @@
             </div>
         </div>
     </div>
+    <div data-when="denied" class="hidden"></div>
+    </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -284,6 +286,8 @@
             }
         });
     </script>
+    <script src="../../assets/js/components.js"></script>
+    <script src="../../assets/js/entitlements.js"></script>
 
 </body>
 </html>

@@ -4,160 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>De Cien a Mil: 6. Mapeador de Dependencias Críticas</title>
-    <style>
-        :root {
-            --color-night-blue: #0D223F; /* Azul Noche */
-            --color-gold: #D4AF37;       /* Dorado */
-            --color-gold-dark: #B89B2E;  /* Dorado Oscuro para hover */
-            --color-card-bg: #FFFFFF;    /* Fondo de la tarjeta principal */
-            --color-text-on-dark: #F0F0F0; /* Texto claro sobre fondo oscuro */
-            --color-text-on-light: #0D223F;/* Texto oscuro sobre fondo claro */
-            --color-border: #E0D6B3;     /* Borde suave, derivado del dorado */
-            --color-dependency-internal: #2980b9; /* Azul para dependencia interna */
-            --color-dependency-external: #c0392b; /* Rojo para dependencia externa */
-            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body {
-            font-family: var(--font-family);
-            background-color: var(--color-night-blue);
-            color: var(--color-text-on-dark);
-            margin: 0;
-            padding: 40px 20px;
-            line-height: 1.6;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-        }
-        .container {
-            display: flex;
-            width: 100%;
-            max-width: 1200px;
-            background: var(--color-card-bg);
-            color: var(--color-text-on-light);
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0, 0.2);
-            overflow: hidden;
-            border: 1px solid var(--color-gold);
-        }
-        .column {
-            padding: 35px;
-            flex-basis: 50%;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-        }
-        .pedagogical-column {
-            background-color: var(--color-night-blue);
-            color: var(--color-text-on-dark);
-            border-right: 1px solid var(--color-gold);
-        }
-        .tool-column {
-            background-color: var(--color-card-bg);
-        }
-        h1, h2 { margin-top: 0; }
-        .pedagogical-column h1 { color: var(--color-card-bg); }
-        .tool-column h2 { color: var(--color-night-blue); }
-        h1 {
-            font-size: 1.8em;
-            border-bottom: 2px solid var(--color-gold);
-            padding-bottom: 10px;
-            margin-bottom: 25px;
-        }
-        h2 { font-size: 1.6em; }
-        h3 {
-            font-size: 1.2em;
-            margin-top: 25px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            color: var(--color-gold);
-        }
-        h3 .icon { width: 24px; height: 24px; margin-right: 10px; fill: currentColor; }
-        p, li { font-size: 0.95em; }
-        ul { list-style: none; padding-left: 0; }
-        ul li {
-            padding-left: 1.5em;
-            text-indent: -1.5em;
-            margin-bottom: 5px;
-        }
-        ul li::before {
-            content: '•';
-            color: var(--color-gold);
-            margin-right: 0.5em;
-            font-size: 1.2em;
-        }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-weight: bold; margin-bottom: 5px; }
-        input[type="text"], select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--color-border);
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 1em;
-            color: var(--color-text-on-light);
-        }
-        button {
-            background-color: var(--color-gold);
-            color: var(--color-night-blue); border: none;
-            padding: 12px 20px; border-radius: 5px;
-            font-size: 1em; font-weight: bold; cursor: pointer;
-            transition: background-color 0.3s, transform 0.1s;
-            width: 100%;
-            margin-top: 10px;
-        }
-        button:hover { background-color: var(--color-gold-dark); }
-        button:active { transform: scale(0.98); }
-
-        #dependency-map {
-            margin-top: 20px;
-            flex-grow: 1;
-            overflow-y: auto;
-        }
-        .activity-card {
-            background-color: #f9f9f9;
-            border: 1px solid var(--color-border);
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        .activity-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--color-border);
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-        }
-        .activity-header h4 {
-            margin: 0;
-            color: var(--color-night-blue);
-        }
-        .delete-activity-btn {
-            background: none; border: none; font-size: 1.2em;
-            cursor: pointer; color: #aaa;
-        }
-        .dependency-tag {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 15px;
-            color: white;
-            font-size: 0.85em;
-            margin: 2px;
-        }
-        .tag-internal { background-color: var(--color-dependency-internal); }
-        .tag-external { background-color: var(--color-dependency-external); }
-
-        @media (max-width: 900px) {
-            body { padding: 0; }
-            .container { flex-direction: column; border-radius: 0; max-width: 100%; }
-            .pedagogical-column { border-right: none; border-bottom: 1px solid var(--color-gold); }
-        }
-    </style>
 </head>
-<body>
+<body class="tool-app mapeador-de-dependencias-criticas">
 
+    <main data-entitlement="camino.fase1">
     <div class="container">
         <div class="column pedagogical-column">
             <h1>6. Mapeador de Dependencias Críticas</h1>
@@ -191,7 +41,7 @@
                 <li><strong>Añadir:</strong> Agrega la dependencia a la actividad. Puedes añadir múltiples dependencias a cada actividad para crear un mapa completo.</li>
             </ul>
         </div>
-        <div class="column tool-column">
+        <div class="column tool-column" data-when="granted">
             <h2>Herramienta Interactiva</h2>
             <div id="dependency-form">
                  <div class="form-group">
@@ -216,89 +66,12 @@
                 <!-- Las tarjetas de actividades y sus dependencias se añadirán aquí -->
             </div>
         </div>
+        <div data-when="denied" class="hidden"></div>
     </div>
+    </main>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const activityNameInput = document.getElementById('activity-name');
-            const dependencyNameInput = document.getElementById('dependency-name');
-            const dependencyTypeSelect = document.getElementById('dependency-type');
-            const addDependencyBtn = document.getElementById('add-dependency-btn');
-            const dependencyMap = document.getElementById('dependency-map');
-
-            let activities = {};
-
-            addDependencyBtn.addEventListener('click', addDependency);
-
-            function addDependency() {
-                const activityName = activityNameInput.value.trim();
-                const dependencyName = dependencyNameInput.value.trim();
-                const dependencyType = dependencyTypeSelect.value;
-
-                if (!activityName || !dependencyName) {
-                    alert('Por favor, completa los campos de actividad y dependencia.');
-                    return;
-                }
-
-                if (!activities[activityName]) {
-                    activities[activityName] = [];
-                }
-
-                activities[activityName].push({
-                    name: dependencyName,
-                    type: dependencyType
-                });
-                
-                renderMap();
-                dependencyNameInput.value = '';
-                dependencyNameInput.focus();
-            }
-            
-            function renderMap() {
-                dependencyMap.innerHTML = '';
-                for (const activityName in activities) {
-                    const card = document.createElement('div');
-                    card.className = 'activity-card';
-                    card.dataset.activity = activityName;
-
-                    let dependenciesHTML = '';
-                    activities[activityName].forEach(dep => {
-                        dependenciesHTML += `<span class="dependency-tag ${dep.type === 'internal' ? 'tag-internal' : 'tag-external'}">${escapeHTML(dep.name)}</span>`;
-                    });
-
-                    card.innerHTML = `
-                        <div class="activity-header">
-                            <h4>${escapeHTML(activityName)}</h4>
-                            <button class="delete-activity-btn" title="Eliminar Actividad">&times;</button>
-                        </div>
-                        <div class="dependencies-container">
-                            ${dependenciesHTML}
-                        </div>
-                    `;
-                    dependencyMap.appendChild(card);
-                }
-
-                document.querySelectorAll('.delete-activity-btn').forEach(btn => {
-                    btn.addEventListener('click', deleteActivity);
-                });
-            }
-
-            function deleteActivity(event) {
-                const card = event.target.closest('.activity-card');
-                const activityNameToDelete = card.dataset.activity;
-                if (confirm(`¿Estás seguro de que quieres eliminar la actividad "${activityNameToDelete}" y todas sus dependencias?`)) {
-                    delete activities[activityNameToDelete];
-                    renderMap();
-                }
-            }
-            
-            function escapeHTML(str) {
-                const p = document.createElement('p');
-                p.textContent = str;
-                return p.innerHTML;
-            }
-        });
-    </script>
-
+    <script src="../../assets/js/components.js"></script>
+    <script src="../../assets/js/entitlements.js"></script>
+    <script src="../../assets/js/tools/mapeador-de-dependencias-criticas.js"></script>
 </body>
 </html>

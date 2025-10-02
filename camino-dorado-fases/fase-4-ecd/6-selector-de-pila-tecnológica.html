@@ -148,7 +148,7 @@
     </style>
 </head>
 <body>
-
+    <main data-entitlement="camino.fase4">
     <div class="container">
         <div class="column pedagogical-column">
             <h1>24. Selector de Pila Tecnológica</h1>
@@ -182,7 +182,7 @@
                 <li><strong>Compara y Decide:</strong> La herramienta calculará una puntuación de alineación para cada opción, facilitando una decisión basada en datos.</li>
             </ul>
         </div>
-        <div class="column tool-column">
+        <div class="column tool-column" data-when="granted">
             <h2>Herramienta Interactiva</h2>
             <div id="tech-form">
                 <h4>1. Define tus Criterios de Decisión</h4>
@@ -227,6 +227,8 @@
             </div>
         </div>
     </div>
+    <div data-when="denied" class="hidden"></div>
+    </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -326,6 +328,8 @@
             }
         });
     </script>
+    <script src="../../assets/js/components.js"></script>
+    <script src="../../assets/js/entitlements.js"></script>
 
 </body>
 </html>

@@ -164,9 +164,10 @@
             #delegation-matrix { grid-template-columns: 1fr; }
         }
     </style>
-</head>
+ </head>
 <body>
 
+    <main data-entitlement="camino.fase2">
     <div class="container">
         <div class="column pedagogical-column">
             <h1>7. Matriz de Delegación Efectiva</h1>
@@ -200,7 +201,7 @@
                 <li><strong>Clasificar:</strong> La herramienta situará la tarea en el cuadrante adecuado, sugiriendo la mejor acción a tomar.</li>
             </ul>
         </div>
-        <div class="column tool-column">
+        <div class="column tool-column" data-when="granted">
             <h2>Herramienta Interactiva</h2>
             <div id="task-form">
                 <div class="form-group">
@@ -245,7 +246,9 @@
                 </div>
             </div>
         </div>
+        <div data-when="denied" class="hidden"></div>
     </div>
+    </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -304,5 +307,7 @@
         });
     </script>
 
+    <script src="../../assets/js/components.js"></script>
+    <script src="../../assets/js/entitlements.js"></script>
 </body>
 </html>

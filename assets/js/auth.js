@@ -462,6 +462,38 @@ class AuthManager {
 function handleCredentialResponse(response) {
     try {
         console.log("Encoded JWT ID token: " + response.credential);
+
+        // Si Firebase está disponible, usar el ID token de Google para firmar en Firebase
+        if (window.__firebaseAuth && window.firebase && window.firebase.auth && window.firebase.auth.GoogleAuthProvider) {
+            (async () => {
+                try {
+                    const cred = window.firebase.auth.GoogleAuthProvider.credential(response.credential);
+                    await window.__firebaseAuth.signInWithCredential(cred);
+                    // Sincronizar enrollments y redirigir
+                    if (window.firebaseAuthHelpers && window.firebaseAuthHelpers.manualSync) {
+                        try { await window.firebaseAuthHelpers.manualSync(); } catch(_) {}
+                    }
+                    if (window.authManager && typeof window.authManager.redirectAfterAuth === 'function') {
+                        window.authManager.redirectAfterAuth();
+                    }
+                } catch (err) {
+                    console.error('Error vinculando Google con Firebase:', err);
+                    // Fallback: intentar con Popup
+                    try {
+                        const provider = new window.firebase.auth.GoogleAuthProvider();
+                        await window.__firebaseAuth.signInWithPopup(provider);
+                        if (window.firebaseAuthHelpers && window.firebaseAuthHelpers.manualSync) {
+                            try { await window.firebaseAuthHelpers.manualSync(); } catch(_) {}
+                        }
+                        if (window.authManager && typeof window.authManager.redirectAfterAuth === 'function') {
+                            window.authManager.redirectAfterAuth();
+                        }
+                    } catch (e2) {
+                        console.error('Fallback signInWithPopup también falló:', e2);
+                    }
+                }
+            })();
+        }
         
         // Decodificar el JWT usando la función mejorada
         const responsePayload = decodeJwtResponse(response.credential);
@@ -601,11 +633,36 @@ function decodeJwtResponse(token) {
 AuthManager.prototype.handleGoogleAuth = async function(googleUser) {
     try {
         this.showLoading('g_id_signin', 'Procesando...');
-        
-        // Aquí deberías enviar los datos de Google a tu backend
-        // para crear/verificar el usuario y obtener un token de tu sistema
+
+        // Si Firebase está disponible, iniciar sesión con credential
+        if (window.__firebaseAuth && window.firebase && window.firebase.auth && window.firebase.auth.GoogleAuthProvider) {
+            try {
+                // Nota: el token original está en googleUser.originalToken si se requiere
+                const cred = window.firebase.auth.GoogleAuthProvider.credential(googleUser.originalToken);
+                await window.__firebaseAuth.signInWithCredential(cred);
+                if (window.firebaseAuthHelpers && window.firebaseAuthHelpers.manualSync) {
+                    try { await window.firebaseAuthHelpers.manualSync(); } catch(_) {}
+                }
+                this.redirectAfterAuth();
+                return;
+            } catch (e) {
+                console.warn('Fallo signInWithCredential, intento Popup', e);
+                try {
+                    const provider = new window.firebase.auth.GoogleAuthProvider();
+                    await window.__firebaseAuth.signInWithPopup(provider);
+                    if (window.firebaseAuthHelpers && window.firebaseAuthHelpers.manualSync) {
+                        try { await window.firebaseAuthHelpers.manualSync(); } catch(_) {}
+                    }
+                    this.redirectAfterAuth();
+                    return;
+                } catch (e2) {
+                    console.warn('Popup también falló, usando flujo simulado', e2);
+                }
+            }
+        }
+
+        // Fallback simulado previo (no Firebase)
         const response = await this.processGoogleAuth(googleUser);
-        
         if (response.success) {
             this.handleSuccessfulAuth(response.user, response.token);
         } else {
@@ -723,3 +780,204 @@ window.authManager = authManager;
 window.requireAuth = requireAuth;
 window.redirectIfAuthenticated = redirectIfAuthenticated;
 window.handleCredentialResponse = handleCredentialResponse;
+
+// =============================
+// Integración Firebase Auth (opcional)
+// =============================
+(function(){
+    function attachFirebaseIntegration(){
+        if (!window.__firebaseAuth) return; // Aún no inicializado por firebase-client
+        const fbAuth = window.__firebaseAuth;
+        // Estado de conocimiento de auth
+        window.__firebaseAuthKnown = false;
+
+        async function syncServerEntitlements(idToken){
+            try {
+                // Construir URL del backend (prod/dev) desde PublicAuthConfig si está disponible
+                const api = (window.PublicAuthConfig && window.PublicAuthConfig.api) || null;
+                const mePath = (api && api.endpoints && api.endpoints.me) ? api.endpoints.me : '/auth/me';
+                const url = api && api.baseUrl ? (api.baseUrl + mePath) : ('/api' + mePath);
+                const verifyPath = (api && api.endpoints && api.endpoints.verify) ? api.endpoints.verify : '/auth/verify';
+                const verifyUrl = api && api.baseUrl ? (api.baseUrl + verifyPath) : ('/api' + verifyPath);
+
+                // 1) Intentar provisionar/verificar usuario en backend (idempotente)
+                try {
+                    await fetch(verifyUrl, {
+                        method: 'POST',
+                        headers: { 'Authorization': 'Bearer ' + idToken, 'Accept': 'application/json' },
+                        body: null
+                    });
+                } catch(_) { /* si falla, seguimos, el backend puede no requerirlo */ }
+
+                // 2) Consultar /auth/me con pequeños reintentos (por eventual consistencia)
+                const fetchMe = async () => fetch(url, { headers: { 'Authorization': 'Bearer ' + idToken, 'Accept': 'application/json' } });
+                let resp = await fetchMe();
+                if (!resp.ok && !(window.Environment && window.Environment.isDevelopment)) {
+                    // reintentos cortos en prod
+                    for (let i=0;i<2 && !resp.ok;i++) {
+                        await new Promise(r=> setTimeout(r, 400*(i+1)));
+                        resp = await fetchMe();
+                    }
+                }
+                if (!resp.ok) {
+                    // Fallback de desarrollo: si no hay backend local, usar datos de Firebase para habilitar sesión local
+                    try {
+                        const isDev = !!(window.Environment && window.Environment.isDevelopment);
+                        const u = fbAuth && fbAuth.currentUser;
+                        if (isDev && u) {
+                            const pref = (localStorage.getItem('deceroacien_avatar_pref') || 'male').toLowerCase();
+                            const fallbackAvatar = pref === 'female' ? '/assets/female-avatar.png' : '/assets/male-avatar.png';
+                            const simpleUser = {
+                                id: u.uid,
+                                email: u.email || (u.providerData && u.providerData[0] && u.providerData[0].email) || '',
+                                firstName: (u.displayName && u.displayName.split(' ')[0]) || 'Usuario',
+                                lastName: (u.displayName && u.displayName.split(' ').slice(1).join(' ')) || '',
+                                profilePicture: (u.photoURL) || fallbackAvatar
+                            };
+                            localStorage.setItem(AuthConfig.storage.userKey, JSON.stringify(simpleUser));
+                            localStorage.setItem(AuthConfig.storage.tokenKey, idToken);
+                            if (window.authManager) {
+                                window.authManager.currentUser = simpleUser;
+                                window.authManager.isAuthenticated = true;
+                            }
+                            console.warn('[dev-fallback] /api/auth/me no disponible; usando datos de Firebase para sesión local.');
+                        }
+                    } catch(_e) {}
+                    // En producción: mostrar notificación visible
+                    if (!(window.Environment && window.Environment.isDevelopment)) {
+                        const msg = 'No se pudo obtener tu perfil desde el servidor (status ' + (resp.status||'') + ').';
+                        if (window.authManager && window.authManager.showError) window.authManager.showError(msg);
+                    }
+                    return; // terminar sin romper flujo local
+                }
+                const data = await resp.json();
+                if (data && data.enrollments && Array.isArray(data.enrollments)) {
+                    if (window.entitlements && window.entitlements.setAll) {
+                        window.entitlements.setAll(data.enrollments);
+                    } else {
+                        // fallback directo localStorage
+                        localStorage.setItem('deceroacien_entitlements', JSON.stringify(data.enrollments));
+                        localStorage.setItem('deceroacien_entitlements_updated', Date.now().toString());
+                    }
+                }
+                // Persist simple user for UI reuse
+                if (data.user) {
+                    // Enriquecer con foto del usuario de Firebase si existe; si no, aplicar preferencia de avatar genérico
+                    const uFb = (typeof fbAuth !== 'undefined' && fbAuth && fbAuth.currentUser) ? fbAuth.currentUser : null;
+                    let picture = (uFb && uFb.photoURL) || data.user.photo_url || data.user.picture || '';
+                    if (!picture) {
+                        const pref = (localStorage.getItem('deceroacien_avatar_pref') || 'male').toLowerCase();
+                        picture = pref === 'female' ? '/assets/female-avatar.png' : '/assets/male-avatar.png';
+                    }
+                    const simpleUser = {
+                        id: data.user.id,
+                        email: data.user.email,
+                        firebase_uid: data.user.firebase_uid,
+                        firstName: data.user.first_name,
+                        lastName: data.user.last_name,
+                        profilePicture: picture
+                    };
+                    localStorage.setItem(AuthConfig.storage.userKey, JSON.stringify(simpleUser));
+                    localStorage.setItem(AuthConfig.storage.tokenKey, idToken);
+                    if (window.authManager) {
+                        window.authManager.currentUser = simpleUser;
+                        window.authManager.isAuthenticated = true;
+                    }
+                }
+            } catch(e){ console.warn('syncServerEntitlements error', e); }
+        }
+
+        fbAuth.onAuthStateChanged(async (user)=>{
+            window.__firebaseAuthKnown = true;
+            if (user) {
+                try {
+                    const idToken = await user.getIdToken(/* forceRefresh */ true);
+                    await syncServerEntitlements(idToken);
+                } catch(e){ console.error('Error obteniendo idToken Firebase', e); }
+            } else {
+                // sign out
+                localStorage.removeItem(AuthConfig.storage.userKey);
+                localStorage.removeItem(AuthConfig.storage.tokenKey);
+                if (window.authManager){
+                    window.authManager.currentUser = null;
+                    window.authManager.isAuthenticated = false;
+                }
+            }
+        });
+
+        // Exponer helpers
+        window.firebaseAuthHelpers = {
+            async loginEmailPassword(email, password){
+                await fbAuth.signInWithEmailAndPassword(email, password);
+                const user = fbAuth.currentUser;
+                const token = user ? await user.getIdToken() : null;
+                return { success: true, token };
+            },
+            async registerEmailPassword(email, password){
+                await fbAuth.createUserWithEmailAndPassword(email, password);
+                const user = fbAuth.currentUser;
+                const token = user ? await user.getIdToken() : null;
+                return { success: true, token };
+            },
+            async logout(){
+                await fbAuth.signOut();
+            },
+            async getToken(){
+                const user = fbAuth.currentUser;
+                if (!user) return null;
+                return user.getIdToken();
+            },
+            async manualSync(){
+                const user = fbAuth.currentUser;
+                if (!user) return;
+                const t = await user.getIdToken(true);
+                await syncServerEntitlements(t);
+            }
+        };
+
+        // Parchear métodos existentes del AuthManager si existe
+        if (window.authManager) {
+            const mgr = window.authManager;
+            mgr.authenticateUser = async function(email, password){
+                try {
+                    const r = await window.firebaseAuthHelpers.loginEmailPassword(email, password);
+                    if (r.success) {
+                        const token = await window.firebaseAuthHelpers.getToken();
+                        return { success: true, user: { email }, token };
+                    }
+                } catch(e){
+                    return { success:false, message: e.message };
+                }
+                return { success:false, message: 'login_failed' };
+            };
+            mgr.registerUser = async function(data){
+                try {
+                    const r = await window.firebaseAuthHelpers.registerEmailPassword(data.email, data.password);
+                    if (r.success) {
+                        const token = await window.firebaseAuthHelpers.getToken();
+                        return { success: true, user: { email: data.email }, token };
+                    }
+                } catch(e){
+                    return { success:false, message: e.message };
+                }
+                return { success:false };
+            };
+            mgr.logout = async function(){
+                try { await window.firebaseAuthHelpers.logout(); } catch(_) {}
+                mgr.clearSession();
+                const currentPath = window.location.pathname;
+                window.location.href = currentPath.includes('/auth/') ? '../index.html' : '/index.html';
+            };
+        }
+    }
+
+    // Inicializa inmediatamente si ya está listo; si no, engancha al evento del loader centralizado
+    if (window.__firebaseAuth) {
+        attachFirebaseIntegration();
+    } else {
+        document.addEventListener('firebase:sdk-ready', function(){
+            // Pequeño delay para permitir que firebase-client inicialice __firebaseAuth tras el evento
+            setTimeout(attachFirebaseIntegration, 0);
+        }, { once: true });
+    }
+})();

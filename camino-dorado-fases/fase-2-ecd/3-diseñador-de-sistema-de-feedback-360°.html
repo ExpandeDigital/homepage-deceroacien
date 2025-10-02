@@ -153,9 +153,10 @@
             .pedagogical-column { border-right: none; border-bottom: 1px solid var(--color-gold); }
         }
     </style>
-</head>
+ </head>
 <body>
 
+    <main data-entitlement="camino.fase2">
     <div class="container">
         <div class="column pedagogical-column">
             <h1>9. Diseñador de Sistema de Feedback 360°</h1>
@@ -189,7 +190,7 @@
                 <li><strong>Genera la Plantilla:</strong> La herramienta creará un borrador de la encuesta listo para ser utilizado.</li>
             </ul>
         </div>
-        <div class="column tool-column">
+        <div class="column tool-column" data-when="granted">
             <h2>Herramienta Interactiva</h2>
             <div id="survey-builder">
                 <div class="form-group">
@@ -211,7 +212,9 @@
             <button id="generate-survey-btn">Generar Plantilla de Feedback</button>
             <div id="survey-output" style="display:none;"></div>
         </div>
+        <div data-when="denied" class="hidden"></div>
     </div>
+    </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -301,5 +304,7 @@ return p.innerHTML;
         });
     </script>
 
+    <script src="../../assets/js/components.js"></script>
+    <script src="../../assets/js/entitlements.js"></script>
 </body>
 </html>

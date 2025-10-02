@@ -20,6 +20,13 @@
 (function (w) {
   const STORAGE_KEY = 'deceroacien_entitlements';
 
+  // Derivaciones internas (solo dentro del mismo producto, NO cruzadas entre suites)
+  // Al comprar el producto macro se otorgan sus fases internas.
+  const DERIVED_ENTITLEMENTS = {
+    'product.deceroacien': ['decero.fase1','decero.fase2','decero.fase3','decero.fase4','decero.fase5'],
+    'product.camino_dorado': ['camino.fase1','camino.fase2','camino.fase3','camino.fase4','camino.fase5']
+  };
+
   // Mapa de productos → CTA por defecto (ajustable)
   const PRODUCT_CTAS = {
   'course.pmv': { href: '/academy-fases/bootcamp-pmv.html', label: 'Comprar Programa PMV' },
@@ -27,18 +34,32 @@
   'course.growth': { href: '/academy-fases/bootcamp-growth.html', label: 'Comprar Programa Growth' },
   'course.ceo': { href: '/masterclass-ceo.html', label: 'Comprar Masterclass CEO' },
   'membership.pro': { href: '/academy-fases/index.html', label: 'Unirme a la Membresía' },
-  'test.clp500': { href: '/pago-prueba.html', label: 'Comprar prueba $500' }
+  'test.clp500': { href: '/pago-prueba.html', label: 'Comprar prueba $500' },
+  // Nuevos productos macro
+  'product.deceroacien': { href: '/de-cero-a-cien.html', label: 'Comprar De Cero a Cien' },
+  'product.camino_dorado': { href: '/camino-dorado.html', label: 'Comprar Camino Dorado' }
   };
+
+  // CTAs para fases internas (apuntan al producto principal). Facilita mostrar botón correcto si se usa data-entitlement="decero.fase1" etc.
+  ['1','2','3','4','5'].forEach(n => {
+    PRODUCT_CTAS['decero.fase'+n] = { href: '/de-cero-a-cien.html', label: 'Comprar De Cero a Cien' };
+    PRODUCT_CTAS['camino.fase'+n] = { href: '/camino-dorado.html', label: 'Comprar Camino Dorado' };
+  });
 
   function readEntitlements() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return [];
       const arr = JSON.parse(raw);
-      return Array.isArray(arr) ? arr : [];
-    } catch (e) {
-      return [];
-    }
+      const base = Array.isArray(arr) ? arr : [];
+      // Expandir sólo derivaciones internas del mismo producto
+      const expanded = new Set(base);
+      base.forEach(id => {
+        const derived = DERIVED_ENTITLEMENTS[id];
+        if (derived) derived.forEach(d => expanded.add(d));
+      });
+      return Array.from(expanded);
+    } catch (e) { return []; }
   }
 
   function writeEntitlements(list) {
@@ -70,6 +91,10 @@
     if (!blocks.length) return;
 
     const isLogged = !!(w.authManager && w.authManager.isUserAuthenticated && w.authManager.isUserAuthenticated());
+    // Conjunto efectivo y almacenado para distinguir derivaciones
+    const storedRaw = (function(){ try { const r=localStorage.getItem(STORAGE_KEY); const a=JSON.parse(r||'[]'); return Array.isArray(a)?a:[];} catch(_){return [];} })();
+    const effective = new Set(readEntitlements());
+    const storedSet = new Set(storedRaw);
 
     blocks.forEach(block => {
       const anyAttr = block.getAttribute('data-entitlement-any');
@@ -92,6 +117,20 @@
         if (deniedEl) deniedEl.classList.add('hidden');
         if (grantedEl) grantedEl.classList.remove('hidden');
         block.classList.remove('opacity-60');
+        // Badge si todos los ids vienen concedidos por derivación (ninguno aparece almacenado directamente)
+        const allDerived = ids.every(id => effective.has(id) && !storedSet.has(id));
+        if(allDerived){
+          let badge = block.querySelector('.entitlement-derived-badge');
+            if(!badge){
+              badge = document.createElement('div');
+              badge.className='entitlement-derived-badge text-[10px] tracking-wide inline-flex items-center gap-1 px-2 py-1 rounded bg-indigo-600/70 text-white border border-indigo-300/30 ml-2';
+              badge.innerHTML = '<span>Incluido por compra completa</span>';
+              // Insertar al principio del grantedEl o del bloque
+              const target = grantedEl || block;
+              target.insertBefore(badge, target.firstChild);
+              badge.title = 'Este acceso proviene de un entitlement macro (ej. producto completo)';
+            }
+        }
       } else {
         // No acceso: ocultar granted y mostrar denied; si no hay denied, generar CTA por defecto
         if (grantedEl) grantedEl.classList.add('hidden');
@@ -185,6 +224,34 @@
   };
 
   init();
+
+  // Panel debug (Shift + E): muestra entitlements almacenados vs efectivos
+  function openEntitlementsDebug(){
+    let existing = document.getElementById('entitlements-debug-panel');
+    if(existing) existing.remove();
+    const panel=document.createElement('div');
+    panel.id='entitlements-debug-panel';
+    panel.className='fixed bottom-4 right-4 w-[360px] max-h-[70vh] overflow-auto text-xs font-mono bg-slate-900/95 border border-slate-700 rounded-lg shadow-xl p-4 z-[99999] space-y-3';
+    const stored = (function(){ try { const r=localStorage.getItem(STORAGE_KEY); const a=JSON.parse(r||'[]'); return Array.isArray(a)?a:[];} catch(_){return [];} })();
+    const effectiveList = readEntitlements();
+    const derivedOnly = effectiveList.filter(e => !stored.includes(e));
+    panel.innerHTML=`<div class='flex justify-between items-center'><strong>Entitlements Debug</strong><button id='closeEDbg' class='text-slate-400 hover:text-white'>×</button></div>
+      <div class='space-y-2'>
+        <div><span class='font-semibold'>Stored (${stored.length}):</span><pre class='mt-1 whitespace-pre-wrap break-all'>${stored.join(', ')||'—'}</pre></div>
+        <div><span class='font-semibold'>Effective (${effectiveList.length}):</span><pre class='mt-1 whitespace-pre-wrap break-all'>${effectiveList.join(', ')||'—'}</pre></div>
+        <div><span class='font-semibold'>Derived Only (${derivedOnly.length}):</span><pre class='mt-1 whitespace-pre-wrap break-all'>${derivedOnly.join(', ')||'—'}</pre></div>
+      </div>
+      <div class='flex gap-2 pt-2'>
+        <button id='refreshEDbg' class='px-2 py-1 rounded bg-slate-700 hover:bg-slate-600'>Refrescar</button>
+        <button id='closeBtnEDbg' class='px-2 py-1 rounded bg-slate-700 hover:bg-slate-600'>Cerrar</button>
+        <button id='clearEDbg' class='ml-auto px-2 py-1 rounded bg-red-700/70 hover:bg-red-600'>Limpiar (stored)</button>
+      </div>`;
+    document.body.appendChild(panel);
+    panel.querySelector('#closeEDbg').onclick = panel.querySelector('#closeBtnEDbg').onclick = ()=>panel.remove();
+    panel.querySelector('#refreshEDbg').onclick = ()=>{ panel.remove(); openEntitlementsDebug(); };
+    panel.querySelector('#clearEDbg').onclick = ()=>{ localStorage.removeItem(STORAGE_KEY); broadcastUpdate(); panel.remove(); openEntitlementsDebug(); };
+  }
+  document.addEventListener('keydown', e=>{ if(e.shiftKey && e.key.toLowerCase()==='e'){ openEntitlementsDebug(); }});
 })(window);
 
 // =============================
@@ -192,24 +259,24 @@
 // =============================
 (function (w) {
   const PATH_GUARD = [
+    // Academy (mantiene course.*)
     { test: /\/fase_1_ecd\//i, required: ['course.pmv'] },
     { test: /\/fase_2_ecd\//i, required: ['course.pmv'] },
     { test: /\/fase_3_ecd\//i, required: ['course.pmf'] },
     { test: /\/fase_4_ecd\//i, required: ['course.growth'] },
     { test: /\/fase_5_ecd\//i, required: ['course.ceo'] },
-  // Rutas del programa Camino Dorado (carpetas con guiones)
-  // Importante: no bloquear el index de cada carpeta (solo archivos internos)
-  { test: /\/camino-dorado-fases\/fase-1-ecd\/(?!index\.html)([^/?#]+)/i, required: ['course.pmv'] },
-  { test: /\/camino-dorado-fases\/fase-2-ecd\/(?!index\.html)([^/?#]+)/i, required: ['course.pmv'] },
-  { test: /\/camino-dorado-fases\/fase-3-ecd\/(?!index\.html)([^/?#]+)/i, required: ['course.pmf'] },
-  { test: /\/camino-dorado-fases\/fase-4-ecd\/(?!index\.html)([^/?#]+)/i, required: ['course.growth'] },
-  { test: /\/camino-dorado-fases\/fase-5-ecd\/(?!index\.html)([^/?#]+)/i, required: ['course.ceo'] },
-    // Rutas equivalentes ya existentes en el repo (de0a100)
-    { test: /\/fase_1_de0a100\//i, required: ['course.pmv'] },
-    { test: /\/fase_2_de0a100\//i, required: ['course.pmv'] },
-    { test: /\/fase_3_de0a100\//i, required: ['course.pmf'] },
-    { test: /\/fase_4_de0a100\//i, required: ['course.growth'] },
-    { test: /\/fase_5_de0a100\//i, required: ['course.ceo'] },
+    // Camino Dorado (granular camino.faseX). Respetar index libre, sólo bloquear archivos internos
+    { test: /\/camino-dorado-fases\/fase-1-ecd\/(?!index\.html)([^/?#]+)/i, required: ['camino.fase1'] },
+    { test: /\/camino-dorado-fases\/fase-2-ecd\/(?!index\.html)([^/?#]+)/i, required: ['camino.fase2'] },
+    { test: /\/camino-dorado-fases\/fase-3-ecd\/(?!index\.html)([^/?#]+)/i, required: ['camino.fase3'] },
+    { test: /\/camino-dorado-fases\/fase-4-ecd\/(?!index\.html)([^/?#]+)/i, required: ['camino.fase4'] },
+    { test: /\/camino-dorado-fases\/fase-5-ecd\/(?!index\.html)([^/?#]+)/i, required: ['camino.fase5'] },
+    // De Cero a Cien (granular decero.faseX)
+    { test: /\/fase_1_de0a100\//i, required: ['decero.fase1'] },
+    { test: /\/fase_2_de0a100\//i, required: ['decero.fase2'] },
+    { test: /\/fase_3_de0a100\//i, required: ['decero.fase3'] },
+    { test: /\/fase_4_de0a100\//i, required: ['decero.fase4'] },
+    { test: /\/fase_5_de0a100\//i, required: ['decero.fase5'] },
   ];
 
   function parseQuery() {
@@ -248,9 +315,10 @@
 
     if (hasSignature && !isDev) {
       try {
-        const qs = new URLSearchParams({ grant: list[0], t: q.t, ref: q.ref || '', sig: q.sig }).toString();
-        const endpoint = '/api/mp/verify-grant';
-        const resp = await fetch(`${endpoint}?${qs}`);
+  const qs = new URLSearchParams({ grant: list[0], t: q.t, ref: q.ref || '', sig: q.sig }).toString();
+  const api = (w.PublicAuthConfig && w.PublicAuthConfig.api) || {};
+  const endpoint = (api.baseUrl ? (api.baseUrl + '/mp/verify-grant') : '/api/mp/verify-grant');
+  const resp = await fetch(`${endpoint}?${qs}`);
         const data = await resp.json();
         if (data && data.ok) {
           await applyGrant(list);

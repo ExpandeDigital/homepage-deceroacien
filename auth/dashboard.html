@@ -22,6 +22,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
     
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/logo_de_cero_a_cien_blanco_y_dorado.png" type="image/png">
+
     <!-- Hojas de estilo -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -47,6 +50,8 @@
             }
         }
     </script>
+    
+    <!-- Firebase cargado de forma centralizada por assets/js/components.js -->
 </head>
 <body class="base-container antialiased">
 
@@ -73,9 +78,12 @@
                                 <p id="userCompany" class="text-xs text-gray-400">Empresa</p>
                             </div>
                         </div>
-                        <button data-logout class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm transition-colors">
-                            Cerrar Sesión
-                        </button>
+                        <!-- Selector de avatar genérico cuando no hay foto de Google -->
+                        <div id="avatarSelector" class="hidden sm:flex items-center gap-2 text-xs text-gray-300">
+                            <span>Avatar:</span>
+                            <button type="button" data-avatar="male" class="px-2 py-1 border border-gray-600 rounded hover:bg-gray-700">Masculino</button>
+                            <button type="button" data-avatar="female" class="px-2 py-1 border border-gray-600 rounded hover:bg-gray-700">Femenino</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -119,50 +127,12 @@
             </div>
         </section>
 
-        <!-- Progress Section -->
+        <!-- Progress Section (dinámica por demo-full-access.js) -->
         <section class="main-section pb-12">
             <div class="section-container">
                 <h2 class="text-2xl font-bold text-white mb-6">Tu Progreso</h2>
-                <div class="responsive-grid lg:grid-cols-2 gap-6">
-                    <div class="card-component">
-                        <h3 class="text-xl font-semibold text-white mb-4">Fases Completadas</h3>
-                        <div class="space-y-3">
-                            <div class="flex items-center justify-between">
-                                <span class="text-gray-300">Fase 1: Validación</span>
-                                <span class="text-green-400 font-semibold">✓ Completada</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-gray-300">Fase 2: Desarrollo</span>
-                                <span class="text-yellow-400 font-semibold">📍 En progreso</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-gray-400">Fase 3: Lanzamiento</span>
-                                <span class="text-gray-500">⏳ Pendiente</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card-component">
-                        <h3 class="text-xl font-semibold text-white mb-4">Herramientas Utilizadas</h3>
-                        <div class="grid grid-cols-2 gap-4 text-center">
-                            <div>
-                                <div class="text-2xl font-bold text-yellow-400">8</div>
-                                <div class="text-sm text-gray-400">Completadas</div>
-                            </div>
-                            <div>
-                                <div class="text-2xl font-bold text-blue-400">5</div>
-                                <div class="text-sm text-gray-400">En progreso</div>
-                            </div>
-                            <div>
-                                <div class="text-2xl font-bold text-gray-400">18</div>
-                                <div class="text-sm text-gray-400">Disponibles</div>
-                            </div>
-                            <div>
-                                <div class="text-2xl font-bold text-green-400">31</div>
-                                <div class="text-sm text-gray-400">Total</div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="card-component" data-progress-dashboard>
+                    <div class="text-gray-400 text-sm animate-pulse">Cargando progreso...</div>
                 </div>
             </div>
         </section>
@@ -212,35 +182,78 @@
     <footer class="footer-component"></footer>
 
     <!-- Scripts JavaScript -->
-    <script src="../assets/js/components.js"></script>
-    <script src="../assets/js/auth-config.js"></script>
+    <script src="../assets/js/config-secure.js"></script>
+    <script src="../assets/js/supabase-client.js"></script>
     <script src="../assets/js/auth.js"></script>
+    <!-- Script de modo demo full access (solo en rama feature/full-access-demo). Debe ir ANTES de components.js para que authManager ya tenga user -->
+    <script src="../assets/js/demo-full-access.js"></script>
+    <script src="../assets/js/tracking-demo.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/debug-auth.js"></script>
     <script>
-        // Proteger esta página requiriendo autenticación
-        document.addEventListener('DOMContentLoaded', function() {
-            // Verificar autenticación cuando el authManager esté listo
-            setTimeout(() => {
-                if (!requireAuth()) {
-                    return;
-                }
-                
-                // Cargar datos del usuario
-                loadUserData();
-            }, 100);
+        // Proteger esta página requiriendo autenticación con una breve espera por sesión de Supabase
+        async function waitForSupabaseSession(timeoutMs = 2000) {
+            const start = Date.now();
+            try { if (window.SupabaseAuth && window.SupabaseAuth.ensureSupabase) await window.SupabaseAuth.ensureSupabase(); } catch(_) {}
+            while (Date.now() - start < timeoutMs) {
+                try {
+                    if (window.authManager && window.authManager.isUserAuthenticated && window.authManager.isUserAuthenticated()) return true;
+                    if (window.SupabaseAuth && window.SupabaseAuth.getAccessToken) {
+                        const t = await window.SupabaseAuth.getAccessToken();
+                        if (t) return true;
+                    }
+                } catch(_) {}
+                await new Promise(r => setTimeout(r, 150));
+            }
+            return !!(window.authManager && window.authManager.isUserAuthenticated && window.authManager.isUserAuthenticated());
+        }
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Espera breve para evitar condiciones de carrera al sincronizar sesión
+            await waitForSupabaseSession(2000);
+            if (!requireAuth()) {
+                return;
+            }
+            // Cargar datos del usuario
+            loadUserData();
         });
 
         function loadUserData() {
             if (authManager && authManager.isUserAuthenticated()) {
                 const user = authManager.getCurrentUser();
-                
                 // Actualizar información del usuario en la página
                 document.getElementById('userName').textContent = user.firstName || 'Usuario';
                 document.getElementById('userEmail').textContent = user.email || '';
                 document.getElementById('userCompany').textContent = user.company || 'Emprendedor';
-                
                 // Si el usuario tiene foto de perfil (Google), usarla
+                const avatarEl = document.getElementById('userAvatar');
+                const hasGooglePhoto = !!(user.profilePicture && /^https?:\/\//.test(user.profilePicture));
                 if (user.profilePicture) {
-                    document.getElementById('userAvatar').src = user.profilePicture;
+                    avatarEl.src = user.profilePicture.startsWith('/') ? ('..' + user.profilePicture) : user.profilePicture;
+                } else {
+                    const pref = (localStorage.getItem('deceroacien_avatar_pref') || 'male').toLowerCase();
+                    avatarEl.src = pref === 'female' ? '../assets/female-avatar.png' : '../assets/male-avatar.png';
+                }
+                // Mostrar selector solo si no hay foto de Google
+                const sel = document.getElementById('avatarSelector');
+                if (sel) {
+                    sel.style.display = hasGooglePhoto ? 'none' : 'flex';
+                    sel.querySelectorAll('button[data-avatar]').forEach(btn => {
+                        btn.onclick = () => {
+                            const choice = btn.getAttribute('data-avatar');
+                            localStorage.setItem('deceroacien_avatar_pref', choice);
+                            const newSrc = choice === 'female' ? '../assets/female-avatar.png' : '../assets/male-avatar.png';
+                            avatarEl.src = newSrc;
+                            // Actualizar en sesión actual
+                            if (window.authManager && window.authManager.currentUser) {
+                                window.authManager.currentUser.profilePicture = '/' + (choice === 'female' ? 'assets/female-avatar.png' : 'assets/male-avatar.png');
+                                try {
+                                    const key = (window.PublicAuthConfig && window.PublicAuthConfig.storage && window.PublicAuthConfig.storage.userKey) || 'deceroacien_user';
+                                    localStorage.setItem(key, JSON.stringify(window.authManager.currentUser));
+                                } catch(_) {}
+                            }
+                        };
+                    });
                 }
             }
         }

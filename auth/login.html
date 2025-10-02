@@ -22,6 +22,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
     
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/logo_de_cero_a_cien_blanco_y_dorado.png" type="image/png">
+
     <!-- Hojas de estilo -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -48,8 +51,7 @@
         }
     </script>
 
-    <!-- Google Identity Services con configuración de idioma español según documentación oficial -->
-    <script src="https://accounts.google.com/gsi/client?hl=es" async defer></script>
+    <!-- Supabase Auth se maneja vía supabase-client.js -->
 </head>
 <body class="base-container antialiased">
 
@@ -129,25 +131,13 @@
                         </div>
                     </div>
 
-                    <!-- Google Sign In - Implementación mejorada según documentación oficial -->
+                    <!-- Login con Google vía Supabase OAuth -->
                     <div class="mt-6">
-                        <!-- Google One Tap configuration - NO se muestra en páginas de auth según mejores prácticas -->
-                        <div id="g_id_onload"
-                             data-client_id="DYNAMIC_CLIENT_ID"
-                             data-callback="handleCredentialResponse"
-                             data-auto_prompt="false"
-                             data-cancel_on_tap_outside="true"
-                             data-context="signin"
-                             data-itp_support="true"
-                             style="display: none;">
-                        </div>
-                        
-                        <!-- Botón de Google - Configuración completa según documentación -->
-                        <div id="googleSignInButton" 
-                             class="w-full">
-                        </div>
-                        
-                        <!-- Fallback HTML button si JavaScript falla -->
+                        <button id="supabaseGoogleBtn" type="button"
+                                class="w-full flex items-center justify-center gap-2 py-2 px-4 border border-gray-600 rounded-md bg-white text-gray-800 hover:bg-gray-100">
+                            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" width="18" height="18" />
+                            <span>Continuar con Google</span>
+                        </button>
                         <noscript>
                             <div class="w-full text-center py-3 px-4 border border-gray-600 rounded-md bg-white text-gray-700">
                                 JavaScript es requerido para el inicio de sesión con Google
@@ -173,79 +163,69 @@
     <footer class="footer-component"></footer>
 
     <!-- Scripts JavaScript -->
-    <script src="../assets/js/components.js"></script>
     <script src="../assets/js/config-secure.js"></script>
-    <script src="../assets/js/auth-config.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/supabase-client.js"></script>
     <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/debug-auth.js"></script>
     <script>
         // Redirigir si ya hay sesión activa
         document.addEventListener('DOMContentLoaded', function () {
             try { if (window.initializeAuthManager) window.initializeAuthManager(); } catch (e) {}
-            setTimeout(function(){
+            (async () => {
+                // Esperar brevemente a que Supabase procese el hash/código de OAuth
+                try { if (window.SupabaseAuth && window.SupabaseAuth.ensureSupabase) await window.SupabaseAuth.ensureSupabase(); } catch(_){ }
+                // Pequeñas reintentos (hasta ~1.5s) para permitir a detectSessionInUrl completar
+                for (let i=0;i<10;i++) {
+                    let has = false; try { has = !!(window.SupabaseAuth && (await window.SupabaseAuth.getAccessToken())); } catch(_){}
+                    try { console.log('[login] check supabase token try', i, '->', has); } catch(_){ }
+                    if (has) break;
+                    await new Promise(r => setTimeout(r, 150));
+                }
+                let hasSupabase = false;
+                try { hasSupabase = !!(window.SupabaseAuth && (await window.SupabaseAuth.getAccessToken())); } catch(_){}
+                if (hasSupabase) {
+                    const url = new URL(window.location.href);
+                    const ret = url.searchParams.get('return');
+                    const target = ret ? decodeURIComponent(ret) : (window.location.origin + '/auth/dashboard.html');
+                    window.location.href = target;
+                    return;
+                }
+                // Fallback al comportamiento existente
                 if (window.redirectIfAuthenticated) {
                     window.redirectIfAuthenticated();
                 }
-            }, 0);
+            })();
         });
     </script>
     
-    <!-- Inicialización de Google Sign In Button según documentación oficial -->
     <script>
-        /**
-         * Inicializa el botón de Google Sign In cuando la página esté cargada
-         * Implementación según documentación oficial de Google Identity Services
-         */
-        window.onload = function () {
-            // Asegurar que AuthManager esté inicializado
-            if (!window.authManager) {
-                window.initializeAuthManager();
-            }
-            
-            // Verificar que Google Identity Services esté disponible
-            if (typeof google === 'undefined' || !google.accounts || !google.accounts.id) {
-                console.error('Google Identity Services no está disponible');
-                return;
-            }
-            
-            // Obtener configuración
-            const config = window.PublicAuthConfig || {};
-            const clientId = config.googleClientId || 'ERROR_CLIENT_ID_NOT_LOADED';
-            
-            try {
-                // Inicializar Google Identity Services
-                google.accounts.id.initialize({
-                    client_id: clientId,
-                    callback: handleCredentialResponse,
-                    auto_select: false,  // No auto-select en página de login
-                    cancel_on_tap_outside: true,
-                    itp_support: true
+        // Inicializar botón de Google (Supabase OAuth)
+        window.addEventListener('DOMContentLoaded', () => {
+            try { if (!window.authManager) window.initializeAuthManager && window.initializeAuthManager(); } catch(_){ }
+            const btn = document.getElementById('supabaseGoogleBtn');
+            if (btn) {
+                btn.addEventListener('click', async () => {
+                    try {
+                        await (window.SupabaseAuth && window.SupabaseAuth.signInWithGoogle ? window.SupabaseAuth.signInWithGoogle() : Promise.reject('supabase_not_ready'));
+                    } catch (e) {
+                        console.error('No se pudo iniciar sesión con Google (Supabase):', e);
+                        alert('No se pudo iniciar sesión con Google. Intenta nuevamente.');
+                    }
                 });
-
-                // Renderizar el botón con configuración personalizada
-                const buttonContainer = document.getElementById("googleSignInButton");
-                if (buttonContainer) {
-                    google.accounts.id.renderButton(
-                        buttonContainer,
-                        {
-                            theme: "filled_black",
-                            size: "large",
-                            text: "signin_with",
-                            shape: "rectangular",
-                            logo_alignment: "left",
-                            width: 300,  // Ancho fijo en píxeles
-                            locale: "es"  // Idioma español
-                        }
-                    );
-                    
-                    console.log('Botón de Google Sign In renderizado correctamente');
-                } else {
-                    console.error('Contenedor del botón de Google no encontrado');
-                }
-                
-            } catch (error) {
-                console.error('Error inicializando Google Sign In:', error);
             }
-        };
+            // Auto-iniciar si viene ?auth=google
+            try {
+                const u = new URL(window.location.href);
+                if ((u.searchParams.get('auth')||'').toLowerCase() === 'google') {
+                    const msg = document.createElement('div');
+                    msg.textContent = 'Redirigiendo a Google…';
+                    msg.style.cssText = 'margin-top:12px;text-align:center;color:#e6f1ff;opacity:.85;';
+                    btn && btn.insertAdjacentElement('afterend', msg);
+                    setTimeout(()=>{ btn?.click(); }, 50);
+                }
+            } catch(_){ }
+        });
     </script>
 </body>
 </html>

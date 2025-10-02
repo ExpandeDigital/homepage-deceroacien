@@ -1,377 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>De Cien a Mil: 4. Simulador de Puntos de Falla</title>
-    <style>
-        :root {
-            --color-night-blue: #0D223F; /* Azul Noche */
-            --color-gold: #D4AF37;       /* Dorado */
-            --color-gold-dark: #B89B2E;  /* Dorado Oscuro para hover */
-            --color-card-bg: #FFFFFF;    /* Fondo de la tarjeta principal */
-            --color-text-on-dark: #F0F0F0; /* Texto claro sobre fondo oscuro */
-            --color-text-on-light: #0D223F;/* Texto oscuro sobre fondo claro */
-            --color-border: #E0D6B3;     /* Borde suave, derivado del dorado */
-            --color-danger-high: #c0392b; /* Rojo para criticidad alta */
-            --color-danger-medium: #f39c12; /* Naranja para criticidad media */
-            --color-danger-low: #27ae60;  /* Verde para criticidad baja */
-            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body {
-            font-family: var(--font-family);
-            background-color: var(--color-night-blue);
-            color: var(--color-text-on-dark);
-            margin: 0;
-            padding: 40px 20px;
-            line-height: 1.6;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-        }
-        .container {
-            display: flex;
-            width: 100%;
-            max-width: 1200px;
-            background: var(--color-card-bg);
-            color: var(--color-text-on-light);
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0, 0.2);
-            overflow: hidden;
-            border: 1px solid var(--color-gold);
-        }
-        .column {
-            padding: 35px;
-            flex-basis: 50%;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-        }
-        .pedagogical-column {
-            background-color: var(--color-night-blue);
-            color: var(--color-text-on-dark);
-            border-right: 1px solid var(--color-gold);
-        }
-        .tool-column {
-            background-color: var(--color-card-bg);
-        }
-        h1, h2 {
-            margin-top: 0;
-        }
-        .pedagogical-column h1 {
-            color: var(--color-card-bg);
-        }
-        .tool-column h2 {
-             color: var(--color-night-blue);
-        }
-        h1 {
-            font-size: 1.8em;
-            border-bottom: 2px solid var(--color-gold);
-            padding-bottom: 10px;
-            margin-bottom: 25px;
-        }
-        h2 {
-            font-size: 1.6em;
-        }
-        h3 {
-            font-size: 1.2em;
-            margin-top: 25px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            color: var(--color-gold);
-        }
-        h3 .icon {
-            width: 24px;
-            height: 24px;
-            margin-right: 10px;
-            fill: currentColor;
-        }
-        p, li {
-            font-size: 0.95em;
-        }
-        ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        ul li {
-            padding-left: 1.5em;
-            text-indent: -1.5em;
-            margin-bottom: 5px;
-        }
-        ul li::before {
-            content: '•';
-            color: var(--color-gold);
-            margin-right: 0.5em;
-            font-size: 1.2em;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--color-border);
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 1em;
-            color: var(--color-text-on-light);
-        }
-        input[type="range"] {
-            -webkit-appearance: none; appearance: none;
-            width: 100%; height: 8px;
-            background: var(--color-border); outline: none;
-            opacity: 0.7; -webkit-transition: .2s; transition: opacity .2s;
-            border-radius: 5px;
-        }
-        input[type="range"]:hover { opacity: 1; }
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none; appearance: none;
-            width: 20px; height: 20px;
-            background: var(--color-gold); cursor: pointer; border-radius: 50%;
-        }
-        input[type="range"]::-moz-range-thumb {
-            width: 20px; height: 20px;
-            background: var(--color-gold); cursor: pointer; border-radius: 50%;
-        }
-        .slider-container {
-            display: flex; align-items: center; gap: 15px;
-        }
-        .slider-container input[type="range"] { flex-grow: 1; }
-        .slider-container span {
-            font-weight: bold; color: var(--color-gold-dark);
-            min-width: 20px; text-align: center;
-        }
-        button {
-            background-color: var(--color-gold);
-            color: var(--color-night-blue); border: none;
-            padding: 12px 20px; border-radius: 5px;
-            font-size: 1em; font-weight: bold; cursor: pointer;
-            transition: background-color 0.3s, transform 0.1s;
-            width: 100%;
-            margin-top: 10px;
-        }
-        button:hover { background-color: var(--color-gold-dark); }
-        button:active { transform: scale(0.98); }
-
-        #risk-list {
-            margin-top: 20px;
-            flex-grow: 1;
-            overflow-y: auto;
-        }
-        .risk-card {
-            background-color: #f9f9f9;
-            border: 1px solid var(--color-border);
-            border-left-width: 5px;
-            border-radius: 5px;
-            padding: 15px;
-            position: relative;
-            margin-bottom: 10px;
-        }
-        .risk-card h4 {
-            margin: 0 0 10px 0;
-            color: var(--color-night-blue);
-        }
-        .risk-details {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.9em;
-        }
-        .risk-score {
-            font-size: 1.4em;
-            font-weight: bold;
-        }
-        .delete-risk-btn {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: none;
-            border: none;
-            font-size: 1.2em;
-            cursor: pointer;
-            color: #aaa;
-        }
-        .delete-risk-btn:hover {
-            color: #777;
-        }
-
-        @media (max-width: 900px) {
-            body { padding: 0; }
-            .container { flex-direction: column; border-radius: 0; max-width: 100%; }
-            .pedagogical-column { border-right: none; border-bottom: 1px solid var(--color-gold); }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>De Cien a Mil: 4. Simulador de Puntos de Falla</title>
 </head>
-<body>
-
+<body class="tool-app simulador-puntos-falla">
+  <main data-entitlement="camino.fase1">
     <div class="container">
-        <div class="column pedagogical-column">
-            <h1>4. Simulador de Puntos de Falla</h1>
-            
-            <h3>
-                <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-2h2v2zm0-4h-2V7h2v5z"></path></svg>
-                Objetivo
-            </h3>
-            <p>Identificar y priorizar de forma proactiva las debilidades potenciales en operaciones, tecnología o personal antes de que se conviertan en fallos catastróficos que frenen el crecimiento.</p>
-
-            <h3>
-                <svg class="icon" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"></path></svg>
-                Importancia Estratégica
-            </h3>
-            <p>El crecimiento exponencial pone una enorme presión sobre la estructura de un negocio. Esta herramienta cambia la mentalidad de "apagar fuegos" a una de gestión de riesgos, permitiendo asignar recursos para reforzar las áreas más vulnerables antes de que fallen.</p>
-
-            <h3>
-                <svg class="icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
-                Para Quién Es
-            </h3>
-            <p>Crítico para el equipo fundador y líderes de departamento (Operaciones, Tecnología, RRHH) que necesitan asegurar la continuidad y estabilidad del negocio durante la escalada.</p>
-
-            <h3>
-                <svg class="icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
-                Instrucciones de Uso
-            </h3>
-            <ul>
-                <li><strong>Punto de Falla:</strong> Describe el riesgo (Ej: "Caída del servidor principal", "Renuncia del desarrollador clave").</li>
-                <li><strong>Probabilidad (1-10):</strong> ¿Qué tan probable es que ocurra?</li>
-                <li><strong>Impacto (1-10):</strong> Si ocurre, ¿qué tan grave sería el daño?</li>
-                <li><strong>Añadir a la Matriz:</strong> El riesgo se añadirá a la lista, priorizado por su nivel de criticidad (Probabilidad x Impacto).</li>
-            </ul>
+      <div class="column pedagogical-column">
+        <h1>4. Simulador de Puntos de Falla</h1>
+        <h3><svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg>Objetivo</h3>
+        <p>Identificar y priorizar de forma proactiva las debilidades potenciales antes de que se conviertan en fallos catastróficos.</p>
+        <h3><svg class="icon" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>Importancia Estratégica</h3>
+        <p>Cambia la mentalidad de apagar fuegos a gestión preventiva del riesgo.</p>
+        <h3><svg class="icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Para Quién Es</h3>
+        <p>Crítico para equipo fundador y líderes de operaciones, tecnología y RRHH.</p>
+        <h3><svg class="icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>Instrucciones de Uso</h3>
+        <ul>
+          <li>Define el punto de falla.</li>
+          <li>Ajusta probabilidad e impacto.</li>
+          <li>Prioriza según criticidad.</li>
+        </ul>
+      </div>
+      <div class="column tool-column" data-when="granted">
+        <h2>Herramienta Interactiva</h2>
+        <div id="risk-form">
+          <div class="form-group"><label for="risk-name">Punto de Falla Potencial</label><input type="text" id="risk-name" placeholder="Ej: Único proveedor crítico"></div>
+          <div class="form-group"><label for="probability">Probabilidad de Ocurrencia</label><div class="slider-container"><span>1</span><input type="range" id="probability" min="1" max="10" value="5"><span id="probability-value">5</span></div></div>
+          <div class="form-group"><label for="impact">Impacto en el Negocio</label><div class="slider-container"><span>1</span><input type="range" id="impact" min="1" max="10" value="5"><span id="impact-value">5</span></div></div>
+          <button id="add-risk-btn">Añadir a la Matriz de Riesgo</button>
         </div>
-        <div class="column tool-column">
-            <h2>Herramienta Interactiva</h2>
-            <div id="risk-form">
-                <div class="form-group">
-                    <label for="risk-name">Punto de Falla Potencial</label>
-                    <input type="text" id="risk-name" placeholder="Ej: Único proveedor de materia prima falla">
-                </div>
-                 <div class="form-group">
-                    <label for="probability">Probabilidad de Ocurrencia</label>
-                    <div class="slider-container">
-                        <span>1</span>
-                        <input type="range" id="probability" min="1" max="10" value="5">
-                        <span id="probability-value">5</span>
-                    </div>
-                </div>
-                 <div class="form-group">
-                    <label for="impact">Impacto en el Negocio</label>
-                    <div class="slider-container">
-                        <span>1</span>
-                        <input type="range" id="impact" min="1" max="10" value="5">
-                        <span id="impact-value">5</span>
-                    </div>
-                </div>
-                <button id="add-risk-btn">Añadir a la Matriz de Riesgo</button>
-            </div>
-
-            <div id="risk-list">
-                <!-- Las tarjetas de Riesgos se añadirán aquí -->
-            </div>
-        </div>
+        <div id="risk-list"></div>
+      </div>
+      <div data-when="denied" class="hidden"></div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const riskNameInput = document.getElementById('risk-name');
-            const probabilitySlider = document.getElementById('probability');
-            const impactSlider = document.getElementById('impact');
-            const probabilityValue = document.getElementById('probability-value');
-            const impactValue = document.getElementById('impact-value');
-            const addRiskBtn = document.getElementById('add-risk-btn');
-            const riskList = document.getElementById('risk-list');
-
-            let risks = [];
-
-            probabilitySlider.addEventListener('input', () => probabilityValue.textContent = probabilitySlider.value);
-            impactSlider.addEventListener('input', () => impactValue.textContent = impactSlider.value);
-
-            addRiskBtn.addEventListener('click', addRisk);
-
-            function addRisk() {
-                const name = riskNameInput.value.trim();
-                const probability = parseInt(probabilitySlider.value);
-                const impact = parseInt(impactSlider.value);
-
-                if (!name) {
-                    alert('Por favor, describe el punto de falla.');
-                    return;
-                }
-
-                const newRisk = {
-                    id: Date.now(),
-                    name,
-                    probability,
-                    impact,
-                    score: probability * impact
-                };
-
-                risks.push(newRisk);
-                renderRisks();
-                clearForm();
-            }
-            
-            function renderRisks() {
-                risks.sort((a, b) => b.score - a.score);
-                riskList.innerHTML = '';
-
-                risks.forEach(risk => {
-                    const card = document.createElement('div');
-                    card.className = 'risk-card';
-                    card.dataset.id = risk.id;
-
-                    let criticalityColor = 'var(--color-danger-low)';
-                    if (risk.score > 60) {
-                        criticalityColor = 'var(--color-danger-high)';
-                    } else if (risk.score > 30) {
-                        criticalityColor = 'var(--color-danger-medium)';
-                    }
-                    card.style.borderLeftColor = criticalityColor;
-                    
-                    card.innerHTML = `
-                        <button class="delete-risk-btn" title="Eliminar Riesgo">&times;</button>
-                        <h4>${escapeHTML(risk.name)}</h4>
-                        <div class="risk-details">
-                            <span>Prob: ${risk.probability}/10 · Imp: ${risk.impact}/10</span>
-                            <span class="risk-score" style="color: ${criticalityColor};">Criticidad: ${risk.score}</span>
-                        </div>
-                    `;
-                    riskList.appendChild(card);
-                });
-
-                document.querySelectorAll('.delete-risk-btn').forEach(btn => {
-                    btn.addEventListener('click', deleteRisk);
-                });
-            }
-
-            function deleteRisk(event) {
-                const card = event.target.closest('.risk-card');
-                const riskId = parseInt(card.dataset.id);
-                risks = risks.filter(r => r.id !== riskId);
-                renderRisks();
-            }
-            
-            function clearForm() {
-                riskNameInput.value = '';
-                probabilitySlider.value = 5;
-                impactSlider.value = 5;
-                probabilityValue.textContent = '5';
-                impactValue.textContent = '5';
-                riskNameInput.focus();
-            }
-
-            function escapeHTML(str) {
-                const p = document.createElement('p');
-                p.textContent = str;
-                return p.innerHTML;
-            }
-        });
-    </script>
-
+  </main>
+  <script src="../../assets/js/components.js"></script>
+  <script src="../../assets/js/entitlements.js"></script>
+  <script src="../../assets/js/tools/simulador-puntos-falla.js"></script>
 </body>
 </html>
