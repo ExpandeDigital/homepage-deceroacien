@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import admin from 'firebase-admin';
+import { createRemoteJWKSet, jwtVerify } from 'jose';
 import { Pool } from 'pg';
 import { MercadoPagoConfig, Preference, Payment } from 'mercadopago';
 import fs from 'fs';
@@ -19,6 +20,19 @@ const MP_INTEGRATOR_ID = process.env.MP_INTEGRATOR_ID || '';
 const PUBLIC_API_BASE = process.env.PUBLIC_API_BASE || '';
 const PUBLIC_SITE_BASE = process.env.PUBLIC_SITE_BASE || 'https://www.deceroacien.app';
 const GRANT_SECRET = process.env.GRANT_SECRET || '';
+// Supabase Auth (config pública + verificación)
+const PUBLIC_SUPABASE_URL = process.env.PUBLIC_SUPABASE_URL || '';
+const PUBLIC_SUPABASE_ANON_KEY = process.env.PUBLIC_SUPABASE_ANON_KEY || '';
+// JWKS remoto (derivado de la URL de Supabase)
+const SUPABASE_JWKS_URL = PUBLIC_SUPABASE_URL ? `${PUBLIC_SUPABASE_URL.replace(/\/$/, '')}/auth/v1/.well-known/jwks.json` : '';
+let SUPABASE_JWKS = null;
+if (SUPABASE_JWKS_URL) {
+  try {
+    SUPABASE_JWKS = createRemoteJWKSet(new URL(SUPABASE_JWKS_URL));
+  } catch (e) {
+    console.warn('[api] No se pudo inicializar JWKS de Supabase:', e?.message || e);
+  }
+}
 // Parámetros de pago (configurables por entorno)
 const MP_INSTALLMENTS = Number(process.env.MP_INSTALLMENTS || 6);
 const _EXC = (process.env.MP_EXCLUDE_PAYMENT_METHODS ?? '');
@@ -29,7 +43,7 @@ const MP_EXCLUDED_PAYMENT_METHODS = _EXC
 const SMTP_URL = process.env.SMTP_URL || '';
 const SMTP_FROM = process.env.SMTP_FROM || 'no-reply@deceroacien.app';
 
-// Inicializar Firebase Admin (usa credenciales del entorno)
+// Inicializar Firebase Admin (usa credenciales del entorno) – se mantiene por compatibilidad y para otros usos opcionales
 try {
   if (!admin.apps.length) {
     if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
@@ -147,12 +161,35 @@ async function verifyBearer(req) {
   const h = req.headers['authorization'] || '';
   const m = /^Bearer\s+(.+)$/i.exec(h);
   if (!m) return null;
-  const idToken = m[1];
+  const token = m[1];
+  // 1) Preferir verificación con Supabase si está configurado
+  if (SUPABASE_JWKS && PUBLIC_SUPABASE_URL) {
+    try {
+      const issuer = `${PUBLIC_SUPABASE_URL.replace(/\/$/, '')}/auth/v1`;
+      const { payload } = await jwtVerify(token, SUPABASE_JWKS, {
+        issuer,
+        audience: 'authenticated'
+      });
+      // Normalizar a objeto tipo decoded Firebase para compat mínima
+      return {
+        uid: payload.sub,
+        email: payload.email || null,
+        name: payload.user_metadata?.full_name || payload.name || null,
+        provider_id: payload.provider_id || null,
+        // guardar claims completos por si se requieren
+        _supabase: payload
+      };
+    } catch (e) {
+      console.warn('[api] Verificación Supabase JWT falló:', e?.message || e);
+      // continuar a fallback Firebase si está disponible
+    }
+  }
+  // 2) Fallback: Firebase Admin (compatibilidad)
   try {
-    const decoded = await admin.auth().verifyIdToken(idToken);
+    const decoded = await admin.auth().verifyIdToken(token);
     return decoded;
   } catch (e) {
-    console.warn('[api] verifyIdToken falló:', e?.errorInfo || e?.message || e);
+    console.warn('[api] verifyIdToken Firebase falló:', e?.errorInfo || e?.message || e);
     return null;
   }
 }
@@ -179,8 +216,13 @@ app.get('/api/public-config', (req, res) => {
     appId: process.env.PUBLIC_FIREBASE_APP_ID || '',
     measurementId: process.env.PUBLIC_FIREBASE_MEASUREMENT_ID || ''
   };
+  const supabase = {
+    url: PUBLIC_SUPABASE_URL || '',
+    anonKey: PUBLIC_SUPABASE_ANON_KEY || ''
+  };
   res.json({
     firebase,
+    supabase,
     apiBase: PUBLIC_API_BASE || '',
     siteBase: PUBLIC_SITE_BASE || ''
   });
@@ -195,9 +237,9 @@ router.post('/auth/verify', async (req, res) => {
   if (!decoded) return res.status(401).json({ error: 'invalid_token' });
 
   // Datos básicos del usuario desde Firebase
-  const uid = decoded.uid;
+  const uid = decoded.uid || decoded.user_id || decoded.sub;
   const email = decoded.email || null;
-  const name = decoded.name || '';
+  const name = decoded.name || decoded._supabase?.user_metadata?.full_name || '';
 
   // Provisionar en DB si existe pool y tabla users
   if (pool) {
@@ -235,11 +277,11 @@ router.get('/auth/me', async (req, res) => {
   if (!decoded) return res.status(401).json({ error: 'invalid_token' });
 
   let user = {
-    id: decoded.uid,
+    id: decoded.uid || decoded.user_id || decoded.sub,
     email: decoded.email || null,
-    firebase_uid: decoded.uid,
-    first_name: (decoded.name || '').split(' ')[0] || null,
-    last_name: (decoded.name || '').split(' ').slice(1).join(' ') || null
+    firebase_uid: decoded.uid || decoded.user_id || decoded.sub,
+    first_name: (decoded.name || decoded._supabase?.user_metadata?.full_name || '').split(' ')[0] || null,
+    last_name: (decoded.name || decoded._supabase?.user_metadata?.full_name || '').split(' ').slice(1).join(' ') || null
   };
   let enrollments = [];
 

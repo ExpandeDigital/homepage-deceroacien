@@ -11,7 +11,8 @@
     "pg": "^8.11.5",
     "nodemailer": "^6.9.11",
     "express": "^4.19.2",
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "jose": "^5.8.0"
   },
   "scripts": {
     "start": "node api/server.mjs",

@@ -10,7 +10,12 @@
         const user = (w.authManager && w.authManager.isUserAuthenticated && w.authManager.isUserAuthenticated())
           ? (w.authManager.getCurrentUser && w.authManager.getCurrentUser())
           : null;
-        const idToken = (w.authManager && w.authManager.getIdToken) ? await w.authManager.getIdToken() : null;
+        // Token: preferir Supabase si existe sesión; fallback a Firebase
+        let idToken = null;
+        try { if (w.SupabaseAuth && w.SupabaseAuth.getAccessToken) idToken = await w.SupabaseAuth.getAccessToken(); } catch(_){}
+        if (!idToken && w.authManager && w.authManager.getIdToken) {
+          try { idToken = await w.authManager.getIdToken(); } catch(_){}
+        }
 
         // Si llegan SKUs (strings), intentamos resolverlos a objetos completos con Pricing
         let normalizedItems = items;
