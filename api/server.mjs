@@ -23,6 +23,8 @@ const GRANT_SECRET = process.env.GRANT_SECRET || '';
 // Supabase Auth (config pública + verificación)
 const PUBLIC_SUPABASE_URL = process.env.PUBLIC_SUPABASE_URL || '';
 const PUBLIC_SUPABASE_ANON_KEY = process.env.PUBLIC_SUPABASE_ANON_KEY || '';
+// Cuando Supabase emite tokens HS256 (por defecto), debemos verificar con el secreto del proyecto
+const SUPABASE_JWT_SECRET = process.env.SUPABASE_JWT_SECRET || '';
 // JWKS remoto (derivado de la URL de Supabase)
 const SUPABASE_JWKS_URL = PUBLIC_SUPABASE_URL ? `${PUBLIC_SUPABASE_URL.replace(/\/$/, '')}/auth/v1/.well-known/jwks.json` : '';
 let SUPABASE_JWKS = null;
@@ -162,10 +164,44 @@ async function verifyBearer(req) {
   const m = /^Bearer\s+(.+)$/i.exec(h);
   if (!m) return null;
   const token = m[1];
+  // Detectar algoritmo del token para decidir estrategia de verificación
+  let alg = null;
+  try {
+    const parts = token.split('.');
+    if (parts.length >= 2) {
+      const header = JSON.parse(Buffer.from(parts[0], 'base64').toString('utf8'));
+      alg = header && header.alg ? String(header.alg) : null;
+    }
+  } catch(_) {}
+  const expectedIssuer = PUBLIC_SUPABASE_URL ? `${PUBLIC_SUPABASE_URL.replace(/\/$/, '')}/auth/v1` : null;
+
+  // 0) Si el token es HS256 (Supabase por defecto) y tenemos SUPABASE_JWT_SECRET, verificar con HMAC primero
+  if (alg === 'HS256' && SUPABASE_JWT_SECRET) {
+    try {
+      const secret = new TextEncoder().encode(SUPABASE_JWT_SECRET);
+      let payload;
+      try {
+        ({ payload } = await jwtVerify(token, secret, { algorithms: ['HS256'], ...(expectedIssuer ? { issuer: expectedIssuer } : {}) }));
+      } catch (strictErr) {
+        // Reintento tolerante: solo firma, sin claims estrictos
+        ({ payload } = await jwtVerify(token, secret, { algorithms: ['HS256'] }));
+      }
+      return {
+        uid: payload.sub,
+        email: payload.email || null,
+        name: payload.user_metadata?.full_name || payload.name || null,
+        provider_id: payload.provider_id || null,
+        _supabase: payload
+      };
+    } catch (e) {
+      console.warn('[api] Verificación Supabase HS256 falló:', e?.message || e);
+      // continuar a intentos alternativos
+    }
+  }
   // 1) Preferir verificación con Supabase si está configurado
   if (SUPABASE_JWKS && PUBLIC_SUPABASE_URL) {
     try {
-      const issuer = `${PUBLIC_SUPABASE_URL.replace(/\/$/, '')}/auth/v1`;
+      const issuer = expectedIssuer;
       let payload;
       try {
         ({ payload } = await jwtVerify(token, SUPABASE_JWKS, { issuer, audience: 'authenticated' }));
@@ -174,7 +210,7 @@ async function verifyBearer(req) {
         try {
           ({ payload } = await jwtVerify(token, SUPABASE_JWKS));
           const iss = String(payload.iss || '');
-          const okIss = iss === issuer || iss === PUBLIC_SUPABASE_URL.replace(/\/$/, '') || iss.startsWith(PUBLIC_SUPABASE_URL.replace(/\/$/, ''));
+          const okIss = !issuer ? true : (iss === issuer || iss === PUBLIC_SUPABASE_URL.replace(/\/$/, '') || iss.startsWith(PUBLIC_SUPABASE_URL.replace(/\/$/, '')));
           if (!okIss) throw strictErr;
         } catch(e2) {
           throw strictErr;
@@ -746,6 +782,18 @@ router.get('/auth/debug-token', async (req, res) => {
     let decoded = await verifyBearer(req);
     let provider = decoded ? (decoded._supabase ? 'supabase' : 'firebase') : 'unknown';
 
+    // Extra: detectar algoritmo del header para diagnosticar
+    let alg = null;
+    try {
+      const h = req.headers['authorization'] || '';
+      const m = /^Bearer\s+(.+)$/i.exec(h);
+      if (m) {
+        const parts = m[1].split('.');
+        const header = JSON.parse(Buffer.from(parts[0] || '', 'base64').toString('utf8'));
+        alg = header && header.alg ? String(header.alg) : null;
+      }
+    } catch(_){}
+
     // Si no se pudo verificar, intentar decodificar sin verificar (solo para diagnóstico)
     let unsigned = null;
     if (!decoded) {
@@ -760,7 +808,7 @@ router.get('/auth/debug-token', async (req, res) => {
       }
     }
 
-    const out = { ok: !!decoded, provider };
+    const out = { ok: !!decoded, provider, alg };
     if (decoded) {
       out.sub = decoded.uid || decoded.user_id || decoded.sub || null;
       out.email = decoded.email || null;
@@ -779,6 +827,9 @@ router.get('/auth/debug-token', async (req, res) => {
           sub: unsigned.sub || null,
           email: unsigned.email || null
         };
+        if (alg === 'HS256' && !process.env.SUPABASE_JWT_SECRET) {
+          out.hint = 'Token HS256 de Supabase: configure SUPABASE_JWT_SECRET en Cloud Run (Auth settings > JWT secret)';
+        }
       }
     }
 
