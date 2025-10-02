@@ -192,28 +192,40 @@
     <script src="../assets/js/components.js"></script>
     <script src="../assets/js/debug-auth.js"></script>
     <script>
-        // Proteger esta página requiriendo autenticación
-        document.addEventListener('DOMContentLoaded', function() {
-            // Verificar autenticación cuando el authManager esté listo
-            setTimeout(() => {
-                if (!requireAuth()) {
-                    return;
-                }
-                
-                // Cargar datos del usuario
-                loadUserData();
-            }, 100);
+        // Proteger esta página requiriendo autenticación con una breve espera por sesión de Supabase
+        async function waitForSupabaseSession(timeoutMs = 2000) {
+            const start = Date.now();
+            try { if (window.SupabaseAuth && window.SupabaseAuth.ensureSupabase) await window.SupabaseAuth.ensureSupabase(); } catch(_) {}
+            while (Date.now() - start < timeoutMs) {
+                try {
+                    if (window.authManager && window.authManager.isUserAuthenticated && window.authManager.isUserAuthenticated()) return true;
+                    if (window.SupabaseAuth && window.SupabaseAuth.getAccessToken) {
+                        const t = await window.SupabaseAuth.getAccessToken();
+                        if (t) return true;
+                    }
+                } catch(_) {}
+                await new Promise(r => setTimeout(r, 150));
+            }
+            return !!(window.authManager && window.authManager.isUserAuthenticated && window.authManager.isUserAuthenticated());
+        }
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Espera breve para evitar condiciones de carrera al sincronizar sesión
+            await waitForSupabaseSession(2000);
+            if (!requireAuth()) {
+                return;
+            }
+            // Cargar datos del usuario
+            loadUserData();
         });
 
         function loadUserData() {
             if (authManager && authManager.isUserAuthenticated()) {
                 const user = authManager.getCurrentUser();
-                
                 // Actualizar información del usuario en la página
                 document.getElementById('userName').textContent = user.firstName || 'Usuario';
                 document.getElementById('userEmail').textContent = user.email || '';
                 document.getElementById('userCompany').textContent = user.company || 'Emprendedor';
-                
                 // Si el usuario tiene foto de perfil (Google), usarla
                 const avatarEl = document.getElementById('userAvatar');
                 const hasGooglePhoto = !!(user.profilePicture && /^https?:\/\//.test(user.profilePicture));
@@ -223,7 +235,6 @@
                     const pref = (localStorage.getItem('deceroacien_avatar_pref') || 'male').toLowerCase();
                     avatarEl.src = pref === 'female' ? '../assets/female-avatar.png' : '../assets/male-avatar.png';
                 }
-
                 // Mostrar selector solo si no hay foto de Google
                 const sel = document.getElementById('avatarSelector');
                 if (sel) {
