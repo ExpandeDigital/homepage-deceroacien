@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import admin from 'firebase-admin';
 import { createRemoteJWKSet, jwtVerify } from 'jose';
 import { Pool } from 'pg';
 import { MercadoPagoConfig, Preference, Payment } from 'mercadopago';
@@ -45,23 +44,7 @@ const MP_EXCLUDED_PAYMENT_METHODS = _EXC
 const SMTP_URL = process.env.SMTP_URL || '';
 const SMTP_FROM = process.env.SMTP_FROM || 'no-reply@deceroacien.app';
 
-// Inicializar Firebase Admin (usa credenciales del entorno) – se mantiene por compatibilidad y para otros usos opcionales
-try {
-  if (!admin.apps.length) {
-    if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
-      const svc = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
-      admin.initializeApp({ credential: admin.credential.cert(svc) });
-      console.log('[api] Firebase Admin inicializado con service account JSON en variables.');
-    } else {
-      // Application Default Credentials (ADC), ideal para Cloud Run/Cloud Functions
-      admin.initializeApp();
-      console.log('[api] Firebase Admin inicializado con credenciales por defecto (ADC).');
-    }
-    console.log('[api] Firebase Admin inicializado');
-  }
-} catch (e) {
-  console.error('[api] Error inicializando Firebase Admin:', e);
-}
+// Firebase Admin eliminado: verificación y autenticación ahora son exclusivamente vía Supabase
 
 // Inicializar pool PG (opcional)
 let pool = null;
@@ -228,14 +211,8 @@ async function verifyBearer(req) {
       // continuar a fallback Firebase si está disponible
     }
   }
-  // 2) Fallback: Firebase Admin (compatibilidad)
-  try {
-    const decoded = await admin.auth().verifyIdToken(token);
-    return decoded;
-  } catch (e) {
-    console.warn('[api] verifyIdToken Firebase falló:', e?.errorInfo || e?.message || e);
-    return null;
-  }
+  // 2) Sin fallback: si no se pudo verificar con Supabase, rechazamos el token
+  return null;
 }
 
 // App

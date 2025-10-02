@@ -25,108 +25,6 @@ const GlobalConfig = {
 };
 
 /**
- * Carga centralizada de Firebase SDK (compat) y configuración pública.
- * - Evita duplicar scripts/config en cada HTML.
- * - Emite evento 'firebase:sdk-ready' cuando ambos scripts estén cargados.
- */
-function ensureFirebaseSDKAndConfig() {
-    try {
-        const base = GlobalConfig.basePath || '';
-        const appCompatUrl = 'https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js';
-        const authCompatUrl = 'https://www.gstatic.com/firebasejs/10.13.1/firebase-auth-compat.js';
-
-        // Helper: cargar un script y devolver Promesa
-        const loadScript = (url) => new Promise((resolve, reject) => {
-            const el = document.createElement('script');
-            el.src = url;
-            el.async = true;
-            el.onload = () => resolve(url);
-            el.onerror = () => reject(new Error('No se pudo cargar ' + url));
-            (document.head || document.getElementsByTagName('head')[0]).appendChild(el);
-        });
-
-        // 1) Asegurar configuración: primero intentar local ignorada por git, luego fallback a config por defecto del repo
-        const ensureConfigLoaded = () => new Promise(async (resolve) => {
-            try {
-                if (window.__FIREBASE_APP_CONFIG) return resolve(true);
-                // 0) Intentar obtener config desde el backend (evita secretos en el repo)
-                // Determinar base del API para producción vs local
-                let apiBase = null;
-                try {
-                    if (window.PublicAuthConfig && window.PublicAuthConfig.api && window.PublicAuthConfig.api.baseUrl) {
-                        apiBase = window.PublicAuthConfig.api.baseUrl;
-                    } else {
-                        const host = (window.location && window.location.hostname) || '';
-                        const isLocal = host === 'localhost' || host === '127.0.0.1';
-                        if (isLocal) {
-                            apiBase = (GlobalConfig.basePath || '') + 'api';
-                        } else if (/(^|\.)deceroacien\.app$/.test(host)) {
-                            apiBase = 'https://api.deceroacien.app/api';
-                        } else {
-                            apiBase = (GlobalConfig.basePath || '') + 'api';
-                        }
-                    }
-                } catch(_) { apiBase = (GlobalConfig.basePath || '') + 'api'; }
-                const res = await fetch(apiBase.replace(/\/+$/, '') + '/public-config', { cache: 'no-store' });
-                if (res.ok) {
-                    const cfg = await res.json();
-                    if (cfg && cfg.firebase) {
-                        window.__FIREBASE_APP_CONFIG = cfg.firebase;
-                        return resolve(true);
-                    }
-                }
-            } catch (e) {}
-            // 1) Intentar cargar scripts de config locales (sin claves reales en el repo)
-            const host = (window.location && window.location.hostname) || '';
-            const isLocal = host === 'localhost' || host === '127.0.0.1';
-            const tryLocal = async () => {
-                try { await loadScript(base + 'assets/js/firebase-config.local.js'); return true; } catch {}
-                try { await loadScript(base + 'assets/js/firebase-config.js'); return true; } catch {}
-                return false;
-            };
-            const ok = await tryLocal();
-            resolve(ok);
-        });
-
-        // 2) Luego asegurar SDK
-        const ensureSDKLoaded = () => new Promise((resolve) => {
-            const hasFirebase = typeof window.firebase !== 'undefined' && !!window.firebase.initializeApp;
-            const scripts = Array.from(document.getElementsByTagName('script')).map(s => s.src || '');
-            const hasAppScript = scripts.some(src => src.includes('firebase-app-compat.js'));
-            const hasAuthScript = scripts.some(src => src.includes('firebase-auth-compat.js'));
-
-            if (hasFirebase || (hasAppScript && hasAuthScript)) {
-                // Ya presente/en carga
-                return resolve(true);
-            }
-
-            let parts = 0;
-            const onPartLoaded = () => {
-                parts += 1;
-                if (parts >= 2) resolve(true);
-            };
-
-            loadScript(appCompatUrl).then(onPartLoaded).catch(() => resolve(false));
-            loadScript(authCompatUrl).then(onPartLoaded).catch(() => resolve(false));
-        });
-
-        // Orquestación: config -> SDK -> evento
-        ensureConfigLoaded()
-            .then(() => ensureSDKLoaded())
-            .then(() => {
-                setTimeout(() => {
-                    document.dispatchEvent(new CustomEvent('firebase:sdk-ready'));
-                    if (window.DEBUG_MODE) console.log('[components] Firebase SDK listo');
-                }, 0);
-            })
-            .catch((e) => {
-                console.warn('No se pudo asegurar Firebase SDK/config de forma centralizada:', e);
-            });
-    } catch (e) {
-        console.warn('No se pudo asegurar Firebase SDK/config de forma centralizada:', e);
-    }
-}
-/**
  * Detecta el basePath a partir del src del script que carga este archivo.
  * Permite que las rutas del header/footer funcionen desde subcarpetas.
  */
@@ -152,9 +50,8 @@ function detectBasePath() {
 // Detectar basePath lo antes posible
 if (typeof document !== 'undefined') {
     detectBasePath();
-    // Asegurar Firebase SDK + configuración pública para toda la app
+    // Inyectar estilos globales
     ensureGlobalStyles(); // mantener orden de estilos
-    ensureFirebaseSDKAndConfig();
 }
 
 /**
