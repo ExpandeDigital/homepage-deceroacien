@@ -5,6 +5,7 @@ import { Pool } from 'pg';
 import { MercadoPagoConfig, Preference, Payment } from 'mercadopago';
 import fs from 'fs';
 import path from 'path';
+import nodemailer from 'nodemailer';
 
 // Config
 const PORT = process.env.PORT || 3001;
@@ -24,6 +25,9 @@ const _EXC = (process.env.MP_EXCLUDE_PAYMENT_METHODS ?? '');
 const MP_EXCLUDED_PAYMENT_METHODS = _EXC
   ? _EXC.split(',').map(s => s.trim()).filter(Boolean).map(id => ({ id }))
   : [];
+// Email (opcional)
+const SMTP_URL = process.env.SMTP_URL || '';
+const SMTP_FROM = process.env.SMTP_FROM || 'no-reply@deceroacien.app';
 
 // Inicializar Firebase Admin (usa credenciales del entorno)
 try {
@@ -55,6 +59,82 @@ if (process.env.DATABASE_URL) {
 } else {
   console.warn('[api] DATABASE_URL no definido; endpoints responderán sin persistencia.');
 }
+
+async function ensureSchema() {
+  if (!pool) return;
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS users (
+        id TEXT PRIMARY KEY,
+        email TEXT UNIQUE,
+        first_name TEXT,
+        last_name TEXT,
+        firebase_uid TEXT UNIQUE,
+        created_at TIMESTAMPTZ DEFAULT now(),
+        updated_at TIMESTAMPTZ DEFAULT now()
+      );
+      CREATE TABLE IF NOT EXISTS products (
+        sku TEXT PRIMARY KEY,
+        title TEXT NOT NULL,
+        price NUMERIC,
+        currency TEXT DEFAULT 'CLP',
+        metadata JSONB
+      );
+      CREATE TABLE IF NOT EXISTS orders (
+        id TEXT PRIMARY KEY,
+        user_id TEXT,
+        email TEXT,
+        items JSONB NOT NULL,
+        total NUMERIC,
+        currency TEXT,
+        preference_id TEXT,
+        status TEXT, -- created|pending|paid|cancelled
+        metadata JSONB,
+        created_at TIMESTAMPTZ DEFAULT now(),
+        updated_at TIMESTAMPTZ DEFAULT now()
+      );
+      CREATE TABLE IF NOT EXISTS payments (
+        id TEXT PRIMARY KEY,
+        order_id TEXT,
+        status TEXT,
+        amount NUMERIC,
+        currency TEXT,
+        method TEXT,
+        raw JSONB,
+        created_at TIMESTAMPTZ DEFAULT now()
+      );
+      CREATE TABLE IF NOT EXISTS enrollments (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL,
+        entitlement TEXT NOT NULL,
+        created_at TIMESTAMPTZ DEFAULT now()
+      );
+      CREATE TABLE IF NOT EXISTS webhook_events (
+        id TEXT PRIMARY KEY,
+        topic TEXT,
+        resource_id TEXT,
+        payload JSONB,
+        created_at TIMESTAMPTZ DEFAULT now()
+      );
+      CREATE TABLE IF NOT EXISTS processed_payments (
+        payment_id TEXT PRIMARY KEY,
+        processed_at TIMESTAMPTZ DEFAULT now()
+      );
+      CREATE TABLE IF NOT EXISTS audit_log (
+        id TEXT PRIMARY KEY,
+        actor TEXT,
+        action TEXT,
+        target TEXT,
+        data JSONB,
+        created_at TIMESTAMPTZ DEFAULT now()
+      );
+    `);
+    console.log('[api] Esquema aplicado/validado');
+  } catch (e) {
+    console.error('[api] Error aplicando esquema:', e?.message || e);
+  }
+}
+ensureSchema().catch(()=>{});
 
 // Helpers
 function corsOptions(origin, callback) {
@@ -252,14 +332,7 @@ async function grantEntitlements({ userId, email, entitlements = [] }) {
   if (!pool) return; // si no hay DB, no persistimos (visibilidad dependerá del cliente)
   if (!entitlements || !entitlements.length) return;
   try {
-    await pool.query(
-      `CREATE TABLE IF NOT EXISTS enrollments (
-        id TEXT PRIMARY KEY,
-        user_id TEXT NOT NULL,
-        entitlement TEXT NOT NULL,
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
-      );`
-    );
+    await ensureSchema();
     let uid = userId || null;
     if (!uid && email) {
       // buscar user id por email
@@ -278,6 +351,18 @@ async function grantEntitlements({ userId, email, entitlements = [] }) {
     }
   } catch (e) {
     console.warn('[api] grantEntitlements falló:', e?.message || e);
+  }
+}
+
+async function sendEmail({ to, subject, html }) {
+  if (!SMTP_URL) return false;
+  try {
+    const tp = nodemailer.createTransport(SMTP_URL);
+    await tp.sendMail({ from: SMTP_FROM, to, subject, html });
+    return true;
+  } catch (e) {
+    console.warn('[api] sendEmail fallo:', e?.message || e);
+    return false;
   }
 }
 
@@ -329,6 +414,7 @@ router.post('/mp/create-preference', async (req, res) => {
         category_id: it.category_id || undefined
       };
     });
+    const orderTotal = itemsForPref.reduce((s, it) => s + Number(it.unit_price) * Number(it.quantity), 0);
     // Validación de productos: si vienen SKUs y no tenemos pricing, lo rechazamos; si vienen objetos completos, permitimos pasar
     if ((items || []).some(s => typeof s === 'string')) {
       if (!pricing || !pricing.products) {
@@ -338,6 +424,18 @@ router.post('/mp/create-preference', async (req, res) => {
       if (invalid.length) {
         return res.status(400).json({ error: 'invalid_items', items: invalid });
       }
+    }
+
+    // Crear orden preliminar (idempotencia a nivel de negocio)
+    let orderId = `ord_${Date.now()}_${Math.random().toString(36).slice(2,8)}`;
+    if (pool) {
+      try {
+        await ensureSchema();
+        await pool.query(
+          'INSERT INTO orders (id, user_id, email, items, total, currency, status, metadata) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)',
+          [orderId, user?.id || null, user?.email || null, JSON.stringify(itemsForPref), orderTotal, (itemsForPref[0]?.currency_id)||'CLP', 'created', JSON.stringify(md)]
+        );
+      } catch (e) { console.warn('[api] crear orden falló:', e?.message || e); }
     }
 
     const prefBody = {
@@ -355,7 +453,7 @@ router.post('/mp/create-preference', async (req, res) => {
         ...(MP_EXCLUDED_PAYMENT_METHODS.length ? { excluded_payment_methods: MP_EXCLUDED_PAYMENT_METHODS } : {})
       },
       external_reference: process.env.MP_CERT_EMAIL || (user && user.email) || undefined,
-      metadata: md
+      metadata: { ...md, order_id: orderId }
     };
     let resp;
     let body;
@@ -403,6 +501,13 @@ router.post('/mp/create-preference', async (req, res) => {
         }
       }
     }
+    // Actualizar orden con preference y estado pendiente
+    if (pool) {
+      try {
+        await pool.query('UPDATE orders SET preference_id=$1, status=$2, updated_at=now() WHERE id=$3', [body.id || body.preference_id || null, 'pending', orderId]);
+      } catch (e) { console.warn('[api] actualizar orden falló:', e?.message || e); }
+    }
+
     return res.json({
       id: body.id,
       init_point: body.init_point,
@@ -466,6 +571,15 @@ router.post('/mp/webhook', async (req, res) => {
       return;
     }
 
+    // Log webhook event
+    if (pool) {
+      try {
+        await ensureSchema();
+        const evId = `wh_${Date.now()}_${Math.random().toString(36).slice(2,8)}`;
+        await pool.query('INSERT INTO webhook_events (id, topic, resource_id, payload) VALUES ($1,$2,$3,$4)', [evId, topic || 'payment', id, JSON.stringify(req.body || {})]);
+      } catch (e) { console.warn('[api] guardar webhook_events falló:', e?.message || e); }
+    }
+
     // Para pagos: intentar SDK y luego REST como respaldo
     let payment = null;
     if (mpPayment) {
@@ -496,7 +610,45 @@ router.post('/mp/webhook', async (req, res) => {
       const userId = md.user_id || null;
       const email = md.email || (payment.payer && payment.payer.email) || null;
       const ents = md.entitlements || [];
-      await grantEntitlements({ userId, email, entitlements: ents });
+      // Idempotencia: registrar payment procesado
+      let isNew = true;
+      if (pool) {
+        try {
+          await ensureSchema();
+          await pool.query('INSERT INTO processed_payments (payment_id) VALUES ($1) ON CONFLICT (payment_id) DO NOTHING', [String(payment.id)]);
+          const chk = await pool.query('SELECT payment_id FROM processed_payments WHERE payment_id=$1', [String(payment.id)]);
+          isNew = !!chk.rowCount;
+        } catch (e) { console.warn('[api] processed_payments fallo:', e?.message || e); }
+      }
+
+      if (isNew) {
+        // Registrar pago y actualizar orden si existe metadata.order_id
+        if (pool) {
+          try {
+            const amount = payment.transaction_amount || payment.total_paid_amount || null;
+            const currency = payment.currency_id || 'CLP';
+            const method = payment.payment_method_id || payment.payment_type_id || null;
+            const orderId = md.order_id || null;
+            if (orderId) {
+              await pool.query('UPDATE orders SET status=$1, updated_at=now() WHERE id=$2', ['paid', orderId]);
+            }
+            await pool.query('INSERT INTO payments (id, order_id, status, amount, currency, method, raw) VALUES ($1,$2,$3,$4,$5,$6,$7) ON CONFLICT (id) DO NOTHING', [String(payment.id), orderId, payment.status, amount, currency, method, JSON.stringify(payment)]);
+          } catch (e) { console.warn('[api] registrar pago fallo:', e?.message || e); }
+        }
+
+        // Otorgar accesos
+        await grantEntitlements({ userId, email, entitlements: ents });
+
+        // Email transaccional (opcional)
+        if (email) {
+          const ok = await sendEmail({
+            to: email,
+            subject: 'Tu pago fue aprobado – Acceso habilitado',
+            html: `<p>¡Gracias por tu compra!</p><p>Tu pago (${payment.id}) fue aprobado. Ya puedes acceder al Portal del Alumno:</p><p><a href="${PUBLIC_SITE_BASE}/portal-alumno.html">Ir al Portal</a></p>`
+          });
+          if (!ok) console.log('[api] email no enviado (config no presente)');
+        }
+      }
     }
     res.status(200).json({ ok: true });
   } catch (e) {

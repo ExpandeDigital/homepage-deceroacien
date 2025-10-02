@@ -112,3 +112,24 @@ Para dudas o mejoras, consulta `docs/flujo-plataforma.md` (mermaid con el flujo 
 - Generación de PDFs desde HTML con Puppeteer: `npm run reports:pdf`.
 - Archivos: `reports/pdf/informe-tecnico.pdf` y `reports/pdf/informe-no-tecnico.pdf`.
 - `reports/pdf/` está en `.gitignore` (uso interno, no público).
+
+## Integración actual: Firebase (Auth) + Supabase (Postgres)
+
+- Autenticación
+  - Frontend: Google Identity Services + Firebase Web SDK (compat) cargado por `assets/js/components.js` y `assets/js/firebase-client.js`.
+  - Backend: Firebase Admin verifica el ID token en `/api/auth/verify` y `/api/auth/me` y provisiona el usuario en la tabla `users`.
+  - Variables mínimas: `PUBLIC_FIREBASE_*` (para `GET /api/public-config`) y credenciales de Admin vía `FIREBASE_SERVICE_ACCOUNT_JSON` o ADC en Cloud Run.
+
+- Base de datos (Supabase como Postgres)
+  - El backend usa `pg` con `DATABASE_URL`. Puedes apuntarlo a Supabase sin cambios de código (por ejemplo: `postgresql://...@aws-1-us-east-2.pooler.supabase.com:6543/postgres`).
+  - SSL: por defecto se usa SSL con `rejectUnauthorized: false`. Puedes forzar o desactivar con `PGSSL=disable` (no recomendado). Si tu cadena incluye `sslmode=require`, también funciona.
+  - Al iniciar, el API emite en logs: `[api] Pool PG inicializado` y `[api] Esquema aplicado/validado`.
+
+- Qué NO está usando Supabase hoy
+  - No usamos Supabase Auth. Los JWT se validan con Firebase Admin y los enrollments se guardan en Postgres.
+
+- Si quieres migrar a Supabase Auth (opcional)
+  - Frontend: reemplazar GIS/Firebase por `@supabase/supabase-js` (Google provider) y exponer `PUBLIC_SUPABASE_URL` y `PUBLIC_SUPABASE_ANON_KEY` vía `GET /api/public-config`.
+  - Backend: verificar JWT de Supabase (JWK o Admin API), adaptar `/auth/verify` y `/auth/me`, mantener tablas `users`/`enrollments`.
+  - Entitlements/Webhook MP: se mantienen igual (seguirán insertando en `enrollments`).
+
