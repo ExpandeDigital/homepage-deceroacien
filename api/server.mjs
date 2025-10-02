@@ -730,6 +730,64 @@ router.get('/mp/verify-grant', async (req, res) => {
 
 app.use(BASE_PATH, router);
 
+// ==============================
+// Debug seguro de token (solo con GRANT_SECRET)
+// GET /api/auth/debug-token
+// Header: Authorization: Bearer <token>
+// Header o query: x-debug-secret / ?secret=
+router.get('/auth/debug-token', async (req, res) => {
+  try {
+    const secret = req.headers['x-debug-secret'] || req.query.secret;
+    if (!GRANT_SECRET || !secret || secret !== GRANT_SECRET) {
+      return res.status(403).json({ ok: false, error: 'forbidden' });
+    }
+
+    // Intentar verificación normal
+    let decoded = await verifyBearer(req);
+    let provider = decoded ? (decoded._supabase ? 'supabase' : 'firebase') : 'unknown';
+
+    // Si no se pudo verificar, intentar decodificar sin verificar (solo para diagnóstico)
+    let unsigned = null;
+    if (!decoded) {
+      const h = req.headers['authorization'] || '';
+      const m = /^Bearer\s+(.+)$/i.exec(h);
+      if (m) {
+        try {
+          const parts = m[1].split('.');
+          const payload = JSON.parse(Buffer.from(parts[1] || '', 'base64').toString('utf8'));
+          unsigned = payload || null;
+        } catch(_){}
+      }
+    }
+
+    const out = { ok: !!decoded, provider };
+    if (decoded) {
+      out.sub = decoded.uid || decoded.user_id || decoded.sub || null;
+      out.email = decoded.email || null;
+      out.name = decoded.name || null;
+      if (decoded._supabase) {
+        out.iss = decoded._supabase.iss || null;
+        out.aud = decoded._supabase.aud || null;
+        out.exp = decoded._supabase.exp || null;
+      }
+    } else {
+      out.error = 'invalid_token';
+      if (unsigned) {
+        out.unsigned = {
+          iss: unsigned.iss || null,
+          aud: unsigned.aud || null,
+          sub: unsigned.sub || null,
+          email: unsigned.email || null
+        };
+      }
+    }
+
+    return res.json(out);
+  } catch (e) {
+    return res.status(500).json({ ok: false, error: e?.message || String(e) });
+  }
+});
+
 // Endpoint de diagnóstico (opcional): inspeccionar preferencia por ID
 router.get('/mp/debug-preference', async (req, res) => {
   try {
