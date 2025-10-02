@@ -447,19 +447,51 @@ router.get('/mp/webhook', async (req, res) => {
 });
 router.post('/mp/webhook', async (req, res) => {
   try {
-    const topic = (req.query.type || req.body.type || '').toString();
+    const topic = (req.query.topic || req.query.type || req.body.type || '').toString();
     const id = (req.query['data.id'] || req.body?.data?.id || req.query.id || req.body.id || '').toString();
-    if (!mpPayment || !id) { res.status(200).json({ ok: true }); return; }
-    // Obtener pago y validar estado
-    let payment = null;
-    try {
-      const p = await mpPayment.get({ id, requestOptions: MP_INTEGRATOR_ID ? { headers: { 'x-integrator-id': MP_INTEGRATOR_ID } } : undefined });
-      payment = p?.body || p;
-    } catch (e) {
-      console.warn('[api] mp webhook get payment falló:', e?.message || e);
+    if (!id) { res.status(200).json({ ok: true }); return; }
+
+    // Manejo especial de merchant_order: no necesitamos otorgar aquí, pero no debemos fallar
+    if (topic === 'merchant_order') {
+      // Opcional: podríamos inspeccionar la orden
+      try {
+        if (MP_ACCESS_TOKEN) {
+          const r = await fetch(`https://api.mercadopago.com/merchant_orders/${encodeURIComponent(id)}`, {
+            headers: { Authorization: `Bearer ${MP_ACCESS_TOKEN}` }
+          });
+          await r.json().catch(()=>null);
+        }
+      } catch(_){}
+      res.status(200).json({ ok: true, topic });
+      return;
     }
-    if (!payment) { res.status(200).json({ ok: true }); return; }
-    if (payment.status === 'approved') {
+
+    // Para pagos: intentar SDK y luego REST como respaldo
+    let payment = null;
+    if (mpPayment) {
+      try {
+        const p = await mpPayment.get({ id, requestOptions: MP_INTEGRATOR_ID ? { headers: { 'x-integrator-id': MP_INTEGRATOR_ID } } : undefined });
+        payment = p?.body || p;
+      } catch (e) {
+        console.warn('[api] mp webhook get payment (SDK) falló:', e?.message || e);
+      }
+    }
+    if (!payment && MP_ACCESS_TOKEN) {
+      try {
+        const r = await fetch(`https://api.mercadopago.com/v1/payments/${encodeURIComponent(id)}`, {
+          headers: {
+            Authorization: `Bearer ${MP_ACCESS_TOKEN}`,
+            ...(MP_INTEGRATOR_ID ? { 'x-integrator-id': MP_INTEGRATOR_ID } : {})
+          }
+        });
+        const body = await r.json();
+        if (r.ok) payment = body; else console.warn('[api] mp webhook get payment (REST) no ok:', body);
+      } catch (e) {
+        console.warn('[api] mp webhook get payment (REST) falló:', e?.message || e);
+      }
+    }
+
+    if (payment && payment.status === 'approved') {
       const md = payment.metadata || {};
       const userId = md.user_id || null;
       const email = md.email || (payment.payer && payment.payer.email) || null;
