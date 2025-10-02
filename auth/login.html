@@ -215,6 +215,17 @@
                     }
                 });
             }
+            // Auto-iniciar si viene ?auth=google
+            try {
+                const u = new URL(window.location.href);
+                if ((u.searchParams.get('auth')||'').toLowerCase() === 'google') {
+                    const msg = document.createElement('div');
+                    msg.textContent = 'Redirigiendo a Google…';
+                    msg.style.cssText = 'margin-top:12px;text-align:center;color:#e6f1ff;opacity:.85;';
+                    btn && btn.insertAdjacentElement('afterend', msg);
+                    setTimeout(()=>{ btn?.click(); }, 50);
+                }
+            } catch(_){ }
         });
     </script>
 </body>
