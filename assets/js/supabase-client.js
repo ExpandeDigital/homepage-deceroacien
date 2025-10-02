@@ -74,7 +74,9 @@
   async function signInWithGoogle() {
     const sb = await ensureSupabase();
     if (!sb) throw new Error('supabase_not_ready');
-    const redirectTo = (w.location && w.location.origin) ? `${w.location.origin}/auth/dashboard.html` : undefined;
+    // Redirigimos a login.html para que detectSessionInUrl procese la sesión y luego
+    // la propia página redirija al dashboard con redirectIfAuthenticated()
+    const redirectTo = (w.location && w.location.origin) ? `${w.location.origin}/auth/login.html` : undefined;
     const { data, error } = await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo } });
     if (error) throw error; return data;
   }

@@ -173,11 +173,25 @@
         // Redirigir si ya hay sesión activa
         document.addEventListener('DOMContentLoaded', function () {
             try { if (window.initializeAuthManager) window.initializeAuthManager(); } catch (e) {}
-            setTimeout(function(){
+            (async () => {
+                // Esperar brevemente a que Supabase procese el hash/código de OAuth
+                try { if (window.SupabaseAuth && window.SupabaseAuth.ensureSupabase) await window.SupabaseAuth.ensureSupabase(); } catch(_){ }
+                // Pequeña espera por consistencia
+                await new Promise(r => setTimeout(r, 100));
+                let hasSupabase = false;
+                try { hasSupabase = !!(window.SupabaseAuth && (await window.SupabaseAuth.getAccessToken())); } catch(_){}
+                if (hasSupabase) {
+                    const url = new URL(window.location.href);
+                    const ret = url.searchParams.get('return');
+                    const target = ret ? decodeURIComponent(ret) : (window.location.origin + '/auth/dashboard.html');
+                    window.location.href = target;
+                    return;
+                }
+                // Fallback al comportamiento existente
                 if (window.redirectIfAuthenticated) {
                     window.redirectIfAuthenticated();
                 }
-            }, 0);
+            })();
         });
     </script>
     
