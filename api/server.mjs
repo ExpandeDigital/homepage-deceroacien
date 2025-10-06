@@ -68,7 +68,6 @@ async function ensureSchema() {
         email TEXT UNIQUE,
         first_name TEXT,
         last_name TEXT,
-        firebase_uid TEXT UNIQUE,
         created_at TIMESTAMPTZ DEFAULT now(),
         updated_at TIMESTAMPTZ DEFAULT now()
       );
@@ -226,27 +225,10 @@ app.use(express.json());
 // Health
 app.get('/health', (req, res) => res.json({ ok: true, ts: Date.now() }));
 
-// Config pública (sin secretos): entrega Firebase web config y URLs
+// Config pública (sin secretos) solo para Supabase y bases
 app.get('/api/public-config', (req, res) => {
-  const firebase = {
-    apiKey: process.env.PUBLIC_FIREBASE_API_KEY || '',
-    authDomain: process.env.PUBLIC_FIREBASE_AUTH_DOMAIN || '',
-    projectId: process.env.PUBLIC_FIREBASE_PROJECT_ID || '',
-    storageBucket: process.env.PUBLIC_FIREBASE_STORAGE_BUCKET || '',
-    messagingSenderId: process.env.PUBLIC_FIREBASE_MESSAGING_SENDER_ID || '',
-    appId: process.env.PUBLIC_FIREBASE_APP_ID || '',
-    measurementId: process.env.PUBLIC_FIREBASE_MEASUREMENT_ID || ''
-  };
-  const supabase = {
-    url: PUBLIC_SUPABASE_URL || '',
-    anonKey: PUBLIC_SUPABASE_ANON_KEY || ''
-  };
-  res.json({
-    firebase,
-    supabase,
-    apiBase: PUBLIC_API_BASE || '',
-    siteBase: PUBLIC_SITE_BASE || ''
-  });
+  const supabase = { url: PUBLIC_SUPABASE_URL || '', anonKey: PUBLIC_SUPABASE_ANON_KEY || '' };
+  res.json({ supabase, apiBase: PUBLIC_API_BASE || '', siteBase: PUBLIC_SITE_BASE || '' });
 });
 
 // Namespace API
@@ -257,7 +239,7 @@ router.post('/auth/verify', async (req, res) => {
   const decoded = await verifyBearer(req);
   if (!decoded) return res.status(401).json({ error: 'invalid_token' });
 
-  // Datos básicos del usuario desde Firebase
+  // Datos básicos del usuario (Supabase)
   const uid = decoded.uid || decoded.user_id || decoded.sub;
   const email = decoded.email || null;
   const name = decoded.name || decoded._supabase?.user_metadata?.full_name || '';
@@ -269,20 +251,19 @@ router.post('/auth/verify', async (req, res) => {
         `CREATE TABLE IF NOT EXISTS users (
           id TEXT PRIMARY KEY,
           email TEXT UNIQUE,
-          first_name TEXT,
-          last_name TEXT,
-          firebase_uid TEXT UNIQUE,
-          created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
-          updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+            first_name TEXT,
+            last_name TEXT,
+            created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+            updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
         );`
       );
       const [firstName, ...rest] = (name || '').split(' ');
       const lastName = rest.join(' ');
       await pool.query(
-        `INSERT INTO users (id, email, first_name, last_name, firebase_uid)
-         VALUES ($1,$2,$3,$4,$5)
+        `INSERT INTO users (id, email, first_name, last_name)
+         VALUES ($1,$2,$3,$4)
          ON CONFLICT (id) DO UPDATE SET email = EXCLUDED.email, first_name = EXCLUDED.first_name, last_name = EXCLUDED.last_name, updated_at = now()`,
-        [uid, email, firstName || null, lastName || null, uid]
+        [uid, email, firstName || null, lastName || null]
       );
     } catch (e) {
       console.warn('[api] upsert users falló (continuamos):', e?.message || e);
@@ -301,7 +282,6 @@ router.get('/auth/me', async (req, res) => {
   let user = {
     id: idClaim,
     email: decoded.email || null,
-    firebase_uid: idClaim,
     first_name: (decoded.name || decoded._supabase?.user_metadata?.full_name || '').split(' ')[0] || null,
     last_name: (decoded.name || decoded._supabase?.user_metadata?.full_name || '').split(' ').slice(1).join(' ') || null
   };
@@ -309,7 +289,7 @@ router.get('/auth/me', async (req, res) => {
 
   if (pool) {
     try {
-      const ures = await pool.query('SELECT id, email, first_name, last_name, firebase_uid FROM users WHERE id = $1 LIMIT 1', [idClaim]);
+  const ures = await pool.query('SELECT id, email, first_name, last_name FROM users WHERE id = $1 LIMIT 1', [idClaim]);
       if (ures.rows[0]) {
         user = ures.rows[0];
       }
