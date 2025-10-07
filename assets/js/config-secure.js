@@ -5,18 +5,8 @@
  * incluso las que son técnicamente "públicas" pero GitHub detecta como sensibles
  */
 
-// Función para construir el Client ID de forma segura
-function getGoogleClientId() {
-    // Client ID codificado en base64 para evitar detección de patrones
-    const encoded = atob('NTk5Nzk3NDI2MzctY3MxZXIwOWZhdGVydHFwZjYzNmVucGM4MTQ2bmNodmwuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20=');
-    return encoded;
-}
-
-// Configuración pública pero segura
+// Configuración pública (sin secretos)
 const SecureAuthConfig = {
-    // Client ID construido dinámicamente
-    getGoogleClientId: getGoogleClientId,
-    
     // URLs de redirección
     redirectUrls: {
         dashboard: '/auth/dashboard.html',
@@ -28,32 +18,6 @@ const SecureAuthConfig = {
         userKey: 'deceroacien_user',
         tokenKey: 'deceroacien_token',
         sessionKey: 'deceroacien_session'
-    },
-    
-    // Configuración de UI
-    ui: {
-        showOneTap: true,
-        autoPrompt: true,
-        autoSelect: false,
-        cancelOnTapOutside: true,
-        theme: 'filled_black',
-        size: 'large',
-        text: 'signin_with',
-        shape: 'rectangular',
-        logo_alignment: 'left',
-        width: 300,  // Ancho fijo en píxeles (no porcentaje)
-        locale: 'es',
-        context: 'signin'
-    },
-    
-    // Configuración de Google One Tap
-    oneTap: {
-        auto_select: false,
-        cancel_on_tap_outside: true,
-        context: 'signin',
-        use_fedcm_for_prompt: true,
-        itp_support: true,
-        ux_mode: 'popup'
     },
     
     // Endpoints de API
@@ -89,8 +53,7 @@ const Environment = {
 
 // Exponer configuración globalmente (compatible con el sistema anterior)
 window.PublicAuthConfig = {
-    ...SecureAuthConfig,
-    googleClientId: getGoogleClientId() // Para compatibilidad con código existente
+    ...SecureAuthConfig
 };
 window.Environment = Environment;
 
