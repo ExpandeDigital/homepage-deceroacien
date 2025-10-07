@@ -306,6 +306,7 @@ class HeaderComponent extends BaseComponent {
             <a href="${this.basePath}liderazgo/index.html" data-priority="3" class="header-link ${this.currentPage === 'liderazgo' ? 'active' : ''}">Liderazgo</a>
             <a href="${this.basePath}de-cero-a-cien.html" data-priority="1" class="header-link ${this.currentPage === 'de-cero-a-cien' ? 'active' : ''}">De Cero a Cien</a>
             <a href="${this.basePath}camino-dorado.html" data-priority="2" class="header-link ${this.currentPage === 'camino-dorado' ? 'active' : ''}">Camino Dorado</a>
+            <a href="${this.basePath}descargas-gratuitas.html" data-priority="4" class="header-link ${this.currentPage === 'descargas-gratuitas' ? 'active' : ''}">Descargas Gratuitas</a>
             
             <a href="${this.basePath}academy-fases/index.html" data-priority="3" class="header-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a>
                 </div>
