@@ -1,283 +1,371 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
-    <!-- Meta tags esenciales para SEO y responsividad -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Tu conexión directa al ecosistema emprendedor. Metodología probada para llevar tu startup de cero a cien.">
-    <meta name="keywords" content="emprendimiento, startups, crecimiento empresarial, metodología, consultoría, DE CERO A CIEN">
+    <meta name="description" content="DE CERO A CIEN es tu conexión al ecosistema emprendedor: herramientas accionables, comunidad y acompañamiento para fundadores en todas las etapas.">
+    <meta name="keywords" content="emprendimiento, startups, suites digitales, herramientas para emprendedores, comunidad, IA">
     <meta name="author" content="DE CERO A CIEN">
-    
-    <!-- Título de la página -->
-    <title>DE CERO A CIEN - Tu Conexión al Ecosistema Emprendedor</title>
-    
-    <!-- Favicons y meta tags para redes sociales -->
-    <meta property="og:title" content="DE CERO A CIEN - Tu Conexión al Ecosistema Emprendedor">
-    <meta property="og:description" content="Tu conexión directa al ecosistema emprendedor. Metodología probada para llevar tu startup de cero a cien.">
+    <title>DE CERO A CIEN: Tu Conexión al Ecosistema Emprendedor</title>
+    <meta property="og:title" content="DE CERO A CIEN: Tu Conexión al Ecosistema Emprendedor">
+    <meta property="og:description" content="Suite digital, comunidad y acompañamiento para transformar ideas en negocios escalables.">
     <meta property="og:url" content="https://deceroacien.app">
     <meta name="twitter:card" content="summary_large_image">
-    
-    <!-- Preload de recursos críticos -->
+    <link rel="icon" href="/assets/logo_de_cero_a_cien_blanco_y_dorado.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" as="style">
-    
-    <!-- Favicon -->
-    <link rel="icon" href="/assets/logo_de_cero_a_cien_blanco_y_dorado.png" type="image/png">
-
-    <!-- Hojas de estilo -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/styles/common.css">
-    <link rel="stylesheet" href="assets/styles/mobile.css">
-    
-    <!-- Configuración de Tailwind personalizada -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'primary-dark': '#0a1f2f',
-                        'secondary-dark': '#112240',
-                        'accent-gold': '#FBBF24',
-                        'text-light': '#e6f1ff',
-                        'border-custom': '#1e2d4d'
+                        'brand-dark': '#0A192F',
+                        'brand-accent': '#FBBF24'
                     },
                     fontFamily: {
-                        'sans': ['Inter', 'sans-serif']
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
                     }
                 }
             }
-        }
+        };
     </script>
-
-    <!-- Autenticación via Supabase (ver assets/js/supabase-client.js) -->
+    <link rel="stylesheet" href="assets/styles/common.css">
+    <link rel="stylesheet" href="assets/styles/mobile.css">
+    <style>
+        :root {
+            --brand-dark: #0A192F;
+            --brand-accent: #FBBF24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .text-brand-accent {
+            color: var(--brand-accent);
+        }
+        .bg-brand-accent {
+            background-color: var(--brand-accent);
+        }
+        .border-brand-accent {
+            border-color: var(--brand-accent);
+        }
+        .bg-brand-dark {
+            background-color: var(--brand-dark);
+        }
+        .text-brand-dark {
+            color: #111827;
+        }
+        .ring-brand-accent {
+            --tw-ring-color: var(--brand-accent);
+        }
+    </style>
 </head>
-<body class="base-container antialiased">
-
-    <!-- HEADER UNIFICADO -->
+<body class="base-container bg-brand-dark text-slate-200 antialiased">
     <header class="header-component"></header>
+    <main class="main-content flex-1">
+        <header class="relative overflow-hidden bg-slate-900 py-24 sm:py-32 md:py-40">
+            <div class="container mx-auto px-6 text-center relative z-10">
+                <h1 class="font-serif text-5xl md:text-7xl font-black text-white leading-tight">DE CERO A CIEN</h1>
+                <p class="mt-4 text-2xl md:text-3xl text-brand-accent tracking-wide">Tu Conexión al Ecosistema Emprendedor</p>
+                <div class="mt-8 max-w-2xl mx-auto text-slate-300 text-lg space-y-2">
+                    <p>Queremos que tu idea avance y tu negocio prospere. Nosotros ya recorrimos este camino y lo que hemos preparado para ti, es lo que nos hubiese gustado tener para crecer acompañados.</p>
+                    <p class="font-semibold">- El equipo fundador</p>
+                </div>
+                <a href="#precios" class="mt-10 inline-block bg-brand-accent text-brand-dark font-bold py-4 px-10 rounded-lg shadow-lg hover:scale-105 transform transition-transform duration-300">
+                    Descubre el Ecosistema
+                </a>
+            </div>
+            <div class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-[60rem] h-[60rem] bg-gradient-to-tr from-yellow-500/20 via-transparent to-transparent rounded-full opacity-30 blur-3xl"></div>
+        </header>
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <main class="main-content">
-        <!-- Sección de bienvenida -->
-        <section class="main-section py-20 sm:py-24 text-center">
-            <div class="section-container">
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-200 fade-in">
-                    Bienvenido a <span class="highlight-text">DE CERO A CIEN</span>
-                </h1>
-                <p class="mt-4 text-lg text-gray-400 fade-in">Tu Conexión Directa al Ecosistema Emprendedor</p>
+        <section id="confianza" class="py-12 bg-slate-900">
+            <div class="container mx-auto px-6 text-center">
+                <p class="text-slate-400 uppercase tracking-widest text-sm">Con la reputación <br>de nuestra razón social</p>
+                <div class="mt-4 flex flex-wrap justify-center items-center gap-4">
+                    <p class="text-xl font-bold text-white">Expande Digital Consultores</p>
+                    <div class="flex items-center gap-2 bg-slate-800 px-3 py-1 rounded-full">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <span class="font-bold text-white">5.0</span>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Marquee Slider Mejorado con comentarios explicativos -->
-        <div class="overflow-hidden bg-gradient-to-r from-[#112240] via-[#172a46] to-[#112240] py-4 border-y border-gray-800">
-            <div class="marquee-content flex items-center">
-                <!-- Texto de marquee con icono de estrella -->
-                <p class="flex items-center text-lg font-semibold text-white mx-8">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-yellow-400">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                    </svg>
-                    Para Emprendimientos Dinámicos y Startups
+        <section id="problema" class="py-20 sm:py-28">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">¿Atrapado entre la <span class="text-brand-accent">visión</span> y la <span class="text-brand-accent">operación</span>?</h2>
+                <p class="max-w-3xl mx-auto text-slate-300 text-xl mb-4">
+                    El 90% de los emprendimientos deja de crecer por falta de innovación.
                 </p>
-                <p class="flex items-center text-lg font-semibold text-white mx-8">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-yellow-400"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-                    Para Emprendimientos Dinámicos y Startups
-                </p>
-                 <p class="flex items-center text-lg font-semibold text-white mx-8">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-yellow-400"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-                    Para Emprendimientos Dinámicos y Startups
-                </p>
-                 <p class="flex items-center text-lg font-semibold text-white mx-8">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-yellow-400"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-                    Para Emprendimientos Dinámicos y Startups
+                <p class="max-w-3xl mx-auto text-slate-400 text-lg">
+                    El 94% de las startups fracasan, no por falta de una buena idea, sino por la soledad del estratega. La teoría se ahoga en el día a día y las herramientas tradicionales son complejas y costosas.
                 </p>
             </div>
-        </div>
+        </section>
 
-        <!-- SECCIÓN DESTACADA: De Cero a Cien -->
-        <section class="main-section py-20 sm:py-28">
-            <div class="section-container">
-                <!-- Tarjeta principal con efecto spotlight -->
-                <div class="card-component card-spotlight p-8 lg:p-12">
+        <section id="solucion" class="py-20 sm:py-28 bg-slate-900/50">
+            <div class="container mx-auto px-6">
+                <div class="text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Más que un curso. Una <span class="text-brand-accent">suite digital</span> para la acción.</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-slate-300 text-lg">
+                        <strong>DE CERO A CIEN</strong> es tu "Fábrica de Soluciones Digitales". Hemos transformado el conocimiento experto en una suite con más de 100 micro-herramientas interactivas, inteligentes y accionables. No vendemos teoría, te damos las herramientas para construir.
+                    </p>
+                </div>
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700 text-center">
+                        <i class="fas fa-infinity text-brand-accent text-4xl mb-4"></i>
+                        <h3 class="text-xl font-bold text-white">Acceso Vitalicio</h3>
+                        <p class="mt-2 text-slate-400">Obtén acceso para siempre a las plataformas por un solo pago. Sin mensualidades ni pagos recurrentes.</p>
+                    </div>
+                    <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700 text-center">
+                        <i class="fas fa-robot text-brand-accent text-4xl mb-4"></i>
+                        <h3 class="text-xl font-bold text-white">Impulsado por IA</h3>
+                        <p class="mt-2 text-slate-400">Usamos inteligencia artificial para analizar, sintetizar y personalizar la estrategia para tu negocio.</p>
+                    </div>
+                    <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700 text-center">
+                        <i class="fas fa-handshake text-brand-accent text-4xl mb-4"></i>
+                        <h3 class="text-xl font-bold text-white">Acompañamiento Humano</h3>
+                        <p class="mt-2 text-slate-400">Únete a nuestra COMUNIDAD, el corazón del ecosistema, y conecta con una red de pares y mentores.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="para-quien" class="py-20 sm:py-28">
+            <div class="container mx-auto px-6">
+                <div class="text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Hecho para cada etapa. <span class="text-brand-accent">Para cada soñador.</span></h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-slate-300 text-lg">
+                        Tanto si eres un(a) emprendedor(a) en solitario como una entidad que busca potenciar a su comunidad, tenemos la solución perfecta para ti.
+                    </p>
+                </div>
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700">
+                        <h3 class="text-2xl font-bold text-white">Para el(la) Emprendedor(a) <span class="text-brand-accent">(B2C)</span></h3>
+                        <p class="mt-4 text-slate-400">Te damos las herramientas que necesitas para formalizar, escalar y no estancarte. DE CERO A CIEN es el ecosistema ideal para emprendimientos dinámicos y startups en etapa temprana o en crecimiento que buscan un camino claro y apoyo constante.</p>
+                    </div>
+                    <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700">
+                        <h3 class="text-2xl font-bold text-white">Para Aliados Estratégicos <span class="text-brand-accent">(B2B/B2F/B2G)</span></h3>
+                        <p class="mt-4 text-slate-400">Transformamos tu gasto en capacitación en una inversión de impacto sostenible y medible. Te ofrecemos el <strong>Ecosistema como Servicio (EaaS)</strong> para potenciar a tus beneficiarios con acceso vitalicio y métricas en tiempo real, demostrando un legado tangible.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="suite" class="py-20 sm:py-28 bg-slate-900/50">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Un vistazo a tu <span class="text-brand-accent">Suite de Herramientas</span></h2>
+                <p class="mt-4 max-w-3xl mx-auto text-slate-300 text-lg">Herramientas tangibles que resuelven problemas reales, desde el primer día.</p>
+                <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 text-left space-y-4">
+                        <svg class="w-12 h-12 text-brand-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3zM8 8h8v8H8zM12 3v5m0 8v5m-9-9h5m8 0h5"></path></svg>
+                        <h3 class="font-bold text-white">Generador de Modelo de Negocio</h3>
+                        <p class="text-slate-400 text-sm">Estructura y visualiza los 9 pilares de tu idea de negocio en un lienzo interactivo.</p>
+                    </div>
+                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 text-left space-y-4">
+                        <svg class="w-12 h-12 text-brand-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"></circle><path d="M20 21a8 8 0 0 0-16 0"></path></svg>
+                        <h3 class="font-bold text-white">Generador de Buyer Persona con IA</h3>
+                        <p class="text-slate-400 text-sm">Usa IA para crear un perfil detallado de tu cliente ideal y alinear tu estrategia de marketing.</p>
+                    </div>
+                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 text-left space-y-4">
+                        <svg class="w-12 h-12 text-brand-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M7 12h10m-7 6h4"></path><rect x="3" y="4" width="18" height="16" rx="2"></rect></svg>
+                        <h3 class="font-bold text-white">Calculadora de Viabilidad</h3>
+                        <p class="text-slate-400 text-sm">Estima la rentabilidad de tu idea y descubre tu punto de equilibrio antes de invertir.</p>
+                    </div>
+                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 text-left space-y-4">
+                        <svg class="w-12 h-12 text-brand-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8m-4-4v8"></path></svg>
+                        <h3 class="font-bold text-white">Extractor de Tamaño de Mercado</h3>
+                        <p class="text-slate-400 text-sm">Calcula el TAM, SAM y SOM para entender y comunicar el potencial real de tu mercado.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ecosistema" class="py-20 sm:py-28">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Bienvenido al <span class="text-brand-accent">Ecosistema del Fundador</span></h2>
+                <p class="mt-4 max-w-3xl mx-auto text-slate-300 text-lg">No solo te damos herramientas. Te damos un sistema operativo completo basado en 4 pilares clave para construir un legado.</p>
+                <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div class="text-center">
-                        <h2 class="text-3xl lg:text-4xl font-black highlight-text">DE CERO A CIEN</h2>
-                        <p class="mt-4 text-lg text-gray-400 max-w-2xl mx-auto">
-                            Nuestra joya de la corona. Son 31 micro herramientas de gestión para que desarrolles 
-                            tu idea de negocio en 5 fases, desde la ideación hasta la consolidación.
-                        </p>
+                        <div class="flex items-center justify-center h-24 w-24 rounded-full bg-slate-800 border-2 border-brand-accent mx-auto">
+                            <i class="fas fa-rocket text-brand-accent text-4xl"></i>
+                        </div>
+                        <h3 class="mt-6 text-xl font-bold text-white">Tu Negocio</h3>
+                        <p class="mt-2 text-slate-400">La suite para idear, validar, construir y escalar tu producto.</p>
                     </div>
-                    
-                    <!-- Grid de fases de cero a cien -->
-                    <ul class="mt-8 grid grid-cols-1 sm:grid-cols-6 gap-4 text-center">
-                        <li class="sm:col-span-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800">
-                            <span class="highlight-text font-semibold block text-sm">Fase 1:</span>
-                            <span class="text-xs text-gray-400">Ideación</span>
-                        </li>
-                        <li class="sm:col-span-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800">
-                            <span class="highlight-text font-semibold block text-sm">Fase 2:</span>
-                            <span class="text-xs text-gray-400">PMV</span>
-                        </li>
-                        <li class="sm:col-span-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800">
-                            <span class="highlight-text font-semibold block text-sm">Fase 3:</span>
-                            <span class="text-xs text-gray-400">Tracción</span>
-                        </li>
-                        <li class="sm:col-span-3 lg:col-span-2 lg:col-start-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800">
-                            <span class="highlight-text font-semibold block text-sm">Fase 4:</span>
-                            <span class="text-xs text-gray-400">Escalabilidad</span>
-                        </li>
-                        <li class="sm:col-span-3 lg:col-span-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800">
-                            <span class="highlight-text font-semibold block text-sm">Fase 5:</span>
-                            <span class="text-xs text-gray-400">Madurez</span>
-                        </li>
-                    </ul>
-                    
-                    <!-- CTA principal -->
-                    <div class="mt-10 text-center">
-                        <a href="de_cero_a_cien.html" class="btn-primary text-lg card-primary-link">
-                            Conocer más &rarr;
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- SECCIÓN DESTACADA: El Camino Dorado -->
-        <section class="main-section py-20 sm:py-28">
-            <div class="section-container">
-                <!-- Tarjeta principal con efecto spotlight -->
-                <div class="card-component card-spotlight p-8 lg:p-12">
                     <div class="text-center">
-                        <h2 class="text-3xl lg:text-4xl font-black highlight-text">EL CAMINO DORADO</h2>
-                        <p class="mt-4 text-lg text-gray-400 max-w-2xl mx-auto">
-                            Nuestra joya de la corona. Son 31 micro herramientas de gestión para que desarrolles 
-                            tu idea de negocio en 5 fases, desde la ideación hasta la consolidación.
-                        </p>
+                        <div class="flex items-center justify-center h-24 w-24 rounded-full bg-slate-800 border-2 border-brand-accent mx-auto">
+                           <i class="fas fa-users text-brand-accent text-4xl"></i>
+                        </div>
+                        <h3 class="mt-6 text-xl font-bold text-white">Tu Equipo</h3>
+                        <p class="mt-2 text-slate-400">El sistema para atraer, retener e inspirar al mejor talento.</p>
                     </div>
-                    
-                    <!-- Grid de fases del camino dorado -->
-                    <ul class="mt-8 grid grid-cols-1 sm:grid-cols-6 gap-4 text-center">
-                        <li class="sm:col-span-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800">
-                            <span class="highlight-text font-semibold block text-sm">Fase 1:</span>
-                            <span class="text-xs text-gray-400">Ideación</span>
-                        </li>
-                        <li class="sm:col-span-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800">
-                            <span class="highlight-text font-semibold block text-sm">Fase 2:</span>
-                            <span class="text-xs text-gray-400">PMV</span>
-                        </li>
-                        <li class="sm:col-span-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800">
-                            <span class="highlight-text font-semibold block text-sm">Fase 3:</span>
-                            <span class="text-xs text-gray-400">Tracción</span>
-                        </li>
-                        <li class="sm:col-span-3 lg:col-span-2 lg:col-start-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800">
-                            <span class="highlight-text font-semibold block text-sm">Fase 4:</span>
-                            <span class="text-xs text-gray-400">Escalabilidad</span>
-                        </li>
-                        <li class="sm:col-span-3 lg:col-span-2 bg-[#0a1f2f] p-3 rounded-lg border border-gray-800">
-                            <span class="highlight-text font-semibold block text-sm">Fase 5:</span>
-                            <span class="text-xs text-gray-400">Madurez</span>
-                        </li>
-                    </ul>
-                    
-                    <!-- CTA principal -->
-                    <div class="mt-10 text-center">
-                        <a href="camino-dorado.html" class="btn-primary text-lg card-primary-link">
-                            Conocer más &rarr;
-                        </a>
+                    <div class="text-center">
+                        <div class="flex items-center justify-center h-24 w-24 rounded-full bg-slate-800 border-2 border-brand-accent mx-auto">
+                            <i class="fas fa-hand-holding-usd text-brand-accent text-4xl"></i>
+                        </div>
+                        <h3 class="mt-6 text-xl font-bold text-white">Tu Capital</h3>
+                        <p class="mt-2 text-slate-400">La estrategia para preparar, negociar y cerrar tu ronda de inversión.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="flex items-center justify-center h-24 w-24 rounded-full bg-slate-800 border-2 border-brand-accent mx-auto">
+                            <i class="fas fa-brain text-brand-accent text-4xl"></i>
+                        </div>
+                        <h3 class="mt-6 text-xl font-bold text-white">Tu Mente</h3>
+                        <p class="mt-2 text-slate-400">Las herramientas para forjar la resiliencia y el enfoque de un líder.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Otros Servicios -->
-        <section class="main-section pb-20 sm:pb-28">
-            <div class="section-container">
-                <!-- Título de la sección -->
-                <div class="text-center mb-12 fade-in">
-                    <h3 class="text-3xl font-bold text-gray-200">Más Soluciones para tu Crecimiento</h3>
+        <section id="precios" class="py-20 sm:py-28 bg-slate-900/50">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Un precio. <span class="text-brand-accent">Acceso para toda la vida.</span></h2>
+                <p class="mt-4 max-w-2xl mx-auto text-slate-300 text-lg">Elige el camino que se alinea con tu etapa actual. Cada opción es una inversión única para un crecimiento ilimitado.</p>
+                <div class="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700 flex flex-col text-left">
+                        <h3 class="text-xl font-bold text-brand-accent">DE CERO A CIEN</h3>
+                        <p class="text-slate-400 mt-2">La hoja de ruta para encontrar tu modelo de negocio.</p>
+                        <p class="mt-6 font-serif text-5xl font-bold text-white">$99.9 <span class="text-base font-sans text-slate-400">USD</span></p>
+                        <p class="text-sm text-slate-500">Pago único, acceso vitalicio</p>
+                        <ul class="mt-8 space-y-4 text-slate-300 flex-grow">
+                            <li class="flex items-start"><i class="fas fa-check-circle text-brand-accent mt-1 mr-3"></i><span>+30 Micro-herramientas de ideación y validación.</span></li>
+                            <li class="flex items-start"><i class="fas fa-check-circle text-brand-accent mt-1 mr-3"></i><span>Acceso a la comunidad de fundadores.</span></li>
+                            <li class="flex items-start"><i class="fas fa-check-circle text-brand-accent mt-1 mr-3"></i><span>Frameworks para PMV y Tracción inicial.</span></li>
+                        </ul>
+                        <a href="de-cero-a-cien.html" class="mt-8 block w-full text-center bg-slate-700 text-white font-bold py-3 px-6 rounded-lg hover:bg-slate-600 transition-colors">Comenzar Ahora</a>
+                    </div>
+                    <div class="bg-slate-900 p-8 rounded-xl border-2 border-brand-accent flex flex-col text-left relative shadow-2xl shadow-yellow-500/10">
+                        <div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-brand-accent text-brand-dark px-4 py-1 rounded-full text-sm font-bold">MÁS POPULAR</div>
+                        <h3 class="text-xl font-bold text-brand-accent">EL CAMINO DORADO</h3>
+                        <p class="text-slate-400 mt-2">Las herramientas para escalar y dominar tu mercado.</p>
+                        <p class="mt-6 font-serif text-5xl font-bold text-white">$99.9 <span class="text-base font-sans text-slate-400">USD</span></p>
+                        <p class="text-sm text-slate-500">Pago único, acceso vitalicio</p>
+                        <ul class="mt-8 space-y-4 text-slate-300 flex-grow">
+                            <li class="flex items-start"><i class="fas fa-check-circle text-brand-accent mt-1 mr-3"></i><span>+30 Micro-herramientas de optimización y estrategia.</span></li>
+                            <li class="flex items-start"><i class="fas fa-check-circle text-brand-accent mt-1 mr-3"></i><span>Playbooks de Liderazgo y Finanzas avanzadas.</span></li>
+                            <li class="flex items-start"><i class="fas fa-check-circle text-brand-accent mt-1 mr-3"></i><span>Todo lo incluido en "DE CERO A CIEN".</span></li>
+                        </ul>
+                        <a href="camino-dorado.html" class="mt-8 block w-full text-center bg-brand-accent text-brand-dark font-bold py-3 px-6 rounded-lg hover:scale-105 transform transition-transform">Elegir Camino Dorado</a>
+                    </div>
+                    <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700 flex flex-col text-left">
+                        <h3 class="text-xl font-bold text-brand-accent">LIDERAZGO</h3>
+                        <p class="text-slate-400 mt-2">Suites especializadas para escalar tu equipo y a ti mismo.</p>
+                        <p class="mt-6 font-serif text-5xl font-bold text-white">$49.9 <span class="text-base font-sans text-slate-400">USD</span></p>
+                        <p class="text-sm text-slate-500">Por cada programa, acceso vitalicio</p>
+                        <ul class="mt-8 space-y-4 text-slate-300 flex-grow">
+                            <li class="flex items-start"><i class="fas fa-check-circle text-brand-accent mt-1 mr-3"></i><span>Programas enfocados en: Equipo, Capital y Mente del Fundador.</span></li>
+                            <li class="flex items-start"><i class="fas fa-check-circle text-brand-accent mt-1 mr-3"></i><span>+45 Micro-herramientas para gestión de talento y levantamiento de capital.</span></li>
+                            <li class="flex items-start"><i class="fas fa-check-circle text-brand-accent mt-1 mr-3"></i><span>Ideal para fundadores en fase de crecimiento y consolidación.</span></li>
+                        </ul>
+                        <a href="liderazgo/index.html" class="mt-8 block w-full text-center bg-slate-700 text-white font-bold py-3 px-6 rounded-lg hover:bg-slate-600 transition-colors">Ver Programas</a>
+                    </div>
                 </div>
-                
-                <!-- Grid de servicios adicionales -->
-                <div class="responsive-grid lg:grid-cols-2">
-                    <!-- Servicios Empresariales -->
-                    <div class="card-component slide-in-left">
-                        <h2 class="text-2xl font-bold highlight-text">SERVICIOS EMPRESARIALES</h2>
-                        <p class="mt-3 text-gray-400 flex-grow">
-                            Una batería con más de 20 servicios especializados para empresas, en 5 áreas clave.
-                        </p>
-                        <div class="mt-auto pt-6">
-                            <a href="servicios.html" class="font-semibold text-white hover:text-yellow-400 transition-colors card-primary-link">
-                                Explorar Servicios &rarr;
-                            </a>
+            </div>
+        </section>
+
+        <section id="faq" class="py-20 sm:py-28">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-white">Preguntas <span class="text-brand-accent">Frecuentes</span></h2>
+                <div x-data="{ open: null }" class="mt-12 space-y-4">
+                    <div class="bg-slate-800/50 rounded-lg overflow-hidden">
+                        <button @click="open = open === 1 ? null : 1" class="w-full flex justify-between items-center p-6 text-left">
+                            <span class="text-lg font-semibold text-white">¿Qué es DE CERO A CIEN?</span>
+                            <i class="fas" :class="open === 1 ? 'fa-minus' : 'fa-plus'"></i>
+                        </button>
+                        <div x-show="open === 1" x-collapse class="px-6 pb-6 text-slate-400">
+                            <p>Es una plataforma y metodología para emprendedores y startups que te guía desde la ideación hasta la consolidación de tu negocio, con herramientas prácticas y acompañamiento experto.</p>
                         </div>
                     </div>
-                    
-                    <!-- Academy -->
-                    <div class="card-component slide-in-right">
-                        <h2 class="text-2xl font-bold highlight-text">ACADEMY</h2>
-                        <p class="mt-3 text-gray-400 flex-grow">
-                            Cursos, talleres y recursos de formación para potenciar tus habilidades y las de tu equipo.
-                        </p>
-                        <div class="mt-auto pt-6">
-                            <a href="academy-fases/index.html" class="font-semibold text-white hover:text-yellow-400 transition-colors card-primary-link">
-                                Ingresar a la Academia &rarr;
-                            </a>
+                    <div class="bg-slate-800/50 rounded-lg overflow-hidden">
+                        <button @click="open = open === 2 ? null : 2" class="w-full flex justify-between items-center p-6 text-left">
+                            <span class="text-lg font-semibold text-white">¿Cómo accedo a las herramientas?</span>
+                            <i class="fas" :class="open === 2 ? 'fa-minus' : 'fa-plus'"></i>
+                        </button>
+                        <div x-show="open === 2" x-collapse class="px-6 pb-6 text-slate-400">
+                            <p>Una vez que realizas el pago único, obtienes acceso vitalicio a un dashboard privado donde encontrarás todas las micro-herramientas organizadas por fases y pilares, listas para usar.</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-lg overflow-hidden">
+                        <button @click="open = open === 3 ? null : 3" class="w-full flex justify-between items-center p-6 text-left">
+                            <span class="text-lg font-semibold text-white">¿Quiénes son los fundadores?</span>
+                            <i class="fas" :class="open === 3 ? 'fa-minus' : 'fa-plus'"></i>
+                        </button>
+                        <div x-show="open === 3" x-collapse class="px-6 pb-6 text-slate-400">
+                            <p>Cristian Jofré (CEO), Claudia Guerra (CRO) e Ignacio Jofré (CTO), con experiencia combinada en estrategia, comunidad y tecnología aplicada a startups y scale-ups.</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-lg overflow-hidden">
+                        <button @click="open = open === 4 ? null : 4" class="w-full flex justify-between items-center p-6 text-left">
+                            <span class="text-lg font-semibold text-white">¿Ofrecen consultoría personalizada?</span>
+                            <i class="fas" :class="open === 4 ? 'fa-minus' : 'fa-plus'"></i>
+                        </button>
+                        <div x-show="open === 4" x-collapse class="px-6 pb-6 text-slate-400">
+                            <p>Sí, además de las herramientas, ofrecemos servicios de consultoría estratégica 1:1 para un acompañamiento adaptado a los desafíos específicos de tu emprendimiento.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Accesos rápidos -->
-        <section class="main-section py-16">
-            <div class="section-container">
-                <div class="text-center mb-10">
-                    <h3 class="text-3xl font-bold text-gray-200">Accesos rápidos</h3>
-                    <p class="mt-2 text-gray-400">Ingresa directo a las áreas clave del ecosistema.</p>
-                </div>
-                <div class="responsive-grid lg:grid-cols-3">
-                    <a href="portal-alumno.html" class="card-component slide-in-left">
-                        <h4 class="text-xl font-bold highlight-text">Portal del Alumno</h4>
-                        <p class="mt-2 text-gray-400">Centro de formación con todas las herramientas por fases.</p>
-                        <span class="mt-4 inline-block card-primary-link">Entrar &rarr;</span>
-                    </a>
-                    <a href="comunidad/conecta.html" class="card-component fade-in">
-                        <h4 class="text-xl font-bold highlight-text">Comunidad</h4>
-                        <p class="mt-2 text-gray-400">Comunidad y eventos para potenciar tu red y aprendizaje.</p>
-                        <span class="mt-4 inline-block card-primary-link">Ver más &rarr;</span>
-                    </a>
-                    <a href="consultoria.html" class="card-component slide-in-right">
-                        <h4 class="text-xl font-bold highlight-text">Consultoría 1:1</h4>
-                        <p class="mt-2 text-gray-400">Acompañamiento estratégico personalizado para tu proyecto.</p>
-                        <span class="mt-4 inline-block card-primary-link">Agendar &rarr;</span>
-                    </a>
+        <section id="kit-gratuito" class="py-20 sm:py-28 bg-brand-dark">
+            <div class="container mx-auto px-6">
+                <div class="bg-slate-900 rounded-2xl p-8 md:p-12 lg:p-16 text-center shadow-2xl overflow-hidden relative">
+                    <div class="absolute -top-10 -left-10 w-40 h-40 bg-brand-accent/10 rounded-full blur-2xl"></div>
+                    <div class="absolute -bottom-16 -right-0 w-56 h-56 bg-brand-accent/10 rounded-full blur-3xl"></div>
+                    <div class="relative z-10 space-y-6">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white">Toma el Control de tu Negocio <span class="text-brand-accent">Hoy</span></h2>
+                        <p class="max-w-2xl mx-auto text-slate-300 text-lg">Accede gratis al kit de herramientas estratégicas que necesitas para lanzar con certeza. Destilamos años de experiencia en 4 recursos prácticos para ti.</p>
+                        <form class="max-w-lg mx-auto flex flex-col sm:flex-row gap-4">
+                            <input type="email" placeholder="Tu mejor correo electrónico" required class="flex-grow w-full p-3 rounded-lg bg-slate-800 border border-slate-700 focus:ring-2 focus:ring-brand-accent focus:outline-none transition-shadow">
+                            <button type="submit" class="bg-brand-accent text-brand-dark font-bold text-lg py-3 px-8 rounded-lg shadow-lg hover:scale-105 transform transition-transform duration-300">
+                                Obtener Acceso Instantáneo
+                            </button>
+                        </form>
+                        <p class="text-sm text-slate-500">Únete a miles de fundadores que ya construyen con estrategia.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
+        <section id="cta-final" class="bg-slate-900">
+            <div class="container mx-auto px-6 py-12 text-center">
+                <h3 class="text-2xl md:text-3xl font-bold text-white">¿Listo(a) para construir tu legado?</h3>
+                <a href="#precios" class="mt-6 inline-block bg-brand-accent text-brand-dark font-bold py-3 px-8 rounded-lg shadow-lg hover:scale-105 transform transition-transform duration-300">
+                    ¡Elige tu Camino!
+                </a>
+                <div class="mt-10 border-t border-slate-800 pt-8">
+                    <div class="flex justify-center gap-6 mb-8">
+                        <a href="#" target="_blank" aria-label="Facebook" class="text-slate-400 hover:text-brand-accent transition-colors duration-300">
+                            <i class="fab fa-facebook-f text-2xl"></i>
+                        </a>
+                        <a href="#" target="_blank" aria-label="Instagram" class="text-slate-400 hover:text-brand-accent transition-colors duration-300">
+                            <i class="fab fa-instagram text-2xl"></i>
+                        </a>
+                        <a href="#" target="_blank" aria-label="LinkedIn" class="text-slate-400 hover:text-brand-accent transition-colors duration-300">
+                            <i class="fab fa-linkedin-in text-2xl"></i>
+                        </a>
+                        <a href="#" target="_blank" aria-label="YouTube" class="text-slate-400 hover:text-brand-accent transition-colors duration-300">
+                            <i class="fab fa-youtube text-2xl"></i>
+                        </a>
+                    </div>
+                    <p class="text-slate-500">© 2025 DE CERO A CIEN. Una marca de Expande Digital Consultores. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </section>
     </main>
-    
-    <!-- FOOTER UNIFICADO -->
-    <footer class="footer-component">
-        <!-- El contenido del footer se genera dinamicamente por JavaScript -->
-    </footer>
-
-    <!-- Scripts JavaScript -->
+    <footer class="footer-component"></footer>
     <script src="assets/js/components.js"></script>
     <script src="assets/js/config-secure.js"></script>
     <script src="assets/js/supabase-client.js"></script>
     <script src="assets/js/auth.js"></script>
-    <script>
-        // Duplica el contenido del marquee para que la animación sea continua (infinita)
-        (function () {
-            var marquee = document.querySelector('.marquee-content');
-            if (!marquee) return;
-            if (marquee.getAttribute('data-duplicated') === 'true') return;
-            marquee.innerHTML = marquee.innerHTML + marquee.innerHTML;
-            marquee.setAttribute('data-duplicated', 'true');
-        })();
-    </script>
 </body>
 </html>
 
