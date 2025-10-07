@@ -8,7 +8,7 @@ Objetivo: maximizar productividad inmediata en este repo. Este es un sitio está
   - `assets/templates/base.html`: patrón de estructura con SEO/meta y carga estándar de scripts.
 - Autenticación (cliente)
   - `assets/js/config-secure.js`: declara `window.PublicAuthConfig` y `Environment`; oculta el Google Client ID (base64). Endpoints de API son placeholders.
-  - `assets/js/auth.js`: `AuthManager` maneja login/registro simulados, sesión en localStorage y Google Identity Services (GIS). Expone `requireAuth()` y `redirectIfAuthenticated()`.
+  - `assets/js/auth.js`: `AuthManager` maneja login/registro simulados y sesión en localStorage usando Supabase Auth (Google OAuth). Expone `requireAuth()` y `redirectIfAuthenticated()`.
   - Páginas: `auth/login.html`, `auth/register.html`, `auth/dashboard.html`.
 - Entitlements (acceso por compra)
   - `assets/js/entitlements.js`: gating declarativo con `data-entitlement`, bloques `[data-when="granted"]` / `[data-when="denied"]`, CTAs por defecto/override, `?grant=...` y auto-guard por carpeta (`/fase_*_ecd/`). Stub `paymentEntitlements.grantAfterCheckout()`.
@@ -29,16 +29,16 @@ Objetivo: maximizar productividad inmediata en este repo. Este es un sitio está
 
 ## Flujos críticos (cómo se usa)
 - Login con Google:
-  - `auth/*.html` carga `https://accounts.google.com/gsi/client?hl=es` y llama `handleCredentialResponse` definido en `auth.js` → `decodeJwtResponse` → guarda sesión en localStorage → `redirectAfterAuth()` hacia `auth/dashboard.html`.
+  - `auth/*.html` usa Supabase Auth (Google OAuth) vía `@supabase/supabase-js` y guarda sesión en localStorage. Tras login exitoso, redirige a `auth/dashboard.html`.
 - Protección de página:
   - En páginas privadas, llamar `requireAuth()` tras `DOMContentLoaded`; si no hay sesión, redirige a `auth/login.html?return=<url>`.
 - Acceso a cursos/herramientas:
   - En `portal-alumno.html` y `fase_*_ecd/` se usa `data-entitlement` para mostrar contenido o CTA. También puedes simular compra con `?grant=course.pmv` o desde consola: `paymentEntitlements.grantAfterCheckout({ items: ['course.pmv'] })`.
 
 ## Qué está listo vs. pendiente
-- Listo (cliente): layout dinámico, navegación, estilos, auth simulada, GIS client-side, gating por entitlements, overlay de auto-guard, portal/catálogos.
+- Listo (cliente): layout dinámico, navegación, estilos, auth simulada con Supabase, gating por entitlements, overlay de auto-guard, portal/catálogos.
 - Parcial: dashboard con datos locales; formularios con `action="#"`; comunidad/juegos mayormente informativos.
-- Faltante: backend real (verificación GIS, refresh, endpoints), integración de pagos y webhook/return para otorgar entitlements.
+- Faltante: backend real (refresh de sesión, endpoints avanzados), integración de pagos y webhook/return para otorgar entitlements.
 
 ## Patrones y ejemplos en el repo
 - `academy.html`: tarjetas con `data-entitlement` + `[data-when]` y CTAs.
@@ -65,12 +65,12 @@ Para dudas o mejoras, consulta `docs/flujo-plataforma.md` (mermaid con el flujo 
   - Endpoints clave:
     - `POST /api/mp/create-preference`: crea preferencias y cumple requisitos de certificación. Fallback robusto: SDK con/sin `x-integrator-id` → REST con/sin `x-integrator-id`.
     - `POST /api/mp/webhook`: maneja `topic=payment` y `merchant_order`. Lee el pago por SDK o REST con `Authorization: Bearer <MP_ACCESS_TOKEN>`. Otorga accesos al estar `status=approved`.
-    - `GET /api/public-config`: entrega configuración pública (Firebase + URLs) para no exponer claves en el frontend.
+  - `GET /api/public-config`: entrega configuración pública (Supabase + URLs) para no exponer claves en el frontend.
     - Debug: `GET /api/mp/debug-whoami`, `GET /api/mp/debug-preference?pref_id=...`.
   - Variables de entorno (mínimas):
     - `MP_ACCESS_TOKEN`, `MP_INTEGRATOR_ID`, `MP_CERT_EMAIL`
     - `MP_INSTALLMENTS`, `MP_EXCLUDE_PAYMENT_METHODS`
-    - `PUBLIC_API_BASE`, `PUBLIC_SITE_BASE`, `ALLOWED_ORIGINS`, `PUBLIC_FIREBASE_*`, `GRANT_SECRET`
+    - `PUBLIC_API_BASE`, `PUBLIC_SITE_BASE`, `ALLOWED_ORIGINS`, `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_JWT_SECRET`, `GRANT_SECRET`
   - Requisitos de certificación cubiertos: integrator id, `back_urls` + `auto_return`, `external_reference` (email), imagen/desc/ID 4 dígitos, cuotas, exclusión de métodos y webhook.
 
 - Seguridad y configuración
@@ -113,23 +113,27 @@ Para dudas o mejoras, consulta `docs/flujo-plataforma.md` (mermaid con el flujo 
 - Archivos: `reports/pdf/informe-tecnico.pdf` y `reports/pdf/informe-no-tecnico.pdf`.
 - `reports/pdf/` está en `.gitignore` (uso interno, no público).
 
-## Integración actual: Firebase (Auth) + Supabase (Postgres)
+
+## Integración actual: Supabase Auth + Postgres (via Supabase)
 
 - Autenticación
-  - Frontend: Google Identity Services + Firebase Web SDK (compat) cargado por `assets/js/components.js` y `assets/js/firebase-client.js`.
-  - Backend: Firebase Admin verifica el ID token en `/api/auth/verify` y `/api/auth/me` y provisiona el usuario en la tabla `users`.
-  - Variables mínimas: `PUBLIC_FIREBASE_*` (para `GET /api/public-config`) y credenciales de Admin vía `FIREBASE_SERVICE_ACCOUNT_JSON` o ADC en Cloud Run.
+  - Frontend: Supabase Auth (Google OAuth) usando `@supabase/supabase-js` y sesión en localStorage. No se usa GIS ni Firebase.
+  - Backend: Verificación de JWT Supabase (HS256/JWKS) en `/api/auth/verify` y `/api/auth/me`, provisioning en tabla `users`.
+  - Variables mínimas: `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_JWT_SECRET`.
 
 - Base de datos (Supabase como Postgres)
   - El backend usa `pg` con `DATABASE_URL`. Puedes apuntarlo a Supabase sin cambios de código (por ejemplo: `postgresql://...@aws-1-us-east-2.pooler.supabase.com:6543/postgres`).
   - SSL: por defecto se usa SSL con `rejectUnauthorized: false`. Puedes forzar o desactivar con `PGSSL=disable` (no recomendado). Si tu cadena incluye `sslmode=require`, también funciona.
   - Al iniciar, el API emite en logs: `[api] Pool PG inicializado` y `[api] Esquema aplicado/validado`.
 
-- Qué NO está usando Supabase hoy
-  - No usamos Supabase Auth. Los JWT se validan con Firebase Admin y los enrollments se guardan en Postgres.
+- Entitlements/Webhook MP: se mantienen igual (insertan en `enrollments`).
 
-- Si quieres migrar a Supabase Auth (opcional)
-  - Frontend: reemplazar GIS/Firebase por `@supabase/supabase-js` (Google provider) y exponer `PUBLIC_SUPABASE_URL` y `PUBLIC_SUPABASE_ANON_KEY` vía `GET /api/public-config`.
-  - Backend: verificar JWT de Supabase (JWK o Admin API), adaptar `/auth/verify` y `/auth/me`, mantener tablas `users`/`enrollments`.
-  - Entitlements/Webhook MP: se mantienen igual (seguirán insertando en `enrollments`).
+### Nota de migración desde versiones previas
+- Elimina cualquier variable `PUBLIC_FIREBASE_*` y credencial Firebase de tu entorno.
+- Si existe la columna `firebase_uid` en la tabla `users`, puedes borrarla:
+  ```sql
+  ALTER TABLE users DROP COLUMN IF EXISTS firebase_uid;
+  ```
+- Verifica que los endpoints `/api/public-config`, `/auth/verify` y `/auth/me` solo usen Supabase.
+- El frontend no debe cargar scripts GIS ni Firebase.
 
