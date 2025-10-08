@@ -64,6 +64,7 @@ function ensureGlobalStyles() {
             .map(l => l.getAttribute('href') || '');
 
         const styles = [
+            `${GlobalConfig.basePath}assets/styles/tailwind.css`,
             `${GlobalConfig.basePath}assets/styles/common.css`,
             `${GlobalConfig.basePath}assets/styles/mobile.css`,
             // Iconos: Font Awesome 4.7 (ligero y suficiente para íconos sociales)

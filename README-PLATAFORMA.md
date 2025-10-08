@@ -2,10 +2,11 @@
 
 Esta guía explica, en lenguaje simple, cómo funciona la plataforma web: qué hace cada parte, cómo se gestionan accesos (entitlements), autenticación, pagos con Mercado Pago y el flujo completo de un alumno.
 
-## Qué es la plataforma
-- Sitio estático modular (HTML + JavaScript) sin backend propio. 
-- Funciones dinámicas en el navegador: cabecera/pie automáticos, autenticación básica, control de acceso a cursos, y compra con Mercado Pago.
-- Todo lo importante (accesos, sesión) se guarda en el dispositivo del usuario (navegador) y se puede sincronizar con el pago.
+-## Qué es la plataforma
+- Sitio estático modular (HTML + JavaScript) renderizado desde el artefacto `dist/` generado por `npm run build:frontend`.
+- Funciones dinámicas en el navegador: cabecera/pie automáticos, autenticación básica, control de acceso a cursos y compra con Mercado Pago.
+- API Express única (`api/server.mjs`) desplegable en Cloud Run: gestiona preferencias de pago, verificación de tokens Supabase, webhooks y captura de leads. Ya no existen funciones Firebase independientes.
+- Todo lo importante en el cliente (accesos, sesión) se guarda en el navegador y se puede sincronizar con el pago vía la API.
 
 ## Piezas principales
 - Cabecera y pie: se generan con `assets/js/components.js` en todas las páginas.
@@ -38,7 +39,7 @@ Esta guía explica, en lenguaje simple, cómo funciona la plataforma web: qué h
 
 ## Pagos con Mercado Pago (Checkout Pro)
 - En el sitio, los botones de "Comprar" llaman a `Payments.startCheckout(...)`.
-- El servidor (sin guardar secretos en el frontend) crea una preferencia de pago con el SDK oficial de Mercado Pago.
+- La API Express (Cloud Run) crea una preferencia de pago con el SDK oficial de Mercado Pago; los secretos viven como variables de entorno.
 - Se envían:
   - Lista de productos (desde `pricing.json`).
   - URL de retorno automática cuando el pago queda aprobado.
@@ -47,20 +48,26 @@ Esta guía explica, en lenguaje simple, cómo funciona la plataforma web: qué h
 
 ### Retorno después del pago
 - Si el pago se aprueba, Mercado Pago devuelve al alumno a `portal-alumno.html` con un parámetro seguro (`grant` firmado).
-- El navegador verifica esa firma (endpoint `/api/mp/verify-grant`) y, si es válida, otorga el acceso automáticamente.
+- El navegador verifica esa firma llamando al endpoint `/api/mp/verify-grant` expuesto por `api/server.mjs`. Si es válida, otorga el acceso automáticamente.
 - Esto evita que alguien se “autorregale” acceso manipulando la URL.
 
 ### Webhooks (notificaciones del pago)
-- Mercado Pago también envía notificaciones al endpoint `/api/mp/webhook`.
+- Mercado Pago también envía notificaciones al endpoint `/api/mp/webhook` (servido desde `api/server.mjs`).
 - Ese endpoint valida una firma de seguridad y consulta el estado real del pago con el SDK oficial.
 - Allí se puede conectar un sistema interno (por ejemplo, una base de datos) para registrar compras de forma persistente. En esta versión, el acceso se gestiona localmente en el navegador y el webhook sólo registra eventos.
 
 ## Captura de leads (Descargas gratuitas)
-- Los formularios de `descargas-gratuitas.html` envían la información al endpoint `POST /api/leads/downloads`.
+- Los formularios de `descargas-gratuitas.html` envían la información al endpoint `POST /api/leads/downloads` que expone `api/server.mjs`.
 - Si hay base de datos (`DATABASE_URL`), los registros se guardan en la tabla `download_leads` con email, fuente, tags y metadatos.
 - Sin base de datos, los leads se registran en un archivo NDJSON (`api/_tmp/download-leads.ndjson`) como respaldo.
 - Puedes activar un aviso por email configurando `LEADS_NOTIFY_EMAIL` y un transporte SMTP (`SMTP_URL` o `SMTP_HOST`/`SMTP_PORT`/`SMTP_USER`/`SMTP_PASS`).
 - El script `assets/js/downloads.js` maneja validaciones, estado del formulario y dispara el evento `lead_download_submitted` a `dataLayer` para analítica.
+
+## Empaquetado y despliegue
+- Para preparar el sitio, ejecuta `npm run build:frontend`. Este comando compila Tailwind a `assets/styles/tailwind.css` y genera el artefacto estático en `dist/` listo para subir a un bucket/CDN.
+- Publica el contenido de `dist/` en tu hosting estático (Cloud Storage + CDN, por ejemplo).
+- Despliega la API Express (`api/server.mjs`) en Cloud Run u otra plataforma Node.js, configurando las variables de entorno (Supabase, Mercado Pago, SMTP, etc.).
+- No quedan endpoints ni dependencias de Firebase; toda la lógica del backend vive en este servicio Express centralizado.
 
 ## Edición de contenidos y precios
 - Páginas y secciones se editan como HTML. 

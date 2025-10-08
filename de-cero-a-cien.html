@@ -19,27 +19,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
 
     <!-- Tailwind + Estilos unificados -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="assets/styles/common.css">
+<link rel="stylesheet" href="assets/styles/common.css">
     <link rel="stylesheet" href="assets/styles/mobile.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary-dark': '#0a1f2f',
-                        'secondary-dark': '#112240',
-                        'accent-gold': '#FBBF24',
-                        'text-light': '#e6f1ff',
-                        'border-custom': '#1e2d4d'
-                    },
-                    fontFamily: { 'sans': ['Inter','sans-serif'] }
-                }
-            }
-        }
-    </script>
-
-    <!-- Estilos locales mínimos SOLO para bloques propios -->
+<!-- Estilos locales mínimos SOLO para bloques propios -->
     <style>
         .urgent-cta { position: relative; overflow: hidden; z-index:1; }
         .urgent-cta::before { content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%; background:conic-gradient(transparent, rgba(255,255,255,.5), transparent 30%); animation:spinBorder 4s linear infinite; z-index:-1; }

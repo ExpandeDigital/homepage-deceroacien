@@ -7,7 +7,6 @@
   },
   "dependencies": {
     "mercadopago": "^2.6.2",
-    "firebase-admin": "^12.5.0",
     "pg": "^8.11.5",
     "nodemailer": "^6.9.11",
     "express": "^4.19.2",
@@ -19,9 +18,15 @@
     "apply:schema": "node scripts/apply-schema.mjs",
     "seed:products": "node scripts/seed-products.mjs",
     "api:start": "node api/server.mjs",
-    "reports:pdf": "node scripts/generate-pdf.mjs"
+    "reports:pdf": "node scripts/generate-pdf.mjs",
+    "build:tailwind": "tailwindcss -i ./src/styles/tailwind.css -o ./assets/styles/tailwind.css --minify",
+    "build:static": "node ./scripts/build-static.mjs",
+    "build:frontend": "npm run build:tailwind && npm run build:static"
   },
   "devDependencies": {
-    "puppeteer": "^22.13.1"
+    "puppeteer": "^22.13.1",
+    "tailwindcss": "^3.4.14",
+    "postcss": "^8.4.47",
+    "autoprefixer": "^10.4.20"
   }
 }
