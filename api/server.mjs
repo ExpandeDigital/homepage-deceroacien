@@ -42,7 +42,13 @@ const MP_EXCLUDED_PAYMENT_METHODS = _EXC
   : [];
 // Email (opcional)
 const SMTP_URL = process.env.SMTP_URL || '';
+const SMTP_HOST = process.env.SMTP_HOST || '';
+const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
+const SMTP_SECURE = String(process.env.SMTP_SECURE || '').toLowerCase() === 'true';
+const SMTP_USER = process.env.SMTP_USER || '';
+const SMTP_PASS = process.env.SMTP_PASS || '';
 const SMTP_FROM = process.env.SMTP_FROM || 'no-reply@deceroacien.app';
+const LEADS_NOTIFY_EMAIL = process.env.LEADS_NOTIFY_EMAIL || '';
 
 // Firebase Admin eliminado: verificación y autenticación ahora son exclusivamente vía Supabase
 
@@ -126,6 +132,17 @@ async function ensureSchema() {
         data JSONB,
         created_at TIMESTAMPTZ DEFAULT now()
       );
+      CREATE TABLE IF NOT EXISTS download_leads (
+        id TEXT PRIMARY KEY,
+        email TEXT NOT NULL,
+        name TEXT,
+        source TEXT NOT NULL DEFAULT 'descargas-gratuitas',
+        tags TEXT[] DEFAULT ARRAY[]::TEXT[],
+        metadata JSONB DEFAULT '{}'::jsonb,
+        created_at TIMESTAMPTZ DEFAULT now(),
+        updated_at TIMESTAMPTZ DEFAULT now()
+      );
+      CREATE UNIQUE INDEX IF NOT EXISTS download_leads_email_source_idx ON download_leads (email, source);
     `);
     console.log('[api] Esquema aplicado/validado');
   } catch (e) {
@@ -140,6 +157,8 @@ function corsOptions(origin, callback) {
   if (ALLOWED_ORIGINS.includes(origin)) return callback(null, { origin: true });
   return callback(null, { origin: false });
 }
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
 
 async function verifyBearer(req) {
   const h = req.headers['authorization'] || '';
@@ -399,16 +418,159 @@ async function grantEntitlements({ userId, email, entitlements = [] }) {
 }
 
 async function sendEmail({ to, subject, html }) {
-  if (!SMTP_URL) return false;
+  if (!SMTP_URL && !SMTP_HOST) return false;
   try {
-    const tp = nodemailer.createTransport(SMTP_URL);
-    await tp.sendMail({ from: SMTP_FROM, to, subject, html });
+    const transporter = SMTP_URL
+      ? nodemailer.createTransport(SMTP_URL)
+      : nodemailer.createTransport({
+          host: SMTP_HOST,
+          port: SMTP_PORT,
+          secure: SMTP_SECURE,
+          auth: SMTP_USER ? { user: SMTP_USER, pass: SMTP_PASS } : undefined
+        });
+    await transporter.sendMail({ from: SMTP_FROM, to, subject, html });
     return true;
   } catch (e) {
     console.warn('[api] sendEmail fallo:', e?.message || e);
     return false;
   }
 }
+
+function escapeHtml(value) {
+  if (value === null || value === undefined) return '';
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+async function persistDownloadLead({ email, name, source, tags, metadata }) {
+  if (!pool) {
+    try {
+      const dir = path.join(process.cwd(), 'api', '_tmp');
+      fs.mkdirSync(dir, { recursive: true });
+      const payload = {
+        id: `lead_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+        email,
+        name: name || null,
+        source: source || 'descargas-gratuitas',
+        tags: Array.isArray(tags) ? tags : null,
+        metadata: metadata || null,
+        stored_at: new Date().toISOString(),
+        storage: 'file'
+      };
+      fs.appendFileSync(path.join(dir, 'download-leads.ndjson'), JSON.stringify(payload) + '\n', 'utf-8');
+      return { stored: false, fallback: 'file' };
+    } catch (e) {
+      console.warn('[api] persistDownloadLead fallback file error:', e?.message || e);
+      return { stored: false, reason: 'no_database' };
+    }
+  }
+
+  try {
+    await ensureSchema();
+    const id = `lead_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+    const tagsArray = Array.isArray(tags)
+      ? tags.map(t => String(t || '').trim()).filter(Boolean)
+      : [];
+    const metadataJson = metadata && typeof metadata === 'object' ? metadata : {};
+    const res = await pool.query(
+      `INSERT INTO download_leads (id, email, name, source, tags, metadata)
+       VALUES ($1,$2,$3,$4,$5,$6::jsonb)
+       ON CONFLICT (email, source) DO UPDATE
+         SET name = COALESCE(EXCLUDED.name, download_leads.name),
+             tags = CASE
+               WHEN EXCLUDED.tags IS NULL OR array_length(EXCLUDED.tags, 1) IS NULL OR array_length(EXCLUDED.tags, 1) = 0
+                 THEN download_leads.tags
+               ELSE EXCLUDED.tags
+             END,
+             metadata = COALESCE(download_leads.metadata, '{}'::jsonb) || COALESCE(EXCLUDED.metadata, '{}'::jsonb),
+             updated_at = now()
+       RETURNING id;`,
+      [
+        id,
+        email,
+        name || null,
+        source || 'descargas-gratuitas',
+  tagsArray,
+        JSON.stringify(metadataJson)
+      ]
+    );
+    return { stored: true, id: res.rows[0]?.id || id };
+  } catch (e) {
+    console.warn('[api] persistDownloadLead falló:', e?.message || e);
+    return { stored: false, reason: e?.message || 'db_error' };
+  }
+}
+
+router.post('/leads/downloads', async (req, res) => {
+  try {
+    const body = req.body || {};
+    const rawEmail = typeof body.email === 'string' ? body.email.trim() : '';
+    if (!rawEmail || !EMAIL_REGEX.test(rawEmail)) {
+      return res.status(400).json({ error: 'invalid_email' });
+    }
+
+    const email = rawEmail.toLowerCase();
+    const name = typeof body.name === 'string' ? body.name.trim() || null : null;
+    const source = typeof body.source === 'string' && body.source.trim()
+      ? body.source.trim().toLowerCase()
+      : 'descargas-gratuitas';
+    const tags = Array.isArray(body.tags)
+      ? body.tags.map(tag => String(tag || '').trim()).filter(Boolean)
+      : [];
+    const consent = (body.consent && typeof body.consent === 'object') ? body.consent : null;
+
+    const metadata = (body.metadata && typeof body.metadata === 'object') ? { ...body.metadata } : {};
+    if (body.asset && typeof body.asset === 'string') {
+      metadata.asset = body.asset;
+    }
+    if (body.context && typeof body.context === 'object') {
+      metadata.context = body.context;
+    }
+    if (body.formId && typeof body.formId === 'string') {
+      metadata.formId = body.formId;
+    }
+    if (body.formVariant && typeof body.formVariant === 'string') {
+      metadata.formVariant = body.formVariant;
+    }
+    metadata.page = metadata.page || body.page || null;
+    metadata.referer = req.headers['referer'] || null;
+    metadata.ip = ((req.headers['x-forwarded-for'] || '').split(',')[0] || '').trim() || req.socket?.remoteAddress || null;
+    metadata.userAgent = req.headers['user-agent'] || null;
+    if (consent) {
+      metadata.consent = consent;
+    }
+
+    const stored = await persistDownloadLead({ email, name, source, tags, metadata });
+
+    let notified = false;
+    if (LEADS_NOTIFY_EMAIL) {
+      const createdAt = new Date().toISOString();
+      const html = `
+        <h2>Nuevo lead de descargas</h2>
+        <ul>
+          <li><strong>Email:</strong> ${escapeHtml(email)}</li>
+          <li><strong>Nombre:</strong> ${escapeHtml(name || '—')}</li>
+          <li><strong>Origen:</strong> ${escapeHtml(source)}</li>
+          <li><strong>Tags:</strong> ${escapeHtml(tags.join(', ') || '—')}</li>
+          <li><strong>Registrado:</strong> ${escapeHtml(createdAt)}</li>
+        </ul>
+        <pre style="background:#f5f5f5;padding:12px;border-radius:8px;white-space:pre-wrap;word-break:break-word;">
+${escapeHtml(JSON.stringify(metadata, null, 2))}
+        </pre>
+      `;
+      notified = await sendEmail({ to: LEADS_NOTIFY_EMAIL, subject: `[Leads] Descarga gratuita (${source})`, html });
+    }
+
+    return res.json({ ok: true, stored: stored.stored || false, fallback: stored.fallback || null, id: stored.id || null, notified });
+  } catch (e) {
+    console.error('[api] /leads/downloads error:', e);
+    return res.status(500).json({ error: 'internal_error' });
+  }
+});
 
 // POST /mp/create-preference
 router.post('/mp/create-preference', async (req, res) => {

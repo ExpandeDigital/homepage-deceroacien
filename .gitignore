@@ -23,6 +23,7 @@ logs/
 *.temp
 .DS_Store
 Thumbs.db
+api/_tmp/
 
 # Dependencias
 node_modules/

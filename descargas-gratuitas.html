@@ -76,9 +76,10 @@
                 <h1 class="font-serif text-4xl sm:text-5xl font-bold text-white leading-tight">Deja de Operar a Ciegas. Toma el Control de tu Negocio Hoy.</h1>
                 <p class="text-lg sm:text-xl text-[var(--kit-texto-secundario)] mt-6">Accede gratis al kit de herramientas estratégicas que necesitas para lanzar con certeza, entender tus números y atraer a tus primeros clientes. Destilamos años de experiencia en 4 recursos prácticos para ti.</p>
 
-                <form class="mt-10 max-w-2xl mx-auto flex flex-col sm:flex-row gap-4" action="#" method="post">
+                <form id="downloadHeroForm" class="mt-10 max-w-2xl mx-auto flex flex-col sm:flex-row gap-4" action="#" method="post" data-download-form="hero" data-download-source="descargas-gratuitas" data-download-tags="kit,freebie,hero" data-download-asset="kit-inicio">
                     <input type="email" name="email" placeholder="Introduce tu mejor correo electrónico" required class="flex-grow p-3 rounded-lg kit-input" aria-label="Correo electrónico">
                     <button type="submit" class="bg-[var(--kit-dorado)] text-[var(--kit-azul-oscuro)] font-bold text-lg py-3 px-8 rounded-lg shadow-lg hover:bg-opacity-90 transition-colors">Obtener acceso instantáneo</button>
+                    <p class="text-sm text-[var(--kit-texto-secundario)] hidden" data-download-status aria-live="polite"></p>
                 </form>
                 <p class="text-sm text-[var(--kit-texto-secundario)] mt-4">Únete a los miles de fundadores que ya construyen con estrategia.</p>
             </header>
@@ -150,9 +151,10 @@
             <section class="text-center py-12 mt-12 border-t-2 border-[var(--kit-dorado)]">
                 <h2 class="font-serif text-3xl font-bold text-white">Tu viaje de Cero a Cien empieza con el primer paso.</h2>
                 <p class="text-lg text-[var(--kit-texto-secundario)] mt-4">Has llegado hasta aquí porque sabes que necesitas más que una buena idea; necesitas una ejecución impecable. Este kit es tu primer paso para construir con estrategia. Es 100% gratuito. Sin condiciones.</p>
-                <form class="mt-8 max-w-2xl mx-auto flex flex-col sm:flex-row gap-4" action="#" method="post">
+                <form id="downloadFooterForm" class="mt-8 max-w-2xl mx-auto flex flex-col sm:flex-row gap-4" action="#" method="post" data-download-form="closing" data-download-source="descargas-gratuitas" data-download-tags="kit,freebie,footer" data-download-asset="kit-inicio">
                     <input type="email" name="email-secondary" placeholder="Introduce tu correo para recibir el kit" required class="flex-grow p-3 rounded-lg kit-input" aria-label="Correo electrónico">
                     <button type="submit" class="bg-[var(--kit-dorado)] text-[var(--kit-azul-oscuro)] font-bold text-lg py-3 px-8 rounded-lg shadow-lg hover:bg-opacity-90 transition-colors">Quiero mi kit de inicio ahora</button>
+                    <p class="text-sm text-[var(--kit-texto-secundario)] hidden" data-download-status aria-live="polite"></p>
                 </form>
             </section>
         </div>
@@ -160,6 +162,7 @@
     <footer class="footer-component"></footer>
     <script src="assets/js/components.js"></script>
     <script src="assets/js/config-secure.js"></script>
+    <script src="assets/js/downloads.js"></script>
     <script src="assets/js/supabase-client.js"></script>
     <script src="assets/js/auth.js"></script>
 </body>

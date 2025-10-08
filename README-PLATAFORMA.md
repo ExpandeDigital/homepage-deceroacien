@@ -55,6 +55,13 @@ Esta guía explica, en lenguaje simple, cómo funciona la plataforma web: qué h
 - Ese endpoint valida una firma de seguridad y consulta el estado real del pago con el SDK oficial.
 - Allí se puede conectar un sistema interno (por ejemplo, una base de datos) para registrar compras de forma persistente. En esta versión, el acceso se gestiona localmente en el navegador y el webhook sólo registra eventos.
 
+## Captura de leads (Descargas gratuitas)
+- Los formularios de `descargas-gratuitas.html` envían la información al endpoint `POST /api/leads/downloads`.
+- Si hay base de datos (`DATABASE_URL`), los registros se guardan en la tabla `download_leads` con email, fuente, tags y metadatos.
+- Sin base de datos, los leads se registran en un archivo NDJSON (`api/_tmp/download-leads.ndjson`) como respaldo.
+- Puedes activar un aviso por email configurando `LEADS_NOTIFY_EMAIL` y un transporte SMTP (`SMTP_URL` o `SMTP_HOST`/`SMTP_PORT`/`SMTP_USER`/`SMTP_PASS`).
+- El script `assets/js/downloads.js` maneja validaciones, estado del formulario y dispara el evento `lead_download_submitted` a `dataLayer` para analítica.
+
 ## Edición de contenidos y precios
 - Páginas y secciones se editan como HTML. 
 - Los precios se cambian en `assets/config/pricing.json` (un solo lugar) y se reflejan automáticamente en la web y al crear las preferencias de pago.
