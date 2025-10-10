@@ -1,22 +1,36 @@
 # Instrucciones para agentes de IA en homepage-deceroacien
 
-Objetivo: maximizar productividad inmediata en este repo. Este es un sitio estático modular (HTML + JS Vanilla + Tailwind CDN) con autenticación en cliente y gating por entitlements en localStorage. No hay build ni backend aquí.
+**Estado actual (Oct 2025)**: ✅ En producción en https://deceroacien.app  
+**Infraestructura**: Google Cloud (Load Balancer + CDN + Cloud Storage + Cloud Run)  
+**CI/CD**: Automático con Cloud Build en push a `main`  
 
-## Arquitectura esencial
+Objetivo: maximizar productividad en sitio estático modular con build pipeline completo, autenticación Supabase, gating por entitlements y pagos Mercado Pago certificados.
+
+## Arquitectura actual (Cloud-native)
+- **Frontend estático**: Cloud Storage + CDN global con build automatizado
+- **API centralizada**: Cloud Run (`api/server.mjs`) con Express + Secret Manager
+- **Build pipeline**: `cloudbuild.yaml` ejecuta en cada push a `main`
+- **Estilos**: Tailwind CSS compilado localmente (no CDN)
+
+### Componentes clave
 - Layout/UI
-  - `assets/js/components.js`: orquesta header/footer dinámicos, inyecta estilos (`assets/styles/*`), detecta `basePath` según `src` para que los enlaces funcionen desde subcarpetas (auth, conecta, etc.). Expone `AppManager` y utilidades.
-  - `assets/templates/base.html`: patrón de estructura con SEO/meta y carga estándar de scripts.
-- Autenticación (cliente)
-  - `assets/js/config-secure.js`: declara `window.PublicAuthConfig` y `Environment`; oculta el Google Client ID (base64). Endpoints de API son placeholders.
-  - `assets/js/auth.js`: `AuthManager` maneja login/registro simulados y sesión en localStorage usando Supabase Auth (Google OAuth). Expone `requireAuth()` y `redirectIfAuthenticated()`.
-  - Páginas: `auth/login.html`, `auth/register.html`, `auth/dashboard.html`.
+  - `assets/js/components.js`: header/footer dinámicos, estilos, detección `basePath`, expone `AppManager`
+  - `assets/templates/base.html`: estructura base con SEO y carga de scripts estándar
+- Autenticación (Supabase)
+  - `assets/js/config-secure.js`: configuración pública Supabase (no Firebase)
+  - `assets/js/auth.js`: `AuthManager` con Supabase Auth (Google OAuth), sesión en localStorage
+  - Páginas: `auth/login.html`, `auth/register.html`, `auth/dashboard.html`
 - Entitlements (acceso por compra)
-  - `assets/js/entitlements.js`: gating declarativo con `data-entitlement`, bloques `[data-when="granted"]` / `[data-when="denied"]`, CTAs por defecto/override, `?grant=...` y auto-guard por carpeta (`/fase_*_ecd/`). Stub `paymentEntitlements.grantAfterCheckout()`.
-- Áreas
-  - Marketing: `index.html`, `servicios.html`, `metodologia.html`, `blog.html`, etc.
-  - Academy/cursos: `academy.html`, `bootcamp_*.html`, `masterclass_ceo.html` (CTAs según entitlements).
-  - Portal alumno: `portal-alumno.html`, y herramientas en `fase_1_ecd/` ... `fase_5_ecd/`.
-  - Comunidad/juegos: `conecta/*.html`, `gamificacion/`.
+  - `assets/js/entitlements.js`: gating declarativo, `?grant=...`, auto-guard por carpeta
+  - Integración: `paymentEntitlements.grantAfterCheckout()` con API Mercado Pago
+- Pagos certificados
+  - `assets/js/payments.js`: frontend Mercado Pago Checkout Pro
+  - `api/mp/*`: endpoints certificados con webhooks y verificación
+- Áreas del sitio
+  - Marketing: `index.html`, `servicios.html`, `metodologia.html`, etc.
+  - Academy: `academy-fases/`, bootcamps con CTAs por entitlements
+  - Portal: `portal-alumno.html`, herramientas en `*-fases/fase_*_ecd/`
+  - Comunidad: `conecta/`, `gamificacion/`
 
 ## Convenciones del repo
 - Siempre incluir `assets/js/components.js` al final. Agregar `assets/js/auth.js` en páginas con lógica de sesión y `assets/js/entitlements.js` donde haya gating o rutas protegidas.

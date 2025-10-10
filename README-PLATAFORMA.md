@@ -1,19 +1,26 @@
-# Plataforma De Cero a Cien – Guía para Clientes
+# Plataforma De Cero a Cien – Documentación Actualizada
 
-Esta guía explica, en lenguaje simple, cómo funciona la plataforma web: qué hace cada parte, cómo se gestionan accesos (entitlements), autenticación, pagos con Mercado Pago y el flujo completo de un alumno.
+## Estado actual (Octubre 2025)
+✅ **En producción**: https://deceroacien.app  
+✅ **Infraestructura**: Google Cloud (Load Balancer + CDN + Cloud Storage + Cloud Run)  
+✅ **CI/CD**: Cloud Build automático en push a `main`  
+✅ **Autenticación**: Supabase Auth (Google OAuth)  
+✅ **Pagos**: Mercado Pago Checkout Pro certificado  
 
--## Qué es la plataforma
-- Sitio estático modular (HTML + JavaScript) renderizado desde el artefacto `dist/` generado por `npm run build:frontend`.
-- Funciones dinámicas en el navegador: cabecera/pie automáticos, autenticación básica, control de acceso a cursos y compra con Mercado Pago.
-- API Express única (`api/server.mjs`) desplegable en Cloud Run: gestiona preferencias de pago, verificación de tokens Supabase, webhooks y captura de leads. Ya no existen funciones Firebase independientes.
-- Todo lo importante en el cliente (accesos, sesión) se guarda en el navegador y se puede sincronizar con el pago vía la API.
+## Qué es la plataforma
+- **Sitio estático modular** (HTML + JavaScript) servido desde Cloud Storage con CDN global
+- **Build pipeline automatizado**: `cloudbuild.yaml` genera `dist/` y despliega en cada push
+- **API Express única** (`api/server.mjs`) en Cloud Run: gestiona pagos, auth, webhooks y leads
+- **Funciones dinámicas**: cabecera/pie automáticos, autenticación Supabase, control de acceso a cursos
+- **Accesos locales**: todo se guarda en localStorage y se sincroniza con pagos via API
 
-## Piezas principales
-- Cabecera y pie: se generan con `assets/js/components.js` en todas las páginas.
-- Autenticación (opcional): `assets/js/auth.js` permite login simulado y con Google (GIS). 
-- Accesos por compra (entitlements): `assets/js/entitlements.js` controla qué se muestra según la compra del alumno.
-- Precios: `assets/config/pricing.json` centraliza los precios y nombres de los productos.
-- Pagos: `assets/js/payments.js` + endpoints `/api/mp/*` integran Mercado Pago Checkout Pro.
+## Arquitectura actual
+- **Cabecera y pie**: `assets/js/components.js` - layout dinámico universal
+- **Autenticación**: `assets/js/auth.js` - Supabase Auth con Google OAuth
+- **Control de acceso**: `assets/js/entitlements.js` - gating declarativo por compra
+- **Precios centralizados**: `assets/config/pricing.json` - fuente única de verdad
+- **Pagos certificados**: `assets/js/payments.js` + API `/api/mp/*` - Mercado Pago Checkout Pro
+- **Estilos**: Tailwind CSS compilado localmente (no CDN)
 
 ## Productos típicos (ejemplos)
 - course.pmv – Programa PMV
@@ -99,20 +106,19 @@ npm run build:frontend     # compila Tailwind y genera dist/
 ```
 `dist/` queda listo para sincronizarse al bucket. Usa `npm run api:start` para levantar la API local.
 
-### Cloud Build (CI/CD)
-- El archivo `cloudbuild.yaml` ejecuta seis pasos secuenciales:
-  1. `npm ci`
-  2. `npm run build:frontend`
-  3. `gsutil -m rsync -r dist gs://www-deceroacien-app` (frontend)
-  4. `docker build ...`
-  5. `docker push ...`
-  6. `gcloud run deploy ... --set-secrets ...`
-- El servicio se despliega con la cuenta `cloud-run-deployer@deceroacienfirebase.iam.gserviceaccount.com`.
-- Para lanzar el pipeline manualmente:
+### Cloud Build (CI/CD automático)
+✅ **Trigger activo**: `deploy-main` ejecuta en cada push a `main`
+- **Pipeline completo** en `cloudbuild.yaml`:
+  1. `npm ci` - instala dependencias
+  2. `npm run build:frontend` - compila Tailwind y genera `dist/`
+  3. `gsutil -m rsync -r dist gs://www-deceroacien-app` - deploy frontend
+  4. `docker build/push` - construye imagen API
+  5. `gcloud run deploy` - actualiza Cloud Run con nuevos secretos
+- **Cuenta de servicio**: `cloud-build-runner@deceroacienfirebase.iam.gserviceaccount.com`
+- **Deploy manual** (si necesario):
 ```pwsh
 gcloud builds submit --config cloudbuild.yaml .
 ```
-  (Configura un trigger en Cloud Build apuntando al branch `main` para automatizarlo).
 
 ### Deploy manual desde la terminal
 
@@ -149,14 +155,41 @@ gcloud run deploy deceroacien-api `
 *(Opcional)* Si usas base de datos: `DATABASE_URL` en el secreto `database-url`.
 
 ### Operaciones rápidas
-- Revisar estado del load balancer: `gcloud compute url-maps describe lb-deceroacien --project=deceroacienfirebase`.
-- Forzar invalidación de CDN tras cambios críticos: `gcloud compute url-maps invalidate-cdn-cache lb-deceroacien --path="/*"`.
-- Distribuir accesos de prueba: abrir `/portal-alumno.html?grant=course.pmv` sólo en entornos de desarrollo.
+- **Estado infraestructura**: `gcloud compute url-maps describe lb-deceroacien --project=deceroacienfirebase`
+- **SSL certificados**: `gcloud compute ssl-certificates list --project=deceroacienfirebase`
+- **Invalidar CDN**: `gcloud compute url-maps invalidate-cdn-cache lb-deceroacien --path="/*"`
+- **Logs de build**: `gcloud builds list --limit=5 --project=deceroacienfirebase`
+- **Estado API**: Verificar https://api.deceroacien.app/health
+- **Accesos de prueba**: `/portal-alumno.html?grant=course.pmv` (solo desarrollo)
 
 ## Qué necesita su equipo para operar
 - Cambiar precios o textos: editar HTML/`pricing.json` y volver a ejecutar `npm run build:frontend`.
 - Activar/ocultar secciones: usar `data-entitlement` en HTML.
 - Configurar pagos: en el panel de Mercado Pago, definir credenciales, webhook y los eventos que enviará.
 
-## Contacto
-Si su equipo requiere analíticas, reportes o registro centralizado de alumnos, podemos extender la integración para almacenar las compras en una base de datos y ofrecer un panel de administración.
+## Infraestructura actual (Google Cloud)
+
+### Dominios y SSL
+- ✅ **deceroacien.app** - Certificado SSL activo, redirige HTTPS
+- ✅ **www.deceroacien.app** - Certificado SSL activo  
+- ✅ **api.deceroacien.app** - API Cloud Run, certificado SSL activo
+
+### Servicios desplegados
+- **Frontend**: Bucket `www-deceroacien-app` + Cloud CDN global
+- **Load Balancer**: `lb-deceroacien` con SSL termination y routing
+- **API**: Cloud Run `deceroacien-api` (región us-central1)
+- **Secrets**: Secret Manager para todas las credenciales
+- **DNS**: Cloudflare apuntando a Load Balancer IP `34.36.64.227`
+
+### Certificados SSL
+- `cert-deceroacien-complete` - Activo para los 3 dominios
+- Auto-renovación gestionada por Google
+
+## Archivos obsoletos eliminados
+- ❌ Firebase Functions (migrado a Express API)
+- ❌ Firebase Auth (migrado a Supabase)  
+- ❌ CDN de Tailwind (compilación local)
+- ❌ Configuraciones Firebase (limpieza pendiente)
+
+## Contacto técnico
+Para análisis, reportes, base de datos centralizada o panel de administración, contactar al equipo técnico.

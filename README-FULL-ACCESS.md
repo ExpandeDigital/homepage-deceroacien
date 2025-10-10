@@ -1,6 +1,13 @@
-# Modo Full Access Demo
+# ⚠️ ARCHIVO OBSOLETO - README-FULL-ACCESS.md
 
-Esta rama (`feature/full-access-demo`) simula un cliente con acceso completo a todos los productos, cursos, fases y herramientas.
+**Estado**: Esta documentación es para testing/demo únicamente. No se usa en producción.  
+**Para producción**: Ver [README-PLATAFORMA.md](./README-PLATAFORMA.md)  
+
+---
+
+# Modo Full Access Demo (SOLO TESTING)
+
+⚠️ Esta documentación es solo para propósitos de testing y demostración.
 
 ## Objetivos
 - Demostraciones y validación de UX sin fricción de gating.

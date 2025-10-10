@@ -1,6 +1,13 @@
-# Mercado Pago – Guía de Integración (Este repo)
+# ⚠️ ARCHIVO OBSOLETO - README-MERCADOPAGO.md
 
-Esta guía explica cómo usar la integración incluida para iniciar pagos con Checkout Pro y otorgar accesos (entitlements) en el frontend como PoC.
+**Estado**: Esta documentación está parcialmente desactualizada tras la migración a Cloud.  
+**Usar en su lugar**: [README-PLATAFORMA.md](./README-PLATAFORMA.md) sección de Pagos  
+
+---
+
+# Mercado Pago – Guía de Integración (LEGACY)
+
+⚠️ Esta guía explica la integración anterior. La implementación actual está documentada en README-PLATAFORMA.md
 
 ## Qué incluye el repo
 
