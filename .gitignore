@@ -52,3 +52,7 @@ assets/js/firebase-config.local.js
 
 # Informes internos (PDF)
 reports/pdf/
+cert-*.json
+lb-deceroacien.json
+.env
+reports/pdf/

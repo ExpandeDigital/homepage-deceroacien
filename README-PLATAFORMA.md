@@ -84,8 +84,77 @@ Esta guía explica, en lenguaje simple, cómo funciona la plataforma web: qué h
 - Los retornos de compra llevan firma HMAC, verificada en el servidor antes de otorgar acceso.
 - El webhook también verifica firma de Mercado Pago y consulta el estado por SDK.
 
+## Pipeline de despliegue
+
+### Requisitos
+- Proyecto activo: `deceroacienfirebase` (Google Cloud). Asegúrate de ejecutar `gcloud auth login` y `gcloud config set project deceroacienfirebase`.
+- Bucket estático: `gs://www-deceroacien-app` con Cloud CDN habilitado y conectado al load balancer `lb-deceroacien`.
+- Servicio de Cloud Run: `deceroacien-api` (región `us-central1`) usando la imagen `gcr.io/deceroacienfirebase/deceroacien-api`.
+- Secret Manager con los secretos listados abajo y acceso otorgado al servicio de Cloud Run y a Cloud Build (`cloud-build@` y `cloud-run-deployer@`).
+
+### Build local rápido
+```pwsh
+npm install
+npm run build:frontend     # compila Tailwind y genera dist/
+```
+`dist/` queda listo para sincronizarse al bucket. Usa `npm run api:start` para levantar la API local.
+
+### Cloud Build (CI/CD)
+- El archivo `cloudbuild.yaml` ejecuta seis pasos secuenciales:
+  1. `npm ci`
+  2. `npm run build:frontend`
+  3. `gsutil -m rsync -r dist gs://www-deceroacien-app` (frontend)
+  4. `docker build ...`
+  5. `docker push ...`
+  6. `gcloud run deploy ... --set-secrets ...`
+- El servicio se despliega con la cuenta `cloud-run-deployer@deceroacienfirebase.iam.gserviceaccount.com`.
+- Para lanzar el pipeline manualmente:
+```pwsh
+gcloud builds submit --config cloudbuild.yaml .
+```
+  (Configura un trigger en Cloud Build apuntando al branch `main` para automatizarlo).
+
+### Deploy manual desde la terminal
+
+**Frontend (sin Cloud Build):**
+```pwsh
+npm run build:frontend
+gsutil -m rsync -r dist gs://www-deceroacien-app
+```
+
+**API en Cloud Run:**
+```pwsh
+docker build -t gcr.io/deceroacienfirebase/deceroacien-api .
+docker push gcr.io/deceroacienfirebase/deceroacien-api
+gcloud run deploy deceroacien-api `
+  --image gcr.io/deceroacienfirebase/deceroacien-api `
+  --region us-central1 `
+  --allow-unauthenticated `
+  --service-account cloud-run-deployer@deceroacienfirebase.iam.gserviceaccount.com `
+  --set-secrets "MP_ACCESS_TOKEN=mp-access-token:latest,GRANT_SECRET=grant-secret:latest,PUBLIC_SUPABASE_URL=public-supabase-url:latest,PUBLIC_SUPABASE_ANON_KEY=public-supabase-anon-key:latest,SUPABASE_JWT_SECRET=supabase-jwt-secret:latest,SMTP_HOST=smtp-host:latest,SMTP_PORT=smtp-port:latest,SMTP_USER=smtp-user:latest,SMTP_PASS=smtp-pass:latest"
+```
+
+### Secretos requeridos
+
+| Llave env                        | Secreto en Secret Manager        |
+|---------------------------------|----------------------------------|
+| `MP_ACCESS_TOKEN`               | `mp-access-token`                |
+| `GRANT_SECRET`                  | `grant-secret`                   |
+| `PUBLIC_SUPABASE_URL`           | `public-supabase-url`            |
+| `PUBLIC_SUPABASE_ANON_KEY`      | `public-supabase-anon-key`       |
+| `SUPABASE_JWT_SECRET`           | `supabase-jwt-secret`            |
+| `SMTP_HOST` / `SMTP_PORT`       | `smtp-host` / `smtp-port`         |
+| `SMTP_USER` / `SMTP_PASS`       | `smtp-user` / `smtp-pass`         |
+
+*(Opcional)* Si usas base de datos: `DATABASE_URL` en el secreto `database-url`.
+
+### Operaciones rápidas
+- Revisar estado del load balancer: `gcloud compute url-maps describe lb-deceroacien --project=deceroacienfirebase`.
+- Forzar invalidación de CDN tras cambios críticos: `gcloud compute url-maps invalidate-cdn-cache lb-deceroacien --path="/*"`.
+- Distribuir accesos de prueba: abrir `/portal-alumno.html?grant=course.pmv` sólo en entornos de desarrollo.
+
 ## Qué necesita su equipo para operar
-- Cambiar precios o textos: editar HTML/`pricing.json`.
+- Cambiar precios o textos: editar HTML/`pricing.json` y volver a ejecutar `npm run build:frontend`.
 - Activar/ocultar secciones: usar `data-entitlement` en HTML.
 - Configurar pagos: en el panel de Mercado Pago, definir credenciales, webhook y los eventos que enviará.
 

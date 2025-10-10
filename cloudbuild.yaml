@@ -1,0 +1,26 @@
+steps:
+  - name: gcr.io/cloud-builders/npm
+    args: ['ci']
+  - name: gcr.io/cloud-builders/npm
+    args: ['run', 'build:frontend']
+  - name: gcr.io/cloud-builders/gsutil
+    args: ['-m', 'rsync', '-r', 'dist', 'gs://www-deceroacien-app']
+  - name: gcr.io/cloud-builders/docker
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/deceroacien-api', '-f', 'Dockerfile', '.']
+  - name: gcr.io/cloud-builders/docker
+    args: ['push', 'gcr.io/$PROJECT_ID/deceroacien-api']
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args:
+      [
+        'run', 'deploy', 'deceroacien-api',
+        '--image', 'gcr.io/$PROJECT_ID/deceroacien-api',
+        '--region', 'us-central1',
+        '--platform', 'managed',
+        '--allow-unauthenticated',
+        '--service-account', 'cloud-run-deployer@deceroacienfirebase.iam.gserviceaccount.com',
+        '--set-secrets',
+          'MP_ACCESS_TOKEN=mp-access-token:latest,GRANT_SECRET=grant-secret:latest,PUBLIC_SUPABASE_URL=public-supabase-url:latest,PUBLIC_SUPABASE_ANON_KEY=public-supabase-anon-key:latest,SUPABASE_JWT_SECRET=supabase-jwt-secret:latest,SMTP_HOST=smtp-host:latest,SMTP_PORT=smtp-port:latest,SMTP_USER=smtp-user:latest,SMTP_PASS=smtp-pass:latest'
+      ]
+images:
+  - gcr.io/$PROJECT_ID/deceroacien-api

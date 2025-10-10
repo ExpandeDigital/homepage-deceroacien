@@ -1,0 +1,12 @@
+createTime: '2025-10-10T17:45:04.709380722Z'
+description: "Build est\xE1tico + deploy API al hacer push en main"
+filename: cloudbuild.yaml
+github:
+  name: homepage-deceroacien
+  owner: ExpandeDigital
+  push:
+    branch: ^main$
+id: b33de3e7-b663-4a0c-81aa-ad2d026f6b35
+name: deploy-main
+resourceName: projects/deceroacienfirebase/locations/global/triggers/b33de3e7-b663-4a0c-81aa-ad2d026f6b35
+serviceAccount: projects/deceroacienfirebase/serviceAccounts/cloud-run-deployer@deceroacienfirebase.iam.gserviceaccount.com
