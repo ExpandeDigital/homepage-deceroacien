@@ -133,6 +133,31 @@
                 </div>
             </div>
         </section>
+
+        <!-- SECCIÓN DE COMPRA -->
+        <section class="section-camino-dorado bg-gray-900 py-16">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-accent mb-6">¿Listo para el Camino Dorado?</h2>
+                <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                    Obtén acceso inmediato a las 31 herramientas estratégicas que transformarán tu negocio, tu liderazgo y tu capacidad de dominar tu mercado.
+                </p>
+                
+                <div class="bg-gray-800 rounded-lg p-8 max-w-md mx-auto mb-8">
+                    <h3 class="text-2xl font-bold text-brand-accent mb-4">El Camino Dorado</h3>
+                    <div class="text-4xl font-bold text-white mb-2">
+                        <span id="golden-price">$149.900</span> <span class="text-lg font-normal text-gray-400">CLP</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">Suite completa de 31 herramientas estratégicas</p>
+                    <button id="cta-comprar-golden" class="w-full bg-brand-accent text-brand-dark font-bold py-4 px-8 rounded-lg hover:scale-105 transform transition-transform">
+                        Acceder al Camino Dorado
+                    </button>
+                </div>
+
+                <p class="text-sm text-gray-500">
+                    Acceso inmediato • Herramientas descargables • Soporte incluido
+                </p>
+            </div>
+        </section>
     </main>
     
     <!-- FOOTER UNIFICADO -->
@@ -143,5 +168,34 @@
     <!-- Scripts JavaScript -->
     <script src="assets/js/components.js"></script>
     <script src="assets/js/auth.js"></script>
+    <script src="assets/js/payments.js"></script>
+    <script src="assets/js/pricing.js"></script>
+    <script>
+        // Configurar precio dinámico y compra para El Camino Dorado
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurar botón de compra
+            const btnComprar = document.getElementById('cta-comprar-golden');
+            if (btnComprar && window.Payments) {
+                btnComprar.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.Payments.startCheckout({ items: ['course.golden'] });
+                });
+            }
+
+            // Actualizar precio dinámico
+            if (window.Pricing) {
+                window.Pricing.loadConfig().then(data => {
+                    const p = data.products && data.products['course.golden'];
+                    if (p && p.unit_price) {
+                        const priceEl = document.getElementById('golden-price');
+                        if (priceEl) {
+                            const formatted = new Intl.NumberFormat('es-CL').format(p.unit_price);
+                            priceEl.textContent = `$${formatted}`;
+                        }
+                    }
+                }).catch(console.error);
+            }
+        });
+    </script>
 </body>
 </html>
