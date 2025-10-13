@@ -165,7 +165,8 @@ async function verifyBearer(req) {
   const m = /^Bearer\s+(.+)$/i.exec(h);
   if (!m) return null;
   const token = m[1];
-  // Detectar algoritmo del token para decidir estrategia de verificación
+  
+  // Detectar algoritmo del token
   let alg = null;
   try {
     const parts = token.split('.');
@@ -174,17 +175,18 @@ async function verifyBearer(req) {
       alg = header && header.alg ? String(header.alg) : null;
     }
   } catch(_) {}
+  
   const expectedIssuer = PUBLIC_SUPABASE_URL ? `${PUBLIC_SUPABASE_URL.replace(/\/$/, '')}/auth/v1` : null;
 
-  // 0) Si el token es HS256 (Supabase por defecto) y tenemos SUPABASE_JWT_SECRET, verificar con HMAC primero
+  // Supabase usa HS256 incluso si el token tiene kid, así que intentamos HS256 primero
   if (alg === 'HS256' && SUPABASE_JWT_SECRET) {
     try {
       const secret = new TextEncoder().encode(SUPABASE_JWT_SECRET);
       let payload;
       try {
-        ({ payload } = await jwtVerify(token, secret, { algorithms: ['HS256'], ...(expectedIssuer ? { issuer: expectedIssuer } : {}) }));
+        ({ payload } = await jwtVerify(token, secret, { algorithms: ['HS256'], issuer: expectedIssuer, audience: 'authenticated' }));
       } catch (strictErr) {
-        // Reintento tolerante: solo firma, sin claims estrictos
+        // Reintento sin restricciones estrictas
         ({ payload } = await jwtVerify(token, secret, { algorithms: ['HS256'] }));
       }
       return {
@@ -195,41 +197,10 @@ async function verifyBearer(req) {
         _supabase: payload
       };
     } catch (e) {
-      console.warn('[api] Verificación Supabase HS256 falló:', e?.message || e);
-      // continuar a intentos alternativos
+      console.warn('[api] Verificación HS256 falló:', e?.message || e);
     }
   }
-  // 1) Preferir verificación con Supabase si está configurado
-  if (SUPABASE_JWKS && PUBLIC_SUPABASE_URL) {
-    try {
-      const issuer = expectedIssuer;
-      let payload;
-      try {
-        ({ payload } = await jwtVerify(token, SUPABASE_JWKS, { issuer, audience: 'authenticated' }));
-      } catch (strictErr) {
-        // Reintento sin restricciones de claims para tolerancia a diferencias menores
-        try {
-          ({ payload } = await jwtVerify(token, SUPABASE_JWKS));
-          const iss = String(payload.iss || '');
-          const okIss = !issuer ? true : (iss === issuer || iss === PUBLIC_SUPABASE_URL.replace(/\/$/, '') || iss.startsWith(PUBLIC_SUPABASE_URL.replace(/\/$/, '')));
-          if (!okIss) throw strictErr;
-        } catch(e2) {
-          throw strictErr;
-        }
-      }
-      return {
-        uid: payload.sub,
-        email: payload.email || null,
-        name: payload.user_metadata?.full_name || payload.name || null,
-        provider_id: payload.provider_id || null,
-        _supabase: payload
-      };
-    } catch (e) {
-      console.warn('[api] Verificación Supabase JWT falló:', e?.message || e);
-      // continuar a fallback Firebase si está disponible
-    }
-  }
-  // 2) Sin fallback: si no se pudo verificar con Supabase, rechazamos el token
+  
   return null;
 }
 
@@ -261,6 +232,7 @@ router.post('/auth/debug-token', async (req, res) => {
   
   const token = m[1];
   let tokenInfo = {};
+  let verificationResult = null;
   
   try {
     const parts = token.split('.');
@@ -283,11 +255,21 @@ router.post('/auth/debug-token', async (req, res) => {
     tokenInfo.decode_error = e.message;
   }
   
+  // Probar la verificación real
+  try {
+    verificationResult = await verifyBearer(req);
+    console.log('[debug] verifyBearer result:', verificationResult);
+  } catch(e) {
+    verificationResult = { error: e.message };
+    console.log('[debug] verifyBearer error:', e);
+  }
+  
   res.json({
     has_supabase_secret: !!SUPABASE_JWT_SECRET,
     has_supabase_jwks: !!SUPABASE_JWKS,
     supabase_url: PUBLIC_SUPABASE_URL || 'not_set',
-    token_info: tokenInfo
+    token_info: tokenInfo,
+    verification_result: verificationResult
   });
 });
 
