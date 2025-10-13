@@ -21,7 +21,8 @@
     "reports:pdf": "node scripts/generate-pdf.mjs",
     "build:tailwind": "tailwindcss -i ./src/styles/tailwind.css -o ./assets/styles/tailwind.css --minify",
     "build:static": "node ./scripts/build-static.mjs",
-    "build:frontend": "npm run build:tailwind && npm run build:static"
+    "build:redirects": "node ./scripts/create-directory-redirects.mjs",
+    "build:frontend": "npm run build:tailwind && npm run build:static && npm run build:redirects"
   },
   "devDependencies": {
     "puppeteer": "^22.13.1",

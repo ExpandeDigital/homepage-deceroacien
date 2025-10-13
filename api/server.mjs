@@ -253,6 +253,44 @@ app.get('/api/public-config', (req, res) => {
 // Namespace API
 const router = express.Router();
 
+// DEBUG: endpoint temporal para diagnosticar JWT (REMOVER EN PRODUCCIÓN)
+router.post('/auth/debug-token', async (req, res) => {
+  const h = req.headers['authorization'] || '';
+  const m = /^Bearer\s+(.+)$/i.exec(h);
+  if (!m) return res.json({ error: 'no_bearer_token', received_headers: Object.keys(req.headers) });
+  
+  const token = m[1];
+  let tokenInfo = {};
+  
+  try {
+    const parts = token.split('.');
+    if (parts.length >= 2) {
+      const header = JSON.parse(Buffer.from(parts[0], 'base64').toString('utf8'));
+      const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString('utf8'));
+      tokenInfo = {
+        header,
+        payload: {
+          iss: payload.iss,
+          aud: payload.aud,
+          sub: payload.sub,
+          exp: payload.exp,
+          iat: payload.iat,
+          email: payload.email
+        }
+      };
+    }
+  } catch(e) {
+    tokenInfo.decode_error = e.message;
+  }
+  
+  res.json({
+    has_supabase_secret: !!SUPABASE_JWT_SECRET,
+    has_supabase_jwks: !!SUPABASE_JWKS,
+    supabase_url: PUBLIC_SUPABASE_URL || 'not_set',
+    token_info: tokenInfo
+  });
+});
+
 // POST /auth/verify: verifica token y provisiona usuario de forma idempotente
 router.post('/auth/verify', async (req, res) => {
   const decoded = await verifyBearer(req);
