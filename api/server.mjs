@@ -166,19 +166,42 @@ async function verifyBearer(req) {
   if (!m) return null;
   const token = m[1];
   
-  // Detectar algoritmo del token
+  // Detectar algoritmo y kid del token
   let alg = null;
+  let kid = null;
   try {
     const parts = token.split('.');
     if (parts.length >= 2) {
       const header = JSON.parse(Buffer.from(parts[0], 'base64').toString('utf8'));
       alg = header && header.alg ? String(header.alg) : null;
+      kid = header && header.kid ? String(header.kid) : null;
     }
   } catch(_) {}
   
   const expectedIssuer = PUBLIC_SUPABASE_URL ? `${PUBLIC_SUPABASE_URL.replace(/\/$/, '')}/auth/v1` : null;
 
-  // Supabase usa HS256 incluso si el token tiene kid, así que intentamos HS256 primero
+  // Si el token tiene kid, intentar JWKS primero (JWT Signing Keys)
+  if (kid && PUBLIC_SUPABASE_URL) {
+    try {
+      const JWKS = createRemoteJWKSet(new URL(`${PUBLIC_SUPABASE_URL.replace(/\/$/, '')}/auth/v1/jwks`));
+      const { payload } = await jwtVerify(token, JWKS, { 
+        issuer: expectedIssuer, 
+        audience: 'authenticated' 
+      });
+      console.log('[api] Verificación JWKS exitosa');
+      return {
+        uid: payload.sub,
+        email: payload.email || null,
+        name: payload.user_metadata?.full_name || payload.name || null,
+        provider_id: payload.provider_id || null,
+        _supabase: payload
+      };
+    } catch (e) {
+      console.warn('[api] Verificación JWKS falló:', e?.message || e);
+    }
+  }
+
+  // Fallback: intentar con Legacy JWT Secret (HS256)
   if (alg === 'HS256' && SUPABASE_JWT_SECRET) {
     try {
       const secret = new TextEncoder().encode(SUPABASE_JWT_SECRET);
@@ -189,6 +212,7 @@ async function verifyBearer(req) {
         // Reintento sin restricciones estrictas
         ({ payload } = await jwtVerify(token, secret, { algorithms: ['HS256'] }));
       }
+      console.log('[api] Verificación HS256 legacy exitosa');
       return {
         uid: payload.sub,
         email: payload.email || null,
