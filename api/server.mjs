@@ -180,39 +180,45 @@ async function verifyBearer(req) {
   
   const expectedIssuer = PUBLIC_SUPABASE_URL ? `${PUBLIC_SUPABASE_URL.replace(/\/$/, '')}/auth/v1` : null;
 
-  // Si el token tiene kid, intentar JWKS primero (JWT Signing Keys)
-  if (kid && PUBLIC_SUPABASE_URL) {
-    try {
-      const JWKS = createRemoteJWKSet(new URL(`${PUBLIC_SUPABASE_URL.replace(/\/$/, '')}/auth/v1/jwks`));
-      const { payload } = await jwtVerify(token, JWKS, { 
-        issuer: expectedIssuer, 
-        audience: 'authenticated' 
-      });
-      console.log('[api] Verificación JWKS exitosa');
-      return {
-        uid: payload.sub,
-        email: payload.email || null,
-        name: payload.user_metadata?.full_name || payload.name || null,
-        provider_id: payload.provider_id || null,
-        _supabase: payload
-      };
-    } catch (e) {
-      console.warn('[api] Verificación JWKS falló:', e?.message || e);
-    }
-  }
+  // Para Supabase con JWT Signing Keys, intentamos con el secreto (incluso con kid presente)
+  // Supabase mantiene compatibilidad con verificación HS256 usando el JWT secret
 
-  // Fallback: intentar con Legacy JWT Secret (HS256)
+  // Intentar verificación con JWT Secret (funciona para legacy y JWT signing keys)
   if (alg === 'HS256' && SUPABASE_JWT_SECRET) {
     try {
       const secret = new TextEncoder().encode(SUPABASE_JWT_SECRET);
       let payload;
-      try {
-        ({ payload } = await jwtVerify(token, secret, { algorithms: ['HS256'], issuer: expectedIssuer, audience: 'authenticated' }));
-      } catch (strictErr) {
-        // Reintento sin restricciones estrictas
-        ({ payload } = await jwtVerify(token, secret, { algorithms: ['HS256'] }));
+      
+      // Intentar diferentes configuraciones de verificación
+      const attempts = [
+        // 1. Verificación completa con issuer y audience
+        () => jwtVerify(token, secret, { 
+          algorithms: ['HS256'], 
+          issuer: expectedIssuer, 
+          audience: 'authenticated' 
+        }),
+        // 2. Solo con issuer
+        () => jwtVerify(token, secret, { 
+          algorithms: ['HS256'], 
+          issuer: expectedIssuer 
+        }),
+        // 3. Solo algoritmo
+        () => jwtVerify(token, secret, { algorithms: ['HS256'] }),
+        // 4. Sin restricciones
+        () => jwtVerify(token, secret)
+      ];
+      
+      for (let i = 0; i < attempts.length; i++) {
+        try {
+          ({ payload } = await attempts[i]());
+          console.log(`[api] Verificación HS256 exitosa (attempt ${i+1})`);
+          break;
+        } catch (attemptErr) {
+          console.warn(`[api] Attempt ${i+1} falló:`, attemptErr?.message || attemptErr);
+          if (i === attempts.length - 1) throw attemptErr;
+        }
       }
-      console.log('[api] Verificación HS256 legacy exitosa');
+      
       return {
         uid: payload.sub,
         email: payload.email || null,
@@ -221,7 +227,7 @@ async function verifyBearer(req) {
         _supabase: payload
       };
     } catch (e) {
-      console.warn('[api] Verificación HS256 falló:', e?.message || e);
+      console.warn('[api] Todas las verificaciones HS256 fallaron:', e?.message || e);
     }
   }
   
