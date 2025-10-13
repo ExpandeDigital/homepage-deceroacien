@@ -13,6 +13,9 @@
       }
       return this._data;
     },
+    async loadConfig() {
+      return await this.load();
+    },
     getProduct(sku) {
       return this._data && this._data.products ? this._data.products[sku] : null;
     },

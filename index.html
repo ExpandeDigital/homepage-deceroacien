@@ -260,7 +260,9 @@
                     <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700 flex flex-col text-left">
                         <h3 class="text-xl font-bold text-brand-accent">DE CERO A CIEN</h3>
                         <p class="text-slate-400 mt-2">La hoja de ruta para encontrar tu modelo de negocio.</p>
-                        <p class="mt-6 font-serif text-5xl font-bold text-white">$99.9 <span class="text-base font-sans text-slate-400">USD</span></p>
+                        <p class="mt-6 font-serif text-5xl font-bold text-white">
+                            <span id="price-deceroacien">$99.9</span> <span class="text-base font-sans text-slate-400">USD</span>
+                        </p>
                         <p class="text-sm text-slate-500">Pago único, acceso vitalicio</p>
                         <ul class="mt-8 space-y-4 text-slate-300 flex-grow">
                             <li class="flex items-start"><i class="fas fa-check-circle text-brand-accent mt-1 mr-3"></i><span>+30 Micro-herramientas de ideación y validación.</span></li>
@@ -273,7 +275,9 @@
                         <div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-brand-accent text-brand-dark px-4 py-1 rounded-full text-sm font-bold">MÁS POPULAR</div>
                         <h3 class="text-xl font-bold text-brand-accent">EL CAMINO DORADO</h3>
                         <p class="text-slate-400 mt-2">Las herramientas para escalar y dominar tu mercado.</p>
-                        <p class="mt-6 font-serif text-5xl font-bold text-white">$99.9 <span class="text-base font-sans text-slate-400">USD</span></p>
+                        <p class="mt-6 font-serif text-5xl font-bold text-white">
+                            <span id="price-golden">$149.9</span> <span class="text-base font-sans text-slate-400">USD</span>
+                        </p>
                         <p class="text-sm text-slate-500">Pago único, acceso vitalicio</p>
                         <ul class="mt-8 space-y-4 text-slate-300 flex-grow">
                             <li class="flex items-start"><i class="fas fa-check-circle text-brand-accent mt-1 mr-3"></i><span>+30 Micro-herramientas de optimización y estrategia.</span></li>
@@ -285,7 +289,9 @@
                     <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700 flex flex-col text-left">
                         <h3 class="text-xl font-bold text-brand-accent">LIDERAZGO</h3>
                         <p class="text-slate-400 mt-2">Suites especializadas para escalar tu equipo y a ti mismo.</p>
-                        <p class="mt-6 font-serif text-5xl font-bold text-white">$49.9 <span class="text-base font-sans text-slate-400">USD</span></p>
+                        <p class="mt-6 font-serif text-5xl font-bold text-white">
+                            <span id="price-liderazgo">$49.9</span> <span class="text-base font-sans text-slate-400">USD</span>
+                        </p>
                         <p class="text-sm text-slate-500">Por cada programa, acceso vitalicio</p>
                         <ul class="mt-8 space-y-4 text-slate-300 flex-grow">
                             <li class="flex items-start"><i class="fas fa-check-circle text-brand-accent mt-1 mr-3"></i><span>Programas enfocados en: Equipo, Capital y Mente del Fundador.</span></li>
@@ -397,6 +403,44 @@
     <script src="assets/js/config-secure.js"></script>
     <script src="assets/js/supabase-client.js"></script>
     <script src="assets/js/auth.js"></script>
+    <script src="assets/js/pricing.js"></script>
+    <script>
+        // Cargar precios dinámicos desde pricing.json
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.Pricing) {
+                window.Pricing.loadConfig().then(data => {
+                    // Actualizar precio DE CERO A CIEN
+                    const pDeceroacien = data.products && data.products['suite.deceroacien'];
+                    if (pDeceroacien && pDeceroacien.unit_price_usd) {
+                        const priceEl = document.getElementById('price-deceroacien');
+                        if (priceEl) {
+                            priceEl.textContent = `$${pDeceroacien.unit_price_usd}`;
+                        }
+                    }
+
+                    // Actualizar precio EL CAMINO DORADO
+                    const pGolden = data.products && data.products['course.golden'];
+                    if (pGolden && pGolden.unit_price_usd) {
+                        const priceEl = document.getElementById('price-golden');
+                        if (priceEl) {
+                            priceEl.textContent = `$${pGolden.unit_price_usd}`;
+                        }
+                    }
+
+                    // Actualizar precio LIDERAZGO
+                    const pLiderazgo = data.products && data.products['suite.liderazgo'];
+                    if (pLiderazgo && pLiderazgo.unit_price_usd) {
+                        const priceEl = document.getElementById('price-liderazgo');
+                        if (priceEl) {
+                            priceEl.textContent = `$${pLiderazgo.unit_price_usd}`;
+                        }
+                    }
+                }).catch(error => {
+                    console.error('Error cargando precios:', error);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
 
