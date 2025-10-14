@@ -1,0 +1,55 @@
+# Configuración de URL Rewriting para Google Cloud Load Balancer
+# Para eliminar extensiones .html de las URLs
+
+# 1. Path Matcher Configuration
+pathMatchers:
+  - name: main-path-matcher
+    defaultService: projects/PROJECT_ID/global/backendBuckets/deceroacien-static
+    routeRules:
+      # Regla para conexion-vivo (sin extensión)
+      - priority: 1
+        matchRules:
+          - prefixMatch: "/conexion-vivo"
+        routeAction:
+          urlRewrite:
+            pathPrefixRewrite: "/conexion-vivo.html"
+        
+      # Regla para ejemplos-sala-espera (sin extensión)  
+      - priority: 2
+        matchRules:
+          - prefixMatch: "/ejemplos-sala-espera"
+        routeAction:
+          urlRewrite:
+            pathPrefixRewrite: "/ejemplos-sala-espera.html"
+            
+      # Regla para portal-alumno (sin extensión)
+      - priority: 3
+        matchRules:
+          - prefixMatch: "/portal-alumno"
+        routeAction:
+          urlRewrite:
+            pathPrefixRewrite: "/portal-alumno.html"
+            
+      # Regla genérica para otras páginas HTML
+      - priority: 10
+        matchRules:
+          - regexMatch: "^/([^./]+)$"
+        routeAction:
+          urlRewrite:
+            pathTemplateRewrite: "/\\1.html"
+
+# 2. Host Rule Configuration
+hostRules:
+  - hosts: 
+    - "deceroacien.app"
+    - "www.deceroacien.app"
+    pathMatcher: main-path-matcher
+
+# 3. Redirect Rules (opcional - redirigir .html a versión sin extensión)
+redirectRules:
+  - priority: 1
+    matchRules:
+      - regexMatch: "^/(.+)\\.html$"
+    redirectResponseCode: MOVED_PERMANENTLY_DEFAULT
+    redirectAction:
+      pathRedirect: "/\\1"

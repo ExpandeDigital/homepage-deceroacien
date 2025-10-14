@@ -6,7 +6,7 @@
 class WaitingRoomUrlGenerator {
     constructor(baseUrl = '') {
         this.baseUrl = baseUrl || this.getBaseUrl();
-        this.page = 'conexion-vivo.html';
+        this.page = 'conexion-vivo';
     }
 
     getBaseUrl() {

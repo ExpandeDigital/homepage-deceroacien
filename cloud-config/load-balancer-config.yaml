@@ -1,0 +1,62 @@
+# Configuración Simple de URL Rewriting para Cloud Load Balancer
+# Archivo: load-balancer-config.yaml
+
+# MÉTODO RECOMENDADO: URL Map con Path Matchers
+
+apiVersion: compute/v1
+kind: UrlMap
+metadata:
+  name: deceroacien-url-map
+spec:
+  defaultService: projects/YOUR_PROJECT_ID/global/backendBuckets/deceroacien-static
+  
+  # Reglas de reescritura de URLs
+  pathMatchers:
+  - name: html-rewrite
+    defaultService: projects/YOUR_PROJECT_ID/global/backendBuckets/deceroacien-static
+    
+    routeRules:
+    # Páginas específicas importantes
+    - priority: 1
+      matchRules:
+      - exactMatch: "/conexion-vivo"
+      routeAction:
+        urlRewrite:
+          pathPrefixRewrite: "/conexion-vivo.html"
+          
+    - priority: 2
+      matchRules:
+      - exactMatch: "/ejemplos-sala-espera"
+      routeAction:
+        urlRewrite:
+          pathPrefixRewrite: "/ejemplos-sala-espera.html"
+          
+    - priority: 3
+      matchRules:
+      - exactMatch: "/portal-alumno"
+      routeAction:
+        urlRewrite:
+          pathPrefixRewrite: "/portal-alumno.html"
+          
+    # Regla genérica para cualquier archivo sin extensión
+    - priority: 100
+      matchRules:
+      - regexMatch: "^/([a-zA-Z0-9-_]+)$"
+      routeAction:
+        urlRewrite:
+          pathTemplateRewrite: "/\\1.html"
+          
+    # Redirección de .html a versión limpia (opcional)
+    - priority: 200
+      matchRules:
+      - regexMatch: "^/(.+)\\.html$"
+      redirectResponseCode: MOVED_PERMANENTLY_DEFAULT
+      redirectAction:
+        pathRedirect: "/\\1"
+        hostRedirect: "deceroacien.app"
+
+  hostRules:
+  - hosts:
+    - "deceroacien.app"
+    - "www.deceroacien.app"
+    pathMatcher: html-rewrite
