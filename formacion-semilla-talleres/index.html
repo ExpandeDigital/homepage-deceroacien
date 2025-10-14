@@ -123,6 +123,9 @@
     </div>
   </main>
   <footer class="footer-component"></footer>
+  <!-- Config pública y cliente de Supabase para sesiones reales -->
+  <script src="../assets/js/config-secure.js"></script>
+  <script src="../assets/js/supabase-client.js"></script>
   <script src="../assets/js/components.js"></script>
   <script src="../assets/js/auth.js"></script>
   <!-- entitlements.js removido - Formación Semilla es contenido gratuito para usuarios registrados -->
@@ -282,7 +285,8 @@
       const maxAttempts = 10;
       const authChecker = setInterval(function() {
         attempts++;
-        if (attempts >= maxAttempts || mainContent.style.display !== 'none') {
+        // Cortar cuando ya se mostró el contenido
+        if (attempts >= maxAttempts || !mainContent.classList.contains('hidden')) {
           clearInterval(authChecker);
           return;
         }

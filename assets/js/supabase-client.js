@@ -56,10 +56,35 @@
             }
           } catch(e){ console.warn('[supabase-client] onAuthStateChange error', e); }
         });
-        // Log de la sesión actual en cold start
+        // Log y sincronización de la sesión actual en cold start
         try {
           const s = await _supabase.auth.getSession();
-          console.log('[supabase-client] getSession(cold):', !!s?.data?.session);
+          const hasSession = !!s?.data?.session;
+          console.log('[supabase-client] getSession(cold):', hasSession);
+          if (hasSession) {
+            try {
+              const session = s.data.session;
+              const u = session.user;
+              const fullName = (u.user_metadata && (u.user_metadata.full_name || u.user_metadata.name)) || '';
+              const [firstName, ...rest] = fullName.split(' ');
+              const simpleUser = {
+                id: u.id,
+                email: u.email,
+                firstName: firstName || null,
+                lastName: rest.join(' ') || null
+              };
+              // Persistir para el frontend (mismo esquema que onAuthStateChange)
+              const storage = (w.PublicAuthConfig && w.PublicAuthConfig.storage) || { userKey: 'deceroacien_user', tokenKey: 'deceroacien_token' };
+              localStorage.setItem(storage.userKey, JSON.stringify(simpleUser));
+              localStorage.setItem(storage.tokenKey, session.access_token);
+              if (w.authManager) {
+                w.authManager.currentUser = simpleUser;
+                w.authManager.isAuthenticated = true;
+              }
+              // Notificar a otros listeners que ya hay sesión activa
+              try { window.dispatchEvent(new CustomEvent('auth:success', { detail: { provider: 'supabase', user: simpleUser } })); } catch(_){}
+            } catch(e) { console.warn('[supabase-client] cold start sync error', e); }
+          }
         } catch(_){ }
       } catch(_){ }
       return _supabase;
