@@ -86,17 +86,17 @@
   }
 
   function defaultProgressModel(){
-    // Valores stub (ajustar totales reales cuando existan)
+    // Progreso real inicial (sin datos demo)
     const fases = ['fase_1_ecd','fase_2_ecd','fase_3_ecd','fase_4_ecd','fase_5_ecd']
-      .reduce((acc,f,i)=>{acc[f]={completed: i===0?5:0,total: i===0?12:10,lastUpdated:new Date().toISOString()};return acc;},{});
+      .reduce((acc,f,i)=>{acc[f]={completed: 0,total: i===0?12:10,lastUpdated:new Date().toISOString()};return acc;},{});
     const cursos = {
-      'course.pmv': { completed: 8, total: 20 },
-      'course.pmf': { completed: 20, total: 20 },
-      'course.growth': { completed: 3, total: 15 },
+      'course.pmv': { completed: 0, total: 20 },
+      'course.pmf': { completed: 0, total: 20 },
+      'course.growth': { completed: 0, total: 15 },
       'course.ceo': { completed: 0, total: 12 }
     };
     const herramientas = {
-      'tool.canvas': true,
+      'tool.canvas': false,
       'tool.mapa-estrategia': false,
       'tool.metricas': false
     };
@@ -144,27 +144,85 @@
 
   function safeParse(str){ try { return JSON.parse(str); } catch(_){ return null; } }
 
+  // Mapeo de IDs internos a nombres amigables
+  function getFriendlyNames() {
+    return {
+      fases: {
+        'fase_1_ecd': 'Validación y PMV',
+        'fase_2_ecd': 'PMF y Crecimiento',
+        'fase_3_ecd': 'Escalamiento',
+        'fase_4_ecd': 'Optimización',
+        'fase_5_ecd': 'Expansión'
+      },
+      cursos: {
+        'course.pmv': 'Bootcamp PMV',
+        'course.pmf': 'Bootcamp PMF',
+        'course.growth': 'Bootcamp Growth',
+        'course.ceo': 'Masterclass CEO'
+      },
+      herramientas: {
+        'tool.canvas': 'Canvas de Modelo de Negocio',
+        'tool.mapa-estrategia': 'Mapa de Estrategia',
+        'tool.metricas': 'Tablero de Métricas'
+      }
+    };
+  }
+
   function renderProgressIfContainer(){
     const container = document.querySelector('[data-progress-dashboard]');
     if(!container) return;
     const state = window.ProgressModel.getState();
+    const friendlyNames = getFriendlyNames();
     function pct(obj){ return obj.total ? Math.round((obj.completed/obj.total)*100) : 0; }
+    
+    // Filtrar solo elementos con progreso real (> 0) o herramientas completadas
+    const hasRealProgress = Object.values(state.fases).some(v => v.completed > 0) ||
+                           Object.values(state.cursos).some(v => v.completed > 0) ||
+                           Object.values(state.herramientas).some(v => v === true);
+    
     let html = '<div class="space-y-6">';
     html += '<h2 class="text-xl font-bold">Progreso Global</h2>';
-    html += '<div class="grid md:grid-cols-2 gap-6">';
-    // Fases
-    html += '<div><h3 class="font-semibold mb-2">Fases</h3><div class="space-y-2">';
-    Object.entries(state.fases).forEach(([k,v])=>{ html += progressBar(k,pct(v), v.completed + '/' + v.total); });
-    html += '</div></div>';
-    // Cursos
-    html += '<div><h3 class="font-semibold mb-2">Cursos</h3><div class="space-y-2">';
-    Object.entries(state.cursos).forEach(([k,v])=>{ html += progressBar(k,pct(v), v.completed + '/' + v.total); });
-    html += '</div></div>';
-    html += '</div>';
-    // Herramientas
-    html += '<div><h3 class="font-semibold mb-2">Herramientas</h3><div class="flex flex-wrap gap-2">';
-    Object.entries(state.herramientas).forEach(([k,v])=>{ html += `<span class="px-3 py-1 rounded text-sm ${v?'bg-green-600':'bg-slate-600'}">${k}${v?' ✓':''}</span>`; });
-    html += '</div></div>';
+    
+    if (!hasRealProgress) {
+      html += '<div class="text-gray-400 text-center py-8">Aún no has comenzado ningún programa. ¡Explora nuestro contenido para empezar!</div>';
+    } else {
+      html += '<div class="grid md:grid-cols-2 gap-6">';
+      
+      // Fases (solo mostrar las que tienen progreso)
+      const fasesConProgreso = Object.entries(state.fases).filter(([k,v]) => v.completed > 0);
+      if (fasesConProgreso.length > 0) {
+        html += '<div><h3 class="font-semibold mb-2">Fases</h3><div class="space-y-2">';
+        fasesConProgreso.forEach(([k,v])=>{ 
+          const friendlyName = friendlyNames.fases[k] || k;
+          html += progressBar(friendlyName,pct(v), v.completed + '/' + v.total); 
+        });
+        html += '</div></div>';
+      }
+      
+      // Cursos (solo mostrar los que tienen progreso)
+      const cursosConProgreso = Object.entries(state.cursos).filter(([k,v]) => v.completed > 0);
+      if (cursosConProgreso.length > 0) {
+        html += '<div><h3 class="font-semibold mb-2">Cursos</h3><div class="space-y-2">';
+        cursosConProgreso.forEach(([k,v])=>{ 
+          const friendlyName = friendlyNames.cursos[k] || k;
+          html += progressBar(friendlyName,pct(v), v.completed + '/' + v.total); 
+        });
+        html += '</div></div>';
+      }
+      
+      html += '</div>';
+      
+      // Herramientas (solo mostrar las completadas)
+      const herramientasCompletadas = Object.entries(state.herramientas).filter(([k,v]) => v === true);
+      if (herramientasCompletadas.length > 0) {
+        html += '<div><h3 class="font-semibold mb-2">Herramientas</h3><div class="flex flex-wrap gap-2">';
+        herramientasCompletadas.forEach(([k,v])=>{ 
+          const friendlyName = friendlyNames.herramientas[k] || k;
+          html += `<span class="px-3 py-1 rounded text-sm bg-green-600">${friendlyName} ✓</span>`; 
+        });
+        html += '</div></div>';
+      }
+    }
 
     html += '</div>';
     container.innerHTML = html;
@@ -212,10 +270,30 @@
   // (syncAuthManager ya se llamó dentro de ensureDemoUser)
 
   // Paso 2: diferir operaciones que requieren DOM completo
+  function renderRecentActivityIfContainer(){
+    const container = document.querySelector('[data-recent-activity]');
+    if(!container) return;
+    
+    // Por ahora, solo mostrar mensaje de placeholder hasta que se implemente actividad real
+    const hasActivity = false; // TODO: implementar sistema de tracking de actividad real
+    
+    if (!hasActivity) {
+      container.innerHTML = `
+        <div class="text-gray-400 text-center py-8">
+          Aún no tienes actividad reciente. ¡Comienza explorando nuestros programas y herramientas!
+        </div>
+      `;
+    } else {
+      // TODO: Renderizar actividad real del usuario
+      container.innerHTML = '<div class="space-y-4" id="activity-list"></div>';
+    }
+  }
+
   function bootstrapLate(){
     ensureEntitlements(); // ahora el DOM está disponible para detectar data-entitlement
     ensureProgress();
     renderProgressIfContainer();
+    renderRecentActivityIfContainer();
     addDebugShortcuts();
   window.dispatchEvent(new CustomEvent('fullaccess:ready',{ detail: { user: getCurrentUserOrNull() } }));
     window.addEventListener('progress:updated', renderProgressIfContainer);
