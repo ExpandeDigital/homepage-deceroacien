@@ -125,7 +125,7 @@
   <footer class="footer-component"></footer>
   <script src="../assets/js/components.js"></script>
   <script src="../assets/js/auth.js"></script>
-  <script src="../assets/js/entitlements.js"></script>
+  <!-- entitlements.js removido - Formación Semilla es contenido gratuito para usuarios registrados -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const authRequiredMessage = document.getElementById('auth-required-message');
@@ -207,15 +207,61 @@
             window.entitlements.grant(['formacion.semilla']);
           }
           
-          // Mostrar contenido
+          // Desactivar gating automático en esta página (Formación Semilla es gratuito)
+          if (window.applyPathAutoGuard) {
+            window.applyPathAutoGuard = function() {
+              console.log('🚫 Auto-guard desactivado para Formación Semilla (contenido gratuito)');
+            };
+          }
+          
+          // Mostrar contenido y proteger de modificaciones posteriores
           authRequiredMessage.classList.add('hidden');
           mainContent.classList.remove('hidden');
+          
+          // Prevenir que otros scripts modifiquen el contenido de Formación Semilla
+          setTimeout(function() {
+            protectFormacionSemillaContent();
+          }, 100);
         } else {
           // Usuario no registrado: mostrar mensaje de registro requerido
           console.log('❌ Usuario no autenticado - mostrando mensaje de registro');
           authRequiredMessage.classList.remove('hidden');
           mainContent.classList.add('hidden');
         }
+      }
+      
+      // Función para proteger el contenido de Formación Semilla de modificaciones externas
+      function protectFormacionSemillaContent() {
+        const tallerCards = document.querySelectorAll('[href*="TALLER"]');
+        tallerCards.forEach(card => {
+          // Preservar el contenido original
+          const originalHTML = card.innerHTML;
+          
+          // Crear un observer para detectar cambios
+          const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+              if (mutation.type === 'childList' || mutation.type === 'characterData') {
+                // Si el contenido ha sido modificado, restaurarlo
+                if (card.innerHTML !== originalHTML) {
+                  console.log('🛡️ Protegiendo contenido de Formación Semilla de modificación externa');
+                  card.innerHTML = originalHTML;
+                }
+              }
+            });
+          });
+          
+          // Observar cambios en el contenido
+          observer.observe(card, {
+            childList: true,
+            subtree: true,
+            characterData: true
+          });
+          
+          // Agregar atributo para identificar que está protegido
+          card.setAttribute('data-formacion-semilla-protected', 'true');
+        });
+        
+        console.log('🛡️ Contenido de Formación Semilla protegido contra modificaciones');
       }
       
       // Iniciar verificación inmediata
