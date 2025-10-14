@@ -200,10 +200,8 @@
     setTimeout(applyGating, 500);
     setTimeout(applyGating, 1500);
 
-  // Otorgar entitlements por query string (retorno de checkout)
-  grantFromURLParams();
   // Auto-guard por carpeta/ruta
-  setTimeout(applyPathAutoGuard, 100);
+  setTimeout(function() { w.applyPathAutoGuard(); }, 100);
   }
 
   // API pública
@@ -219,7 +217,7 @@
       writeEntitlements(Array.from(cur));
       broadcastUpdate();
       applyGating();
-      applyPathAutoGuard();
+      w.applyPathAutoGuard();
     }
   };
 
@@ -371,4 +369,10 @@
     overlay.appendChild(cta);
     document.body.appendChild(overlay);
   };
+
+  // Inicializar después de que todas las funciones estén definidas
+  setTimeout(function() {
+    // Otorgar entitlements por query string (retorno de checkout)
+    w.grantFromURLParams();
+  }, 50);
 })(window);

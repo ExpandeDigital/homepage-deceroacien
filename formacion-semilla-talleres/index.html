@@ -4,27 +4,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bonus: Formación Semilla - DE CERO A CIEN</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-  <style>body{font-family:'Inter',sans-serif;background:#0a1f2f;color:#e6f1ff}.card{background:#112240;border:1px solid #1e2d4d}</style>
+  <link rel="stylesheet" href="../assets/styles/formacion-semilla.css">
 </head>
-<body>
+<body class="fs-body">
   <header class="header-component"></header>
   <main class="py-16">
-    <div class="container mx-auto max-w-7xl px-6">
+    <div class="fs-container">
       <!-- Mensaje para usuarios no registrados -->
-      <div id="auth-required-message" class="hidden bg-[#112240] border border-[#1e2d4d] rounded-xl p-8 text-center">
+      <div id="auth-required-message" class="hidden fs-card rounded-xl p-8 text-center">
         <h1 class="text-4xl font-black mb-4">Bonus · Formación Semilla</h1>
-        <div class="bg-gradient-to-r from-yellow-400/10 to-yellow-600/10 border border-yellow-400/30 rounded-lg p-6 mb-6">
-          <h2 class="text-2xl font-bold text-yellow-400 mb-3">🔐 Registro Requerido</h2>
+        <div class="fs-highlight-box p-6 mb-6">
+          <h2 class="fs-section-title">🔐 Registro Requerido</h2>
           <p class="text-gray-300 mb-4">Para acceder a Formación Semilla necesitas registrarte gratuitamente en nuestra plataforma.</p>
           <p class="text-gray-400 text-sm mb-6">Cinco talleres introductorios para emprendedores que quieren avanzar más rápido.</p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="../auth/register.html?return=formacion-semilla-talleres/" class="bg-yellow-500 hover:bg-yellow-400 text-black px-6 py-3 rounded-lg font-bold transition-colors">
+            <a href="../auth/register.html?return=formacion-semilla-talleres/" class="fs-btn fs-btn-primary">
               Registrarme Gratis
             </a>
-            <a href="../auth/login.html?return=formacion-semilla-talleres/" class="border border-gray-400 hover:border-white text-gray-300 hover:text-white px-6 py-3 rounded-lg font-bold transition-colors">
+            <a href="../auth/login.html?return=formacion-semilla-talleres/" class="fs-btn fs-btn-secondary">
               Ya tengo cuenta
             </a>
           </div>
@@ -36,42 +33,42 @@
         <h1 class="text-4xl font-black">Bonus · Formación Semilla</h1>
         <p class="mt-3 text-gray-400">Acceso exclusivo para alumnos registrados. Cinco talleres introductorios para avanzar más rápido.</p>
 
-        <section class="mt-10 bg-[#112240] border border-[#1e2d4d] rounded-xl p-8 space-y-4">
-          <h2 class="text-2xl md:text-3xl font-bold text-[#FBBF24]">¿Para quién es Formación Semilla?</h2>
+        <section class="mt-10 fs-card rounded-xl p-8 space-y-4">
+          <h2 class="fs-section-title">¿Para quién es Formación Semilla?</h2>
           <p class="text-gray-300">Formación Semilla es para quienes están sembrando las bases de su emprendimiento y necesitan claridad para pasar de la idea a la acción con pasos concretos.</p>
           <p class="text-gray-400"><strong>Es para ti si…</strong> estás validando tu problema, quieres estructurar propuestas iniciales de valor, buscas acelerar tus primeros aprendizajes y prefieres guías accionables en lugar de teoría infinita.</p>
         </section>
 
         <section class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <a class="card rounded-lg p-6 block hover:bg-[#1a2b4a] transition-colors" href="TALLER 01 - FORMACIÓN SEMILLA/taller-01.html">
+          <a class="fs-card-interactive rounded-lg p-6 block transition-colors" href="TALLER 01 - FORMACIÓN SEMILLA/taller-01.html">
             <h2 class="text-xl font-bold text-yellow-400">Taller 01 – De la Idea a la Acción</h2>
             <p class="text-gray-400 mt-2">Convierte tu idea en un plan de acción concreto</p>
             <div class="mt-4 flex items-center text-sm text-gray-500">
               <span>📊 Incluye: Calculadora de Punto de Equilibrio</span>
             </div>
           </a>
-          <a class="card rounded-lg p-6 block hover:bg-[#1a2b4a] transition-colors" href="TALLER 02 - FORMACIÓN SEMILLA/taller-02.html">
+          <a class="fs-card-interactive rounded-lg p-6 block transition-colors" href="TALLER 02 - FORMACIÓN SEMILLA/taller-02.html">
             <h2 class="text-xl font-bold text-yellow-400">Taller 02 – El Valor de tu Idea</h2>
             <p class="text-gray-400 mt-2">Diseña tu propuesta de valor y aprende a comprar bien</p>
             <div class="mt-4 flex items-center text-sm text-gray-500">
               <span>🎯 Incluye: Diseñador de Propuesta de Valor</span>
             </div>
           </a>
-          <a class="card rounded-lg p-6 block hover:bg-[#1a2b4a] transition-colors" href="TALLER 03 - FORMACIÓN SEMILLA/taller-03.html">
+          <a class="fs-card-interactive rounded-lg p-6 block transition-colors" href="TALLER 03 - FORMACIÓN SEMILLA/taller-03.html">
             <h2 class="text-xl font-bold text-yellow-400">Taller 03 – Tu Primera Venta</h2>
             <p class="text-gray-400 mt-2">Cómo contar tu historia y encontrar a tus clientes</p>
             <div class="mt-4 flex items-center text-sm text-gray-500">
               <span>✍️ Incluye: Generador de Copy con IA</span>
             </div>
           </a>
-          <a class="card rounded-lg p-6 block hover:bg-[#1a2b4a] transition-colors" href="TALLER 04 - FORMACIÓN SEMILLA/taller-04.html">
+          <a class="fs-card-interactive rounded-lg p-6 block transition-colors" href="TALLER 04 - FORMACIÓN SEMILLA/taller-04.html">
             <h2 class="text-xl font-bold text-yellow-400">Taller 04 – De Bombero a Arquitecto</h2>
             <p class="text-gray-400 mt-2">Cómo organizar tu día para crecer</p>
             <div class="mt-4 flex items-center text-sm text-gray-500">
               <span>⚡ Incluye: Priorizador de Tareas con IA</span>
             </div>
           </a>
-          <a class="card rounded-lg p-6 block md:col-span-2 hover:bg-[#1a2b4a] transition-colors" href="TALLER 05 - FORMACIÓN SEMILLA/taller-05.html">
+          <a class="fs-card-interactive rounded-lg p-6 block md:col-span-2 transition-colors" href="TALLER 05 - FORMACIÓN SEMILLA/taller-05.html">
             <h2 class="text-xl font-bold text-yellow-400">Taller 05 – De la Rutina a la Revolución</h2>
             <p class="text-gray-400 mt-2">Cómo innovar sin ser un genio</p>
             <div class="mt-4 flex items-center text-sm text-gray-500">
@@ -81,8 +78,8 @@
         </section>
 
         <!-- Recursos adicionales -->
-        <section class="mt-10 bg-[#112240] border border-[#1e2d4d] rounded-xl p-8">
-          <h3 class="text-2xl font-bold text-yellow-400 mb-4">📚 Recursos Adicionales</h3>
+        <section class="mt-10 fs-card rounded-xl p-8">
+          <h3 class="fs-section-title mb-4">📚 Recursos Adicionales</h3>
           
           <!-- Recurso destacado: La Bitácora del Fundador -->
           <div class="mb-6 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-400/30 rounded-xl p-6">
@@ -105,14 +102,14 @@
           
           <!-- Otros recursos -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <a href="Cuaderno de Estrategia.html" class="flex items-center space-x-3 p-4 border border-gray-600 rounded-lg hover:bg-[#1a2b4a] transition-colors">
+            <a href="Cuaderno de Estrategia.html" class="flex items-center space-x-3 p-4 border border-gray-600 rounded-lg fs-hover-effect transition-colors">
               <span class="text-2xl">📋</span>
               <div>
                 <h4 class="font-bold">Cuaderno de Estrategia</h4>
                 <p class="text-sm text-gray-400">Plantillas y ejercicios prácticos</p>
               </div>
             </a>
-            <a href="Landing_Formacion_Semilla.html" class="flex items-center space-x-3 p-4 border border-gray-600 rounded-lg hover:bg-[#1a2b4a] transition-colors">
+            <a href="Landing_Formacion_Semilla.html" class="flex items-center space-x-3 p-4 border border-gray-600 rounded-lg fs-hover-effect transition-colors">
               <span class="text-2xl">🚀</span>
               <div>
                 <h4 class="font-bold">Información del Programa</h4>
@@ -134,18 +131,46 @@
       const authRequiredMessage = document.getElementById('auth-required-message');
       const mainContent = document.getElementById('main-content');
       
-      // Verificar si el usuario está autenticado
-      const isAuthenticated = AuthManager.isAuthenticated();
-      
-      if (isAuthenticated) {
-        // Usuario registrado: mostrar contenido
-        authRequiredMessage.classList.add('hidden');
-        mainContent.classList.remove('hidden');
-      } else {
-        // Usuario no registrado: mostrar mensaje de registro requerido
-        authRequiredMessage.classList.remove('hidden');
-        mainContent.classList.add('hidden');
+      // Función para verificar autenticación con seguridad
+      function checkAuthentication() {
+        console.log('🔍 Verificando autenticación...');
+        
+        // Para desarrollo: revisar si hay parámetro ?dev=true para mostrar contenido
+        const urlParams = new URLSearchParams(window.location.search);
+        const devMode = urlParams.get('dev') === 'true';
+        
+        if (devMode) {
+          console.log('🔧 Modo desarrollador activado - mostrando contenido');
+          authRequiredMessage.classList.add('hidden');
+          mainContent.classList.remove('hidden');
+          return;
+        }
+        
+        // Verificar que authManager esté disponible
+        if (typeof window.authManager !== 'undefined') {
+          const isAuthenticated = window.authManager.isAuthenticated;
+          console.log('🔐 authManager disponible. Usuario autenticado:', isAuthenticated);
+          
+          if (isAuthenticated) {
+            // Usuario registrado: mostrar contenido
+            console.log('✅ Mostrando contenido para usuario autenticado');
+            authRequiredMessage.classList.add('hidden');
+            mainContent.classList.remove('hidden');
+          } else {
+            // Usuario no registrado: mostrar mensaje de registro requerido
+            console.log('❌ Mostrando mensaje de registro requerido');
+            authRequiredMessage.classList.remove('hidden');
+            mainContent.classList.add('hidden');
+          }
+        } else {
+          console.log('⏳ authManager no disponible aún, reintentando...');
+          // Si authManager no está disponible, intentar después de un pequeño delay
+          setTimeout(checkAuthentication, 100);
+        }
       }
+      
+      // Iniciar verificación
+      checkAuthentication();
     });
   </script>
 </body>
