@@ -252,6 +252,8 @@ class HeaderComponent extends BaseComponent {
         const p = path.toLowerCase();
         // Academy: cualquier ruta dentro de /academy-fases/ activa 'academy'
         if (p.includes('/academy-fases/')) return 'academy';
+        // Comunidad: activar cuando estamos en rutas /comunidad/
+        if (p.includes('/comunidad/')) return 'comunidad';
     // Talento
     if (p.includes('/talento/')) return 'talent';
     // Liderazgo
@@ -307,7 +309,7 @@ class HeaderComponent extends BaseComponent {
             <a href="${this.basePath}liderazgo/index.html" data-priority="3" class="header-link ${this.currentPage === 'liderazgo' ? 'active' : ''}">Liderazgo</a>
             <a href="${this.basePath}de-cero-a-cien.html" data-priority="1" class="header-link ${this.currentPage === 'de-cero-a-cien' ? 'active' : ''}">De Cero a Cien</a>
             <a href="${this.basePath}camino-dorado.html" data-priority="2" class="header-link ${this.currentPage === 'camino-dorado' ? 'active' : ''}">Camino Dorado</a>
-            <a href="${this.basePath}descargas-gratuitas.html" data-priority="4" class="header-link ${this.currentPage === 'descargas-gratuitas' ? 'active' : ''}">Descargas Gratuitas</a>
+            <a href="${this.basePath}comunidad/conecta.html" data-priority="4" class="header-link ${this.currentPage === 'comunidad' ? 'active' : ''}">Comunidad</a>
             
             <a href="${this.basePath}academy-fases/index.html" data-priority="3" class="header-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a>
                 </div>
@@ -482,6 +484,7 @@ class HeaderComponent extends BaseComponent {
         <a href="${this.basePath}liderazgo/index.html" class="mobile-menu-link">Liderazgo</a>
         <a href="${this.basePath}de-cero-a-cien.html" class="mobile-menu-link">De Cero a Cien</a>
         <a href="${this.basePath}camino-dorado.html" class="mobile-menu-link">Camino Dorado</a>
+        <a href="${this.basePath}comunidad/conecta.html" class="mobile-menu-link">Comunidad</a>
         
         <a href="${this.basePath}academy-fases/index.html" class="mobile-menu-link">Academy</a>
         <a href="${this.basePath}contacto.html" class="mobile-menu-link">Contacto</a>
@@ -908,7 +911,7 @@ class FooterComponent extends BaseComponent {
                 <li><a href="${this.basePath}academy-fases/index.html" class="footer-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a></li>
                 <li><a href="${this.basePath}gamificacion/index.html" class="footer-link ${this.currentPage === 'gamificacion' ? 'active' : ''}">Gamificación</a></li>
                 <li><a href="${this.basePath}diagnosticos-ai.html" class="footer-link ${this.currentPage === 'diagnosticos-ai' ? 'active' : ''}">Diagnósticos con IA</a></li>
-                <li><a href="${this.basePath}comunidad/conecta.html" class="footer-link ${this.currentPage === 'comunidad' ? 'active' : ''}">Comunidad</a></li>
+                <li><a href="${this.basePath}descargas-gratuitas.html" class="footer-link ${this.currentPage === 'descargas-gratuitas' ? 'active' : ''}">Descargas Gratuitas</a></li>
                 <li><a href="${this.basePath}servicios-empresariales/conferencias/index.html" class="footer-link ${this.currentPage === 'conferencias' ? 'active' : ''}">Conferencias</a></li>
                 <li><a href="${this.basePath}soluciones-a-medida.html" class="footer-link ${this.currentPage === 'soluciones-a-medida' ? 'active' : ''}">Soluciones a Medida</a></li>
 
