@@ -252,8 +252,10 @@ class HeaderComponent extends BaseComponent {
         const p = path.toLowerCase();
         // Academy: cualquier ruta dentro de /academy-fases/ activa 'academy'
         if (p.includes('/academy-fases/')) return 'academy';
-        // Comunidad: activar cuando estamos en rutas /comunidad/
-        if (p.includes('/comunidad/')) return 'comunidad';
+        // Comunidad: activar cuando estamos en rutas /comunidad/ pero no afiliados
+        if (p.includes('/comunidad/') && !p.includes('/afiliados')) return 'comunidad';
+        // Afiliados: detectar específicamente la página de afiliados
+        if (p.includes('/comunidad/afiliados')) return 'afiliados';
     // Talento
     if (p.includes('/talento/')) return 'talent';
     // Liderazgo
@@ -303,15 +305,15 @@ class HeaderComponent extends BaseComponent {
                 <!-- Navegación principal (desktop) -->
                 <div class="header-nav-links" style="flex:1 1 auto; display:flex; flex-wrap:nowrap; align-items:center; gap:12px; overflow:hidden; min-width:0;">
             <a href="${this.basePath}index.html" data-priority="0" class="header-link ${this.currentPage === 'index' ? 'active' : ''}">Inicio</a>
-            <a href="${this.basePath}nosotros.html" data-priority="2" class="header-link ${this.currentPage === 'nosotros' ? 'active' : ''}">Nosotros</a>
-            <a href="${this.basePath}servicios.html" data-priority="1" class="header-link ${this.currentPage === 'servicios' ? 'active' : ''}">Servicios Empresariales</a>
-            <a href="${this.basePath}formacion-semilla-talleres/index.html" data-priority="3" class="header-link ${this.currentPage === 'formacion-semilla' ? 'active' : ''}">Formación Semilla</a>
-            <a href="${this.basePath}liderazgo/index.html" data-priority="3" class="header-link ${this.currentPage === 'liderazgo' ? 'active' : ''}">Liderazgo</a>
-            <a href="${this.basePath}de-cero-a-cien.html" data-priority="1" class="header-link ${this.currentPage === 'de-cero-a-cien' ? 'active' : ''}">De Cero a Cien</a>
-            <a href="${this.basePath}camino-dorado.html" data-priority="2" class="header-link ${this.currentPage === 'camino-dorado' ? 'active' : ''}">Camino Dorado</a>
-            <a href="${this.basePath}comunidad/conecta.html" data-priority="4" class="header-link ${this.currentPage === 'comunidad' ? 'active' : ''}">Comunidad</a>
-            
-            <a href="${this.basePath}academy-fases/index.html" data-priority="3" class="header-link ${this.currentPage === 'academy' ? 'active' : ''}">Academy</a>
+            <a href="${this.basePath}nosotros.html" data-priority="1" class="header-link ${this.currentPage === 'nosotros' ? 'active' : ''}">Nosotros</a>
+            <a href="${this.basePath}de-cero-a-cien.html" data-priority="2" class="header-link ${this.currentPage === 'de-cero-a-cien' ? 'active' : ''}">De Cero a Cien</a>
+            <a href="${this.basePath}camino-dorado.html" data-priority="3" class="header-link ${this.currentPage === 'camino-dorado' ? 'active' : ''}">Camino Dorado</a>
+            <a href="${this.basePath}liderazgo/index.html" data-priority="4" class="header-link ${this.currentPage === 'liderazgo' ? 'active' : ''}">Liderazgo</a>
+            <a href="${this.basePath}servicios.html" data-priority="5" class="header-link ${this.currentPage === 'servicios' ? 'active' : ''}">Servicios Empresariales</a>
+            <a href="${this.basePath}academy-fases/index.html" data-priority="6" class="header-link ${this.currentPage === 'academy' ? 'active' : ''}">Academia</a>
+            <a href="${this.basePath}formacion-semilla-talleres/index.html" data-priority="7" class="header-link ${this.currentPage === 'formacion-semilla' ? 'active' : ''}">Formación Semilla</a>
+            <a href="${this.basePath}alianzas.html" data-priority="8" class="header-link ${this.currentPage === 'alianzas' ? 'active' : ''}">Alianzas</a>
+            <a href="${this.basePath}comunidad/conecta.html" data-priority="9" class="header-link ${this.currentPage === 'comunidad' ? 'active' : ''}">Comunidad</a>
                 </div>
 
                 <!-- Menú overflow "Más" (desktop) -->
@@ -478,15 +480,15 @@ class HeaderComponent extends BaseComponent {
     return `
             <div class="mobile-menu-content">
         <a href="${this.basePath}index.html" class="mobile-menu-link">Inicio</a>
-    <a href="${this.basePath}nosotros.html" class="mobile-menu-link">Nosotros</a>
-        <a href="${this.basePath}servicios.html" class="mobile-menu-link">Servicios Empresariales</a>
-        <a href="${this.basePath}formacion-semilla-talleres/index.html" class="mobile-menu-link">Formación Semilla</a>
-        <a href="${this.basePath}liderazgo/index.html" class="mobile-menu-link">Liderazgo</a>
+        <a href="${this.basePath}nosotros.html" class="mobile-menu-link">Nosotros</a>
         <a href="${this.basePath}de-cero-a-cien.html" class="mobile-menu-link">De Cero a Cien</a>
         <a href="${this.basePath}camino-dorado.html" class="mobile-menu-link">Camino Dorado</a>
+        <a href="${this.basePath}liderazgo/index.html" class="mobile-menu-link">Liderazgo</a>
+        <a href="${this.basePath}servicios.html" class="mobile-menu-link">Servicios Empresariales</a>
+        <a href="${this.basePath}academy-fases/index.html" class="mobile-menu-link">Academia</a>
+        <a href="${this.basePath}formacion-semilla-talleres/index.html" class="mobile-menu-link">Formación Semilla</a>
+        <a href="${this.basePath}alianzas.html" class="mobile-menu-link">Alianzas</a>
         <a href="${this.basePath}comunidad/conecta.html" class="mobile-menu-link">Comunidad</a>
-        
-        <a href="${this.basePath}academy-fases/index.html" class="mobile-menu-link">Academy</a>
         <a href="${this.basePath}contacto.html" class="mobile-menu-link">Contacto</a>
                 <div class="mobile-menu-auth">
                     <a href="#" class="mobile-auth-link">Ingresa</a>
@@ -853,8 +855,10 @@ class FooterComponent extends BaseComponent {
         const p = path.toLowerCase();
         // Academy: cualquier ruta dentro de /academy-fases/ activa 'academy'
         if (p.includes('/academy-fases/')) return 'academy';
-        // Comunidad: activar cuando estamos en rutas /comunidad/
-        if (p.includes('/comunidad/')) return 'comunidad';
+        // Comunidad: activar cuando estamos en rutas /comunidad/ pero no afiliados
+        if (p.includes('/comunidad/') && !p.includes('/afiliados')) return 'comunidad';
+        // Afiliados: detectar específicamente la página de afiliados
+        if (p.includes('/comunidad/afiliados')) return 'afiliados';
         const isBlogArticle = (
             p.includes('no-te-enamores-de-tu-idea') ||
             p.includes('tu-pmv-no-es-un-producto-barato') ||

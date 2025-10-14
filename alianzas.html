@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alianzas Estratégicas | DE CERO A CIEN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-oscuro: #101326;
+            --azul-noche: #1a1f3a;
+            --dorado: #d4af37;
+            --dorado-hover: #b89b31;
+            --texto-claro: #f8f9fa;
+            --texto-secundario: #a7a9be;
+            --borde-sutil: rgba(212, 175, 55, 0.2);
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--azul-oscuro);
+            color: var(--texto-claro);
+        }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .hero-bg {
+            background: linear-gradient(rgba(16, 19, 38, 0.9), rgba(16, 19, 38, 0.9)), url('https://placehold.co/1920x1080/101326/d4af37');
+            background-size: cover;
+            background-position: center;
+        }
+        .btn-gold {
+            background-color: var(--dorado);
+            color: var(--azul-noche);
+            font-weight: 700;
+            padding: 0.85rem 2.5rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: 2px solid transparent;
+        }
+        .btn-gold:hover {
+            background-color: var(--dorado-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.15);
+        }
+        .section-title {
+            border-bottom: 3px solid var(--dorado);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+        .stat-card, .alliance-card {
+            background-color: var(--azul-noche);
+            border: 1px solid var(--borde-sutil);
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover, .alliance-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--dorado);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- HERO SECTION -->
+    <header class="hero-bg py-24 md:py-36 text-center">
+        <div class="container mx-auto px-4">
+            <h1 class="font-serif text-4xl md:text-6xl font-black text-white leading-tight">Potenciamos el Impacto Social y Corporativo.</h1>
+            <p class="mt-6 text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                DE CERO A CIEN es el primer **ecosistema integral** que transforma la inversión en emprendimiento en un legado medible, escalable y sostenible. Nos convertimos en su socio estratégico para crear los agentes de cambio del mañana.
+            </p>
+            <a href="#contacto" class="mt-10 btn-gold text-lg">Solicitar Propuesta de Alianza</a>
+            <p class="mt-4 text-dorado font-serif tracking-widest text-lg opacity-75">Alianzas</p>
+        </div>
+    </header>
+
+    <main>
+        <!-- PROBLEM SECTION -->
+        <section class="py-20 bg-azul-oscuro">
+            <div class="container mx-auto px-4 max-w-5xl text-center">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-white section-title">La Paradoja de la Inversión en Emprendimiento</h2>
+                <p class="mt-8 text-gray-300 text-lg leading-relaxed">
+                    Las organizaciones invierten millones en programas de fomento, RSE y capacitación. Sin embargo, se enfrentan a una paradoja constante: la capacitación termina, pero el viaje del emprendedor apenas comienza. Esto genera una brecha crítica donde el impacto se diluye por falta de seguimiento, herramientas prácticas y una red de apoyo sostenible.
+                </p>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="stat-card p-6 rounded-lg">
+                        <p class="text-3xl font-bold text-dorado">90%</p>
+                        <p class="mt-2 text-gray-400">de los emprendimientos fracasan, a menudo por falta de estrategia post-lanzamiento.</p>
+                    </div>
+                    <div class="stat-card p-6 rounded-lg">
+                        <p class="text-3xl font-bold text-dorado">75%</p>
+                        <p class="mt-2 text-gray-400">de los programas de RSE luchan por demostrar un ROI tangible y a largo plazo.</p>
+                    </div>
+                    <div class="stat-card p-6 rounded-lg">
+                        <p class="text-3xl font-bold text-dorado">#1</p>
+                        <p class="mt-2 text-gray-400">La "soledad del estratega" es la principal causa de estancamiento en fundadores.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOLUTION SECTION -->
+        <section class="py-20 bg-azul-noche">
+            <div class="container mx-auto px-4 max-w-6xl">
+                <div class="text-center">
+                    <h2 class="font-serif text-3xl md:text-4xl font-bold text-white section-title">Nuestra Solución: El Ecosistema como Servicio (EaaS)</h2>
+                    <p class="mt-8 text-gray-300 text-lg leading-relaxed max-w-4xl mx-auto">
+                        No ofrecemos un curso, ofrecemos una alianza. Integramos nuestro ecosistema digital "DE CERO A CIEN" como el motor que potencia sus programas. Transformamos su inversión de un evento de capacitación a un activo sostenible que genera impacto medible y continuo.
+                    </p>
+                </div>
+
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+                    <div>
+                        <div class="text-5xl text-dorado mb-4">🚀</div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Escalable</h3>
+                        <p class="text-gray-400">Implementamos su programa para cientos o miles de beneficiarios sin un incremento significativo en costos variables, optimizando cada peso de su inversión.</p>
+                    </div>
+                    <div>
+                        <div class="text-5xl text-dorado mb-4">📊</div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Medible</h3>
+                        <p class="text-gray-400">Nuestra plataforma genera métricas de uso, progreso y aplicación de herramientas, proporcionando data dura para sus reportes de impacto y sostenibilidad.</p>
+                    </div>
+                    <div>
+                        <div class="text-5xl text-dorado mb-4">🤝</div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Sostenible</h3>
+                        <p class="text-gray-400">Gracias a nuestra comunidad CONECTA, el apoyo no termina. Los emprendedores acceden a una red de pares y mentores que asegura un impacto duradero.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ALLIANCE MODELS SECTION -->
+        <section class="py-20">
+            <div class="container mx-auto px-4 max-w-6xl">
+                 <div class="text-center">
+                    <h2 class="font-serif text-3xl md:text-4xl font-bold text-white section-title">Modelos de Alianza Estratégica</h2>
+                    <p class="mt-8 text-gray-300 text-lg leading-relaxed max-w-4xl mx-auto">
+                        Nos adaptamos a sus objetivos. Ya sea potenciando sus programas existentes o co-creando nuevas iniciativas, somos el socio tecnológico que garantiza la ejecución y el impacto.
+                    </p>
+                </div>
+                <div class="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="alliance-card p-8 rounded-lg flex flex-col">
+                        <h3 class="text-2xl font-bold text-dorado mb-3">B2B: Alianzas Corporativas (RSE)</h3>
+                        <p class="text-gray-300 mb-4 flex-grow">Integramos nuestro ecosistema en sus programas de Responsabilidad Social Empresarial, convirtiendo la capacitación en un activo medible y sostenible que forma a los "agentes de cambio" que su comunidad necesita.</p>
+                        <p class="font-bold text-white">Ideal para:</p>
+                        <p class="text-sm text-gray-400">Empresas que buscan maximizar el impacto de su inversión social y generar un legado tangible.</p>
+                        <p class="mt-4 text-xs text-dorado font-bold tracking-wider">CASO DE ÉXITO: MINERA ESCONDIDA (BHP)</p>
+                    </div>
+                     <div class="alliance-card p-8 rounded-lg flex flex-col border-2 border-dorado shadow-2xl">
+                        <h3 class="text-2xl font-bold text-dorado mb-3">B2F: Alianzas con Fundaciones</h3>
+                        <p class="text-gray-300 mb-4 flex-grow">Actuamos como su socio tecnológico estratégico. Potenciamos el impacto de sus fondos y concursos, entregando a sus beneficiarios un sistema operativo completo que asegura que el apoyo financiero se traduzca en negocios exitosos y autosostenibles.</p>
+                        <p class="font-bold text-white">Ideal para:</p>
+                        <p class="text-sm text-gray-400">Fundaciones que buscan ir más allá del financiamiento y asegurar el éxito a largo plazo de sus proyectos.</p>
+                        <p class="mt-4 text-xs text-dorado font-bold tracking-wider">CASOS DE ÉXITO: FUNDACIÓN COLUNGA & MUSTAKIS</p>
+                    </div>
+                     <div class="alliance-card p-8 rounded-lg flex flex-col">
+                        <h3 class="text-2xl font-bold text-dorado mb-3">B2G: Alianzas con Gobierno</h3>
+                        <p class="text-gray-300 mb-4 flex-grow">Colaboramos con entidades gubernamentales para masificar el acceso a la formación emprendedora de alto nivel. Nuestra plataforma GovTech permite democratizar la estrategia de negocios, impulsando el desarrollo económico local y nacional.</p>
+                        <p class="font-bold text-white">Ideal para:</p>
+                        <p class="text-sm text-gray-400">Municipios, gobiernos regionales y agencias de fomento (CORFO, Sercotec) que buscan soluciones innovadoras.</p>
+                         <p class="mt-4 text-xs text-dorado font-bold tracking-wider">MODELO EN DESARROLLO</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ECOSYSTEM SECTION -->
+        <section class="py-20 bg-azul-noche">
+             <div class="container mx-auto px-4 max-w-5xl text-center">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-white section-title">Un Ecosistema Integral a su Disposición</h2>
+                <p class="mt-8 text-gray-300 text-lg leading-relaxed">
+                    Nuestros aliados otorgan a sus beneficiarios acceso a un portafolio completo de servicios que los acompaña en cada etapa de su viaje, desde la idea hasta el levantamiento de capital.
+                </p>
+                <div class="mt-12 text-left">
+                    <img src="https://i.imgur.com/e4652f.png" alt="Pilares del Ecosistema DE CERO A CIEN" class="rounded-lg shadow-lg">
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT FORM / CTA -->
+        <section id="contacto" class="py-20">
+            <div class="container mx-auto px-4 max-w-3xl text-center">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-white">Construyamos Juntos el Futuro del Emprendimiento</h2>
+                <p class="mt-6 text-gray-300 text-lg">
+                    Estamos convencidos de que una alianza puede ser un catalizador para el desarrollo y el empoderamiento. Permítanos mostrarle en una breve sesión estratégica cómo nuestro ecosistema puede potenciar el impacto de su labor.
+                </p>
+                <form class="mt-10 max-w-xl mx-auto" action="#" method="POST">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <input type="text" placeholder="Nombre Completo" class="bg-azul-noche p-3 rounded-md border border-borde-sutil focus:border-dorado focus:outline-none w-full" required>
+                        <input type="text" placeholder="Organización" class="bg-azul-noche p-3 rounded-md border border-borde-sutil focus:border-dorado focus:outline-none w-full" required>
+                    </div>
+                    <input type="email" placeholder="Email Corporativo" class="bg-azul-noche p-3 mt-6 rounded-md border border-borde-sutil focus:border-dorado focus:outline-none w-full" required>
+                    <textarea placeholder="Cuéntenos brevemente sobre su programa o desafío..." rows="4" class="bg-azul-noche p-3 mt-6 rounded-md border border-borde-sutil focus:border-dorado focus:outline-none w-full"></textarea>
+                    <button type="submit" class="mt-8 btn-gold text-lg w-full">Agendar Sesión Estratégica</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="py-8 bg-azul-noche border-t border-borde-sutil">
+        <div class="container mx-auto px-4 text-center text-gray-500">
+             <p>&copy; 2025 DE CERO A CIEN. Todos los derechos reservados.</p>
+             <p class="text-sm mt-2">Transformando la inversión en un legado de impacto.</p>
+        </div>
+    </footer>
+
+    <!-- Cargar componentes dinámicos -->
+    <script src="assets/js/components.js"></script>
+
+</body>
+</html>
