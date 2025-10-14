@@ -21,8 +21,16 @@
  * Utilidades y configuración global
  */
 const GlobalConfig = {
-    basePath: '' // Prefijo para rutas relativas ("", "../", "../../", etc.)
+    basePath: '', // Prefijo para rutas relativas ("", "../", "../../", etc.)
+    assetVersion: '20251014' // Versión simple para cache busting de JS/CSS inyectados
 };
+
+// Shim defensivo para entitlements antiguos en caché: evita ReferenceError si llaman grantFromURLParams antes de definirla
+if (typeof window !== 'undefined') {
+    if (typeof window.grantFromURLParams !== 'function') {
+        window.grantFromURLParams = function(){ /* noop shim to avoid errors from cached entitlements.js */ };
+    }
+}
 
 /**
  * Detecta el basePath a partir del src del script que carga este archivo.
@@ -1300,7 +1308,8 @@ class AppManager {
             const shouldLoad = /\/portal-alumno\.html$/.test(path) || /\/fase_\d+_ecd\//.test(path) || /\/fase_\d+_de0a100\//.test(path);
             if (!already && shouldLoad) {
                 const s = document.createElement('script');
-                s.src = `${GlobalConfig.basePath}assets/js/entitlements.js`;
+                const v = GlobalConfig.assetVersion ? `?v=${GlobalConfig.assetVersion}` : '';
+                s.src = `${GlobalConfig.basePath}assets/js/entitlements.js${v}`;
                 s.defer = true;
                 document.head.appendChild(s);
             }
