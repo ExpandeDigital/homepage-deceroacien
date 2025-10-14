@@ -106,15 +106,25 @@
 
     <div class="container-card">
         <h1 class="font-serif text-3xl md:text-4xl font-bold text-white mb-2">
-            Próxima Conexión en Vivo
+            Sala de Espera - Reunión en Vivo
         </h1>
         <p class="text-[var(--texto-secundario)] mb-4">
-            ¡Prepárate para la mentoría de la semana!
+            Serás redirigido automáticamente cuando comience la reunión
+        </p>
+        <p class="text-sm text-[var(--texto-secundario)] mb-2">
+            📅 Martes, 14 octubre · 11:40am – 12:40pm
+        </p>
+        <p class="text-xs text-[var(--texto-secundario)] mb-4">
+            🌎 Zona horaria: America/Montevideo
         </p>
 
         <!-- Contador de Tiempo -->
         <div class="countdown" id="countdown-timer">
             <!-- Los valores del temporizador se insertarán aquí por JavaScript -->
+            <div class="time-unit" id="hours-unit" style="display: none;">
+                <span id="hours">00</span>
+                <span>horas</span>
+            </div>
             <div class="time-unit">
                 <span id="minutes">00</span>
                 <span>minutos</span>
@@ -132,10 +142,13 @@
                 Tu navegador no soporta el elemento de audio.
             </audio>
 
-            <button id="play-pause-btn" class="btn-play mt-4 pulse">
+            <button id="play-pause-btn" class="btn-play mt-4 pulse" title="Reproducir música de espera (opcional)">
                 <i id="play-pause-icon" class="fas fa-play text-2xl"></i>
             </button>
-            <p id="message" class="mt-4 text-[var(--texto-secundario)]">Cargando audio...</p>
+            <p id="message" class="mt-4 text-[var(--texto-secundario)]">Inicializando sala de espera...</p>
+            <p class="text-xs text-[var(--texto-secundario)] mt-2 opacity-75">
+                💡 Puedes reproducir música de espera mientras aguardas
+            </p>
         </div>
     </div>
 
@@ -145,96 +158,170 @@
             const playPauseBtn = document.getElementById('play-pause-btn');
             const playPauseIcon = document.getElementById('play-pause-icon');
             const messageEl = document.getElementById('message');
+            const hoursEl = document.getElementById('hours');
             const minutesEl = document.getElementById('minutes');
             const secondsEl = document.getElementById('seconds');
-            let timerInterval;
-            let totalSeconds = 0;
+            const hoursUnit = document.getElementById('hours-unit');
+            let countdownInterval;
+            let isAudioReady = false;
+
+            // CONFIGURACIÓN DE LA REUNIÓN
+            const MEETING_CONFIG = {
+                // Fecha y hora de la reunión: Martes, 14 octubre 2025 · 11:40am
+                // Zona horaria: America/Montevideo (UTC-3)
+                date: '2025-10-14',
+                time: '11:40',
+                timezone: 'America/Montevideo',
+                meetingUrl: 'https://meet.google.com/ihf-paiw-baf'
+            };
+
+            // Función para calcular el tiempo restante hasta la reunión
+            const getTimeUntilMeeting = () => {
+                // Crear fecha/hora de la reunión
+                const meetingDateTime = new Date(`${MEETING_CONFIG.date}T${MEETING_CONFIG.time}:00-03:00`);
+                const now = new Date();
+                const timeDiff = meetingDateTime.getTime() - now.getTime();
+                
+                // Retorna segundos restantes (puede ser negativo si ya pasó)
+                return Math.max(0, Math.floor(timeDiff / 1000));
+            };
 
             // Función para actualizar el contador
             const updateCountdown = (timeInSeconds) => {
-                const minutes = Math.floor(timeInSeconds / 60);
+                if (timeInSeconds <= 0) {
+                    hoursEl.textContent = '00';
+                    minutesEl.textContent = '00';
+                    secondsEl.textContent = '00';
+                    hoursUnit.style.display = 'none';
+                    return;
+                }
+                
+                const hours = Math.floor(timeInSeconds / 3600);
+                const minutes = Math.floor((timeInSeconds % 3600) / 60);
                 const seconds = timeInSeconds % 60;
+                
+                // Mostrar horas solo si es mayor a 0
+                if (hours > 0) {
+                    hoursEl.textContent = String(hours).padStart(2, '0');
+                    hoursUnit.style.display = 'flex';
+                } else {
+                    hoursUnit.style.display = 'none';
+                }
+                
                 minutesEl.textContent = String(minutes).padStart(2, '0');
                 secondsEl.textContent = String(seconds).padStart(2, '0');
             };
 
-            // Espera a que la metadata del audio esté cargada para obtener la duración
-            audio.addEventListener('loadedmetadata', () => {
-                totalSeconds = Math.floor(audio.duration);
-                if (totalSeconds > 0) {
-                    updateCountdown(totalSeconds);
-                    messageEl.textContent = 'Presiona Play para iniciar';
-                    playPauseBtn.classList.add('pulse');
-                    playPauseBtn.disabled = false;
-                } else {
-                    messageEl.textContent = 'Error: No se pudo obtener la duración del audio.';
-                    playPauseBtn.disabled = true;
+            // Función para redirigir a la reunión
+            const redirectToMeeting = () => {
+                messageEl.textContent = '¡Redirigiendo a la reunión...!';
+                // Pausa el audio si está reproduciéndose
+                if (!audio.paused) {
+                    audio.pause();
                 }
+                // Pequeño delay para que el usuario vea el mensaje
+                setTimeout(() => {
+                    window.location.href = MEETING_CONFIG.meetingUrl;
+                }, 2000);
+            };
+
+            // Función principal del countdown automático
+            const startAutomaticCountdown = () => {
+                const updateTimer = () => {
+                    const secondsRemaining = getTimeUntilMeeting();
+                    
+                    if (secondsRemaining <= 0) {
+                        // ¡Es hora de la reunión!
+                        clearInterval(countdownInterval);
+                        updateCountdown(0);
+                        redirectToMeeting();
+                        return;
+                    }
+                    
+                    updateCountdown(secondsRemaining);
+                    
+                    // Actualizar mensaje según el tiempo restante
+                    if (secondsRemaining > 3600) { // Más de 1 hora
+                        const hoursRemaining = Math.floor(secondsRemaining / 3600);
+                        messageEl.textContent = `Faltan ${hoursRemaining} hora(s) para la reunión. Relájate con la música de espera.`;
+                    } else if (secondsRemaining > 1800) { // Entre 30 minutos y 1 hora
+                        messageEl.textContent = 'La reunión comenzará en menos de una hora. ¡Prepárate!';
+                    } else if (secondsRemaining > 300) { // Entre 5-30 minutos
+                        messageEl.textContent = '¡La reunión comenzará pronto! Reproduce la música de espera.';
+                    } else if (secondsRemaining > 60) { // Entre 1-5 minutos
+                        messageEl.textContent = '🔔 ¡La reunión comenzará en menos de 5 minutos!';
+                    } else if (secondsRemaining > 30) { // Entre 30 segundos y 1 minuto
+                        messageEl.textContent = '⚡ ¡La reunión comenzará en menos de un minuto!';
+                        // Auto-reproducir música en el último minuto si no está sonando
+                        if (isAudioReady && audio.paused) {
+                            audio.play().catch(e => console.log('Auto-play bloqueado por el navegador'));
+                        }
+                    } else { // Menos de 30 segundos
+                        messageEl.textContent = '🚀 ¡Conectando en segundos...!';
+                    }
+                };
+
+                // Ejecutar inmediatamente y luego cada segundo
+                updateTimer();
+                countdownInterval = setInterval(updateTimer, 1000);
+            };
+
+            // Manejo del audio
+            audio.addEventListener('loadedmetadata', () => {
+                isAudioReady = true;
+                playPauseBtn.disabled = false;
+                playPauseBtn.classList.add('pulse');
             });
 
-            // Si hay un error al cargar el audio
             audio.addEventListener('error', () => {
-                messageEl.textContent = 'Error: No se pudo cargar la canción. Verifica la conexión.';
+                messageEl.textContent = 'Audio no disponible, pero el countdown continúa.';
                 playPauseBtn.disabled = true;
                 playPauseBtn.classList.remove('pulse');
             });
 
-            // Si el audio puede empezar a reproducirse
             audio.addEventListener('canplaythrough', () => {
-                if (totalSeconds === 0) {
-                    totalSeconds = Math.floor(audio.duration);
-                    updateCountdown(totalSeconds);
-                    messageEl.textContent = 'Presiona Play para iniciar';
-                    playPauseBtn.classList.add('pulse');
+                if (!isAudioReady) {
+                    isAudioReady = true;
                     playPauseBtn.disabled = false;
+                    playPauseBtn.classList.add('pulse');
                 }
             });
 
-            // Sincroniza el contador con el tiempo de reproducción del audio
-            audio.addEventListener('timeupdate', () => {
-                if (totalSeconds > 0) {
-                    const remainingTime = totalSeconds - audio.currentTime;
-                    updateCountdown(Math.max(0, Math.ceil(remainingTime)));
-                }
-            });
-
-            // Maneja el clic en el botón de Play/Pause
+            // Controles de audio (opcionales para el usuario)
             playPauseBtn.addEventListener('click', () => {
                 if (audio.paused) {
                     audio.play().catch(e => {
                         console.error('Error al reproducir audio:', e);
-                        messageEl.textContent = 'Error al reproducir. Intenta nuevamente.';
+                        messageEl.textContent = 'Error al reproducir. El countdown continúa.';
                     });
                 } else {
                     audio.pause();
                 }
             });
 
-            // Maneja el estado de reproducción del audio
             audio.addEventListener('play', () => {
                 playPauseIcon.classList.remove('fa-play');
                 playPauseIcon.classList.add('fa-pause');
                 playPauseBtn.classList.remove('pulse');
-                messageEl.textContent = '¡Música en vivo! Nos conectamos pronto...';
             });
 
             audio.addEventListener('pause', () => {
                 playPauseIcon.classList.remove('fa-pause');
                 playPauseIcon.classList.add('fa-play');
                 playPauseBtn.classList.add('pulse');
-                messageEl.textContent = 'Pausa. Presiona Play para continuar.';
-            });
-            
-            audio.addEventListener('ended', () => {
-                 playPauseIcon.classList.remove('fa-pause');
-                 playPauseIcon.classList.add('fa-play');
-                 playPauseBtn.classList.add('pulse');
-                 messageEl.textContent = '¡El evento ha comenzado!';
-                 updateCountdown(0);
             });
 
-            // Inicializar el mensaje
-            messageEl.textContent = 'Cargando audio...';
+            // Verificar si la reunión ya debe haber comenzado
+            const initialTimeCheck = getTimeUntilMeeting();
+            if (initialTimeCheck <= 0) {
+                // La reunión ya debería haber comenzado
+                updateCountdown(0);
+                redirectToMeeting();
+            } else {
+                // Iniciar countdown automático
+                messageEl.textContent = 'Calculando tiempo hasta la reunión...';
+                startAutomaticCountdown();
+            }
         });
     </script>
 </body>
