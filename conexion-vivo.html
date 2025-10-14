@@ -112,7 +112,7 @@
             Serás redirigido automáticamente cuando comience la reunión
         </p>
         <p class="text-sm text-[var(--texto-secundario)] mb-2">
-            📅 Martes, 14 octubre · 11:40am – 12:40pm
+            📅 Martes, 14 octubre · 12:00pm – 1:00pm
         </p>
         <p class="text-xs text-[var(--texto-secundario)] mb-4">
             🌎 Zona horaria: America/Montevideo
@@ -149,6 +149,11 @@
             <p class="text-xs text-[var(--texto-secundario)] mt-2 opacity-75">
                 💡 Puedes reproducir música de espera mientras aguardas
             </p>
+            
+            <!-- Botón de prueba temporal -->
+            <button id="test-redirect" style="margin-top: 10px; padding: 8px 16px; background: #dc2626; color: white; border: none; border-radius: 5px; font-size: 12px; cursor: pointer;">
+                🧪 PRUEBA: Ir a reunión ahora
+            </button>
         </div>
     </div>
 
@@ -167,23 +172,37 @@
 
             // CONFIGURACIÓN DE LA REUNIÓN
             const MEETING_CONFIG = {
-                // Fecha y hora de la reunión: Martes, 14 octubre 2025 · 11:40am
+                // Fecha y hora de la reunión: Martes, 14 octubre 2025 · 12:00pm
                 // Zona horaria: America/Montevideo (UTC-3)
                 date: '2025-10-14',
-                time: '11:40',
+                time: '12:00',
                 timezone: 'America/Montevideo',
                 meetingUrl: 'https://meet.google.com/ihf-paiw-baf'
             };
 
             // Función para calcular el tiempo restante hasta la reunión
             const getTimeUntilMeeting = () => {
-                // Crear fecha/hora de la reunión
-                const meetingDateTime = new Date(`${MEETING_CONFIG.date}T${MEETING_CONFIG.time}:00-03:00`);
-                const now = new Date();
-                const timeDiff = meetingDateTime.getTime() - now.getTime();
-                
-                // Retorna segundos restantes (puede ser negativo si ya pasó)
-                return Math.max(0, Math.floor(timeDiff / 1000));
+                try {
+                    // Crear fecha/hora de la reunión en zona horaria de Montevideo (UTC-3)
+                    const meetingDateTime = new Date(`${MEETING_CONFIG.date}T${MEETING_CONFIG.time}:00-03:00`);
+                    const now = new Date();
+                    
+                    // Debug: mostrar fechas en consola
+                    console.log('Hora actual:', now.toISOString());
+                    console.log('Hora reunión:', meetingDateTime.toISOString());
+                    console.log('Hora reunión local:', meetingDateTime.toLocaleString());
+                    
+                    const timeDiff = meetingDateTime.getTime() - now.getTime();
+                    const secondsRemaining = Math.floor(timeDiff / 1000);
+                    
+                    console.log('Segundos restantes:', secondsRemaining);
+                    
+                    // Retorna segundos restantes (puede ser negativo si ya pasó)
+                    return Math.max(0, secondsRemaining);
+                } catch (error) {
+                    console.error('Error calculando tiempo:', error);
+                    return 0;
+                }
             };
 
             // Función para actualizar el contador
@@ -214,6 +233,7 @@
 
             // Función para redirigir a la reunión
             const redirectToMeeting = () => {
+                console.log('Iniciando redirección a:', MEETING_CONFIG.meetingUrl);
                 messageEl.textContent = '¡Redirigiendo a la reunión...!';
                 // Pausa el audio si está reproduciéndose
                 if (!audio.paused) {
@@ -221,6 +241,7 @@
                 }
                 // Pequeño delay para que el usuario vea el mensaje
                 setTimeout(() => {
+                    console.log('Redirigiendo ahora...');
                     window.location.href = MEETING_CONFIG.meetingUrl;
                 }, 2000);
             };
@@ -310,18 +331,45 @@
                 playPauseIcon.classList.add('fa-play');
                 playPauseBtn.classList.add('pulse');
             });
+            
+            // Botón de prueba temporal
+            document.getElementById('test-redirect').addEventListener('click', () => {
+                console.log('Prueba manual activada');
+                redirectToMeeting();
+            });
 
             // Verificar si la reunión ya debe haber comenzado
             const initialTimeCheck = getTimeUntilMeeting();
+            console.log('Verificación inicial - segundos restantes:', initialTimeCheck);
+            
             if (initialTimeCheck <= 0) {
                 // La reunión ya debería haber comenzado
+                console.log('La reunión ya comenzó, redirigiendo...');
                 updateCountdown(0);
                 redirectToMeeting();
             } else {
                 // Iniciar countdown automático
+                console.log('Iniciando countdown automático');
                 messageEl.textContent = 'Calculando tiempo hasta la reunión...';
                 startAutomaticCountdown();
             }
+            
+            // Mostrar información de debug en la página (temporal)
+            const debugInfo = document.createElement('div');
+            debugInfo.style.cssText = 'position: fixed; top: 10px; left: 10px; background: rgba(0,0,0,0.8); color: white; padding: 10px; font-size: 12px; z-index: 9999; border-radius: 5px;';
+            debugInfo.innerHTML = `
+                <div>Hora actual: ${new Date().toLocaleString()}</div>
+                <div>Reunión: ${new Date('2025-10-14T12:00:00-03:00').toLocaleString()}</div>
+                <div>Segundos restantes: ${initialTimeCheck}</div>
+            `;
+            document.body.appendChild(debugInfo);
+            
+            // Remover debug info después de 10 segundos
+            setTimeout(() => {
+                if (debugInfo.parentNode) {
+                    debugInfo.parentNode.removeChild(debugInfo);
+                }
+            }, 10000);
         });
     </script>
 </body>
