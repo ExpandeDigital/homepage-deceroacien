@@ -14,6 +14,7 @@
   // Nota: En producción cada producto (academy / de cero a cien / camino dorado) es independiente.
   // Aquí en la demo full-access concedemos todos para mostrar el catálogo completo simultáneamente.
   const BASE_ENTITLEMENTS = [
+    'formacion.semilla', // Bonus gratuito para usuarios registrados
     'course.pmv','course.pmf','course.growth','course.ceo', // Academy
     'membership.pro',
     'product.deceroacien','product.camino_dorado', // Productos independientes (no derivan cursos automáticamente)

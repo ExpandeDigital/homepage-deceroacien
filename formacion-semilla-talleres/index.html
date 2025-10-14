@@ -133,7 +133,7 @@
       
       // Función para verificar autenticación con seguridad
       function checkAuthentication() {
-        console.log('🔍 Verificando autenticación...');
+        console.log('🔍 Verificando autenticación para Formación Semilla...');
         
         // Para desarrollo: revisar si hay parámetro ?dev=true para mostrar contenido
         const urlParams = new URLSearchParams(window.location.search);
@@ -146,31 +146,102 @@
           return;
         }
         
-        // Verificar que authManager esté disponible
+        // Verificar múltiples fuentes de autenticación
+        let isAuthenticated = false;
+        
+        // Método 1: authManager (principal)
         if (typeof window.authManager !== 'undefined') {
-          const isAuthenticated = window.authManager.isAuthenticated;
-          console.log('🔐 authManager disponible. Usuario autenticado:', isAuthenticated);
-          
-          if (isAuthenticated) {
-            // Usuario registrado: mostrar contenido
-            console.log('✅ Mostrando contenido para usuario autenticado');
-            authRequiredMessage.classList.add('hidden');
-            mainContent.classList.remove('hidden');
-          } else {
-            // Usuario no registrado: mostrar mensaje de registro requerido
-            console.log('❌ Mostrando mensaje de registro requerido');
-            authRequiredMessage.classList.remove('hidden');
-            mainContent.classList.add('hidden');
+          if (typeof window.authManager.isAuthenticated === 'boolean') {
+            isAuthenticated = window.authManager.isAuthenticated;
+          } else if (typeof window.authManager.isUserAuthenticated === 'function') {
+            try {
+              isAuthenticated = window.authManager.isUserAuthenticated();
+            } catch(e) {
+              console.log('Error verificando authManager:', e);
+            }
+          } else if (window.authManager.currentUser) {
+            isAuthenticated = true;
           }
+        }
+        
+        // Método 2: Verificar localStorage (fallback para sesiones persistentes)
+        if (!isAuthenticated) {
+          const localUser = localStorage.getItem('deceroacien_user');
+          const localSession = localStorage.getItem('deceroacien_session');
+          const localToken = localStorage.getItem('deceroacien_token');
+          
+          if (localUser || localSession || localToken) {
+            console.log('📱 Detectada sesión en localStorage');
+            isAuthenticated = true;
+          }
+        }
+        
+        // Método 3: Verificar si hay datos de usuario en cualquier formato
+        if (!isAuthenticated) {
+          // Verificar claves comunes de autenticación
+          const authKeys = ['sb-', 'supabase', 'auth', 'session', 'user'];
+          for (let key of authKeys) {
+            for (let i = 0; i < localStorage.length; i++) {
+              const storageKey = localStorage.key(i);
+              if (storageKey && storageKey.includes(key)) {
+                const value = localStorage.getItem(storageKey);
+                if (value && value !== 'null' && value !== '{}') {
+                  console.log('🔑 Detectada posible sesión en:', storageKey);
+                  isAuthenticated = true;
+                  break;
+                }
+              }
+            }
+            if (isAuthenticated) break;
+          }
+        }
+        
+        console.log('🔐 Estado de autenticación final:', isAuthenticated);
+        
+        if (isAuthenticated) {
+          // Usuario registrado: Formación Semilla es acceso gratuito
+          console.log('✅ Usuario autenticado - Formación Semilla es contenido gratuito');
+          
+          // Otorgar acceso automático a Formación Semilla para usuarios registrados
+          if (window.entitlements && window.entitlements.grant) {
+            window.entitlements.grant(['formacion.semilla']);
+          }
+          
+          // Mostrar contenido
+          authRequiredMessage.classList.add('hidden');
+          mainContent.classList.remove('hidden');
         } else {
-          console.log('⏳ authManager no disponible aún, reintentando...');
-          // Si authManager no está disponible, intentar después de un pequeño delay
-          setTimeout(checkAuthentication, 100);
+          // Usuario no registrado: mostrar mensaje de registro requerido
+          console.log('❌ Usuario no autenticado - mostrando mensaje de registro');
+          authRequiredMessage.classList.remove('hidden');
+          mainContent.classList.add('hidden');
         }
       }
       
-      // Iniciar verificación
+      // Iniciar verificación inmediata
       checkAuthentication();
+      
+      // Verificación adicional después de que otros scripts se carguen
+      setTimeout(checkAuthentication, 500);
+      setTimeout(checkAuthentication, 1500);
+      
+      // Escuchar eventos de autenticación
+      window.addEventListener('auth:success', function() {
+        console.log('🎉 Evento de autenticación detectado');
+        checkAuthentication();
+      });
+      
+      // Verificación periódica para casos edge (solo por 10 segundos)
+      let attempts = 0;
+      const maxAttempts = 10;
+      const authChecker = setInterval(function() {
+        attempts++;
+        if (attempts >= maxAttempts || mainContent.style.display !== 'none') {
+          clearInterval(authChecker);
+          return;
+        }
+        checkAuthentication();
+      }, 1000);
     });
   </script>
 </body>
