@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplos de Sala de Espera</title>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .example-card {
+            background: linear-gradient(135deg, #112240 0%, #0A192F 100%);
+            border: 1px solid #334155;
+        }
+        .btn-primary {
+            background: #FBBF24;
+            color: #0A192F;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: #F59E0B;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 min-h-screen p-8">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-4xl font-bold text-white mb-2 text-center">
+            🎯 Ejemplos de Sala de Espera
+        </h1>
+        <p class="text-slate-400 text-center mb-8">
+            Prueba diferentes configuraciones de reuniones haciendo clic en los enlaces
+        </p>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- Ejemplo 1: Reunión de hoy -->
+            <div class="example-card rounded-xl p-6">
+                <h3 class="text-xl font-semibold text-white mb-3">
+                    ⏰ Reunión Hoy - 17:00
+                </h3>
+                <p class="text-slate-300 mb-4 text-sm">
+                    Sala de espera para reunión de hoy a las 17:00 (5:00 PM)
+                </p>
+                <a href="conexion-vivo.html?date=2025-10-14&time=17:00&url=https://meet.google.com/ihf-paiw-baf&title=Reunión%20de%20Estrategia"
+                   class="btn-primary px-4 py-2 rounded-lg font-semibold inline-block">
+                    🚀 Ir a Sala de Espera
+                </a>
+                <div class="mt-4 text-xs text-slate-400">
+                    <strong>Parámetros:</strong><br>
+                    • date=2025-10-14<br>
+                    • time=17:00<br>
+                    • Google Meet
+                </div>
+            </div>
+
+            <!-- Ejemplo 2: Masterclass mañana -->
+            <div class="example-card rounded-xl p-6">
+                <h3 class="text-xl font-semibold text-white mb-3">
+                    🎓 Masterclass Mañana - 13:00
+                </h3>
+                <p class="text-slate-300 mb-4 text-sm">
+                    Masterclass CEO programada para mañana a las 13:00 (1:00 PM)
+                </p>
+                <a href="conexion-vivo.html?date=2025-10-15&time=13:00&url=https://zoom.us/j/123456789&title=Masterclass%20CEO"
+                   class="btn-primary px-4 py-2 rounded-lg font-semibold inline-block">
+                    📚 Ir a Masterclass
+                </a>
+                <div class="mt-4 text-xs text-slate-400">
+                    <strong>Parámetros:</strong><br>
+                    • date=2025-10-15<br>
+                    • time=13:00<br>
+                    • Zoom
+                </div>
+            </div>
+
+            <!-- Ejemplo 3: Bootcamp PMV -->
+            <div class="example-card rounded-xl p-6">
+                <h3 class="text-xl font-semibold text-white mb-3">
+                    💼 Bootcamp PMV - Config JSON
+                </h3>
+                <p class="text-slate-300 mb-4 text-sm">
+                    Usando configuración predefinida desde meetings.json
+                </p>
+                <a href="conexion-vivo.html?meeting=bootcamp_pmv"
+                   class="btn-primary px-4 py-2 rounded-lg font-semibold inline-block">
+                    🎯 Ir a Bootcamp
+                </a>
+                <div class="mt-4 text-xs text-slate-400">
+                    <strong>Configuración:</strong><br>
+                    • meeting=bootcamp_pmv<br>
+                    • Desde JSON<br>
+                    • Configuración central
+                </div>
+            </div>
+
+            <!-- Ejemplo 4: Reunión Teams -->
+            <div class="example-card rounded-xl p-6">
+                <h3 class="text-xl font-semibold text-white mb-3">
+                    🤝 Reunión Teams - Pasado Mañana
+                </h3>
+                <p class="text-slate-300 mb-4 text-sm">
+                    Ejemplo con Microsoft Teams para pasado mañana a las 19:00
+                </p>
+                <a href="conexion-vivo.html?date=2025-10-16&time=19:00&url=https://teams.microsoft.com/ejemplo&title=Reunión%20Teams"
+                   class="btn-primary px-4 py-2 rounded-lg font-semibold inline-block">
+                    💻 Ir a Teams
+                </a>
+                <div class="mt-4 text-xs text-slate-400">
+                    <strong>Parámetros:</strong><br>
+                    • date=2025-10-16<br>
+                    • time=19:00<br>
+                    • Microsoft Teams
+                </div>
+            </div>
+
+            <!-- Ejemplo 5: Configuración por defecto -->
+            <div class="example-card rounded-xl p-6">
+                <h3 class="text-xl font-semibold text-white mb-3">
+                    ⚡ Configuración por Defecto
+                </h3>
+                <p class="text-slate-300 mb-4 text-sm">
+                    Sin parámetros - usa configuración por defecto del sistema
+                </p>
+                <a href="conexion-vivo.html"
+                   class="btn-primary px-4 py-2 rounded-lg font-semibold inline-block">
+                    🔧 Ver Defecto
+                </a>
+                <div class="mt-4 text-xs text-slate-400">
+                    <strong>Configuración:</strong><br>
+                    • Sin parámetros<br>
+                    • Hoy a las 17:00<br>
+                    • Google Meet por defecto
+                </div>
+            </div>
+
+            <!-- Ejemplo 6: Configuración desde JSON -->
+            <div class="example-card rounded-xl p-6">
+                <h3 class="text-xl font-semibold text-white mb-3">
+                    📋 Ejemplo desde JSON
+                </h3>
+                <p class="text-slate-300 mb-4 text-sm">
+                    Usando configuración predefinida "example1" del archivo JSON
+                </p>
+                <a href="conexion-vivo.html?meeting=example1"
+                   class="btn-primary px-4 py-2 rounded-lg font-semibold inline-block">
+                    📄 Ver Ejemplo 1
+                </a>
+                <div class="mt-4 text-xs text-slate-400">
+                    <strong>Configuración:</strong><br>
+                    • meeting=example1<br>
+                    • Desde meetings.json<br>
+                    • Configuración centralizada
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Instrucciones -->
+        <div class="mt-12 example-card rounded-xl p-8">
+            <h2 class="text-2xl font-bold text-white mb-4">📝 Instrucciones de Uso</h2>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-lg font-semibold text-yellow-400 mb-3">🌐 Parámetros de URL</h3>
+                    <div class="space-y-2 text-sm text-slate-300">
+                        <div><code class="bg-slate-800 px-2 py-1 rounded">date</code> - Fecha (YYYY-MM-DD)</div>
+                        <div><code class="bg-slate-800 px-2 py-1 rounded">time</code> - Hora (HH:MM)</div>
+                        <div><code class="bg-slate-800 px-2 py-1 rounded">url</code> - Enlace de reunión</div>
+                        <div><code class="bg-slate-800 px-2 py-1 rounded">title</code> - Título personalizado</div>
+                        <div><code class="bg-slate-800 px-2 py-1 rounded">meeting</code> - ID desde JSON</div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-yellow-400 mb-3">🎛️ Funcionalidades</h3>
+                    <div class="space-y-2 text-sm text-slate-300">
+                        <div>⏰ Cuenta regresiva automática</div>
+                        <div>🌍 Zonas horarias múltiples</div>
+                        <div>🎵 Música de fondo con controles</div>
+                        <div>🔄 Redirección automática</div>
+                        <div>📱 Diseño responsive</div>
+                        <div>🔧 Configuración dinámica</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 p-4 bg-slate-800 rounded-lg">
+                <h4 class="text-yellow-400 font-semibold mb-2">💡 Ejemplo de URL personalizada:</h4>
+                <code class="text-green-400 text-sm break-all">
+                    conexion-vivo.html?date=2025-10-14&time=17:00&url=https://meet.google.com/abc&title=Mi%20Reunión
+                </code>
+            </div>
+        </div>
+
+        <!-- Comandos de consola -->
+        <div class="mt-8 example-card rounded-xl p-8">
+            <h2 class="text-2xl font-bold text-white mb-4">🖥️ Comandos de Consola</h2>
+            <p class="text-slate-300 mb-4">Una vez en la sala de espera, puedes usar estos comandos en la consola del navegador:</p>
+            
+            <div class="space-y-4">
+                <div class="bg-slate-800 p-4 rounded-lg">
+                    <div class="text-yellow-400 font-semibold mb-2">Ver estado actual:</div>
+                    <code class="text-green-400">window.getMeetingStatus()</code>
+                </div>
+                
+                <div class="bg-slate-800 p-4 rounded-lg">
+                    <div class="text-yellow-400 font-semibold mb-2">Cambiar configuración:</div>
+                    <code class="text-green-400 text-sm">window.updateMeeting({date: "2025-10-15", time: "13:00", meetingUrl: "https://...", title: "Nueva Reunión"})</code>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center mt-12 text-slate-500 text-sm">
+        <p>🚀 Sistema de Sala de Espera - De Cero a Cien • Versión 2.0</p>
+    </footer>
+</body>
+</html>

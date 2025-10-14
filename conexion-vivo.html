@@ -3,213 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conexión en Vivo - De C                   <div class="timezone-item">
-                <div class="text-xs font-semibold text-dorado">🇨🇱 Santiago</div>
-                <div class="text-xs text-texto-secundario">12:30 PM</div>
-            </div> <div class="timezone-item">
-                <div class="text-xs font-semibold text-dorado">🇺🇾 Montevideo</div>
-                <div class="text-xs text-texto-secundario">12:30 PM</div>
-            </div>a Cien</title>
+    <title>Conexión en Vivo - De Cero a Cien</title>
+    <meta name="description" content="Sala de espera para reuniones en vivo - De Cero a Cien">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Estilos -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --azul-oscuro: #0A192F;
-            --azul-noche: #112240;
-            --dorado: #FBBF24;
-            --dorado-hover: #F59E0B;
-            --texto-claro: #E2E8F0;
-            --texto-secundario: #a7a9be;
-            --borde-sutil: #334155;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--azul-oscuro);
-            color: var(--texto-claro);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            text-align: center;
-            padding: 1rem;
-        }
-        .container-card {
-            background-color: var(--azul-noche);
-            border: 1px solid var(--borde-sutil);
-            border-radius: 1.5rem;
-            padding: 2.5rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-            max-width: 640px;
-            width: 100%;
-        }
-        .countdown {
-            font-family: 'Playfair Display', serif;
-            font-weight: 900;
-            font-size: 3rem;
-            color: var(--dorado);
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-            margin-bottom: 2rem;
-        }
-        @media (min-width: 640px) {
-            .countdown {
-                font-size: 5rem;
-            }
-        }
-        .time-unit {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 4rem;
-        }
-        .time-unit span:first-child {
-            font-size: 1.5rem;
-            line-height: 1;
-        }
-        .time-unit span:last-child {
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            color: var(--texto-secundario);
-            margin-top: 0.25rem;
-        }
-        .btn-play {
-            background-color: var(--dorado);
-            color: var(--azul-noche);
-            border-radius: 9999px;
-            width: 4rem;
-            height: 4rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-play:hover {
-            background-color: var(--dorado-hover);
-            transform: scale(1.1);
-        }
-        .btn-play:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        .pulse {
-            animation: pulse-animation 2s infinite;
-        }
-        @keyframes pulse-animation {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.7; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        .volume-btn {
-            background-color: var(--azul-noche);
-            border: 1px solid var(--borde-sutil);
-            color: var(--dorado);
-            width: 2rem;
-            height: 2rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .volume-btn:hover {
-            background-color: var(--dorado);
-            color: var(--azul-noche);
-        }
-        .volume-bar-container {
-            width: 80px;
-            height: 6px;
-            background-color: var(--azul-noche);
-            border-radius: 3px;
-            border: 1px solid var(--borde-sutil);
-            overflow: hidden;
-        }
-        .volume-bar {
-            width: 100%;
-            height: 100%;
-            background-color: var(--borde-sutil);
-            position: relative;
-        }
-        .volume-fill {
-            height: 100%;
-            background-color: var(--dorado);
-            width: 25%;
-            transition: width 0.2s ease;
-        }
-        .timezone-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.75rem;
-            margin-top: 1rem;
-        }
-        @media (min-width: 640px) {
-            .timezone-grid {
-                grid-template-columns: repeat(5, 1fr);
-                gap: 0.75rem;
-            }
-        }
-        .timezone-item {
-            background-color: var(--azul-noche);
-            border: 1px solid var(--borde-sutil);
-            border-radius: 0.5rem;
-            padding: 0.75rem;
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/styles/waiting-room.css">
+    
+    <!-- Tailwind CSS (solo para utilidades adicionales) -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="waiting-room">
 
-    <div class="container-card">
-        <h1 class="font-serif text-3xl md:text-4xl font-bold text-white mb-2">
+    <div class="container-card fade-in">
+        <h1 id="meeting-title" class="font-serif text-3xl md:text-4xl font-bold text-white mb-2">
             Sala de Espera - Reunión en Vivo
         </h1>
-        <p class="text-[var(--texto-secundario)] mb-4">
+        <p class="status-message mb-4">
             Serás redirigido automáticamente cuando comience la reunión
         </p>
-        <p class="text-sm text-[var(--texto-secundario)] mb-2">
-            📅 Martes, 14 octubre · 12:00pm – 1:00pm
+        <p id="meeting-date" class="text-sm status-message mb-2">
+            📅 Configurando horario de reunión...
         </p>
-        <p class="text-xs text-[var(--texto-secundario)] mb-3">
+        <p class="text-xs status-message mb-3">
             🌎 Hora de inicio en cada país:
         </p>
         
         <!-- Zonas horarias -->
         <div class="timezone-grid">
             <div class="timezone-item">
-                <div class="text-xs font-semibold text-dorado">�� Montevideo</div>
-                <div class="text-xs text-texto-secundario">12:00 PM</div>
+                <div class="text-xs font-semibold text-dorado">🇺🇾 Montevideo</div>
+                <div class="text-xs text-texto-secundario">--:-- --</div>
             </div>
             <div class="timezone-item">
-                <div class="text-xs font-semibold text-dorado">�� Santiago</div>
-                <div class="text-xs text-texto-secundario">12:00 PM</div>
+                <div class="text-xs font-semibold text-dorado">🇨🇱 Santiago</div>
+                <div class="text-xs text-texto-secundario">--:-- --</div>
             </div>
             <div class="timezone-item">
                 <div class="text-xs font-semibold text-dorado">🇦🇷 Buenos Aires</div>
-                <div class="text-xs text-texto-secundario">12:30 PM</div>
+                <div class="text-xs text-texto-secundario">--:-- --</div>
             </div>
             <div class="timezone-item">
                 <div class="text-xs font-semibold text-dorado">🇵🇪 Lima</div>
-                <div class="text-xs text-texto-secundario">10:30 AM</div>
+                <div class="text-xs text-texto-secundario">--:-- --</div>
             </div>
             <div class="timezone-item">
                 <div class="text-xs font-semibold text-dorado">🇨🇴 Bogotá</div>
-                <div class="text-xs text-texto-secundario">10:30 AM</div>
+                <div class="text-xs text-texto-secundario">--:-- --</div>
             </div>
         </div>
 
         <!-- Contador de Tiempo -->
         <div class="countdown" id="countdown-timer">
-            <!-- Los valores del temporizador se insertarán aquí por JavaScript -->
             <div class="time-unit" id="hours-unit" style="display: none;">
                 <span id="hours">00</span>
                 <span>horas</span>
@@ -224,7 +75,7 @@
             </div>
         </div>
 
-        <!-- Botón de Play/Pause y Reproductor de Audio -->
+        <!-- Audio y Controles -->
         <div class="flex flex-col items-center">
             <audio id="background-music" preload="metadata" autoplay loop>
                 <source src="assets/audio/sientes-dudas-al-empezar.mp3" type="audio/mpeg">
@@ -234,20 +85,22 @@
             <button id="play-pause-btn" class="btn-play mt-4" title="Controlar música de espera" style="display: none;">
                 <i id="play-pause-icon" class="fas fa-pause text-2xl"></i>
             </button>
-            <p id="message" class="mt-4 text-[var(--texto-secundario)]">Inicializando sala de espera...</p>
+            
+            <p id="message" class="status-message mt-4">Inicializando sala de espera...</p>
+            
             <!-- Controles de volumen -->
             <div class="flex items-center justify-center mt-4 gap-3">
                 <button id="volume-down" class="volume-btn">
                     <i class="fas fa-volume-down text-sm"></i>
                 </button>
                 <div class="flex items-center gap-2">
-                    <span class="text-xs text-[var(--texto-secundario)]">🔉</span>
+                    <span class="text-xs status-message">🔉</span>
                     <div class="volume-bar-container">
                         <div class="volume-bar">
                             <div id="volume-fill" class="volume-fill"></div>
                         </div>
                     </div>
-                    <span class="text-xs text-[var(--texto-secundario)]">🔊</span>
+                    <span class="text-xs status-message">🔊</span>
                 </div>
                 <button id="volume-up" class="volume-btn">
                     <i class="fas fa-volume-up text-sm"></i>
@@ -256,249 +109,136 @@
                     <i id="mute-icon" class="fas fa-volume-up text-sm"></i>
                 </button>
             </div>
-            <p class="text-xs text-[var(--texto-secundario)] mt-2 opacity-75">
+            
+            <p class="text-xs status-message mt-2 opacity-75">
                 🎵 Música de espera automática • Controles de volumen disponibles
             </p>
         </div>
     </div>
 
+    <!-- Scripts -->
+    <script src="assets/js/waiting-room.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const audio = document.getElementById('background-music');
-            const playPauseBtn = document.getElementById('play-pause-btn');
-            const playPauseIcon = document.getElementById('play-pause-icon');
-            const messageEl = document.getElementById('message');
-            const hoursEl = document.getElementById('hours');
-            const minutesEl = document.getElementById('minutes');
-            const secondsEl = document.getElementById('seconds');
-            const hoursUnit = document.getElementById('hours-unit');
-            const volumeDownBtn = document.getElementById('volume-down');
-            const volumeUpBtn = document.getElementById('volume-up');
-            const muteBtn = document.getElementById('mute-btn');
-            const muteIcon = document.getElementById('mute-icon');
-            const volumeFill = document.getElementById('volume-fill');
-            let countdownInterval;
-            let timezoneInterval;
-            let isAudioReady = false;
-            let currentVolume = 0.25; // 25% por defecto
-            let isMuted = false;
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Función para obtener parámetros de la URL
+                const getUrlParams = () => {
+                    const params = new URLSearchParams(window.location.search);
+                    return {
+                        meeting: params.get('meeting') || null,
+                        date: params.get('date') || null,
+                        time: params.get('time') || null,
+                        url: params.get('url') || null,
+                        title: params.get('title') || null
+                    };
+                };
 
-            // CONFIGURACIÓN DE LA REUNIÓN
-            const MEETING_CONFIG = {
-                // Fecha y hora de la reunión: Martes, 14 octubre 2025 · 12:30pm
-                // Zona horaria: America/Montevideo (UTC-3)
-                date: '2025-10-14',
-                time: '12:30',
-                timezone: 'America/Montevideo',
-                meetingUrl: 'https://meet.google.com/ihf-paiw-baf'
-            };
-
-            // Función para calcular el tiempo restante hasta la reunión
-            const getTimeUntilMeeting = () => {
-                try {
-                    // Crear fecha/hora de la reunión en zona horaria de Montevideo (UTC-3)
-                    const meetingDateTime = new Date(`${MEETING_CONFIG.date}T${MEETING_CONFIG.time}:00-03:00`);
-                    const now = new Date();
-                    
-                    const timeDiff = meetingDateTime.getTime() - now.getTime();
-                    const secondsRemaining = Math.floor(timeDiff / 1000);
-                    
-                    // Retorna segundos restantes (puede ser negativo si ya pasó)
-                    return Math.max(0, secondsRemaining);
-                } catch (error) {
-                    return 0;
-                }
-            };
-
-            // Función para actualizar el contador
-            const updateCountdown = (timeInSeconds) => {
-                if (timeInSeconds <= 0) {
-                    hoursEl.textContent = '00';
-                    minutesEl.textContent = '00';
-                    secondsEl.textContent = '00';
-                    hoursUnit.style.display = 'none';
-                    return;
-                }
-                
-                const hours = Math.floor(timeInSeconds / 3600);
-                const minutes = Math.floor((timeInSeconds % 3600) / 60);
-                const seconds = timeInSeconds % 60;
-                
-                // Mostrar horas solo si es mayor a 0
-                if (hours > 0) {
-                    hoursEl.textContent = String(hours).padStart(2, '0');
-                    hoursUnit.style.display = 'flex';
-                } else {
-                    hoursUnit.style.display = 'none';
-                }
-                
-                minutesEl.textContent = String(minutes).padStart(2, '0');
-                secondsEl.textContent = String(seconds).padStart(2, '0');
-            };
-
-
-
-            // Función para actualizar volumen visual
-            const updateVolumeDisplay = () => {
-                const percentage = isMuted ? 0 : (currentVolume * 100);
-                volumeFill.style.width = percentage + '%';
-                
-                if (isMuted || currentVolume === 0) {
-                    muteIcon.className = 'fas fa-volume-mute text-sm';
-                } else if (currentVolume < 0.5) {
-                    muteIcon.className = 'fas fa-volume-down text-sm';
-                } else {
-                    muteIcon.className = 'fas fa-volume-up text-sm';
-                }
-            };
-
-            // Función para redirigir a la reunión
-            const redirectToMeeting = () => {
-                messageEl.textContent = '¡Redirigiendo a la reunión...!';
-                // Pausa el audio si está reproduciéndose
-                if (!audio.paused) {
-                    audio.pause();
-                }
-                // Pequeño delay para que el usuario vea el mensaje
-                setTimeout(() => {
-                    window.location.href = MEETING_CONFIG.meetingUrl;
-                }, 2000);
-            };
-
-            // Función principal del countdown automático
-            const startAutomaticCountdown = () => {
-                const updateTimer = () => {
-                    const secondsRemaining = getTimeUntilMeeting();
-                    
-                    if (secondsRemaining <= 0) {
-                        // ¡Es hora de la reunión!
-                        clearInterval(countdownInterval);
-                        if (timezoneInterval) clearInterval(timezoneInterval);
-                        updateCountdown(0);
-                        redirectToMeeting();
-                        return;
+                // Obtener configuración de la reunión
+                const getMeetingConfig = async (params) => {
+                    // Si se pasan parámetros directos en la URL
+                    if (params.date && params.time && params.url) {
+                        return {
+                            title: params.title || 'Reunión en Vivo',
+                            date: params.date,
+                            time: params.time,
+                            meetingUrl: params.url,
+                            timezone: 'America/Montevideo'
+                        };
                     }
-                    
-                    updateCountdown(secondsRemaining);
-                    
-                    // Actualizar mensaje según el tiempo restante
-                    if (secondsRemaining > 3600) { // Más de 1 hora
-                        const hoursRemaining = Math.floor(secondsRemaining / 3600);
-                        messageEl.textContent = `Faltan ${hoursRemaining} hora(s) para la reunión. Disfruta la música de espera.`;
-                    } else if (secondsRemaining > 1800) { // Entre 30 minutos y 1 hora
-                        messageEl.textContent = 'La reunión comenzará en menos de una hora. ¡Prepárate!';
-                    } else if (secondsRemaining > 300) { // Entre 5-30 minutos
-                        messageEl.textContent = '¡La reunión comenzará pronto! Música de espera activada.';
-                    } else if (secondsRemaining > 60) { // Entre 1-5 minutos
-                        messageEl.textContent = '🔔 ¡La reunión comenzará en menos de 5 minutos!';
-                    } else if (secondsRemaining > 30) { // Entre 30 segundos y 1 minuto
-                        messageEl.textContent = '⚡ ¡La reunión comenzará en menos de un minuto!';
-                        // Asegurar que la música esté sonando en el último minuto
-                        if (isAudioReady && audio.paused) {
-                            audio.play().catch(e => console.log('Auto-play bloqueado por el navegador'));
+
+                    // Si se especifica un meeting ID, intentar cargar desde config
+                    if (params.meeting) {
+                        try {
+                            const response = await fetch('assets/config/meetings.json');
+                            const config = await response.json();
+                            
+                            if (config.meetings && config.meetings[params.meeting]) {
+                                return config.meetings[params.meeting];
+                            } else {
+                                console.warn(`Reunión "${params.meeting}" no encontrada en la configuración`);
+                            }
+                        } catch (error) {
+                            console.warn('Error cargando configuración de reuniones:', error);
                         }
-                    } else { // Menos de 30 segundos
-                        messageEl.textContent = '🚀 ¡Conectando en segundos...!';
+                    }
+
+                    // Configuración por defecto (reunión de ejemplo para hoy a las 17:00)
+                    const today = new Date();
+                    const todayStr = today.toISOString().split('T')[0]; // YYYY-MM-DD
+                    
+                    return {
+                        title: 'Reunión de Ejemplo',
+                        date: todayStr,
+                        time: '17:00',
+                        meetingUrl: 'https://meet.google.com/ihf-paiw-baf',
+                        timezone: 'America/Montevideo'
+                    };
+                };
+
+                // Obtener parámetros y configuración
+                const urlParams = getUrlParams();
+                const meetingConfig = await getMeetingConfig(urlParams);
+                
+                console.log('Configuración de reunión cargada:', meetingConfig);
+
+                // Actualizar título si está disponible
+                if (meetingConfig.title) {
+                    const titleEl = document.getElementById('meeting-title');
+                    if (titleEl) {
+                        titleEl.textContent = `Sala de Espera - ${meetingConfig.title}`;
+                    }
+                }
+
+                // Actualizar fecha mostrada
+                const dateEl = document.getElementById('meeting-date');
+                if (dateEl && meetingConfig.date && meetingConfig.time) {
+                    const meetingDate = new Date(`${meetingConfig.date}T${meetingConfig.time}:00`);
+                    const dateStr = meetingDate.toLocaleDateString('es-ES', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                    const timeStr = meetingDate.toLocaleTimeString('es-ES', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
+                    });
+                    dateEl.textContent = `📅 ${dateStr} · ${timeStr}`;
+                }
+
+                // Inicializar la sala de espera
+                window.waitingRoom = new WaitingRoom(meetingConfig);
+                
+                // Exponer métodos útiles globalmente para debugging/testing
+                window.updateMeeting = (newConfig) => {
+                    if (window.waitingRoom) {
+                        window.waitingRoom.updateConfig(newConfig);
                     }
                 };
 
-                // Ejecutar inmediatamente y luego cada segundo
-                updateTimer();
-                countdownInterval = setInterval(updateTimer, 1000);
-            };
+                window.getMeetingStatus = () => {
+                    if (window.waitingRoom) {
+                        return window.waitingRoom.getStatus();
+                    }
+                };
 
-            // Configurar volumen inicial
-            audio.volume = currentVolume;
-            updateVolumeDisplay();
-
-            // Manejo del audio automático
-            audio.addEventListener('loadedmetadata', () => {
-                isAudioReady = true;
-                // Intentar autoplay automático
-                audio.play().then(() => {
-                    playPauseIcon.classList.remove('fa-play');
-                    playPauseIcon.classList.add('fa-pause');
-                }).catch(e => {
-                    playPauseBtn.style.display = 'flex';
-                    playPauseBtn.classList.add('pulse');
+                console.log('Sala de espera inicializada correctamente');
+                console.log('Comandos disponibles:', {
+                    'window.getMeetingStatus()': 'Ver estado actual',
+                    'window.updateMeeting({date: "2025-10-15", time: "13:00", meetingUrl: "https://..."})': 'Cambiar configuración'
                 });
-            });
-
-            audio.addEventListener('error', () => {
-                // Continuar sin música en caso de error
-            });
-
-            audio.addEventListener('canplaythrough', () => {
-                if (!isAudioReady) {
-                    isAudioReady = true;
-                    audio.play().catch(e => {
-                        playPauseBtn.style.display = 'flex';
-                        playPauseBtn.classList.add('pulse');
-                    });
+                
+            } catch (error) {
+                console.error('Error inicializando sala de espera:', error);
+                
+                // Mostrar mensaje de error en la interfaz
+                const messageEl = document.getElementById('message');
+                if (messageEl) {
+                    messageEl.textContent = 'Error al inicializar la sala. Revisa la configuración.';
+                    messageEl.className = 'status-message critical';
                 }
-            });
-
-            // Controles de audio (opcionales para el usuario)
-            playPauseBtn.addEventListener('click', () => {
-                if (audio.paused) {
-                    audio.play().catch(e => {
-                        console.error('Error al reproducir audio:', e);
-                        messageEl.textContent = 'Error al reproducir. El countdown continúa.';
-                    });
-                } else {
-                    audio.pause();
-                }
-            });
-
-            audio.addEventListener('play', () => {
-                playPauseIcon.classList.remove('fa-play');
-                playPauseIcon.classList.add('fa-pause');
-                playPauseBtn.classList.remove('pulse');
-            });
-
-            audio.addEventListener('pause', () => {
-                playPauseIcon.classList.remove('fa-pause');
-                playPauseIcon.classList.add('fa-play');
-                playPauseBtn.classList.add('pulse');
-            });
-            
-            // Controles de volumen
-            volumeDownBtn.addEventListener('click', () => {
-                if (currentVolume > 0) {
-                    currentVolume = Math.max(0, currentVolume - 0.1);
-                    if (!isMuted) audio.volume = currentVolume;
-                    updateVolumeDisplay();
-                }
-            });
-
-            volumeUpBtn.addEventListener('click', () => {
-                if (currentVolume < 1) {
-                    currentVolume = Math.min(1, currentVolume + 0.1);
-                    if (!isMuted) audio.volume = currentVolume;
-                    updateVolumeDisplay();
-                }
-            });
-
-            muteBtn.addEventListener('click', () => {
-                isMuted = !isMuted;
-                audio.volume = isMuted ? 0 : currentVolume;
-                updateVolumeDisplay();
-            });
-
-            // Verificar si la reunión ya debe haber comenzado
-            const initialTimeCheck = getTimeUntilMeeting();
-            
-            if (initialTimeCheck <= 0) {
-                // La reunión ya debería haber comenzado
-                updateCountdown(0);
-                redirectToMeeting();
-            } else {
-                // Iniciar countdown automático
-                messageEl.textContent = 'Inicializando sala de espera...';
-                startAutomaticCountdown();
             }
-            
-
         });
     </script>
 </body>
