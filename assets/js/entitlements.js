@@ -201,7 +201,7 @@
     setTimeout(applyGating, 1500);
 
   // Auto-guard por carpeta/ruta
-  setTimeout(function() { w.applyPathAutoGuard(); }, 100);
+  setTimeout(function() { try { w.applyPathAutoGuard && w.applyPathAutoGuard(); } catch(_){} }, 100);
   }
 
   // API pública

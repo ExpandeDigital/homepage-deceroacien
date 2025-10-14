@@ -147,8 +147,8 @@
     <script src="assets/js/components.js"></script>
     <script src="assets/js/supabase-client.js"></script>
     <script src="assets/js/auth.js"></script>
-    <!-- Entitlements + Auditor (orden: components -> auth -> entitlements -> auditor) -->
-    <script src="/assets/js/entitlements.js"></script>
+    <!-- Entitlements ya no se carga de forma global; components.js lo inyecta solo en rutas protegidas -->
+    <!-- <script src="/assets/js/entitlements.js"></script> -->
     <script src="/assets/js/gating-auditor.js" defer></script>
     
     <!-- Scripts adicionales específicos de la página -->
