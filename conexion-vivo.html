@@ -148,8 +148,8 @@
         }
         @media (min-width: 640px) {
             .timezone-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 1rem;
+                grid-template-columns: repeat(5, 1fr);
+                gap: 0.75rem;
             }
         }
         .timezone-item {
@@ -174,26 +174,30 @@
             📅 Martes, 14 octubre · 12:00pm – 1:00pm
         </p>
         <p class="text-xs text-[var(--texto-secundario)] mb-3">
-            🌎 Hora de referencia: Montevideo (UTC-3)
+            🌎 Hora de inicio en cada país:
         </p>
         
         <!-- Zonas horarias -->
         <div class="timezone-grid">
             <div class="timezone-item">
-                <div class="text-xs font-semibold text-dorado">🇨🇱 Santiago</div>
-                <div class="text-xs text-texto-secundario" id="time-santiago">--:--</div>
+                <div class="text-xs font-semibold text-dorado">�� Montevideo</div>
+                <div class="text-xs text-texto-secundario">12:00 PM</div>
             </div>
             <div class="timezone-item">
-                <div class="text-xs font-semibold text-dorado">🇵🇪 Lima</div>
-                <div class="text-xs text-texto-secundario" id="time-lima">--:--</div>
+                <div class="text-xs font-semibold text-dorado">�� Santiago</div>
+                <div class="text-xs text-texto-secundario">12:00 PM</div>
             </div>
             <div class="timezone-item">
                 <div class="text-xs font-semibold text-dorado">🇦🇷 Buenos Aires</div>
-                <div class="text-xs text-texto-secundario" id="time-buenos-aires">--:--</div>
+                <div class="text-xs text-texto-secundario">12:00 PM</div>
+            </div>
+            <div class="timezone-item">
+                <div class="text-xs font-semibold text-dorado">🇵🇪 Lima</div>
+                <div class="text-xs text-texto-secundario">10:00 AM</div>
             </div>
             <div class="timezone-item">
                 <div class="text-xs font-semibold text-dorado">🇨🇴 Bogotá</div>
-                <div class="text-xs text-texto-secundario" id="time-bogota">--:--</div>
+                <div class="text-xs text-texto-secundario">10:00 AM</div>
             </div>
         </div>
 
@@ -216,13 +220,13 @@
 
         <!-- Botón de Play/Pause y Reproductor de Audio -->
         <div class="flex flex-col items-center">
-            <audio id="background-music" preload="metadata">
+            <audio id="background-music" preload="metadata" autoplay loop>
                 <source src="assets/audio/sientes-dudas-al-empezar.mp3" type="audio/mpeg">
                 Tu navegador no soporta el elemento de audio.
             </audio>
 
-            <button id="play-pause-btn" class="btn-play mt-4 pulse" title="Reproducir música de espera (opcional)">
-                <i id="play-pause-icon" class="fas fa-play text-2xl"></i>
+            <button id="play-pause-btn" class="btn-play mt-4" title="Controlar música de espera" style="display: none;">
+                <i id="play-pause-icon" class="fas fa-pause text-2xl"></i>
             </button>
             <p id="message" class="mt-4 text-[var(--texto-secundario)]">Inicializando sala de espera...</p>
             <!-- Controles de volumen -->
@@ -290,20 +294,12 @@
                     const meetingDateTime = new Date(`${MEETING_CONFIG.date}T${MEETING_CONFIG.time}:00-03:00`);
                     const now = new Date();
                     
-                    // Debug: mostrar fechas en consola
-                    console.log('Hora actual:', now.toISOString());
-                    console.log('Hora reunión:', meetingDateTime.toISOString());
-                    console.log('Hora reunión local:', meetingDateTime.toLocaleString());
-                    
                     const timeDiff = meetingDateTime.getTime() - now.getTime();
                     const secondsRemaining = Math.floor(timeDiff / 1000);
-                    
-                    console.log('Segundos restantes:', secondsRemaining);
                     
                     // Retorna segundos restantes (puede ser negativo si ya pasó)
                     return Math.max(0, secondsRemaining);
                 } catch (error) {
-                    console.error('Error calculando tiempo:', error);
                     return 0;
                 }
             };
@@ -334,24 +330,7 @@
                 secondsEl.textContent = String(seconds).padStart(2, '0');
             };
 
-            // Función para actualizar zonas horarias
-            const updateTimezones = () => {
-                const now = new Date();
-                const options = { hour: '2-digit', minute: '2-digit', hour12: true };
-                
-                try {
-                    document.getElementById('time-santiago').textContent = 
-                        new Date(now.toLocaleString("en-US", {timeZone: "America/Santiago"})).toLocaleTimeString('es-ES', options);
-                    document.getElementById('time-lima').textContent = 
-                        new Date(now.toLocaleString("en-US", {timeZone: "America/Lima"})).toLocaleTimeString('es-ES', options);
-                    document.getElementById('time-buenos-aires').textContent = 
-                        new Date(now.toLocaleString("en-US", {timeZone: "America/Argentina/Buenos_Aires"})).toLocaleTimeString('es-ES', options);
-                    document.getElementById('time-bogota').textContent = 
-                        new Date(now.toLocaleString("en-US", {timeZone: "America/Bogota"})).toLocaleTimeString('es-ES', options);
-                } catch (error) {
-                    console.error('Error actualizando zonas horarias:', error);
-                }
-            };
+
 
             // Función para actualizar volumen visual
             const updateVolumeDisplay = () => {
@@ -369,7 +348,6 @@
 
             // Función para redirigir a la reunión
             const redirectToMeeting = () => {
-                console.log('Iniciando redirección a:', MEETING_CONFIG.meetingUrl);
                 messageEl.textContent = '¡Redirigiendo a la reunión...!';
                 // Pausa el audio si está reproduciéndose
                 if (!audio.paused) {
@@ -377,7 +355,6 @@
                 }
                 // Pequeño delay para que el usuario vea el mensaje
                 setTimeout(() => {
-                    console.log('Redirigiendo ahora...');
                     window.location.href = MEETING_CONFIG.meetingUrl;
                 }, 2000);
             };
@@ -401,16 +378,16 @@
                     // Actualizar mensaje según el tiempo restante
                     if (secondsRemaining > 3600) { // Más de 1 hora
                         const hoursRemaining = Math.floor(secondsRemaining / 3600);
-                        messageEl.textContent = `Faltan ${hoursRemaining} hora(s) para la reunión. Relájate con la música de espera.`;
+                        messageEl.textContent = `Faltan ${hoursRemaining} hora(s) para la reunión. Disfruta la música de espera.`;
                     } else if (secondsRemaining > 1800) { // Entre 30 minutos y 1 hora
                         messageEl.textContent = 'La reunión comenzará en menos de una hora. ¡Prepárate!';
                     } else if (secondsRemaining > 300) { // Entre 5-30 minutos
-                        messageEl.textContent = '¡La reunión comenzará pronto! Reproduce la música de espera.';
+                        messageEl.textContent = '¡La reunión comenzará pronto! Música de espera activada.';
                     } else if (secondsRemaining > 60) { // Entre 1-5 minutos
                         messageEl.textContent = '🔔 ¡La reunión comenzará en menos de 5 minutos!';
                     } else if (secondsRemaining > 30) { // Entre 30 segundos y 1 minuto
                         messageEl.textContent = '⚡ ¡La reunión comenzará en menos de un minuto!';
-                        // Auto-reproducir música en el último minuto si no está sonando
+                        // Asegurar que la música esté sonando en el último minuto
                         if (isAudioReady && audio.paused) {
                             audio.play().catch(e => console.log('Auto-play bloqueado por el navegador'));
                         }
@@ -428,30 +405,30 @@
             audio.volume = currentVolume;
             updateVolumeDisplay();
 
-            // Manejo del audio
+            // Manejo del audio automático
             audio.addEventListener('loadedmetadata', () => {
                 isAudioReady = true;
-                playPauseBtn.disabled = false;
-                // Intentar autoplay
+                // Intentar autoplay automático
                 audio.play().then(() => {
-                    console.log('Autoplay exitoso');
+                    playPauseIcon.classList.remove('fa-play');
+                    playPauseIcon.classList.add('fa-pause');
                 }).catch(e => {
-                    console.log('Autoplay bloqueado, usuario debe interactuar');
+                    playPauseBtn.style.display = 'flex';
                     playPauseBtn.classList.add('pulse');
                 });
             });
 
             audio.addEventListener('error', () => {
-                messageEl.textContent = 'Audio no disponible, pero el countdown continúa.';
-                playPauseBtn.disabled = true;
-                playPauseBtn.classList.remove('pulse');
+                // Continuar sin música en caso de error
             });
 
             audio.addEventListener('canplaythrough', () => {
                 if (!isAudioReady) {
                     isAudioReady = true;
-                    playPauseBtn.disabled = false;
-                    playPauseBtn.classList.add('pulse');
+                    audio.play().catch(e => {
+                        playPauseBtn.style.display = 'flex';
+                        playPauseBtn.classList.add('pulse');
+                    });
                 }
             });
 
@@ -504,41 +481,18 @@
 
             // Verificar si la reunión ya debe haber comenzado
             const initialTimeCheck = getTimeUntilMeeting();
-            console.log('Verificación inicial - segundos restantes:', initialTimeCheck);
             
             if (initialTimeCheck <= 0) {
                 // La reunión ya debería haber comenzado
-                console.log('La reunión ya comenzó, redirigiendo...');
                 updateCountdown(0);
                 redirectToMeeting();
             } else {
                 // Iniciar countdown automático
-                console.log('Iniciando countdown automático');
-                messageEl.textContent = 'Calculando tiempo hasta la reunión...';
+                messageEl.textContent = 'Inicializando sala de espera...';
                 startAutomaticCountdown();
             }
             
-            // Inicializar y actualizar zonas horarias cada minuto
-            updateTimezones();
-            timezoneInterval = setInterval(updateTimezones, 60000);
-            
-            // Mostrar información de debug en la página (temporal)
-            const debugInfo = document.createElement('div');
-            debugInfo.style.cssText = 'position: fixed; top: 10px; left: 10px; background: rgba(0,0,0,0.8); color: white; padding: 10px; font-size: 12px; z-index: 9999; border-radius: 5px;';
-            debugInfo.innerHTML = `
-                <div><strong>✅ VERSIÓN ACTUALIZADA - 14 Oct 15:45</strong></div>
-                <div>Hora actual: ${new Date().toLocaleString()}</div>
-                <div>Reunión: ${new Date('2025-10-14T12:00:00-03:00').toLocaleString()}</div>
-                <div>Segundos restantes: ${initialTimeCheck}</div>
-            `;
-            document.body.appendChild(debugInfo);
-            
-            // Remover debug info después de 10 segundos
-            setTimeout(() => {
-                if (debugInfo.parentNode) {
-                    debugInfo.parentNode.removeChild(debugInfo);
-                }
-            }, 10000);
+
         });
     </script>
 </body>
