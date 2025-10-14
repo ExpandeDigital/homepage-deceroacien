@@ -1,0 +1,267 @@
+/* 
+ * FORMACIÓN SEMILLA - ESTILOS CENTRALIZADOS
+ * Estilos específicos para todos los componentes de Formación Semilla
+ */
+
+:root {
+    --fs-dark-blue: #0A142F;
+    --fs-light-blue: #1D2B48;
+    --fs-gold: #D4AF37;
+    --fs-yellow: #FBBF24;
+    --fs-yellow-dark: #F59E0B;
+    --fs-slate-dark: #0F172A;
+}
+
+/* === ESTILOS BASE === */
+.fs-body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0a1f2f;
+    color: #e6f1ff;
+}
+
+.fs-font-serif {
+    font-family: 'Playfair Display', serif;
+}
+
+/* === COMPONENTES REUTILIZABLES === */
+.fs-card {
+    background: #112240;
+    border: 1px solid #1e2d4d;
+}
+
+.fs-text-gradient-gold {
+    background: linear-gradient(120deg, var(--fs-gold), var(--fs-yellow-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.fs-bg-gradient-gold {
+    background: linear-gradient(120deg, var(--fs-gold), var(--fs-yellow-dark));
+}
+
+.fs-mentor-recommendation {
+    background-color: rgba(212, 175, 55, 0.05);
+    border-left: 4px solid var(--fs-gold);
+}
+
+.fs-interactive-tool {
+    background-color: var(--fs-dark-blue);
+    border: 1px solid #334155;
+}
+
+.fs-result-value {
+    background: linear-gradient(135deg, #FBBF24, #F59E0B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.fs-glow-border {
+    position: relative;
+    overflow: hidden;
+}
+
+.fs-glow-border:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 0.75rem;
+    border: 1px solid transparent;
+    background: linear-gradient(120deg, var(--fs-gold), var(--fs-dark-blue), var(--fs-dark-blue)) border-box;
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) padding-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: 
+        linear-gradient(#fff 0 0) padding-box, 
+        linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+}
+
+/* === BITÁCORA DEL FUNDADOR === */
+.bitacora-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 100vh;
+}
+
+.bitacora-sidebar {
+    background-color: var(--fs-dark-blue);
+}
+
+.bitacora-content {
+    background-color: var(--fs-light-blue);
+}
+
+.bitacora-sidebar-link {
+    transition: all 0.2s ease-in-out;
+    border-left: 4px solid transparent;
+}
+
+.bitacora-sidebar-link.active {
+    background-color: var(--fs-light-blue);
+    border-left-color: var(--fs-gold);
+    color: white;
+}
+
+.bitacora-sidebar-link:hover {
+    background-color: var(--fs-light-blue);
+}
+
+.bitacora-page {
+    display: none;
+}
+
+.bitacora-page.active {
+    display: block;
+}
+
+/* === HERRAMIENTAS INTERACTIVAS === */
+.eisenhower-quadrant {
+    min-height: 150px;
+}
+
+.task-item {
+    cursor: grab;
+}
+
+.task-item:active {
+    cursor: grabbing;
+}
+
+/* === LANDING PAGE === */
+.landing-body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--fs-slate-dark);
+    color: #E2E8F0;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(251, 191, 36, 0.05), transparent 30%),
+        radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.05), transparent 40%);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+    .bitacora-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .bitacora-sidebar {
+        display: none;
+    }
+}
+
+/* === FORMULARIOS === */
+.fs-input {
+    background: #1a2b48;
+    border: 1px solid #334155;
+    color: #e6f1ff;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+}
+
+.fs-input:focus {
+    outline: none;
+    border-color: var(--fs-yellow);
+    box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.2);
+}
+
+.fs-textarea {
+    background: #1a2b48;
+    border: 1px solid #334155;
+    color: #e6f1ff;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    resize: vertical;
+    min-height: 100px;
+}
+
+.fs-textarea:focus {
+    outline: none;
+    border-color: var(--fs-yellow);
+    box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.2);
+}
+
+/* === BOTONES === */
+.fs-btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+}
+
+.fs-btn-primary {
+    background: var(--fs-yellow);
+    color: #000;
+}
+
+.fs-btn-primary:hover {
+    background: var(--fs-yellow-dark);
+    transform: translateY(-2px);
+}
+
+.fs-btn-secondary {
+    background: transparent;
+    color: var(--fs-yellow);
+    border: 2px solid var(--fs-yellow);
+}
+
+.fs-btn-secondary:hover {
+    background: var(--fs-yellow);
+    color: #000;
+}
+
+.fs-btn-outline {
+    background: transparent;
+    border: 1px solid #6b7280;
+    color: #e6f1ff;
+}
+
+.fs-btn-outline:hover {
+    border-color: var(--fs-yellow);
+    color: var(--fs-yellow);
+}
+
+/* === UTILIDADES === */
+.fs-text-center { text-align: center; }
+.fs-text-left { text-align: left; }
+.fs-text-right { text-align: right; }
+
+.fs-mt-1 { margin-top: 0.25rem; }
+.fs-mt-2 { margin-top: 0.5rem; }
+.fs-mt-4 { margin-top: 1rem; }
+.fs-mt-6 { margin-top: 1.5rem; }
+.fs-mt-8 { margin-top: 2rem; }
+
+.fs-mb-1 { margin-bottom: 0.25rem; }
+.fs-mb-2 { margin-bottom: 0.5rem; }
+.fs-mb-4 { margin-bottom: 1rem; }
+.fs-mb-6 { margin-bottom: 1.5rem; }
+.fs-mb-8 { margin-bottom: 2rem; }
+
+.fs-p-4 { padding: 1rem; }
+.fs-p-6 { padding: 1.5rem; }
+.fs-p-8 { padding: 2rem; }
+
+.fs-rounded { border-radius: 0.5rem; }
+.fs-rounded-lg { border-radius: 0.75rem; }
+.fs-rounded-xl { border-radius: 1rem; }
+
+.fs-hidden { display: none; }
+.fs-block { display: block; }
+.fs-flex { display: flex; }
+.fs-grid { display: grid; }
+
+.fs-gap-4 { gap: 1rem; }
+.fs-gap-6 { gap: 1.5rem; }
+
+.fs-w-full { width: 100%; }
+.fs-h-full { height: 100%; }

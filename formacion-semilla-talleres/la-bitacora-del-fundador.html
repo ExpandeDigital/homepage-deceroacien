@@ -9,69 +9,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            --color-dark-blue: #0A142F;
-            --color-gold: #D4AF37;
-            --color-light-blue: #1D2B48;
-        }
-        .font-serif { font-family: 'Playfair Display', serif; }
-        .interactive-book-container {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            min-height: 100vh;
-        }
-        .sidebar { background-color: var(--color-dark-blue); }
-        .content { background-color: var(--color-light-blue); }
-        .sidebar-link {
-            transition: all 0.2s ease-in-out;
-            border-left: 4px solid transparent;
-        }
-        .sidebar-link.active {
-            background-color: var(--color-light-blue);
-            border-left-color: var(--color-gold);
-            color: white;
-        }
-        .sidebar-link:hover {
-            background-color: var(--color-light-blue);
-        }
-        .page { display: none; }
-        .page.active { display: block; }
-
-        .mentor-recommendation {
-            background-color: rgba(212, 175, 55, 0.05);
-            border-left: 4px solid var(--color-gold);
-        }
-        
-        .interactive-tool {
-            background-color: var(--color-dark-blue);
-            border: 1px solid #334155;
-        }
-
-        .result-value {
-            background: linear-gradient(135deg, #FBBF24, #F59E0B);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Styling for Eisenhower Matrix */
-        .eisenhower-quadrant {
-            min-height: 150px;
-        }
-        .task-item {
-            cursor: grab;
-        }
-        .task-item:active {
-            cursor: grabbing;
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/styles/formacion-semilla.css">
 </head>
-<body class="bg-[var(--color-dark-blue)] text-gray-300">
+<body class="fs-body">
 
-    <div class="interactive-book-container">
+    <div class="bitacora-container">
         <!-- Sidebar -->
-        <aside class="sidebar p-6 flex flex-col">
+        <aside class="bitacora-sidebar p-6 flex flex-col">
             <div class="text-center mb-6">
                 <a href="index.html" class="block">
                     <img src="../assets/logo_de_cero_a_cien_blanco_y_dorado.png" alt="Logo De Cero a Cien" class="w-20 h-20 object-contain mx-auto">
@@ -87,13 +31,13 @@
                 </a>
             </div>
             <nav id="book-nav" class="flex flex-col space-y-2">
-                <a href="#" data-page="intro" class="sidebar-link active text-gray-400 font-semibold p-3 rounded-r-lg">Bienvenida</a>
-                <a href="#" data-page="cap1" class="sidebar-link text-gray-400 font-semibold p-3 rounded-r-lg">Cap. 1: De la Idea a la Acción</a>
-                <a href="#" data-page="cap2" class="sidebar-link text-gray-400 font-semibold p-3 rounded-r-lg">Cap. 2: El Valor de tu Idea</a>
-                <a href="#" data-page="cap3" class="sidebar-link text-gray-400 font-semibold p-3 rounded-r-lg">Cap. 3: Tu Primera Venta</a>
-                <a href="#" data-page="cap4" class="sidebar-link text-gray-400 font-semibold p-3 rounded-r-lg">Cap. 4: De Bombero a Arquitecto</a>
-                <a href="#" data-page="cap5" class="sidebar-link text-gray-400 font-semibold p-3 rounded-r-lg">Cap. 5: De la Rutina a la Revolución</a>
-                 <a href="#" data-page="cierre" class="sidebar-link text-gray-400 font-semibold p-3 rounded-r-lg">Cierre: Próximo Ascenso</a>
+                <a href="#" data-page="intro" class="bitacora-sidebar-link active text-gray-400 font-semibold p-3 rounded-r-lg">Bienvenida</a>
+                <a href="#" data-page="cap1" class="bitacora-sidebar-link text-gray-400 font-semibold p-3 rounded-r-lg">Cap. 1: De la Idea a la Acción</a>
+                <a href="#" data-page="cap2" class="bitacora-sidebar-link text-gray-400 font-semibold p-3 rounded-r-lg">Cap. 2: El Valor de tu Idea</a>
+                <a href="#" data-page="cap3" class="bitacora-sidebar-link text-gray-400 font-semibold p-3 rounded-r-lg">Cap. 3: Tu Primera Venta</a>
+                <a href="#" data-page="cap4" class="bitacora-sidebar-link text-gray-400 font-semibold p-3 rounded-r-lg">Cap. 4: De Bombero a Arquitecto</a>
+                <a href="#" data-page="cap5" class="bitacora-sidebar-link text-gray-400 font-semibold p-3 rounded-r-lg">Cap. 5: De la Rutina a la Revolución</a>
+                 <a href="#" data-page="cierre" class="bitacora-sidebar-link text-gray-400 font-semibold p-3 rounded-r-lg">Cierre: Próximo Ascenso</a>
             </nav>
             <div class="mt-auto text-center text-xs text-gray-500">
                 <p>&copy; 2025 De Cero a Cien</p>
@@ -101,30 +45,30 @@
         </aside>
 
         <!-- Content -->
-        <main class="content p-8 md:p-12 overflow-y-auto">
+        <main class="bitacora-content p-8 md:p-12 overflow-y-auto">
             
             <!-- Intro Page -->
-            <div id="intro" class="page active">
-                <h2 class="font-serif text-4xl text-white mb-4">Una Carta de tu Mentor</h2>
+            <div id="intro" class="bitacora-page active">
+                <h2 class="fs-font-serif text-4xl text-white mb-4">Una Carta de tu Mentor</h2>
                 <div class="prose prose-invert max-w-none text-gray-300">
                     <p>Bienvenido/a a la Bitácora del Fundador.</p>
                     <p>Este no es un libro para leer, es un espacio para construir. En las páginas que siguen, no solo encontrarás los conceptos clave que te llevarán de la idea a un negocio rentable y sostenible, sino también las herramientas y los espacios de trabajo para que apliques cada lección a tu propia realidad.</p>
                     <p>El viaje del emprendedor es un ascenso, a veces solitario, a menudo desafiante. Considera esta bitácora como tu manual de campo, tu compañero en cada etapa del Campamento Base. Úsala para dar claridad a tus ideas, para tomar decisiones estratégicas y para registrar tu progreso.</p>
                     <p>Estamos aquí para acompañarte en cada paso. El viaje de mil millas comienza con el primer paso, y hoy, estás dando uno gigante.</p>
                     <p class="font-semibold text-white">Adelante,</p>
-                    <p class="font-serif text-yellow-400 text-xl">- El equipo de De Cero a Cien</p>
+                    <p class="fs-font-serif text-yellow-400 text-xl">- El equipo de De Cero a Cien</p>
                 </div>
             </div>
 
             <!-- Chapter 1 -->
-            <div id="cap1" class="page">
-                <h2 class="font-serif text-4xl text-white mb-2">Capítulo 1: De la Idea a la Acción</h2>
+            <div id="cap1" class="bitacora-page">
+                <h2 class="fs-font-serif text-4xl text-white mb-2">Capítulo 1: De la Idea a la Acción</h2>
                 <p class="text-lg text-gray-400 mb-8">El Primer Mapa para tu Negocio.</p>
                 
-                <h3 class="font-serif text-2xl text-yellow-400 mb-3">El Problema: El Círculo Vicioso de la Informalidad</h3>
+                <h3 class="fs-font-serif text-2xl text-yellow-400 mb-3">El Problema: El Círculo Vicioso de la Informalidad</h3>
                 <p class="mb-6">¿Sientes que trabajas mucho pero no avanzas? No estás solo. Más del 58% de los microemprendedores opera en la informalidad. Esto crea una trampa: sin formalidad no hay acceso a créditos ni a mejores clientes; y sin eso, es muy difícil crecer.</p>
                 
-                <h3 class="font-serif text-2xl text-yellow-400 mb-3">La Llave: ¿Por qué Formalizar?</h3>
+                <h3 class="fs-font-serif text-2xl text-yellow-400 mb-3">La Llave: ¿Por qué Formalizar?</h3>
                  <ul class="list-disc list-inside space-y-2 mb-8">
                     <li><strong class="text-white">Protege tu patrimonio:</strong> Separa tus finanzas personales de las del negocio. ¡Tu casa y tus ahorros estarán seguros!</li>
                     <li><strong class="text-white">Accede a nuevos clientes:</strong> Podrás venderle a empresas más grandes que exigen facturas.</li>
@@ -132,35 +76,35 @@
                     <li><strong class="text-white">Proyecta confianza y seriedad:</strong> Mejora la percepción de tu marca en el mercado.</li>
                 </ul>
 
-                <div class="mentor-recommendation p-4 rounded-lg mb-8">
+                <div class="fs-mentor-recommendation p-4 rounded-lg mb-8">
                     <p class="font-bold text-yellow-500">Recomendación del Mentor:</p>
                     <p class="text-gray-300 italic">"Tu primer objetivo no es ser millonario, es ser rentable. Conocer tus números te da un objetivo claro y te quita el miedo a la incertidumbre."</p>
                 </div>
 
-                <h3 class="font-serif text-2xl text-yellow-400 mb-3">Zona de Trabajo: Tu Primera Herramienta Práctica</h3>
-                <div class="interactive-tool p-6 rounded-lg">
+                <h3 class="fs-font-serif text-2xl text-yellow-400 mb-3">Zona de Trabajo: Tu Primera Herramienta Práctica</h3>
+                <div class="fs-interactive-tool p-6 rounded-lg">
                     <h4 class="text-xl font-bold text-white mb-2">Calculadora de Punto de Equilibrio</h4>
                     <p class="text-gray-400 mb-6">Descubre cuántas unidades necesitas vender para cubrir tus costos.</p>
                     <div class="grid md:grid-cols-2 gap-6">
                         <div class="space-y-4">
                             <div>
                                 <label for="costosFijos" class="block text-sm font-medium text-gray-400 mb-1">Costos Fijos Mensuales ($)</label>
-                                <input type="number" id="costosFijos" class="w-full bg-gray-800 border-gray-600 rounded-md p-2 text-white" placeholder="Ej: 1000">
+                                <input type="number" id="costosFijos" class="fs-input fs-w-full" placeholder="Ej: 1000">
                             </div>
                             <div>
                                 <label for="precioVenta" class="block text-sm font-medium text-gray-400 mb-1">Precio de Venta por Unidad ($)</label>
-                                <input type="number" id="precioVenta" class="w-full bg-gray-800 border-gray-600 rounded-md p-2 text-white" placeholder="Ej: 50">
+                                <input type="number" id="precioVenta" class="fs-input fs-w-full" placeholder="Ej: 50">
                             </div>
                             <div>
                                 <label for="costoVariable" class="block text-sm font-medium text-gray-400 mb-1">Costo Variable por Unidad ($)</label>
-                                <input type="number" id="costoVariable" class="w-full bg-gray-800 border-gray-600 rounded-md p-2 text-white" placeholder="Ej: 20">
+                                <input type="number" id="costoVariable" class="fs-input fs-w-full" placeholder="Ej: 20">
                             </div>
                         </div>
                         <div class="bg-gray-900/50 p-6 rounded-lg flex flex-col justify-center items-center text-center">
                             <p class="text-gray-400">Necesitas vender</p>
-                            <p id="unidadesEquilibrio" class="text-6xl font-bold result-value">0</p>
+                            <p id="unidadesEquilibrio" class="text-6xl font-bold fs-result-value">0</p>
                             <p class="text-gray-400">unidades al mes para cubrir tus costos.</p>
-                             <div id="error-pe" class="hidden text-red-400 mt-2">El precio debe ser mayor al costo.</div>
+                             <div id="error-pe" class="fs-hidden text-red-400 mt-2">El precio debe ser mayor al costo.</div>
                         </div>
                     </div>
                 </div>
@@ -349,156 +293,22 @@
         </main>
     </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const navLinks = document.querySelectorAll('.sidebar-link');
-        const pages = document.querySelectorAll('.page');
-
-        // Navigation logic
-        navLinks.forEach(link => {
-            link.addEventListener('click', e => {
-                e.preventDefault();
-                const pageId = link.dataset.page;
-
-                navLinks.forEach(nav => nav.classList.remove('active'));
-                link.classList.add('active');
-
-                pages.forEach(page => page.classList.remove('active'));
-                document.getElementById(pageId).classList.add('active');
-            });
-        });
-
-        // Chapter 1: Break-Even Calculator
-        const costosFijosEl = document.getElementById('costosFijos');
-        const precioVentaEl = document.getElementById('precioVenta');
-        const costoVariableEl = document.getElementById('costoVariable');
-        const unidadesEquilibrioEl = document.getElementById('unidadesEquilibrio');
-        const errorPeEl = document.getElementById('error-pe');
-
-        function calcularEquilibrio() {
-            const costosFijos = parseFloat(costosFijosEl.value) || 0;
-            const precioVenta = parseFloat(precioVentaEl.value) || 0;
-            const costoVariable = parseFloat(costoVariableEl.value) || 0;
-            
-            if (precioVenta > 0 && precioVenta <= costoVariable) {
-                errorPeEl.classList.remove('hidden');
-                unidadesEquilibrioEl.textContent = 'X';
-                return;
-            }
-            errorPeEl.classList.add('hidden');
-
-            if (precioVenta === 0 || costosFijos === 0) {
-                 unidadesEquilibrioEl.textContent = 0;
-                 return;
-            }
-
-            const margenContribucion = precioVenta - costoVariable;
-            const unidades = margenContribucion > 0 ? Math.ceil(costosFijos / margenContribucion) : 0;
-            unidadesEquilibrioEl.textContent = unidades.toLocaleString('es-ES');
-        }
-        [costosFijosEl, precioVentaEl, costoVariableEl].forEach(el => el.addEventListener('input', calcularEquilibrio));
-
-        // Chapter 3: Copy Generator
-        const generateCopyBtn = document.getElementById('generateCopyBtn');
-        const copyResult = document.getElementById('copyResult');
-        const copyOutput = document.getElementById('copyOutput');
-        
-        generateCopyBtn.addEventListener('click', () => {
-            const cliente = document.getElementById('copyCliente').value || "[Tu cliente ideal]";
-            const solucion = document.getElementById('copySolucion').value || "[Tu solución]";
-            const diferencia = document.getElementById('copyDiferencia').value || "[Tu diferenciador clave]";
-            
-            copyOutput.textContent = `¿Eres ${cliente}? Te ayudamos a ${solucion}. A diferencia de otros, nosotros ${diferencia}. ¡Transforma tu negocio hoy!`;
-            copyResult.classList.remove('hidden');
-        });
-
-        // Chapter 4: Eisenhower Matrix
-        const newTaskInput = document.getElementById('newTaskInput');
-        const addTaskBtn = document.getElementById('addTaskBtn');
-        const taskList = document.getElementById('taskList');
-        const quadrants = document.querySelectorAll('.eisenhower-quadrant');
-        let draggableTask = null;
-
-        function createTaskElement(text) {
-             const task = document.createElement('div');
-             task.textContent = text;
-             task.className = 'task-item bg-gray-700 p-2 rounded-md text-sm';
-             task.draggable = true;
-
-            task.addEventListener('dragstart', () => {
-                draggableTask = task;
-                setTimeout(() => { task.style.display = 'none'; }, 0);
-            });
-
-            task.addEventListener('dragend', () => {
-                setTimeout(() => {
-                    draggableTask.style.display = 'block';
-                    draggableTask = null;
-                }, 0);
-            });
-            return task;
-        }
-
-        addTaskBtn.addEventListener('click', () => {
-            const taskText = newTaskInput.value.trim();
-            if (taskText) {
-                taskList.appendChild(createTaskElement(taskText));
-                newTaskInput.value = '';
-            }
-        });
-
-        quadrants.forEach(quadrant => {
-            quadrant.addEventListener('dragover', e => e.preventDefault());
-            quadrant.addEventListener('drop', e => {
-                e.preventDefault();
-                if (draggableTask) {
-                    quadrant.appendChild(draggableTask);
-                }
-            });
-        });
-
-        // Chapter 5: SCAMPER
-        const scamperInput = document.getElementById('scamperInput');
-        const scamperQuestionsEl = document.getElementById('scamperQuestions');
-        const scamperTemplates = {
-            S: "¿Qué puedes **Sustituir** en {topic}? ¿Materiales, procesos, personas, lugares?",
-            C: "¿Qué puedes **Combinar** con {topic}? ¿Otros productos, servicios, ideas?",
-            A: "¿Qué puedes **Adaptar** de otro contexto a {topic}? ¿Una idea de otra industria?",
-            M: "¿Cómo puedes **Modificar** o magnificar {topic}? ¿Hacerlo más grande, más pequeño, más fuerte, con otro color?",
-            P: "¿Puedes **Poner** {topic} en otro **Uso**? ¿Sirve para otros clientes o problemas?",
-            E: "¿Qué puedes **Eliminar** o simplificar en {topic}? ¿Quitar una parte, reducir pasos?",
-            R: "¿Puedes **Reorganizar** o invertir el proceso de {topic}? ¿Cambiar el orden, el patrón, el layout?"
-        };
-        
-        function generateScamperQuestions() {
-            const topic = scamperInput.value.trim() || "tu producto/servicio";
-            let html = '';
-            for (const key in scamperTemplates) {
-                const question = scamperTemplates[key].replace('{topic}', `<strong class="text-yellow-400">${topic}</strong>`);
-                html += `
-                    <div class="bg-gray-800 p-3 rounded-lg">
-                        <p class="font-bold text-white">${question}</p>
-                        <textarea class="w-full bg-gray-700 rounded p-2 text-sm mt-2" rows="2" placeholder="Escribe tus ideas aquí..."></textarea>
-                    </div>
-                `;
-            }
-            scamperQuestionsEl.innerHTML = html;
-        }
-
-        scamperInput.addEventListener('input', generateScamperQuestions);
-        generateScamperQuestions(); // Initial call
-    });
-</script>
-
 <!-- Scripts del sistema -->
-<script src="../assets/js/components.js"></script>
-<script src="../assets/js/auth.js"></script>
+<script src="../assets/js/formacion-semilla.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Inicializar la funcionalidad de la Bitácora del Fundador
+        if (typeof FormacionSemilla !== 'undefined' && FormacionSemilla.bitacora) {
+            FormacionSemilla.bitacora.init();
+        }
+        
         // Requiere autenticación para acceder
         requireAuth();
     });
 </script>
+
+<script src="../assets/js/components.js"></script>
+<script src="../assets/js/auth.js"></script>
 
 </body>
 </html>
