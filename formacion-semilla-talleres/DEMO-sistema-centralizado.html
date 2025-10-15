@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DEMO Sistema Centralizado | Formación Semilla</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="../assets/styles/common.css">
+	<link rel="stylesheet" href="../assets/styles/mobile.css">
+	<link rel="stylesheet" href="../assets/styles/formacion-semilla.css">
+</head>
+<body class="antialiased bg-[#0a1f2f] text-[#e6f1ff]">
+	<div class="sticky top-0 z-50 bg-[#0a192f]/80 backdrop-blur-lg border-b border-gray-800">
+		<nav class="container mx-auto max-w-7xl px-6 py-3 flex justify-between items-center">
+			<a href="index.html" class="text-lg font-bold highlight-text">← Volver a Formación Semilla</a>
+			<span class="text-sm text-slate-300">DEMO Herramienta</span>
+		</nav>
+	</div>
+	<main class="container mx-auto max-w-4xl px-6 py-12">
+		<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+			<!-- Columna Izquierda: Explicación -->
+			<aside class="doc-container p-6 rounded-lg">
+				<h1 class="text-2xl font-black text-white mb-2">DEMO Sistema Centralizado</h1>
+				<p class="text-sm highlight-text mb-4">Herramienta de ejemplo para Formación Semilla</p>
+				<div class="space-y-6 text-gray-400 text-sm">
+					<div>
+						<h2 class="font-bold text-slate-300 text-base">🎯 Objetivo</h2>
+						<p class="mt-1">Demostrar la estructura y formato unificado de las herramientas FS.</p>
+					</div>
+					<div>
+						<h2 class="font-bold text-slate-300 text-base">⭐ Importancia</h2>
+						<p class="mt-1">Permite validar visualmente la coherencia entre las herramientas FS y De Cero a Cien.</p>
+					</div>
+				</div>
+			</aside>
+			<!-- Columna Derecha: Herramienta -->
+			<div class="tool-container p-6 rounded-lg flex flex-col justify-center items-center">
+				<h2 class="text-xl font-bold text-white mb-6">Demo Interactiva</h2>
+				<div class="w-full max-w-md space-y-6">
+					<p class="text-gray-400">Aquí iría la funcionalidad centralizada de la herramienta.</p>
+				</div>
+			</div>
+		</div>
+	</main>
+	<footer class="footer-component"></footer>
+	<script src="../assets/js/components.js"></script>
+	<script src="../assets/js/auth.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			requireAuth();
+		});
+	</script>
+</body>
+</html>
