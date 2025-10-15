@@ -134,9 +134,28 @@
       const authRequiredMessage = document.getElementById('auth-required-message');
       const mainContent = document.getElementById('main-content');
       
+      // Limpia cualquier overlay de gating heredado (por caché o scripts externos)
+      function removeGatingOverlays() {
+        try {
+          const candidates = Array.from(document.querySelectorAll('body > div'));
+          candidates.forEach(el => {
+            const zs = (el.style && el.style.zIndex) ? parseInt(el.style.zIndex, 10) : 0;
+            const pos = (el.style && el.style.position) || '';
+            const cls = el.className || '';
+            const text = el.textContent || '';
+            const looksLikeOverlay = (pos === 'fixed' && zs >= 9999) || /bg-slate-900\/90/.test(cls) || text.includes('Contenido disponible para alumnos');
+            if (looksLikeOverlay) {
+              el.remove();
+            }
+          });
+        } catch (_) {}
+      }
+      
       // Función para verificar autenticación con seguridad
       function checkAuthentication() {
         console.log('🔍 Verificando autenticación para Formación Semilla...');
+        // Siempre limpiar posibles overlays antes de aplicar la UI
+        removeGatingOverlays();
         
         // Para desarrollo: revisar si hay parámetro ?dev=true para mostrar contenido
         const urlParams = new URLSearchParams(window.location.search);
@@ -220,6 +239,8 @@
           // Mostrar contenido y proteger de modificaciones posteriores
           authRequiredMessage.classList.add('hidden');
           mainContent.classList.remove('hidden');
+          // Asegurar que no queden overlays
+          removeGatingOverlays();
           
           // Prevenir que otros scripts modifiquen el contenido de Formación Semilla
           setTimeout(function() {
@@ -228,6 +249,8 @@
         } else {
           // Usuario no registrado: mostrar mensaje de registro requerido
           console.log('❌ Usuario no autenticado - mostrando mensaje de registro');
+          // Asegurar que no queden overlays que bloqueen el mensaje
+          removeGatingOverlays();
           authRequiredMessage.classList.remove('hidden');
           mainContent.classList.add('hidden');
         }
