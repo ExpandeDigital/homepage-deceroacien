@@ -1305,7 +1305,16 @@ class AppManager {
         try {
             const already = Array.from(document.scripts).some(s => (s.src || '').includes('assets/js/entitlements.js'));
             const path = (location && location.pathname || '').toLowerCase();
-            const shouldLoad = /\/portal-alumno\.html$/.test(path) || /\/fase_\d+_ecd\//.test(path) || /\/fase_\d+_de0a100\//.test(path);
+            // Cargar en portal y herramientas por ruta conocida (soporta fase_1_ecd y fase-1-ecd)
+            let shouldLoad = /\/portal-alumno\.html$/.test(path)
+                || /\/fase[_-]\d+_ecd\//.test(path)
+                || /\/fase_\d+_de0a100\//.test(path);
+            // Además, si la página contiene elementos con data-entitlement, inyectar (ej. academy, catálogos)
+            if (!shouldLoad) {
+                try {
+                    shouldLoad = !!document.querySelector('[data-entitlement]');
+                } catch (_) {}
+            }
             if (!already && shouldLoad) {
                 const s = document.createElement('script');
                 const v = GlobalConfig.assetVersion ? `?v=${GlobalConfig.assetVersion}` : '';
