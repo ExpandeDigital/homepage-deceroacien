@@ -1303,7 +1303,8 @@ class AppManager {
      */
     ensureEntitlementsLoader() {
         try {
-            const already = Array.from(document.scripts).some(s => (s.src || '').includes('assets/js/entitlements.js'));
+            const scripts = Array.from(document.scripts);
+            const entScript = scripts.find(s => (s.src || '').includes('assets/js/entitlements.js'));
             const path = (location && location.pathname || '').toLowerCase();
             // Cargar en portal y herramientas por ruta conocida (soporta fase_1_ecd y fase-1-ecd)
             let shouldLoad = /\/portal-alumno\.html$/.test(path)
@@ -1315,6 +1316,24 @@ class AppManager {
                     shouldLoad = !!document.querySelector('[data-entitlement]');
                 } catch (_) {}
             }
+            // Si ya existe un script directo, normalizar cache-busting y defer
+            if (entScript) {
+                try {
+                    const hasQuery = (entScript.src || '').includes('?');
+                    const v = GlobalConfig.assetVersion ? `v=${GlobalConfig.assetVersion}` : '';
+                    if (v) {
+                        if (hasQuery) {
+                            if (!entScript.src.includes('v=')) {
+                                entScript.src = `${entScript.src}&${v}`;
+                            }
+                        } else {
+                            entScript.src = `${entScript.src}?${v}`;
+                        }
+                    }
+                    entScript.defer = true;
+                } catch (_) {}
+            }
+            const already = !!entScript;
             if (!already && shouldLoad) {
                 const s = document.createElement('script');
                 const v = GlobalConfig.assetVersion ? `?v=${GlobalConfig.assetVersion}` : '';

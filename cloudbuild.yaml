@@ -8,6 +8,18 @@ steps:
   # Forzar revalidación de JS críticos para evitar servir versiones en caché en CDN/navegador
   - name: gcr.io/cloud-builders/gsutil
     args: ['-m', 'setmeta', '-r', '-h', 'Cache-Control:no-cache, max-age=0, must-revalidate', 'gs://www-deceroacien-app/assets/js']
+  # Reducir la caché de HTML de Formación Semilla y raíz para evitar versiones antiguas
+  - name: gcr.io/cloud-builders/gsutil
+    args: ['-m', 'setmeta', '-h', 'Cache-Control:no-cache, max-age=0, must-revalidate', 'gs://www-deceroacien-app/formacion-semilla-talleres/index.html']
+  - name: gcr.io/cloud-builders/gsutil
+    args: ['-m', 'setmeta', '-h', 'Cache-Control:no-cache, max-age=0, must-revalidate', 'gs://www-deceroacien-app/*.html']
+  # Invalidación de caché en Cloud CDN para asegurar propagación inmediata
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args: ['compute','url-maps','invalidate-cdn-cache','lb-deceroacien','--path','/formacion-semilla-talleres/*']
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args: ['compute','url-maps','invalidate-cdn-cache','lb-deceroacien','--path','/assets/js/*']
   - name: gcr.io/cloud-builders/docker
     args: ['build', '-t', 'gcr.io/$PROJECT_ID/deceroacien-api', '-f', 'Dockerfile', '.']
   - name: gcr.io/cloud-builders/docker

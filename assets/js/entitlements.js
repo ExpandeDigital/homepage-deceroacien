@@ -373,6 +373,10 @@
   // Inicializar después de que todas las funciones estén definidas
   setTimeout(function() {
     // Otorgar entitlements por query string (retorno de checkout)
-    w.grantFromURLParams();
+    try {
+      if (typeof w.grantFromURLParams === 'function') {
+        w.grantFromURLParams();
+      }
+    } catch(_) {}
   }, 50);
 })(window);
