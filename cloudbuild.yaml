@@ -5,6 +5,9 @@ steps:
     args: ['run', 'build:frontend']
   - name: gcr.io/cloud-builders/gsutil
     args: ['-m', 'rsync', '-r', 'dist', 'gs://www-deceroacien-app']
+  # Forzar revalidación de JS críticos para evitar servir versiones en caché en CDN/navegador
+  - name: gcr.io/cloud-builders/gsutil
+    args: ['-m', 'setmeta', '-r', '-h', 'Cache-Control:no-cache, max-age=0, must-revalidate', 'gs://www-deceroacien-app/assets/js']
   - name: gcr.io/cloud-builders/docker
     args: ['build', '-t', 'gcr.io/$PROJECT_ID/deceroacien-api', '-f', 'Dockerfile', '.']
   - name: gcr.io/cloud-builders/docker
