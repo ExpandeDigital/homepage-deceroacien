@@ -8,6 +8,16 @@
 </head>
 <body class="fs-body">
   <header class="header-component"></header>
+  <script>
+    // Enlaces universales: return a la URL actual
+    document.addEventListener('DOMContentLoaded', function() {
+      var currentUrl = encodeURIComponent(window.location.href);
+      var register = document.getElementById('fs-register-link');
+      var login = document.getElementById('fs-login-link');
+      if (register) register.href = `../auth/register.html?return=${currentUrl}`;
+      if (login) login.href = `../auth/login.html?return=${currentUrl}`;
+    });
+  </script>
   <main class="py-16">
     <div class="fs-container">
       <!-- Mensaje para usuarios no registrados -->
@@ -18,10 +28,10 @@
           <p class="text-gray-300 mb-4">Para acceder a Formación Semilla necesitas registrarte gratuitamente en nuestra plataforma.</p>
           <p class="text-gray-400 text-sm mb-6">Cinco talleres introductorios para emprendedores que quieren avanzar más rápido.</p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="../auth/register.html?return=formacion-semilla-talleres/" class="fs-btn fs-btn-primary">
+            <a id="fs-register-link" href="#" class="fs-btn fs-btn-primary">
               Registrarme Gratis
             </a>
-            <a href="../auth/login.html?return=formacion-semilla-talleres/" class="fs-btn fs-btn-secondary">
+            <a id="fs-login-link" href="#" class="fs-btn fs-btn-secondary">
               Ya tengo cuenta
             </a>
           </div>
