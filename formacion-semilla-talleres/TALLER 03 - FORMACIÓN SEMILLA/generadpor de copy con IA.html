@@ -45,144 +45,78 @@
             <!-- =============================================== -->
             <!-- SECCIÓN DE DESCRIPCIONES                      -->
             <!-- =============================================== -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                <!-- Objetivo -->
-                <div class="bg-gray-800 p-4 rounded-lg">
-                    <h3 class="font-bold text-lg text-yellow-400 mb-2">🎯 Objetivo</h3>
-                    <p class="text-sm text-gray-300">Crear un primer borrador de tu mensaje de ventas claro y persuasivo para atraer clientes.</p>
-                </div>
-                <!-- Importancia -->
-                <div class="bg-gray-800 p-4 rounded-lg">
-                    <h3 class="font-bold text-lg text-yellow-400 mb-2">⭐ Importancia</h3>
-                    <p class="text-sm text-gray-300">Un buen "copy" (texto de venta) es la diferencia entre ser ignorado y captar el interés de tu cliente ideal.</p>
-                </div>
-                <!-- Qué es lo que hace -->
-                <div class="bg-gray-800 p-4 rounded-lg">
-                    <h3 class="font-bold text-lg text-yellow-400 mb-2">⚙️ ¿Qué es lo que hace?</h3>
-                    <p class="text-sm text-gray-300">Transforma las características de tu producto en beneficios que resuenan con los problemas de tu cliente.</p>
-                </div>
-                <!-- Para qué me sirve -->
-                <div class="bg-gray-800 p-4 rounded-lg">
-                    <h3 class="font-bold text-lg text-yellow-400 mb-2">💡 ¿Para qué me sirve?</h3>
-                    <p class="text-sm text-gray-300">Para ahorrar horas de tiempo, superar el "miedo a la página en blanco" y tener un texto base para tus redes o web.</p>
-                </div>
-            </div>
-            <!-- =============================================== -->
-            <!-- FIN DE LA SECCIÓN DE DESCRIPCIONES              -->
-            <!-- =============================================== -->
-            
-             <div class="bg-gray-800/50 border border-yellow-500/30 rounded-lg p-4 mb-8 text-left text-sm max-w-3xl mx-auto">
-                <h4 class="font-bold text-yellow-400 mb-2">Aclaraciones para el uso de esta herramienta:</h4>
-                <ul class="list-disc list-inside text-gray-400 space-y-1">
-                    <li>Sé lo más específico posible en tus respuestas para obtener mejores resultados.</li>
-                    <li>La IA te dará un primer borrador excelente. ¡Siéntete libre de editarlo y añadir tu toque personal!</li>
-                    <li>Esta herramienta es ideal para crear textos para redes sociales, anuncios o la sección principal de tu web.</li>
-                    <li>Guarda tus resultados, te servirán como base para toda tu comunicación.</li>
-                </ul>
-            </div>
 
-            <div class="grid lg:grid-cols-2 gap-8">
-                <div class="bg-gray-800 p-6 rounded-lg space-y-4">
-                    <div>
-                        <label for="productName" class="block text-sm font-medium text-gray-400 mb-2">1. Nombre de tu Producto/Servicio</label>
-                        <input type="text" id="productName" class="w-full bg-gray-700 border-gray-600 rounded-md p-2 text-white" placeholder="Ej: Curso de Marketing Digital">
-                    </div>
-                    <div>
-                        <label for="idealClient" class="block text-sm font-medium text-gray-400 mb-2">2. Cliente Ideal y su Problema Principal</label>
-                        <textarea id="idealClient" rows="3" class="w-full bg-gray-700 border-gray-600 rounded-md p-2 text-white" placeholder="Ej: Emprendedores que luchan por atraer clientes online de forma consistente"></textarea>
-                    </div>
-                    <div>
-                        <label for="solution" class="block text-sm font-medium text-gray-400 mb-2">3. ¿Cómo tu Solución los Ayuda?</label>
-                        <textarea id="solution" rows="3" class="w-full bg-gray-700 border-gray-600 rounded-md p-2 text-white" placeholder="Ej: Les enseñamos un sistema paso a paso para crear contenido que atrae y convierte"></textarea>
-                    </div>
-                    <div>
-                        <label for="benefits" class="block text-sm font-medium text-gray-400 mb-2">4. Tres Beneficios Clave (uno por línea)</label>
-                        <textarea id="benefits" rows="3" class="w-full bg-gray-700 border-gray-600 rounded-md p-2 text-white" placeholder="Ej: Aumentar tus ventas&#10;Atraer más leads&#10;Ahorrar tiempo y dinero"></textarea>
-                    </div>
-                    <button id="generateCopyBtn" class="w-full bg-yellow-500 text-gray-900 font-bold py-3 px-4 rounded-lg hover:bg-yellow-400 transition-colors">
-                        Generar Copy con IA
-                    </button>
+            <!DOCTYPE html>
+            <html lang="es">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Generador de Copy con IA | Formación Semilla</title>
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+                <link rel="stylesheet" href="../../assets/styles/common.css">
+                <link rel="stylesheet" href="../../assets/styles/mobile.css">
+                <link rel="stylesheet" href="../../assets/styles/formacion-semilla.css">
+            </head>
+            <body class="antialiased bg-[#0a1f2f] text-[#e6f1ff]">
+                <div class="sticky top-0 z-50 bg-[#0a192f]/80 backdrop-blur-lg border-b border-gray-800">
+                    <nav class="container mx-auto max-w-7xl px-6 py-3 flex justify-between items-center">
+                        <a href="taller-03.html" class="text-lg font-bold highlight-text">← Volver al Taller 03</a>
+                        <span class="text-sm text-slate-300">Herramienta interactiva</span>
+                    </nav>
                 </div>
-                <div id="copy-results" class="bg-gray-800 p-6 rounded-lg">
-                    <div id="copy-placeholder" class="text-center text-gray-500 flex items-center justify-center h-full">
-                        <p>Los textos generados por nuestra IA aparecerán aquí.</p>
-                    </div>
-                    <div id="copy-loading" class="hidden text-center text-gray-400 flex-col items-center justify-center h-full">
-                        <div class="loader mb-4"></div>
-                        <p>Analizando... generando textos persuasivos...</p>
-                    </div>
-                    <div id="copy-generated" class="hidden space-y-6 text-sm">
-                        <div>
-                            <h4 class="font-semibold text-yellow-400 mb-2">Titular Principal (Headline):</h4>
-                            <p id="copy-headline" class="bg-gray-700 p-3 rounded-md"></p>
+                <main class="container mx-auto max-w-4xl px-6 py-12">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Columna Izquierda: Explicación -->
+                        <aside class="doc-container p-6 rounded-lg">
+                            <h1 class="text-2xl font-black text-white mb-2">Generador de Copy con IA</h1>
+                            <p class="text-sm highlight-text mb-4">Obtén textos persuasivos para tu página de ventas</p>
+                            <div class="space-y-6 text-gray-400 text-sm">
+                                <div>
+                                    <h2 class="font-bold text-slate-300 text-base">🎯 Objetivo</h2>
+                                    <p class="mt-1">Crear un primer borrador de tu mensaje de ventas claro y persuasivo para atraer clientes.</p>
+                                </div>
+                                <div>
+                                    <h2 class="font-bold text-slate-300 text-base">⭐ Importancia</h2>
+                                    <p class="mt-1">Un buen "copy" (texto de venta) es la diferencia entre ser ignorado y captar el interés de tu cliente ideal.</p>
+                                </div>
+                                <div>
+                                    <h2 class="font-bold text-slate-300 text-base">⚙️ ¿Qué es lo que hace?</h2>
+                                    <p class="mt-1">Transforma las características de tu producto en beneficios que resuenan con los problemas de tu cliente.</p>
+                                </div>
+                                <div>
+                                    <h2 class="font-bold text-slate-300 text-base">💡 ¿Para qué me sirve?</h2>
+                                    <p class="mt-1">Para ahorrar horas de tiempo, superar el "miedo a la página en blanco" y tener un texto base para tus redes o web.</p>
+                                </div>
+                                <div class="bg-gray-800/50 border border-yellow-500/30 rounded-lg p-4 text-left text-sm">
+                                    <h4 class="font-bold text-yellow-400 mb-2">Aclaraciones para el uso de esta herramienta:</h4>
+                                    <ul class="list-disc list-inside text-gray-400 space-y-1">
+                                        <li>Sé lo más específico posible en tus respuestas para obtener mejores resultados.</li>
+                                        <li>La IA te dará un primer borrador excelente. ¡Siéntete libre de editarlo y añadir tu toque personal!</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </aside>
+                        <!-- Columna Derecha: Herramienta -->
+                        <div class="tool-container p-6 rounded-lg flex flex-col justify-center items-center">
+                            <h2 class="text-xl font-bold text-white mb-6">Tu Generador de Copy</h2>
+                            <div class="w-full max-w-md space-y-6">
+                                <!-- Aquí va el formulario y resultados, igual que antes -->
+                            </div>
                         </div>
-                        <div>
+                    </div>
+                </main>
+                <footer class="footer-component"></footer>
+                <script src="../../assets/js/components.js"></script>
+                <script src="../../assets/js/auth.js"></script>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        requireAuth();
+                    });
+                </script>
+            </body>
+            </html>
                             <h4 class="font-semibold text-yellow-400 mb-2">Subtítulo (Beneficio Principal):</h4>
+
                             <p id="copy-subheadline" class="bg-gray-700 p-3 rounded-md"></p>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-yellow-400 mb-2">Puntos de Dolor y Beneficios:</h4>
-                            <ul id="copy-benefits-list" class="list-disc list-inside space-y-2 bg-gray-700 p-3 rounded-md"></ul>
-                        </div>
-                         <div>
-                            <h4 class="font-semibold text-yellow-400 mb-2">Llamada a la Acción (CTA):</h4>
-                            <p id="copy-cta" class="bg-gray-700 p-3 rounded-md"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-<script>
-    const generateBtn = document.getElementById('generateCopyBtn');
-    const placeholder = document.getElementById('copy-placeholder');
-    const loading = document.getElementById('copy-loading');
-    const generated = document.getElementById('copy-generated');
-
-    generateBtn.addEventListener('click', () => {
-        const productName = document.getElementById('productName').value;
-        const idealClient = document.getElementById('idealClient').value;
-        const solution = document.getElementById('solution').value;
-        const benefitsText = document.getElementById('benefits').value;
-        
-        if (!productName || !idealClient || !solution || !benefitsText) {
-            alert('Por favor, completa todos los campos para obtener el mejor resultado.');
-            return;
-        }
-
-        placeholder.classList.add('hidden');
-        generated.classList.add('hidden');
-        loading.classList.remove('hidden');
-        
-        // Simulación de llamada a IA
-        setTimeout(() => {
-            const benefitsList = benefitsText.split('\n').filter(b => b.trim() !== '');
-            
-            // Lógica simple para generar el copy (se puede reemplazar con una llamada a API real)
-            const clientProblem = idealClient.split(' ').slice(2).join(' '); // Extrae el problema
-            const headline = `¿Cansado de ${clientProblem}? Descubre cómo ${benefitsList[0].trim().toLowerCase()} con ${productName}.`;
-            const subheadline = `${solution.charAt(0).toUpperCase() + solution.slice(1)} para que finalmente puedas ${benefitsList[1].toLowerCase()} y ${benefitsList[2].toLowerCase()}.`;
-            
-            document.getElementById('copy-headline').textContent = headline;
-            document.getElementById('copy-subheadline').textContent = subheadline;
-            
-            const benefitsListEl = document.getElementById('copy-benefits-list');
-            benefitsListEl.innerHTML = '';
-            benefitsList.forEach(benefit => {
-                const li = document.createElement('li');
-                li.textContent = `Logra ${benefit.trim().toLowerCase()} sin tener que [dolor común, ej: gastar una fortuna en anuncios].`;
-                benefitsListEl.appendChild(li);
-            });
-
-            document.getElementById('copy-cta').textContent = `¡Sí, quiero ${benefitsList[0].trim().toUpperCase()} ahora!`;
-
-            loading.classList.add('hidden');
-            generated.classList.remove('hidden');
-        }, 2500);
-    });
-</script>
-
-</body>
-</html>
-
