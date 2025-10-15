@@ -31,6 +31,10 @@
         }
     </style>
 </head>
+    <link rel="stylesheet" href="../../assets/styles/common.css?v=1">
+    <link rel="stylesheet" href="../../assets/styles/mobile.css?v=1">
+    <link rel="stylesheet" href="../../assets/styles/formacion-semilla.css?v=1">
+</head>
 <body class="bg-gray-900">
 
     <div class="text-gray-200 p-8">
@@ -91,11 +95,11 @@
                     <div id="matrix-placeholder" class="text-center text-gray-500 flex items-center justify-center h-full">
                         <p>La Matriz de Eisenhower con tus tareas priorizadas aparecerá aquí.</p>
                     </div>
-                    <div id="matrix-loading" class="hidden text-center text-gray-400 flex flex-col items-center justify-center h-full">
+                    <div id="matrix-loading" class="hidden text-center text-gray-400 flex-col items-center justify-center h-full">
                         <div class="loader mb-4"></div>
                         <p>Clasificando tareas...</p>
                     </div>
-                    <div id="matrix-generated" class="hidden grid grid-cols-2 grid-rows-2 gap-4 h-full">
+                    <div id="matrix-generated" class="hidden grid-cols-2 grid-rows-2 gap-4 h-full">
                         <div class="bg-green-500/20 border-l-4 border-green-400 p-4 rounded-md">
                             <h4 class="font-bold text-green-300">Hacer Ahora (Urgente e Importante)</h4>
                             <ul id="matrix-do" class="text-sm mt-2 space-y-1 list-disc list-inside"></ul>
