@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Generador de Ideas con IA (SCAMPER) | Formación Semilla</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="../../assets/styles/common.css">
+	<link rel="stylesheet" href="../../assets/styles/mobile.css">
+	<link rel="stylesheet" href="../../assets/styles/formacion-semilla.css">
+</head>
+<body class="antialiased bg-[#0a1f2f] text-[#e6f1ff]">
+	<div class="sticky top-0 z-50 bg-[#0a192f]/80 backdrop-blur-lg border-b border-gray-800">
+		<nav class="container mx-auto max-w-7xl px-6 py-3 flex justify-between items-center">
+			<a href="taller-05.html" class="text-lg font-bold highlight-text">← Volver al Taller 05</a>
+			<span class="text-sm text-slate-300">Herramienta interactiva</span>
+		</nav>
+	</div>
+	<main class="container mx-auto max-w-4xl px-6 py-12">
+		<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+			<aside class="doc-container p-6 rounded-lg">
+				<h1 class="text-2xl font-black text-white mb-2">Generador de Ideas con IA (SCAMPER)</h1>
+				<p class="text-sm highlight-text mb-4">Supera el bloqueo creativo y genera nuevas ideas</p>
+				<div class="space-y-6 text-gray-400 text-sm">
+					<div>
+						<h2 class="font-bold text-slate-300 text-base">🎯 Objetivo</h2>
+						<p class="mt-1">Entrenar tu "músculo" creativo para encontrar oportunidades de mejora y nuevas líneas de negocio.</p>
+					</div>
+					<div>
+						<h2 class="font-bold text-slate-300 text-base">⭐ Importancia</h2>
+						<p class="mt-1">La innovación constante es lo que diferencia a los negocios que sobreviven de los que lideran el mercado.</p>
+					</div>
+					<div>
+						<h2 class="font-bold text-slate-300 text-base">⚙️ ¿Qué es lo que hace?</h2>
+						<p class="mt-1">Aplica 7 "lentes" de innovación (el método SCAMPER) a tu idea para forzarte a pensar fuera de la caja.</p>
+					</div>
+					<div>
+						<h2 class="font-bold text-slate-300 text-base">💡 ¿Para qué me sirve?</h2>
+						<p class="mt-1">Para generar decenas de ideas accionables en minutos y convertir la innovación en un hábito.</p>
+					</div>
+					<div class="bg-gray-800/50 border border-yellow-500/30 rounded-lg p-4 text-left text-sm">
+						<h4 class="font-bold text-yellow-400 mb-2">Aclaraciones para el uso de esta herramienta:</h4>
+						<ul class="list-disc list-inside text-gray-400 space-y-1">
+							<li>Describe tu producto o negocio de la forma más simple y clara posible.</li>
+							<li>No todas las ideas generadas serán perfectas. El objetivo es estimular tu pensamiento.</li>
+							<li>Anota las ideas que más te resuenen y explóralas más a fondo.</li>
+							<li>Usa esta herramienta una vez al mes para mantener tu negocio fresco y relevante.</li>
+						</ul>
+					</div>
+				</div>
+			</aside>
+			<div class="tool-container p-6 rounded-lg flex flex-col justify-center items-center">
+				<h2 class="text-xl font-bold text-white mb-6">Tu Generador SCAMPER</h2>
+				<div class="w-full max-w-md space-y-6">
+					<label for="ideaInput" class="block text-sm font-medium text-gray-400 mb-2">Describe tu idea, producto o servicio actual:</label>
+					<textarea id="ideaInput" rows="3" class="w-full bg-gray-700 border-gray-600 rounded-md p-2 text-white" placeholder="Ej: Una app de delivery de comida casera para oficinistas"></textarea>
+					<button id="generateIdeasBtn" class="w-full md:w-auto bg-yellow-500 text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-yellow-400 transition-colors">
+						Desbloquear Innovación con IA
+					</button>
+					<div id="ideas-results" class="mt-8">
+						<div id="ideas-placeholder" class="text-center text-gray-500 py-12">
+							<p>Las sugerencias de innovación de nuestra IA aparecerán aquí.</p>
+						</div>
+						<div id="ideas-loading" class="text-center text-gray-400 flex flex-col items-center justify-center py-12" style="display:none;">
+							<div class="loader mb-4"></div>
+							<p>Aplicando SCAMPER para generar ideas disruptivas...</p>
+						</div>
+						<div id="ideas-generated" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" style="display:none;">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<footer class="footer-component"></footer>
+	<script src="../../assets/js/components.js"></script>
+	<script src="../../assets/js/auth.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			requireAuth();
+		});
+		const generateBtn = document.getElementById('generateIdeasBtn');
+		const placeholder = document.getElementById('ideas-placeholder');
+		const loading = document.getElementById('ideas-loading');
+		const generatedContainer = document.getElementById('ideas-generated');
+		const ideaInput = document.getElementById('ideaInput');
+		generateBtn.addEventListener('click', () => {
+			const idea = ideaInput.value;
+			if (!idea.trim()) {
+				alert('Por favor, describe tu idea de negocio.');
+				return;
+			}
+			placeholder.style.display = 'none';
+			generatedContainer.style.display = 'none';
+			generatedContainer.innerHTML = '';
+			loading.style.display = '';
+			setTimeout(() => {
+				const scamperSuggestions = {
+					'Sustituir': `¿Qué pasaría si sustituyes los envases tradicionales por opciones comestibles o 100% compostables para tu '${idea}'?`,
+					'Combinar': `¿Puedes combinar tu '${idea}' con un servicio de suscripción de kits de ingredientes para que los clientes cocinen en casa el fin de semana?`,
+					'Adaptar': `¿Cómo adaptarías el modelo de Netflix (una tarifa plana mensual por 'comidas ilimitadas' hasta cierto valor) a tu '${idea}'?`,
+					'Modificar': `¿Puedes magnificar tu '${idea}' para ofrecer un servicio de catering corporativo para empresas, o minimizarla a un servicio de snacks saludables a media tarde?`,
+					'Poner en otro uso': `¿Podrías usar tu red de cocineros y logística para ofrecer talleres de cocina online o vender los insumos que usas directamente a los clientes?`,
+					'Eliminar': `¿Qué pasaría si eliminas el menú variable y ofreces un único 'plato del día' increíblemente bueno y a un precio competitivo para tu '${idea}'?`,
+					'Reorganizar': `¿Puedes invertir el proceso? Que las empresas publiquen sus necesidades de almuerzo semanal y los cocineros de tu red oferten para adjudicarse el servicio.`
+				};
+				for (const [key, value] of Object.entries(scamperSuggestions)) {
+					const card = `
+						<div class="bg-gray-700 p-4 rounded-lg border border-gray-600">
+							<h4 class="font-bold text-yellow-400 mb-2">${key.toUpperCase()}</h4>
+							<p class="text-sm text-gray-300">${value}</p>
+						</div>
+					`;
+					generatedContainer.innerHTML += card;
+				}
+				loading.style.display = 'none';
+				generatedContainer.style.display = '';
+			}, 2000);
+		});
+	</script>
+</body>
+</html>
