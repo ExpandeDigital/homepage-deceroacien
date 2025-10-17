@@ -68,6 +68,33 @@ class AuthManager {
         const loginForm = document.getElementById('loginForm');
         if (loginForm) {
             loginForm.addEventListener('submit', (e) => this.handleLogin(e));
+            // Enlace "¿Olvidaste tu contraseña?"
+            const forgot = document.getElementById('forgotPasswordLink');
+            if (forgot) {
+                forgot.addEventListener('click', (ev) => {
+                    ev.preventDefault();
+                    // Abrir modal de recuperación
+                    try {
+                        const modal = document.getElementById('resetModal');
+                        const emailInput = loginForm.querySelector('#email');
+                        const resetEmail = document.getElementById('resetEmail');
+                        if (resetEmail && emailInput && emailInput.value) resetEmail.value = emailInput.value.trim();
+                        if (modal) modal.style.display = 'flex';
+                        const close = () => { if (modal) modal.style.display = 'none'; };
+                        const cancelBtn = document.getElementById('resetCancel');
+                        const submitBtn = document.getElementById('resetSubmit');
+                        cancelBtn && (cancelBtn.onclick = close);
+                        submitBtn && (submitBtn.onclick = async () => {
+                            const mail = (resetEmail && resetEmail.value || '').trim();
+                            if (!mail || !/@/.test(mail)) { this.showError('Ingresa un correo válido.'); return; }
+                            await this.requestPasswordReset(mail);
+                            close();
+                            const fb = document.getElementById('passwordResetFeedback');
+                            if (fb) { fb.style.display = 'block'; fb.textContent = 'Si el correo existe, te enviamos un enlace para restablecer tu contraseña.'; }
+                        });
+                    } catch(_){}
+                });
+            }
         }
 
         // Register form
@@ -75,6 +102,171 @@ class AuthManager {
         if (registerForm) {
             registerForm.addEventListener('submit', (e) => this.handleRegister(e));
         }
+    }
+
+    /**
+     * Helper: obtiene cliente Supabase si está disponible
+     */
+    async getSupabaseClient() {
+        try {
+            if (window.SupabaseAuth && window.SupabaseAuth.ensureSupabase) {
+                return await window.SupabaseAuth.ensureSupabase();
+            }
+        } catch (e) {
+            console.warn('[auth] No se pudo inicializar Supabase:', e);
+        }
+        return null;
+    }
+
+    /**
+     * Maneja submit de Login con email/contraseña (Supabase primero, fallback legacy)
+     */
+    async handleLogin(event) {
+        event.preventDefault();
+        const form = event.currentTarget || document.getElementById('loginForm');
+        const email = (form.querySelector('#email') || {}).value?.trim();
+        const password = (form.querySelector('#password') || {}).value || '';
+        const remember = !!(form.querySelector('#remember-me') || {}).checked;
+
+        if (!email || !password) {
+            this.showError('Ingresa tu correo y contraseña.');
+            return;
+        }
+        this.showLoading('loginButton', 'Ingresando…');
+        try {
+            // Intentar con Supabase
+            const sb = await this.getSupabaseClient();
+            if (sb && sb.auth && sb.auth.signInWithPassword) {
+                const { data, error } = await sb.auth.signInWithPassword({ email, password });
+                if (error) throw error;
+                // Persistencia se maneja en supabase-client.onAuthStateChange
+                if (remember) {
+                    try { localStorage.setItem(AuthConfig.storage.sessionKey, 'persistent'); } catch(_){}
+                }
+                this.redirectAfterAuth();
+                return;
+            }
+            // Fallback (Firebase/legacy)
+            const res = await this.authenticateUser(email, password);
+            if (res && res.success) {
+                this.handleSuccessfulAuth(res.user, res.token, remember);
+            } else {
+                throw new Error((res && res.message) || 'No se pudo iniciar sesión.');
+            }
+        } catch (e) {
+            const msg = e && e.message ? e.message : 'Error al iniciar sesión';
+            this.showError(msg);
+        } finally {
+            this.hideLoading('loginButton', 'Iniciar Sesión');
+        }
+    }
+
+    /**
+     * Maneja submit de Registro con email/contraseña (Supabase primero, fallback legacy)
+     */
+    async handleRegister(event) {
+        event.preventDefault();
+        const form = event.currentTarget || document.getElementById('registerForm');
+        const firstName = (form.querySelector('#firstName') || {}).value?.trim();
+        const lastName = (form.querySelector('#lastName') || {}).value?.trim();
+        const email = (form.querySelector('#email') || {}).value?.trim();
+        const password = (form.querySelector('#password') || {}).value || '';
+        const confirmPassword = (form.querySelector('#confirmPassword') || {}).value || '';
+        const company = (form.querySelector('#company') || {}).value?.trim();
+        const termsAccepted = !!(form.querySelector('#terms') || {}).checked;
+        const newsletter = !!(form.querySelector('#newsletter') || {}).checked;
+        // Validaciones básicas
+        if (!firstName || !lastName) { this.showError('Completa tu nombre y apellido.'); return; }
+        if (!email) { this.showError('Ingresa tu correo.'); return; }
+        if (!password) { this.showError('Ingresa una contraseña.'); return; }
+        if (password !== confirmPassword) { this.showError('Las contraseñas no coinciden.'); return; }
+        if (!termsAccepted) { this.showError('Debes aceptar los Términos y Condiciones.'); return; }
+        // Política mínima: 8+, mayúsculas, minúsculas y números (recomendado)
+        try {
+            const hasMin = password.length >= 8;
+            const hasUpper = /[A-ZÁÉÍÓÚÑ]/.test(password);
+            const hasLower = /[a-záéíóúñ]/.test(password);
+            const hasNum = /[0-9]/.test(password);
+            if (!(hasMin && hasUpper && hasLower && hasNum)) {
+                this.showError('La contraseña debe tener mínimo 8 caracteres, incluir mayúsculas, minúsculas y números.');
+                return;
+            }
+        } catch(_){}
+
+        this.showLoading('registerButton', 'Creando cuenta…');
+        try {
+            const sb = await this.getSupabaseClient();
+            if (sb && sb.auth && sb.auth.signUp) {
+                const { data, error } = await sb.auth.signUp({
+                    email,
+                    password,
+                    options: {
+                        data: { first_name: firstName, last_name: lastName, company: company || null, newsletter: !!newsletter },
+                        emailRedirectTo: (window.location && window.location.origin ? window.location.origin : '') + '/auth/login.html'
+                    }
+                });
+                if (error) throw error;
+                // Si requiere verificación por email, session será null
+                const needsConfirm = !data.session;
+                if (needsConfirm) {
+                    this.showSuccess('Te enviamos un correo para confirmar tu cuenta. Revisa tu bandeja de entrada.');
+                    // Opcional: redirigir a login después de unos segundos
+                    setTimeout(()=>{ try { window.location.href = 'login.html'; } catch(_){} }, 1200);
+                    return;
+                } else {
+                    // Sesión activa inmediatamente
+                    this.redirectAfterAuth();
+                    return;
+                }
+            }
+            // Fallback a registro legacy
+            const res = await this.registerUser({ firstName, lastName, email, password, company, newsletter });
+            if (res && res.success) {
+                this.handleSuccessfulAuth(res.user, res.token, true);
+            } else {
+                throw new Error((res && res.message) || 'No se pudo crear la cuenta.');
+            }
+        } catch (e) {
+            const msg = e && e.message ? e.message : 'Error al crear la cuenta';
+            this.showError(msg);
+        } finally {
+            this.hideLoading('registerButton', 'Crear Cuenta');
+        }
+    }
+
+    /**
+     * Solicita email de recuperación de contraseña (Supabase)
+     */
+    async requestPasswordReset(email) {
+        try {
+            const sb = await this.getSupabaseClient();
+            if (!sb) throw new Error('Servicio de autenticación no disponible.');
+            let targetEmail = email && /@/.test(email) ? email : null;
+            if (!targetEmail) {
+                try { targetEmail = (prompt('Ingresa tu correo para recuperar tu contraseña')||'').trim(); } catch(_){ }
+            }
+            if (!targetEmail) { this.showError('Debes ingresar un correo válido.'); return; }
+            const redirectTo = (window.location && window.location.origin ? window.location.origin : '') + '/auth/reset-password.html';
+            const { error } = await sb.auth.resetPasswordForEmail(targetEmail, { redirectTo });
+            if (error) throw error;
+            this.showSuccess('Si el correo existe, te enviamos un enlace para restablecer tu contraseña.');
+        } catch(e) {
+            const msg = e && e.message ? e.message : 'No se pudo iniciar la recuperación.';
+            this.showError(msg);
+        }
+    }
+
+    /**
+     * Actualiza la contraseña del usuario autenticado en sesión de recuperación
+     */
+    async updatePassword(newPassword) {
+        const sb = await this.getSupabaseClient();
+        if (!sb) throw new Error('Servicio de autenticación no disponible.');
+        const { data: sessionData } = await sb.auth.getSession();
+        if (!sessionData || !sessionData.session) throw new Error('Sesión de recuperación no encontrada. Abre el enlace de tu correo.');
+        const { error } = await sb.auth.updateUser({ password: newPassword });
+        if (error) throw error;
+        return true;
     }
 
     // (Firebase legacy eliminado)
@@ -342,6 +534,11 @@ if (document.readyState === 'loading') {
 
 // Asegurar que esté disponible globalmente
 window.initializeAuthManager = initializeAuthManager;
+// Exponer helpers para flujos externos
+window.AuthFlows = {
+    requestPasswordReset: (...args) => { try { return authManager.requestPasswordReset(...args); } catch(e){ throw e; } },
+    updatePassword: (...args) => { try { return authManager.updatePassword(...args); } catch(e){ throw e; } }
+};
 
 /**
  * FUNCIONES UTILITY PARA PROTEGER PÁGINAS
