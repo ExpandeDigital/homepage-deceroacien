@@ -2,8 +2,8 @@
 # Actualiza CSS, clases y scripts para usar el sistema centralizado
 
 $talleres = @(
-    "TALLER 04 - FORMACIÓN SEMILLA\taller-04.html",
-    "TALLER 05 - FORMACIÓN SEMILLA\taller-05.html"
+    "taller-04-formacion-semilla\taller-04.html",
+    "taller-05-formacion-semilla\taller-05.html"
 )
 
 $basePath = "c:\Users\cjofr\Desktop\IGNACIO\homepage-deceroacien\formacion-semilla-talleres"
