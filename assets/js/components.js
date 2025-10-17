@@ -1264,6 +1264,8 @@ class AppManager {
     ensureAuthLoaderAndGuard() {
         try {
             const path = (location && location.pathname || '').toLowerCase();
+            // No aplicar guard en Formación Semilla: la página maneja su propio CTA sin redirigir a login
+            if (path.includes('/formacion-semilla-talleres/')) return;
             const isProtected = /\/portal-alumno\.html$/.test(path)
                 || /\/fase_\d+_ecd\//.test(path)
                 || /\/fase_\d+_de0a100\//.test(path)
