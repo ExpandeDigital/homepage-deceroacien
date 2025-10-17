@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DE CERO A CIEN TALENT · Gestión de Personas — Generador de Planes de Desarrollo Individual (PDI)</title>
+    <meta name="description" content="Crea planes PDI personalizados con metas, acciones y métricas para desarrollar habilidades y retener talento clave." />
+    <link rel="canonical" href="https://deceroacien.app/liderazgo/TALENT%20Gesti%C3%B3n%20de%20Personas/8Generador%20de%20Planes%20de%20Desarrollo%20Individual.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="DE CERO A CIEN" />
+    <meta property="og:title" content="DE CERO A CIEN TALENT · Gestión de Personas — Generador de Planes de Desarrollo Individual (PDI)" />
+    <meta property="og:description" content="Crea planes PDI personalizados con metas, acciones y métricas para desarrollar habilidades y retener talento clave." />
+    <meta property="og:url" content="https://deceroacien.app/liderazgo/TALENT%20Gesti%C3%B3n%20de%20Personas/8Generador%20de%20Planes%20de%20Desarrollo%20Individual.html" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="DE CERO A CIEN TALENT · Gestión de Personas — Generador de Planes de Desarrollo Individual (PDI)" />
+    <meta name="twitter:description" content="Crea planes PDI personalizados con metas, acciones y métricas para desarrollar habilidades y retener talento clave." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A192F;
+            color: #E2E8F0;
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .tool-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #FBBF24;
+        }
+        input, textarea, select {
+            background-color: #112240;
+            border: 1px solid #334155;
+            color: #E2E8F0;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            width: 100%;
+        }
+        input:focus, textarea:focus, select:focus {
+            border-color: #FBBF24;
+            outline: none;
+        }
+        .btn {
+            background-color: #FBBF24;
+            color: #111827;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            background-color: #F59E0B;
+            transform: scale(1.05);
+        }
+        .status-message {
+            background-color: #0A192F;
+            border: 1px solid #334155;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            color: #FBBF24;
+            display: none;
+        }
+        .action-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        @media (min-width: 640px) {
+            .action-container {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+        .goal-card {
+            background-color: #112240;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid #FBBF24;
+        }
+    </style>
+    </head>
+<body class="p-4 sm:p-8">
+    <div class="bg-[#112240] p-6 sm:p-12 rounded-xl shadow-lg min-h-screen">
+        <div class="tool-content">
+            <h2 class="text-3xl font-serif mb-6 text-center text-white">Generador de Planes de Desarrollo Individual (PDI)</h2>
+            <p class="text-center mb-8 text-gray-400">Convierte las conversaciones de desempeño en planes de acción y crecimiento. Retén a tu mejor talento invirtiendo en su futuro profesional.</p>
+
+            <div class="space-y-6 mb-12">
+                <div class="bg-[#0A192F] p-6 rounded-lg shadow-inner border-t-4 border-yellow-500">
+                    <h3 class="text-2xl font-bold mb-4 flex items-center text-white"><span class="text-3xl mr-2">📈</span> Objetivo y Funcionamiento</h3>
+                    <p>Un PDI es un acuerdo entre el colaborador y la empresa para alinear sus metas profesionales con los objetivos de la organización. Esta herramienta te permite documentar los objetivos, las acciones necesarias y los recursos, creando un documento claro y motivador para el desarrollo.</p>
+                </div>
+            </div>
+
+            <hr class="border-t-2 border-gray-700 my-12" />
+
+            <div class="space-y-6 mb-8 bg-[#0A192F] p-6 rounded-lg shadow-inner">
+                <h3 class="text-xl font-bold text-white mb-4">Detalles del Plan</h3>
+                <div>
+                    <label for="collaborator-name" class="block text-sm font-medium mb-1">Nombre del Colaborador</label>
+                    <input type="text" id="collaborator-name" placeholder="Ej: Sofía Pérez">
+                </div>
+                <div>
+                    <label for="collaborator-role" class="block text-sm font-medium mb-1">Rol</label>
+                    <input type="text" id="collaborator-role" placeholder="Ej: Gerente de Marketing Digital">
+                </div>
+                
+                <h4 class="text-lg font-bold text-yellow-500 mt-6 mb-2">Añadir un Objetivo</h4>
+                <div>
+                    <label for="goal-description" class="block text-sm font-medium mb-1">Descripción del Objetivo</label>
+                    <textarea id="goal-description" rows="2" placeholder="Ej: Mejorar las habilidades de liderazgo para gestionar equipos más grandes."></textarea>
+                </div>
+                <div>
+                    <label for="goal-date" class="block text-sm font-medium mb-1">Fecha Límite</label>
+                    <input type="date" id="goal-date">
+                </div>
+                <div>
+                    <label for="goal-resources" class="block text-sm font-medium mb-1">Recursos y Acciones</label>
+                    <textarea id="goal-resources" rows="2" placeholder="Ej: Inscribirse en un curso online de gestión de equipos. 
+Participar en la próxima reunión de liderazgo."></textarea>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <button id="add-goal-btn" class="btn">Añadir Objetivo</button>
+            </div>
+
+            <div id="results-section" class="space-y-4 result-box p-6 rounded-lg shadow-lg mt-8 hidden">
+                <h3 class="text-xl font-bold text-white mb-4">Plan de Desarrollo Individual</h3>
+                <p id="pdi-header" class="text-lg font-bold"></p>
+                <div id="goals-container" class="space-y-4"></div>
+            </div>
+
+            <div class="action-container mt-8">
+                <button id="save-btn" class="btn">Guardar</button>
+                <button id="download-btn" class="btn">Descargar</button>
+                <button id="share-btn" class="btn">Compartir</button>
+            </div>
+            
+            <div id="status-message" class="status-message mt-8"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const collaboratorNameInput = document.getElementById('collaborator-name');
+            const collaboratorRoleInput = document.getElementById('collaborator-role');
+            const goalDescriptionInput = document.getElementById('goal-description');
+            const goalDateInput = document.getElementById('goal-date');
+            const goalResourcesInput = document.getElementById('goal-resources');
+            const addGoalBtn = document.getElementById('add-goal-btn');
+            const goalsContainer = document.getElementById('goals-container');
+            const resultsSection = document.getElementById('results-section');
+            const pdiHeader = document.getElementById('pdi-header');
+            const saveBtn = document.getElementById('save-btn');
+            const downloadBtn = document.getElementById('download-btn');
+            const shareBtn = document.getElementById('share-btn');
+            const statusMessage = document.getElementById('status-message');
+
+            let pdiGoals = [];
+
+            const showStatusMessage = (message) => {
+                statusMessage.textContent = message;
+                statusMessage.style.display = 'block';
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 3000);
+            };
+
+            const renderGoals = () => {
+                goalsContainer.innerHTML = '';
+                if (pdiGoals.length === 0) {
+                    goalsContainer.innerHTML = '<p class="text-gray-400">Aún no se han añadido objetivos.</p>';
+                } else {
+                    pdiGoals.forEach((goal, index) => {
+                        const goalCard = document.createElement('div');
+                        goalCard.className = 'goal-card';
+                        goalCard.innerHTML = `
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-bold text-lg text-white">Objetivo ${index + 1}</h4>
+                                <button data-index="${index}" class="text-red-400 hover:text-red-500 delete-goal-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm6 0a1 1 0 112 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <p class="mb-2"><strong class="text-yellow-500">Descripción:</strong> ${goal.description}</p>
+                            <p class="mb-2"><strong class="text-yellow-500">Fecha Límite:</strong> ${goal.date}</p>
+                            <p><strong class="text-yellow-500">Recursos/Acciones:</strong> ${goal.resources.replace(/\n/g, '<br>')}</p>
+                        `;
+                        goalsContainer.appendChild(goalCard);
+                    });
+                }
+            };
+
+            const updateHeader = () => {
+                const name = collaboratorNameInput.value.trim();
+                const role = collaboratorRoleInput.value.trim();
+                if (name && role) {
+                    pdiHeader.textContent = `Colaborador: ${name} | Rol: ${role}`;
+                    resultsSection.classList.remove('hidden');
+                } else {
+                    pdiHeader.textContent = '';
+                }
+            };
+
+            addGoalBtn.addEventListener('click', () => {
+                const description = goalDescriptionInput.value.trim();
+                const date = goalDateInput.value;
+                const resources = goalResourcesInput.value.trim();
+
+                if (description) {
+                    pdiGoals.push({ description, date, resources });
+                    goalDescriptionInput.value = '';
+                    goalDateInput.value = '';
+                    goalResourcesInput.value = '';
+                    renderGoals();
+                    updateHeader();
+                } else {
+                    showStatusMessage("Por favor, ingresa una descripción para el objetivo.");
+                }
+            });
+
+            goalsContainer.addEventListener('click', (e) => {
+                if (e.target.closest('.delete-goal-btn')) {
+                    const index = e.target.closest('.delete-goal-btn').dataset.index;
+                    pdiGoals.splice(index, 1);
+                    renderGoals();
+                    updateHeader();
+                }
+            });
+
+            collaboratorNameInput.addEventListener('input', updateHeader);
+            collaboratorRoleInput.addEventListener('input', updateHeader);
+            saveBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Guardar': ¡Próximamente!"));
+            downloadBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Descargar': ¡Próximamente!"));
+            shareBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Compartir': ¡Próximamente!"));
+        });
+    </script>
+</body>
+</html>

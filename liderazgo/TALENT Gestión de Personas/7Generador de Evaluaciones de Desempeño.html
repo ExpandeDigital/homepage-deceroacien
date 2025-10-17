@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DE CERO A CIEN TALENT · Gestión de Personas — Generador de Evaluaciones de Desempeño</title>
+    <meta name="description" content="Genera evaluaciones claras y constructivas para impulsar el crecimiento y el desempeño continuo del equipo." />
+    <link rel="canonical" href="https://deceroacien.app/liderazgo/TALENT%20Gesti%C3%B3n%20de%20Personas/7Generador%20de%20Evaluaciones%20de%20Desempe%C3%B1o.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="DE CERO A CIEN" />
+    <meta property="og:title" content="DE CERO A CIEN TALENT · Gestión de Personas — Generador de Evaluaciones de Desempeño" />
+    <meta property="og:description" content="Genera evaluaciones claras y constructivas para impulsar el crecimiento y el desempeño continuo del equipo." />
+    <meta property="og:url" content="https://deceroacien.app/liderazgo/TALENT%20Gesti%C3%B3n%20de%20Personas/7Generador%20de%20Evaluaciones%20de%20Desempe%C3%B1o.html" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="DE CERO A CIEN TALENT · Gestión de Personas — Generador de Evaluaciones de Desempeño" />
+    <meta name="twitter:description" content="Genera evaluaciones claras y constructivas para impulsar el crecimiento y el desempeño continuo del equipo." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A192F;
+            color: #E2E8F0;
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .tool-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #FBBF24;
+        }
+        input, textarea, select {
+            background-color: #112240;
+            border: 1px solid #334155;
+            color: #E2E8F0;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            width: 100%;
+        }
+        input:focus, textarea:focus, select:focus {
+            border-color: #FBBF24;
+            outline: none;
+        }
+        .btn {
+            background-color: #FBBF24;
+            color: #111827;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            background-color: #F59E0B;
+            transform: scale(1.05);
+        }
+        .status-message {
+            background-color: #0A192F;
+            border: 1px solid #334155;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            color: #FBBF24;
+            display: none;
+        }
+        .action-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        @media (min-width: 640px) {
+            .action-container {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="bg-[#112240] p-6 sm:p-12 rounded-xl shadow-lg min-h-screen">
+        <div class="tool-content">
+            <h2 class="text-3xl font-serif mb-6 text-center text-white">Generador de Evaluaciones de Desempeño</h2>
+            <p class="text-center mb-8 text-gray-400">Transforma las evaluaciones en conversaciones de crecimiento. Obtén un plan estructurado para medir el impacto de tu equipo.</p>
+
+            <!-- Sección de Explicaciones -->
+            <div class="space-y-6 mb-12">
+                <div class="bg-[#0A192F] p-6 rounded-lg shadow-inner border-t-4 border-yellow-500">
+                    <h3 class="text-2xl font-bold mb-4 flex items-center text-white"><span class="text-3xl mr-2">📊</span> Objetivo y Funcionamiento</h3>
+                    <p>Las evaluaciones de desempeño son una herramienta crucial para el desarrollo profesional y la retención del talento. Esta herramienta te ayuda a generar una plantilla con preguntas y puntos clave, garantizando que cada evaluación sea objetiva, constructiva y enfocada en el desarrollo a largo plazo.</p>
+                </div>
+            </div>
+
+            <hr class="border-t-2 border-gray-700 my-12" />
+
+            <!-- Formulario de Entrada de Datos -->
+            <div class="space-y-6 mb-8 bg-[#0A192F] p-6 rounded-lg shadow-inner">
+                <h3 class="text-xl font-bold text-white mb-4">Configurar Evaluación</h3>
+                <div>
+                    <label for="role-select" class="block text-sm font-medium mb-1">Rol a Evaluar</label>
+                    <select id="role-select">
+                        <option value="">-- Elige un rol --</option>
+                        <option value="gerente_proyecto">Gerente de Proyecto</option>
+                        <option value="desarrollador_software">Desarrollador de Software</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="period-select" class="block text-sm font-medium mb-1">Periodo de Evaluación</label>
+                    <select id="period-select">
+                        <option value="">-- Elige un periodo --</option>
+                        <option value="trimestral">Trimestral</option>
+                        <option value="anual">Anual</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <button id="generate-btn" class="btn">Generar Evaluación</button>
+            </div>
+
+            <!-- Sección de Resultados -->
+            <div id="results-section" class="space-y-4 result-box p-6 rounded-lg shadow-lg mt-8 hidden">
+                <h3 class="text-xl font-bold text-white mb-4">Plantilla de Evaluación Generada</h3>
+                <div id="evaluation-result" class="text-lg text-white leading-relaxed"></div>
+            </div>
+
+            <div class="action-container mt-8">
+                <button id="save-btn" class="btn">Guardar</button>
+                <button id="download-btn" class="btn">Descargar</button>
+                <button id="share-btn" class="btn">Compartir</button>
+            </div>
+            
+            <div id="status-message" class="status-message mt-8"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const roleSelect = document.getElementById('role-select');
+            const periodSelect = document.getElementById('period-select');
+            const generateBtn = document.getElementById('generate-btn');
+            const evaluationResult = document.getElementById('evaluation-result');
+            const resultsSection = document.getElementById('results-section');
+            const saveBtn = document.getElementById('save-btn');
+            const downloadBtn = document.getElementById('download-btn');
+            const shareBtn = document.getElementById('share-btn');
+            const statusMessage = document.getElementById('status-message');
+
+            const evaluationTemplates = {
+                gerente_proyecto: {
+                    trimestral: {
+                        titulo: "Evaluación Trimestral: Gerente de Proyecto",
+                        secciones: [
+                            {
+                                titulo: "1. Gestión de Proyectos",
+                                preguntas: [
+                                    "¿Qué tan bien se adhirió a los plazos y presupuestos del proyecto?",
+                                    "¿Cómo gestionó el alcance del proyecto y los cambios en los requisitos?",
+                                    "¿Qué tan efectiva fue la comunicación con los stakeholders del proyecto?"
+                                ]
+                            },
+                            {
+                                titulo: "2. Liderazgo de Equipo",
+                                preguntas: [
+                                    "¿Cómo fomentó la colaboración y resolvió conflictos dentro del equipo?",
+                                    "¿Qué tan bien motivó al equipo para alcanzar los objetivos?",
+                                    "¿Qué oportunidades tuvo para delegar responsabilidades clave?"
+                                ]
+                            }
+                        ]
+                    },
+                    anual: {
+                        titulo: "Evaluación Anual: Gerente de Proyecto",
+                        secciones: [
+                            {
+                                titulo: "1. Logros y Resultados Clave",
+                                preguntas: [
+                                    "¿Cuáles fueron los principales logros y proyectos exitosos del año?",
+                                    "¿Cómo contribuyó a los objetivos estratégicos de la compañía?",
+                                    "¿Cómo se adaptó a los desafíos inesperados durante el año?"
+                                ]
+                            },
+                            {
+                                titulo: "2. Desarrollo Profesional",
+                                preguntas: [
+                                    "¿En qué áreas ha mejorado su habilidad de liderazgo?",
+                                    "¿Qué habilidades técnicas o de gestión ha adquirido?",
+                                    "¿Qué objetivos de desarrollo personal y profesional se propone para el próximo año?"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                desarrollador_software: {
+                    trimestral: {
+                        titulo: "Evaluación Trimestral: Desarrollador de Software",
+                        secciones: [
+                            {
+                                titulo: "1. Calidad de Código y Productividad",
+                                preguntas: [
+                                    "¿Cómo ha gestionado las tareas y los plazos en este trimestre?",
+                                    "¿Qué tan bien documenta su código y sigue los estándares de la compañía?",
+                                    "¿Cómo maneja la resolución de errores y la depuración de código?"
+                                ]
+                            },
+                            {
+                                titulo: "2. Colaboración y Aprendizaje",
+                                preguntas: [
+                                    "¿Qué tan efectivamente colabora con otros desarrolladores y equipos?",
+                                    "¿Qué nuevas tecnologías o metodologías ha aprendido?",
+                                    "¿Cómo ha contribuido al crecimiento y conocimiento del equipo?"
+                                ]
+                            }
+                        ]
+                    },
+                    anual: {
+                        titulo: "Evaluación Anual: Desarrollador de Software",
+                        secciones: [
+                            {
+                                titulo: "1. Logros Técnicos y Contribución",
+                                preguntas: [
+                                    "¿Cuáles fueron los proyectos o características más importantes que desarrolló?",
+                                    "¿Cómo mejoró la arquitectura o la eficiencia de los sistemas existentes?",
+                                    "¿Qué logros técnicos destacan en su trabajo del año?"
+                                ]
+                            },
+                            {
+                                titulo: "2. Desarrollo y Visión de Carrera",
+                                preguntas: [
+                                    "¿Qué habilidades clave desarrolló durante el último año?",
+                                    "¿En qué áreas le gustaría especializarse o crecer profesionalmente?",
+                                    "¿Cómo imagina su trayectoria profesional en los próximos 1-3 años?"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            };
+
+            const showStatusMessage = (message) => {
+                statusMessage.textContent = message;
+                statusMessage.style.display = 'block';
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 3000);
+            };
+
+            const generateEvaluation = () => {
+                const selectedRole = roleSelect.value;
+                const selectedPeriod = periodSelect.value;
+                
+                if (!selectedRole || !selectedPeriod) {
+                    showStatusMessage("Por favor, selecciona un rol y un periodo para generar la evaluación.");
+                    return;
+                }
+
+                const template = evaluationTemplates[selectedRole][selectedPeriod];
+                let htmlContent = `<h4 class="text-2xl font-bold mb-4 text-yellow-500">${template.titulo}</h4>`;
+                
+                template.secciones.forEach(seccion => {
+                    htmlContent += `<div class="mb-6">`;
+                    htmlContent += `<h5 class="text-xl font-bold text-white mb-2">${seccion.titulo}</h5>`;
+                    htmlContent += `<ul class="list-disc ml-6 space-y-2 text-gray-300">`;
+                    seccion.preguntas.forEach(pregunta => {
+                        htmlContent += `<li>${pregunta}</li>`;
+                    });
+                    htmlContent += `</ul>`;
+                    htmlContent += `</div>`;
+                });
+                
+                evaluationResult.innerHTML = htmlContent;
+                resultsSection.classList.remove('hidden');
+            };
+
+            generateBtn.addEventListener('click', generateEvaluation);
+            saveBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Guardar': ¡Próximamente!"));
+            downloadBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Descargar': ¡Próximamente!"));
+            shareBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Compartir': ¡Próximamente!"));
+        });
+    </script>
+</body>
+</html>

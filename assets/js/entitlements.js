@@ -269,12 +269,12 @@
     { test: /\/camino-dorado-fases\/fase-3-ecd\/(?!index\.html)([^/?#]+)/i, required: ['camino.fase3'] },
     { test: /\/camino-dorado-fases\/fase-4-ecd\/(?!index\.html)([^/?#]+)/i, required: ['camino.fase4'] },
     { test: /\/camino-dorado-fases\/fase-5-ecd\/(?!index\.html)([^/?#]+)/i, required: ['camino.fase5'] },
-    // De Cero a Cien (granular decero.faseX)
-    { test: /\/fase_1_de0a100\//i, required: ['decero.fase1'] },
-    { test: /\/fase_2_de0a100\//i, required: ['decero.fase2'] },
-    { test: /\/fase_3_de0a100\//i, required: ['decero.fase3'] },
-    { test: /\/fase_4_de0a100\//i, required: ['decero.fase4'] },
-    { test: /\/fase_5_de0a100\//i, required: ['decero.fase5'] },
+  // De Cero a Cien (granular decero.faseX) — soporta legacy y canónico
+  { test: /\/(de-cero-a-cien-fases\/)?fase[-_]1[-_]de0a100\//i, required: ['decero.fase1'] },
+  { test: /\/(de-cero-a-cien-fases\/)?fase[-_]2[-_]de0a100\//i, required: ['decero.fase2'] },
+  { test: /\/(de-cero-a-cien-fases\/)?fase[-_]3[-_]de0a100\//i, required: ['decero.fase3'] },
+  { test: /\/(de-cero-a-cien-fases\/)?fase[-_]4[-_]de0a100\//i, required: ['decero.fase4'] },
+  { test: /\/(de-cero-a-cien-fases\/)?fase[-_]5[-_]de0a100\//i, required: ['decero.fase5'] },
   ];
 
   function parseQuery() {

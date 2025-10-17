@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DE CERO A CIEN TALENT · Gestión de Personas — Planificador de OKRs Inteligente</title>
+	<meta name="description" content="Crea objetivos claros y resultados clave medibles. Alinea equipos y prioriza iniciativas con un plan de OKRs listo para ejecutar." />
+	<link rel="canonical" href="https://deceroacien.app/liderazgo/TALENT%20Gesti%C3%B3n%20de%20Personas/2Planificador%20de%20OKRs%20Inteligente.html" />
+	<meta property="og:type" content="article" />
+	<meta property="og:site_name" content="DE CERO A CIEN" />
+	<meta property="og:title" content="DE CERO A CIEN TALENT · Gestión de Personas — Planificador de OKRs Inteligente" />
+	<meta property="og:description" content="Crea objetivos claros y resultados clave medibles. Alinea equipos y prioriza iniciativas con un plan de OKRs listo para ejecutar." />
+	<meta property="og:url" content="https://deceroacien.app/liderazgo/TALENT%20Gesti%C3%B3n%20de%20Personas/2Planificador%20de%20OKRs%20Inteligente.html" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:title" content="DE CERO A CIEN TALENT · Gestión de Personas — Planificador de OKRs Inteligente" />
+	<meta name="twitter:description" content="Crea objetivos claros y resultados clave medibles. Alinea equipos y prioriza iniciativas con un plan de OKRs listo para ejecutar." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+	<style>
+		body {
+			font-family: 'Inter', sans-serif;
+			background-color: #0A192F;
+			color: #E2E8F0;
+		}
+		.font-serif {
+			font-family: 'Playfair Display', serif;
+		}
+		.tool-content h2 {
+			font-size: 1.5rem;
+			font-weight: 700;
+			margin-bottom: 1rem;
+			color: #FBBF24;
+		}
+		input, textarea, select {
+			background-color: #112240;
+			border: 1px solid #334155;
+			color: #E2E8F0;
+			padding: 0.5rem;
+			border-radius: 0.375rem;
+			width: 100%;
+		}
+		input:focus, textarea:focus, select:focus {
+			border-color: #FBBF24;
+			outline: none;
+		}
+		.result-box {
+			background-color: #112240;
+			border-top: 4px solid #FBBF24;
+		}
+		.btn {
+			background-color: #FBBF24;
+			color: #111827;
+			font-weight: 600;
+			padding: 0.75rem 1.5rem;
+			border-radius: 9999px;
+			transition: all 0.2s;
+		}
+		.btn:hover {
+			background-color: #F59E0B;
+			transform: scale(1.05);
+		}
+		.status-message {
+			background-color: #0A192F;
+			border: 1px solid #334155;
+			padding: 1rem;
+			border-radius: 0.5rem;
+			text-align: center;
+			color: #FBBF24;
+			display: none;
+		}
+		.action-container {
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+		}
+		@media (min-width: 640px) {
+			.action-container {
+				flex-direction: row;
+				justify-content: center;
+			}
+		}
+		.objective-card {
+			background-color: #112240;
+			border: 1px solid #334155;
+			padding: 1rem;
+			border-radius: 0.5rem;
+			margin-bottom: 1rem;
+		}
+		.objective-card h4 {
+			font-size: 1.25rem;
+			font-weight: 600;
+			color: #FBBF24;
+		}
+		.objective-card ul {
+			list-style-type: disc;
+			margin-left: 1.5rem;
+		}
+	</style>
+</head>
+<body class="p-4 sm:p-8">
+	<div class="bg-[#112240] p-6 sm:p-12 rounded-xl shadow-lg min-h-screen">
+		<div class="tool-content">
+			<h2 class="text-3xl font-serif mb-6 text-center text-white">Planificador de OKRs Inteligente</h2>
+			<p class="text-center mb-8 text-gray-400">Establece objetivos ambiciosos y resultados clave medibles para tu equipo.</p>
+
+			<!-- Sección de Explicaciones -->
+			<div class="space-y-6 mb-12">
+				<div class="bg-[#0A192F] p-6 rounded-lg shadow-inner border-t-4 border-yellow-500">
+					<h3 class="text-2xl font-bold mb-4 flex items-center text-white"><span class="text-3xl mr-2">🎯</span> Objetivo y Funcionamiento</h3>
+					<p>Los OKRs (Objetivos y Resultados Clave) son una metodología probada para alinear a un equipo con las prioridades de la empresa. Un **Objetivo** es lo que quieres lograr (cualitativo y ambicioso). Un **Resultado Clave** es cómo medirás el progreso (cuantitativo y específico). Usa esta herramienta para definir tus OKRs y ver la conexión clara entre la estrategia y la ejecución.</p>
+				</div>
+			</div>
+
+			<hr class="border-t-2 border-gray-700 my-12" />
+
+			<!-- Formulario de Entrada de Datos -->
+			<div class="space-y-6 mb-8 bg-[#0A192F] p-6 rounded-lg shadow-inner">
+				<h3 class="text-xl font-bold text-white mb-4">Define tu OKR</h3>
+				<div>
+					<label for="objective-name" class="block text-sm font-medium mb-1">Objetivo (O)</label>
+					<input type="text" id="objective-name" placeholder="Ej: Mejorar la experiencia del usuario en el onboarding.">
+				</div>
+				<div>
+					<label for="key-result-1" class="block text-sm font-medium mb-1">Resultado Clave 1 (KR)</label>
+					<textarea id="key-result-1" rows="2" placeholder="Ej: Reducir el tiempo de onboarding de 5 a 2 minutos."></textarea>
+				</div>
+				<div>
+					<label for="key-result-2" class="block text.sm font-medium mb-1">Resultado Clave 2 (KR)</label>
+					<textarea id="key-result-2" rows="2" placeholder="Ej: Aumentar la tasa de finalización del tutorial de 60% a 90%."></textarea>
+				</div>
+				<div>
+					<label for="key-result-3" class="block text-sm font-medium mb-1">Resultado Clave 3 (KR)</label>
+					<textarea id="key-result-3" rows="2" placeholder="Ej: Disminuir la tasa de abandono en la primera semana de 15% a 5%."></textarea>
+				</div>
+			</div>
+
+			<div class="text-center mt-8">
+				<button id="add-okr-btn" class="btn">Añadir OKR</button>
+			</div>
+
+			<!-- Sección de Resultados -->
+			<div id="results-section" class="space-y-4 result-box p-6 rounded-lg shadow-lg mt-8 hidden">
+				<h3 class="text-xl font-bold text-white mb-4">Tus OKRs</h3>
+				<div id="okr-list" class="text-white"></div>
+			</div>
+
+			<div class="action-container mt-8">
+				<button id="save-btn" class="btn">Guardar</button>
+				<button id="download-btn" class="btn">Descargar</button>
+				<button id="share-btn" class="btn">Compartir</button>
+			</div>
+            
+			<div id="status-message" class="status-message mt-8"></div>
+		</div>
+	</div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			const objectiveInput = document.getElementById('objective-name');
+			const kr1Input = document.getElementById('key-result-1');
+			const kr2Input = document.getElementById('key-result-2');
+			const kr3Input = document.getElementById('key-result-3');
+			const addOkrBtn = document.getElementById('add-okr-btn');
+			const okrList = document.getElementById('okr-list');
+			const resultsSection = document.getElementById('results-section');
+			const saveBtn = document.getElementById('save-btn');
+			const downloadBtn = document.getElementById('download-btn');
+			const shareBtn = document.getElementById('share-btn');
+			const statusMessage = document.getElementById('status-message');
+
+			const okrs = [];
+
+			const showStatusMessage = (message) => {
+				statusMessage.textContent = message;
+				statusMessage.style.display = 'block';
+				setTimeout(() => {
+					statusMessage.style.display = 'none';
+				}, 3000);
+			};
+
+			const renderOKRs = () => {
+				okrList.innerHTML = '';
+				if (okrs.length === 0) {
+					okrList.innerHTML = '<p class="text-center text-gray-400">No hay OKRs añadidos todavía.</p>';
+					resultsSection.classList.add('hidden');
+					return;
+				}
+                
+				resultsSection.classList.remove('hidden');
+				okrs.forEach((okr, index) => {
+					const card = document.createElement('div');
+					card.className = 'objective-card';
+                    
+					const objectiveTitle = document.createElement('h4');
+					objectiveTitle.textContent = `Objetivo ${index + 1}: ${okr.objective}`;
+					card.appendChild(objectiveTitle);
+
+					const krList = document.createElement('ul');
+					krList.className = 'mt-2 space-y-1';
+					okr.keyResults.forEach(kr => {
+						if (kr) {
+							const krItem = document.createElement('li');
+							krItem.textContent = kr;
+							krList.appendChild(krItem);
+						}
+					});
+					card.appendChild(krList);
+					okrList.appendChild(card);
+				});
+			};
+
+			addOkrBtn.addEventListener('click', () => {
+				const objective = objectiveInput.value.trim();
+				const keyResults = [kr1Input.value.trim(), kr2Input.value.trim(), kr3Input.value.trim()];
+                
+				if (objective && keyResults.some(kr => kr !== '')) {
+					okrs.push({ objective, keyResults });
+					objectiveInput.value = '';
+					kr1Input.value = '';
+					kr2Input.value = '';
+					kr3Input.value = '';
+					renderOKRs();
+				} else {
+					showStatusMessage("Por favor, ingresa un objetivo y al menos un resultado clave.");
+				}
+			});
+
+			saveBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Guardar': ¡Próximamente!"));
+			downloadBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Descargar': ¡Próximamente!"));
+			shareBtn.addEventListener('click', () => showStatusMessage("Funcionalidad 'Compartir': ¡Próximamente!"));
+		});
+	</script>
+</body>
+</html>

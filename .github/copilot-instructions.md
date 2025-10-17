@@ -1,7 +1,7 @@
 # Instrucciones para agentes de IA en homepage-deceroacien
 
 **Estado actual (Oct 2025)**: ✅ En producción en https://deceroacien.app  
-**Infraestructura**: Google Cloud (Load Balancer + CDN + Cloud Storage + Cloud Run)  
+**Infraestructura**: Google Cloud (Load Balancer con URL Maps + CDN + Cloud Storage + Cloud Run)  
 **CI/CD**: Automático con Cloud Build en push a `main`  
 
 Objetivo: maximizar productividad en sitio estático modular con build pipeline completo, autenticación Supabase, gating por entitlements y pagos Mercado Pago certificados.
@@ -40,6 +40,13 @@ Objetivo: maximizar productividad en sitio estático modular con build pipeline 
 - Auto-guard por ruta: visitar `/fase_*_ecd/` sin entitlement muestra overlay de CTA sin destruir el DOM original.
 - Auth en cliente: `localStorage` usa claves `deceroacien_user`, `deceroacien_token`, `deceroacien_session`.
 - Entitlements en cliente: `deceroacien_entitlements` (array) y `deceroacien_entitlements_updated` (broadcast entre pestañas).
+
+### Convención de nombres y rutas (kebab-case)
+- Todos los nombres de carpetas y archivos deben estar en minúsculas, sin espacios ni acentos, usando guiones medios (kebab-case). Ej.: `taller-01-formacion-semilla/taller-01.html`.
+- Al renombrar carpetas/archivos, debes actualizar también todas las rutas y enlaces que apunten a ellos en todo el repositorio (HTML, JS, JSON, plantillas), manteniendo enlaces relativos.
+- Compatibilidad/SEO: si existían rutas legacy (con espacios o mayúsculas), configura redirecciones permanentes (301) en el Load Balancer mediante URL Maps hacia la versión canonical kebab-case.
+  - Además, si aplica al sitio estático, puedes dejar stubs de redirección (HTML meta refresh o JS) como fallback durante la transición.
+- Normaliza también trailing slashes y sensibilidad de mayúsculas en URL Maps para evitar duplicados.
 
 ## Flujos críticos (cómo se usa)
 - Login con Google:

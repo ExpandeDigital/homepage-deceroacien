@@ -18,8 +18,9 @@
 
   const PROTECTED_PATTERNS = [
     /\/camino-dorado-fases\/fase-[1-5]-ecd\/(?!index\.html).+\.html/i,
-    /\/fase_[1-5]_de0a100\/(?!index\.html).+\.html/i, // rutas antiguas o directas
-    /\/de-cero-a-cien-fases\/fase_[1-5]_de0a100\/(?!index\.html).+\.html/i // rutas anidadas
+    // De Cero a Cien (canónico con guiones y legacy con guion bajo)
+    /\/(?:de-cero-a-cien-fases\/)?fase-[1-5]-de0a100\/(?!index\.html).+\.html/i,
+    /\/(?:de-cero-a-cien-fases\/)?fase_[1-5]_de0a100\/(?!index\.html).+\.html/i
   ];
 
   // Index pages (desde aquí se intentará descubrir herramientas enlazadas)
@@ -29,6 +30,13 @@
     '/camino-dorado-fases/fase-3-ecd/index.html',
     '/camino-dorado-fases/fase-4-ecd/index.html',
     '/camino-dorado-fases/fase-5-ecd/index.html',
+    // Canónico
+    '/de-cero-a-cien-fases/fase-1-de0a100/index.html',
+    '/de-cero-a-cien-fases/fase-2-de0a100/index.html',
+    '/de-cero-a-cien-fases/fase-3-de0a100/index.html',
+    '/de-cero-a-cien-fases/fase-4-de0a100/index.html',
+    '/de-cero-a-cien-fases/fase-5-de0a100/index.html',
+    // Legacy (mientras existan)
     '/de-cero-a-cien-fases/fase_1_de0a100/index.html',
     '/de-cero-a-cien-fases/fase_2_de0a100/index.html',
     '/de-cero-a-cien-fases/fase_3_de0a100/index.html',

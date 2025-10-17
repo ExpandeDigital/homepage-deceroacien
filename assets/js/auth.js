@@ -73,26 +73,9 @@ class AuthManager {
             if (forgot) {
                 forgot.addEventListener('click', (ev) => {
                     ev.preventDefault();
-                    // Abrir modal de recuperación
-                    try {
-                        const modal = document.getElementById('resetModal');
-                        const emailInput = loginForm.querySelector('#email');
-                        const resetEmail = document.getElementById('resetEmail');
-                        if (resetEmail && emailInput && emailInput.value) resetEmail.value = emailInput.value.trim();
-                        if (modal) modal.style.display = 'flex';
-                        const close = () => { if (modal) modal.style.display = 'none'; };
-                        const cancelBtn = document.getElementById('resetCancel');
-                        const submitBtn = document.getElementById('resetSubmit');
-                        cancelBtn && (cancelBtn.onclick = close);
-                        submitBtn && (submitBtn.onclick = async () => {
-                            const mail = (resetEmail && resetEmail.value || '').trim();
-                            if (!mail || !/@/.test(mail)) { this.showError('Ingresa un correo válido.'); return; }
-                            await this.requestPasswordReset(mail);
-                            close();
-                            const fb = document.getElementById('passwordResetFeedback');
-                            if (fb) { fb.style.display = 'block'; fb.textContent = 'Si el correo existe, te enviamos un enlace para restablecer tu contraseña.'; }
-                        });
-                    } catch(_){}
+                    const emailInput = loginForm.querySelector('#email');
+                    const prefill = (emailInput && emailInput.value) ? emailInput.value.trim() : '';
+                    this.openResetPasswordModal(prefill);
                 });
             }
         }
@@ -154,7 +137,25 @@ class AuthManager {
                 throw new Error((res && res.message) || 'No se pudo iniciar sesión.');
             }
         } catch (e) {
-            const msg = e && e.message ? e.message : 'Error al iniciar sesión';
+            const msg = (e && (e.message||e.error_description||e.error_message)) ? String(e.message||e.error_description||e.error_message) : 'Error al iniciar sesión';
+            const lower = msg.toLowerCase();
+            // Caso: email no confirmado
+            if (lower.includes('confirm')) {
+                const container = document.getElementById('loginInlineAlert');
+                const safeEmail = (email||'');
+                if (container) {
+                    container.style.display = 'block';
+                    container.innerHTML = `Tu cuenta no está confirmada. Revisa tu correo o <a href="#" id="resendConfLogin" class="text-yellow-400 underline">reenviar confirmación</a>.`;
+                    const btn = document.getElementById('resendConfLogin');
+                    btn && (btn.onclick = async (ev)=>{
+                        ev.preventDefault();
+                        try { await this.resendConfirmation(safeEmail); container.innerHTML = 'Hemos reenviado el correo de confirmación. Revisa tu bandeja.'; } catch(ex) { this.showError((ex && ex.message) || 'No se pudo reenviar.'); }
+                    });
+                } else {
+                    this.showError('Tu cuenta no está confirmada. Revisa tu correo.');
+                }
+                return;
+            }
             this.showError(msg);
         } finally {
             this.hideLoading('loginButton', 'Iniciar Sesión');
@@ -209,9 +210,20 @@ class AuthManager {
                 // Si requiere verificación por email, session será null
                 const needsConfirm = !data.session;
                 if (needsConfirm) {
-                    this.showSuccess('Te enviamos un correo para confirmar tu cuenta. Revisa tu bandeja de entrada.');
-                    // Opcional: redirigir a login después de unos segundos
-                    setTimeout(()=>{ try { window.location.href = 'login.html'; } catch(_){} }, 1200);
+                    try { localStorage.setItem('deceroacien_pending_confirmation_email', email); } catch(_){}
+                    // Mostrar CTA de reenviar confirmación en el registro
+                    const container = document.getElementById('registerInlineAlert');
+                    if (container) {
+                        container.style.display = 'block';
+                        container.innerHTML = `Te enviamos un correo para confirmar tu cuenta. <a href="#" id="resendConfRegister" class="text-yellow-400 underline">Reenviar confirmación</a> · <a href="login.html" class="text-yellow-400 underline">Ir al login</a>`;
+                        const btn = document.getElementById('resendConfRegister');
+                        btn && (btn.onclick = async (ev)=>{
+                            ev.preventDefault();
+                            try { await this.resendConfirmation(email); container.innerHTML = 'Hemos reenviado el correo de confirmación. Revisa tu bandeja.'; } catch(ex) { this.showError((ex && ex.message) || 'No se pudo reenviar.'); }
+                        });
+                    } else {
+                        this.showSuccess('Te enviamos un correo para confirmar tu cuenta. Revisa tu bandeja de entrada.');
+                    }
                     return;
                 } else {
                     // Sesión activa inmediatamente
@@ -227,7 +239,22 @@ class AuthManager {
                 throw new Error((res && res.message) || 'No se pudo crear la cuenta.');
             }
         } catch (e) {
-            const msg = e && e.message ? e.message : 'Error al crear la cuenta';
+            const msg = (e && (e.message||e.error_description||e.error_message)) ? String(e.message||e.error_description||e.error_message) : 'Error al crear la cuenta';
+            const lower = msg.toLowerCase();
+            // Caso: usuario ya registrado
+            if (lower.includes('already') && lower.includes('registered')) {
+                const container = document.getElementById('registerInlineAlert');
+                const html = `Ese correo ya está registrado. <a href="login.html" class="text-yellow-400 underline">Inicia sesión</a> o <a href="login.html" class="text-yellow-400 underline" id="goResetFromRegister">restablece tu contraseña</a>.`;
+                if (container) {
+                    container.style.display = 'block';
+                    container.innerHTML = html;
+                    const go = document.getElementById('goResetFromRegister');
+                    go && (go.onclick = (ev)=>{ ev.preventDefault(); try { window.location.href = 'login.html?forgot=1&email=' + encodeURIComponent(email||''); } catch(_){} });
+                } else {
+                    this.showError('Ese correo ya está registrado. Ve a Iniciar sesión o restablece tu contraseña.');
+                }
+                return;
+            }
             this.showError(msg);
         } finally {
             this.hideLoading('registerButton', 'Crear Cuenta');
@@ -267,6 +294,44 @@ class AuthManager {
         const { error } = await sb.auth.updateUser({ password: newPassword });
         if (error) throw error;
         return true;
+    }
+
+    /**
+     * Reenvía correo de confirmación (signup)
+     */
+    async resendConfirmation(email) {
+        const sb = await this.getSupabaseClient();
+        if (!sb) throw new Error('Servicio de autenticación no disponible.');
+        const target = email || (function(){ try { return localStorage.getItem('deceroacien_pending_confirmation_email') || ''; } catch(_) { return ''; }})();
+        if (!target) throw new Error('No se puede determinar el correo a reenviar.');
+        const { error } = await sb.auth.resend({ type: 'signup', email: target });
+        if (error) throw error;
+        try { localStorage.setItem('deceroacien_pending_confirmation_email', target); } catch(_){}
+        return true;
+    }
+
+    /**
+     * Abre el modal de recuperación de contraseña en login (si existe en el DOM)
+     */
+    openResetPasswordModal(prefillEmail) {
+        try {
+            const modal = document.getElementById('resetModal');
+            const resetEmail = document.getElementById('resetEmail');
+            if (resetEmail && prefillEmail) resetEmail.value = prefillEmail;
+            if (modal) modal.style.display = 'flex';
+            const close = () => { if (modal) modal.style.display = 'none'; };
+            const cancelBtn = document.getElementById('resetCancel');
+            const submitBtn = document.getElementById('resetSubmit');
+            cancelBtn && (cancelBtn.onclick = close);
+            submitBtn && (submitBtn.onclick = async () => {
+                const mail = (resetEmail && resetEmail.value || '').trim();
+                if (!mail || !/@/.test(mail)) { this.showError('Ingresa un correo válido.'); return; }
+                await this.requestPasswordReset(mail);
+                close();
+                const fb = document.getElementById('passwordResetFeedback');
+                if (fb) { fb.style.display = 'block'; fb.textContent = 'Si el correo existe, te enviamos un enlace para restablecer tu contraseña.'; }
+            });
+        } catch(_){ }
     }
 
     // (Firebase legacy eliminado)
@@ -537,7 +602,9 @@ window.initializeAuthManager = initializeAuthManager;
 // Exponer helpers para flujos externos
 window.AuthFlows = {
     requestPasswordReset: (...args) => { try { return authManager.requestPasswordReset(...args); } catch(e){ throw e; } },
-    updatePassword: (...args) => { try { return authManager.updatePassword(...args); } catch(e){ throw e; } }
+    updatePassword: (...args) => { try { return authManager.updatePassword(...args); } catch(e){ throw e; } },
+    resendConfirmation: (...args) => { try { return authManager.resendConfirmation(...args); } catch(e){ throw e; } },
+    openResetModal: (...args) => { try { return authManager.openResetPasswordModal(...args); } catch(e){ throw e; } }
 };
 
 /**

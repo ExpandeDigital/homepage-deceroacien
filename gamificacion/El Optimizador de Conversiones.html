@@ -1,114 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego: El Optimizador de Conversiones - DE CERO A CIEN</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/styles/common.css">
-    <link rel="stylesheet" href="../assets/styles/mobile.css">
+  <meta charset="UTF-8" />
+  <meta http-equiv="refresh" content="0; url=./el-optimizador-de-conversiones.html" />
+  <script>location.replace('./el-optimizador-de-conversiones.html');</script>
+  <title>Redirigiendo…</title>
 </head>
-<body class="gamificacion-page">
-    <div class="game-layout">
-        <!-- Panel de Instrucciones (lado izquierdo) -->
-        <div class="instructions-panel">
-            <h2 class="instructions-title">Herramienta de la Fase 3: Tracción y P-M Fit</h2>
-
-            <div class="info-section space-y-3">
-                <div class="info-item">
-                    <span class="info-icon">🎯</span>
-                    <div>
-                        <h3>Objetivo</h3>
-                        <p>Tomar decisiones de mejora de producto y marketing basadas en datos, no en opiniones, comparando el rendimiento de dos versiones de un mismo elemento.</p>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <span class="info-icon">⭐</span>
-                    <div>
-                        <h3>Importancia</h3>
-                        <p>Las pruebas A/B son el motor de la optimización continua. Te permiten mejorar de forma incremental y constante tus tasas de conversión, eliminando las conjeturas.</p>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <span class="info-icon">⚙️</span>
-                    <div>
-                        <h3>¿Qué es lo que hace?</h3>
-                        <p>Este juego te presenta una página con una tasa de conversión base. Deberás elegir qué elemento probar (título, imagen, etc.) para intentar mejorarla. El juego simula el resultado del test A/B.</p>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <span class="info-icon">💡</span>
-                    <div>
-                        <h3>¿Para qué me sirve?</h3>
-                        <p>Para entrenar tu intuición de optimización y entender que no todos los cambios generan un impacto positivo. Es la práctica ideal para la herramienta H5 (Fase 3): Motor de Pruebas A/B.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Contenido del Juego (lado derecho) -->
-        <div class="game-content">
-            <div class="text-center mb-6">
-                <h1 class="font-serif text-4xl font-bold text-white">Optimizador de Conversiones</h1>
-            </div>
-
-            <div id="game-container" class="w-full max-w-6xl mx-auto">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                    <!-- Columna Izquierda: Simulación de Landing y Métricas -->
-                    <div>
-                        <div class="bg-black/20 p-4 rounded-lg border border-white/10">
-                            <div class="text-center mb-4">
-                                <p class="text-sm text-gray-400">Semana</p>
-                                <p id="week-display" class="text-2xl font-bold">1 / 5</p>
-                            </div>
-                            <!-- Landing simulada -->
-                            <div class="bg-white text-gray-800 p-6 rounded-lg text-center">
-                                <h2 id="landing-headline" class="text-2xl font-bold text-[var(--azul-noche)]">Vende tus Cursos Online</h2>
-                                <div class="my-4 h-32 bg-gray-200 rounded-md flex items-center justify-center">
-                                    <p id="landing-image-text" class="text-gray-500">Imagen Genérica</p>
-                                </div>
-                                <button id="landing-cta" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg">Empieza Gratis</button>
-                            </div>
-                            <div class="mt-4 text-center">
-                                <p class="text-sm text-gray-400">Tasa de Conversión Actual</p>
-                                <p id="conversion-rate-display" class="text-4xl font-black text-[var(--dorado)] stat-value">2.00%</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Columna Derecha: Decisiones y Resultados -->
-                    <div>
-                        <h3 class="font-bold text-lg text-[var(--dorado)] mb-2">¿Qué quieres probar esta semana?</h3>
-                        <p class="text-sm text-gray-300 mb-4">Elige un experimento A/B. Cada prueba tiene un impacto potencial diferente.</p>
-                        <div id="options-area" class="space-y-3">
-                            <!-- Opciones se generan aquí -->
-                        </div>
-                        <div id="result-area" class="mt-4 bg-black/20 p-4 rounded-lg hidden">
-                            <h4 class="font-bold text-lg text-white">Resultado del Experimento:</h4>
-                            <p id="result-text" class="mt-2"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de Fin de Juego -->
-    <div id="game-over-modal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center p-4 z-50">
-        <div class="bg-[var(--azul-noche)] border-2 border-[var(--dorado)] rounded-xl shadow-2xl w-full max-w-lg text-center p-8">
-            <h2 id="game-over-title" class="font-serif text-4xl font-bold"></h2>
-            <p id="game-over-final-rate" class="text-6xl font-black text-[var(--dorado)] my-4"></p>
-            <p id="game-over-feedback" class="text-[var(--texto-claro)] mb-6"></p>
-            <div class="flex gap-4 justify-center">
-                <button id="info-back-btn" class="bg-gray-500 text-white font-bold text-lg py-3 px-8 rounded-lg">Ver Explicación</button>
-                <button id="play-again-btn" class="bg-[var(--dorado)] text-[var(--azul-noche)] font-bold text-lg py-3 px-8 rounded-lg">Jugar de Nuevo</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="../assets/js/components.js"></script>
-    <script src="../assets/js/updateScripts.js"></script>
+<body>
+  <p>Esta URL cambió. Ir a <a href="./el-optimizador-de-conversiones.html">el-optimizador-de-conversiones.html</a>.</p>
 </body>
 </html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego: Dilema del PMV - DE CERO A CIEN</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/styles/common.css">
+    <link rel="stylesheet" href="../assets/styles/mobile.css">
+</head>
+<body class="gamificacion-page">
+    <div class="game-layout">
+        <!-- Panel de Instrucciones (lado izquierdo) -->
+        <div class="instructions-panel">
+            <h2 class="instructions-title">Herramienta de la Fase 2: Construcción del PMV</h2>
+            
+            <div class="info-section space-y-3">
+                <div class="info-item">
+                    <span class="info-icon">🎯</span>
+                    <div>
+                        <h3>Objetivo</h3>
+                        <p>Entrenar la habilidad de tomar decisiones estratégicas de priorización para definir el alcance de un Producto Mínimo Viable (PMV) que entregue valor real al cliente sin exceder el presupuesto.</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">⭐</span>
+                    <div>
+                        <h3>Importancia</h3>
+                        <p>El éxito de un lanzamiento a menudo depende de la disciplina para enfocarse en lo esencial. Construir demasiado puede llevar a la bancarrota; construir muy poco puede no resolver el problema del cliente.</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">⚙️</span>
+                    <div>
+                        <h3>¿Qué es lo que hace?</h3>
+                        <p>Te presenta un caso de negocio, un presupuesto y 10 funcionalidades con sus costos. Deberás arrastrar cada funcionalidad a las categorías del método MoSCoW para definir tu PMV. El resultado dependerá de tu priorización.</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">💡</span>
+                    <div>
+                        <h3>¿Para qué me sirve?</h3>
+                        <p>Este juego te fuerza a pensar críticamente sobre qué es "indispensable" versus qué es "deseable". Es la práctica perfecta antes de usar la herramienta H2 (Fase 2): Matriz de Priorización del Camino Dorado.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenido del Juego (lado derecho) -->
+        <div class="game-content">
+            <div class="text-center mb-6">
+                <h1 class="font-serif text-4xl font-bold text-white">Dilema del PMV</h1>
+                <p id="case-description" class="text-gray-300 mt-2 max-w-3xl mx-auto"></p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+                <!-- Columna de Features -->
+                <div class="lg:col-span-2">
+                    <h3 class="font-bold text-lg text-[var(--dorado)] mb-4">Funcionalidades Propuestas:</h3>
+                    <div id="features-area" class="space-y-3">
+                        <!-- Las features se generan aquí -->
+                    </div>
+                </div>
+
+                <!-- Columnas de MoSCoW -->
+                <div class="lg:col-span-3">
+                     <div class="flex justify-between items-center bg-black/20 p-3 rounded-lg mb-4">
+                        <h3 class="font-bold text-lg text-white">Prioriza tu PMV (Arrastra aquí):</h3>
+                        <div class="text-right">
+                            <p class="text-[var(--dorado)] font-bold">Presupuesto: $<span id="budget">100000</span></p>
+                            <p class="text-white">Gastado: $<span id="spent">0</span></p>
+                            <p class="text-white">Restante: $<span id="remaining">100000</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div>
+                            <h4 class="font-bold text-green-400 mb-2">MUST HAVE</h4>
+                            <div id="must-have" class="drop-zone p-3 rounded-lg min-h-32">
+                                <p class="text-gray-500 text-sm">Esencial para funcionar</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-yellow-400 mb-2">SHOULD HAVE</h4>
+                            <div id="should-have" class="drop-zone p-3 rounded-lg min-h-32">
+                                <p class="text-gray-500 text-sm">Importante pero no crítico</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-blue-400 mb-2">COULD HAVE</h4>
+                            <div id="could-have" class="drop-zone p-3 rounded-lg min-h-32">
+                                <p class="text-gray-500 text-sm">Nice to have</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-red-400 mb-2">WON'T HAVE</h4>
+                            <div id="wont-have" class="drop-zone p-3 rounded-lg min-h-32">
+                                <p class="text-gray-500 text-sm">Para versiones futuras</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 text-center">
+                        <button id="evaluate-mvp-btn" class="bg-[var(--dorado)] text-[var(--azul-noche)] font-bold px-6 py-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                            Evaluar mi PMV
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Resultados -->
+    <div id="result-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50">
+        <div class="bg-[var(--azul-noche)] border border-[var(--dorado)] rounded-lg p-6 max-w-md w-full">
+            <h2 id="result-title" class="font-serif text-2xl font-bold text-center mb-4">Resultado</h2>
+            <div class="text-center mb-4">
+                <span class="text-3xl font-bold text-[var(--dorado)]" id="result-score">0/100</span>
+            </div>
+            <p id="result-feedback" class="text-gray-300 text-center mb-6"></p>
+            <div class="text-center">
+                <button id="try-again-btn" class="bg-[var(--dorado)] text-[var(--azul-noche)] font-bold px-6 py-2 rounded-lg mr-2">
+                    Probar de Nuevo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/updateScripts.js"></script>
+</body>
+</html>
